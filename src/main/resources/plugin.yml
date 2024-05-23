@@ -1,0 +1,6 @@
+name: AtlasEnchants
+version: '${project.version}'
+main: com.atlasplugins.atlasenchants.Main
+api-version: '1.20'
+authors: [_Ghillie & Helix]
+description: AtlasEnchants brings new custom enchants to the game that act as good vanilla enchants.
