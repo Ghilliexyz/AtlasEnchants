@@ -1,0 +1,10 @@
+com\atlasplugins\atlasenchants\GUIs\BlackSmithGUI.class
+com\atlasplugins\atlasenchants\GUIs\shop.class
+com\atlasplugins\atlasenchants\Enchants\Rare\Fearsight.class
+com\atlasplugins\atlasenchants\Listeners\onInventoryClick.class
+com\atlasplugins\atlasenchants\Commands\BlackSmith.class
+com\atlasplugins\atlasenchants\Commands\Shop.class
+com\atlasplugins\atlasenchants\Main.class
+com\atlasplugins\atlasenchants\Commands\GiveEnchant.class
+com\atlasplugins\atlasenchants\Enchants\Rare\Fearsight$1.class
+com\atlasplugins\atlasenchants\Listeners\onPlayerJoin.class

@@ -1,5 +1,5 @@
 name: AtlasEnchants
-version: '${project.version}'
+version: '1.0'
 main: com.atlasplugins.atlasenchants.Main
 api-version: '1.20'
 authors: [_Ghillie & Helix]
