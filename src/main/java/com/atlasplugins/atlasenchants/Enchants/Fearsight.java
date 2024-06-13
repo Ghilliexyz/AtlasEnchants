@@ -1,15 +1,12 @@
-package com.atlasplugins.atlasenchants.Enchants.Rare;
+package com.atlasplugins.atlasenchants.Enchants;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.jeff_media.armorequipevent.ArmorEquipEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -20,16 +17,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.inventivetalent.glow.GlowAPI;
+import ru.xezard.glow.data.glow.Glow;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Fearsight implements Listener
-{
+public class Fearsight implements Listener {
+
     private Main main;
     public Fearsight (Main main) {
         this.main = main;
@@ -80,6 +76,43 @@ public class Fearsight implements Listener
     public void PlayerMoveEvent(PlayerMoveEvent e) {
 
         Player player = e.getPlayer();
+        List<Entity> listE = player.getNearbyEntities(50, 50, 50);
+
+        for (Entity entity: listE) {
+
+            Glow glowRed = Glow.builder()
+                    .color(ChatColor.DARK_RED)
+                    .name("redglow")
+                    .build();
+
+            if (entity instanceof org.bukkit.entity.Monster ||
+                    entity instanceof org.bukkit.entity.Flying ||
+                    entity instanceof org.bukkit.entity.Slime ||
+                    entity instanceof org.bukkit.entity.Boss) {
+
+                glowRed.addHolders(entity);
+                glowRed.display(player);
+            }else
+
+            if (entity instanceof org.bukkit.entity.Animals ||
+                    entity instanceof org.bukkit.entity.Ambient ||
+                    entity instanceof org.bukkit.entity.WaterMob) {
+
+//                    GlowAPI.setGlowing(entity, GlowAPI.Color.DARK_GREEN, player);
+            }else
+
+            if (entity instanceof Player ||
+                    entity instanceof org.bukkit.entity.Villager ||
+                    entity instanceof org.bukkit.entity.WanderingTrader ||
+                    entity instanceof org.bukkit.entity.IronGolem ) {
+
+//                    GlowAPI.setGlowing(entity, GlowAPI.Color.WHITE, player);
+            }
+
+//            if (entity.getLocation().distance(player.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + level)) {
+//                glowRed.removeHolders(entity);
+//            }
+        }
 
         if (main.hasHelmet.containsKey(player)) {
             if (main.ColorTask.containsKey(player)) {
@@ -91,7 +124,6 @@ public class Fearsight implements Listener
             ItemMeta helmetMeta = helmet.getItemMeta();
             String EnchantName = Main.color("&cFearsight I");
             int level = 0;
-            List<Entity> listE = null;
 
             for (String a: helmetMeta.getLore()){
                 if (a.equals(EnchantName)) {
@@ -117,35 +149,34 @@ public class Fearsight implements Listener
                 }
             }
 
-            for (Entity entity: listE) {
-
-                if (entity instanceof org.bukkit.entity.Monster ||
-                        entity instanceof org.bukkit.entity.Flying ||
-                        entity instanceof org.bukkit.entity.Slime ||
-                        entity instanceof org.bukkit.entity.Boss) {
-
-                    GlowAPI.setGlowing(entity, GlowAPI.Color.DARK_RED, player);
-                }else
-
-                if (entity instanceof org.bukkit.entity.Animals ||
-                        entity instanceof org.bukkit.entity.Ambient ||
-                        entity instanceof org.bukkit.entity.WaterMob) {
-
-                    GlowAPI.setGlowing(entity, GlowAPI.Color.DARK_GREEN, player);
-                }else
-
-                if (entity instanceof Player ||
-                        entity instanceof org.bukkit.entity.Villager ||
-                        entity instanceof org.bukkit.entity.WanderingTrader ||
-                        entity instanceof org.bukkit.entity.IronGolem ) {
-
-                    GlowAPI.setGlowing(entity, GlowAPI.Color.WHITE, player);
-                }
-
-                if (entity.getLocation().distance(player.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + level)) {
-                    GlowAPI.setGlowing(entity, false, player);
-                }
-            }
+//            for (Entity entity: listE) {
+//
+//                if (entity instanceof org.bukkit.entity.Monster ||
+//                        entity instanceof org.bukkit.entity.Flying ||
+//                        entity instanceof org.bukkit.entity.Slime ||
+//                        entity instanceof org.bukkit.entity.Boss) {
+//
+//                }else
+//
+//                if (entity instanceof org.bukkit.entity.Animals ||
+//                        entity instanceof org.bukkit.entity.Ambient ||
+//                        entity instanceof org.bukkit.entity.WaterMob) {
+//
+////                    GlowAPI.setGlowing(entity, GlowAPI.Color.DARK_GREEN, player);
+//                }else
+//
+//                if (entity instanceof Player ||
+//                        entity instanceof org.bukkit.entity.Villager ||
+//                        entity instanceof org.bukkit.entity.WanderingTrader ||
+//                        entity instanceof org.bukkit.entity.IronGolem ) {
+//
+////                    GlowAPI.setGlowing(entity, GlowAPI.Color.WHITE, player);
+//                }
+//
+//                if (entity.getLocation().distance(player.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + level)) {
+//                    glowRed.removeHolders(entity);
+//                }
+//            }
 
             if (main.playerEntities.get(player) != listE) {
                 main.playerEntities.put(player, listE);
@@ -154,24 +185,24 @@ public class Fearsight implements Listener
                 main.ColorTask.put(player, (new BukkitRunnable() {
                     public void run() {
                         for (Entity entity : player.getNearbyEntities(55.0D, 55.0D, 55.0D)) {
-                            GlowAPI.setGlowing(entity, false, player);
+//                            glowRed.removeHolders(entity);
                         }
                     }
-                }).runTaskTimer((Plugin) main, 0L, 15L));
+                }).runTaskTimer(main, 0L, 15L));
             }
 
         }
     }
 
-    @EventHandler
-    public void PlayerDeathEvent(PlayerDeathEvent e) {
-        Player player = e.getEntity();
-        for (Entity entity : player.getNearbyEntities(50.0D, 50.0D, 50.0D)) {
-            if (GlowAPI.isGlowing(entity, player)) {
-                GlowAPI.setGlowing(entity, false, player);
-            }
-        }
-    }
+//    @EventHandler
+//    public void PlayerDeathEvent(PlayerDeathEvent e) {
+//        Player player = e.getEntity();
+//        for (Entity entity : player.getNearbyEntities(50.0D, 50.0D, 50.0D)) {
+//            if (GlowAPI.isGlowing(entity, player)) {
+//                GlowAPI.setGlowing(entity, false, player);
+//            }
+//        }
+//    }
 
     @EventHandler
     public void PlayerJoinEvent(PlayerJoinEvent e){
@@ -207,12 +238,12 @@ public class Fearsight implements Listener
             if (main.hasHelmet.containsKey(player)) {
                 main.hasHelmet.remove(player);
             }
-            if (main.playerEntities.containsKey(player)) {
-                for (Entity entity : main.playerEntities.get(player)) {
-                    if (GlowAPI.isGlowing(entity, player))
-                        GlowAPI.setGlowing(entity, false, player);
-                }
-            }
+//            if (main.playerEntities.containsKey(player)) {
+//                for (Entity entity : main.playerEntities.get(player)) {
+//                    if (GlowAPI.isGlowing(entity, player))
+//                        GlowAPI.setGlowing(entity, false, player);
+//                }
+//            }
             if (main.playerEntities.containsKey(player)) {
                 main.playerEntities.remove(player);
             }
@@ -304,4 +335,5 @@ public class Fearsight implements Listener
                 return;
             }
     }
+
 }

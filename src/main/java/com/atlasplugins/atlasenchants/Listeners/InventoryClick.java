@@ -1,5 +1,6 @@
 package com.atlasplugins.atlasenchants.Listeners;
 
+import com.atlasplugins.atlasenchants.GUIs.FearSight.FearsightShop;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,10 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 
-public class onInventoryClick implements Listener {
+public class InventoryClick implements Listener {
 
     private Main main;
-    public onInventoryClick (Main main) {
+    public InventoryClick (Main main) {
         this.main = main;
     }
 
@@ -47,13 +48,13 @@ public class onInventoryClick implements Listener {
                 return;
             }
 
-            if ((e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE || e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("&c&lGODLY"))) {
+//            if ((e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE || e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("&c&lGODLY"))) {
 //                GodlyEnchants godly = new GodlyEnchants(main);
 //                godly.build(player);
 //                godly.show(player);
-                player.updateInventory();
-                e.setCancelled(true);
-            }
+//                player.updateInventory();
+//                e.setCancelled(true);
+//            }
 
             if (e.getCurrentItem().getType() == Material.YELLOW_STAINED_GLASS_PANE || e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("&e&lMythic")) {
                 e.setCancelled(true);
@@ -98,9 +99,9 @@ public class onInventoryClick implements Listener {
             }
 
             if (e.getCurrentItem().getType() == Material.HEART_OF_THE_SEA || e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(Main.color(main.getConfig().getString("Shop.GodlyEnchantsList.FearSightName")))) {
-//                FearsightShop fear = new FearsightShop(main);
-//                fear.build(player);
-//                fear.show(player);
+                FearsightShop fear = new FearsightShop(main);
+                fear.build(player);
+                fear.show(player);
                 player.updateInventory();
                 e.setCancelled(true);
             }

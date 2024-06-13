@@ -9,10 +9,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class shop {
+public class ShopGUI {
 
     private Main main;
-    public shop (Main main) {
+    public ShopGUI (Main main) {
         this.main = main;
     }
 

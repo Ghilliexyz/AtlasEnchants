@@ -5,24 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/BlackSmithCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/ShopCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Rare/Fearsight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/BlackSmithGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onPlayerJoin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/BlackSmithCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/ShopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/ShopCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Rare/Fearsight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/shop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onInventoryClick.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onPlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onPlayerJoin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/BlackSmithCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/BlackSmithCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/ShopCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Enchants/Fearsight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Fearsight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/BlackSmithGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/FearSight/FearsightShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/FearSight/FearsightShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/ShopGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/ShopGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Listeners/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/InventoryClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Listeners/onPlayerJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
-    <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-    </list>
+    <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,25 +44,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java">
-      <ranges>
-        <range start1="2" end1="2" start2="2" end2="8" changelist="7576ba64-8148-4ab9-9e6a-9e043b163574" />
-        <range start1="4" end1="4" start2="10" end2="13" changelist="5489b0f3-e62e-4d18-af93-a4d29381cd78" />
-        <range start1="5" end1="5" start2="14" end2="15" changelist="5489b0f3-e62e-4d18-af93-a4d29381cd78" />
-        <range start1="7" end1="7" start2="17" end2="19" changelist="5489b0f3-e62e-4d18-af93-a4d29381cd78" />
-        <range start1="9" end1="9" start2="21" end2="30" changelist="7576ba64-8148-4ab9-9e6a-9e043b163574" />
-        <range start1="30" end1="30" start2="51" end2="77" changelist="7576ba64-8148-4ab9-9e6a-9e043b163574" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/resources/config.yml">
-      <ranges>
-        <range start1="0" end1="0" start2="0" end2="1" changelist="5489b0f3-e62e-4d18-af93-a4d29381cd78" />
-        <range start1="14" end1="14" start2="15" end2="69" changelist="7576ba64-8148-4ab9-9e6a-9e043b163574" />
-        <range start1="15" end1="15" start2="70" end2="96" changelist="7576ba64-8148-4ab9-9e6a-9e043b163574" />
-      </ranges>
-    </file>
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -68,19 +55,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.AtlasEnchants package.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Development/Minecraft Plugins/AtlasEnchants/GlowAPI_v1.5.7-SNAPSHOT.jar",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.36091954"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.AtlasEnchants package.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Development/Minecraft Plugins/AtlasEnchants/GlowAPI_v1.5.7-SNAPSHOT.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.atlasplugins.atlasenchants.Enchants.Rare" />

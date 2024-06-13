@@ -1,6 +1,6 @@
 name: AtlasEnchants
 version: '1.0'
-main: me.helix.atlasenchants.Main
+main: com.atlasplugins.atlasenchants.Main
 api-version: '1.20'
 description: Custom Enchants
 commands:
