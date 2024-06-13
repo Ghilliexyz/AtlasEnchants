@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.atlasplugins</groupId>
+  <groupId>me.helix</groupId>
   <artifactId>AtlasEnchants</artifactId>
-  <name>AtlasEnchants</name>
+  <name>Main</name>
   <version>1.0</version>
-  <description>AtlasEnchants brings new custom enchants to the game that act as good vanilla enchants.</description>
   <build>
     <resources>
       <resource>
@@ -48,6 +47,10 @@
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
+    </repository>
+    <repository>
+      <id>dmulloy2-repo</id>
+      <url>https://repo.dmulloy2.net/repository/public/</url>
     </repository>
   </repositories>
   <dependencies>

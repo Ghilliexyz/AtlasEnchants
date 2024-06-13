@@ -1,16 +1,12 @@
 name: AtlasEnchants
 version: '${project.version}'
-main: com.atlasplugins.atlasenchants.Main
+main: me.helix.atlasenchants.Main
 api-version: '1.20'
-authors: [_Ghillie & Helix]
-description: AtlasEnchants brings new custom enchants to the game that act as good vanilla enchants.
+description: Custom Enchants
 commands:
-  giveenchant:
-    description: Gives an enchanted item.
-    usage: /giveenchant
   blacksmith:
-    description: Access the blacksmith.
-    usage: /blacksmith
-  shop:
-    description: Opens the shop.
-    usage: /shop
+    description: Opens the Blacksmith
+  Shop:
+    description: Opens The Enchant Shop
+  test:
+    description: For Testing only
