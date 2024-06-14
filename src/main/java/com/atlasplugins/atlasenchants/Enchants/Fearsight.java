@@ -2,6 +2,7 @@ package com.atlasplugins.atlasenchants.Enchants;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.jeff_media.armorequipevent.ArmorEquipEvent;
+import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import ru.xezard.glow.data.glow.Glow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,23 +75,17 @@ public class Fearsight implements Listener {
     @EventHandler
     public void PlayerMoveEvent(PlayerMoveEvent e) {
 
-        Player player = e.getPlayer();
-        List<Entity> listE = player.getNearbyEntities(50, 50, 50);
+        Player p = e.getPlayer();
+        List<Entity> listE = p.getNearbyEntities(50, 50, 50);
 
         for (Entity entity: listE) {
-
-//            Glow glowRed = Glow.builder()
-//                    .color(ChatColor.DARK_RED)
-//                    .name("redglow")
-//                    .build();
 
             if (entity instanceof org.bukkit.entity.Monster ||
                     entity instanceof org.bukkit.entity.Flying ||
                     entity instanceof org.bukkit.entity.Slime ||
                     entity instanceof org.bukkit.entity.Boss) {
 
-//                glowRed.addHolders(entity);
-//                glowRed.display(player);
+//                    glowRedEntitiy.setGlowing(entity, p, ChatColor.DARK_RED);
             }else
 
             if (entity instanceof org.bukkit.entity.Animals ||
@@ -109,18 +103,18 @@ public class Fearsight implements Listener {
 //                    GlowAPI.setGlowing(entity, GlowAPI.Color.WHITE, player);
             }
 
-//            if (entity.getLocation().distance(player.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + level)) {
+//            if (entity.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + level)) {
 //                glowRed.removeHolders(entity);
 //            }
         }
 
-        if (main.hasHelmet.containsKey(player)) {
-            if (main.ColorTask.containsKey(player)) {
-                Bukkit.getScheduler().cancelTask(((BukkitTask)main.ColorTask.get(player)).getTaskId());
-                main.ColorTask.remove(player);
+        if (main.hasHelmet.containsKey(p)) {
+            if (main.ColorTask.containsKey(p)) {
+                Bukkit.getScheduler().cancelTask(((BukkitTask)main.ColorTask.get(p)).getTaskId());
+                main.ColorTask.remove(p);
             }
 
-            ItemStack helmet = player.getInventory().getHelmet();
+            ItemStack helmet = p.getInventory().getHelmet();
             ItemMeta helmetMeta = helmet.getItemMeta();
             String EnchantName = Main.color("&cFearsight I");
             int level = 0;
@@ -128,21 +122,21 @@ public class Fearsight implements Listener {
             for (String a: helmetMeta.getLore()){
                 if (a.equals(EnchantName)) {
                     level = 1;
-                    listE = player.getNearbyEntities(
+                    listE = p.getNearbyEntities(
                             main.getConfig().getInt("Fearsight.radius-of-glowing-1"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-1"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-1"));
                 }
                 if (a.equals(String.valueOf(EnchantName) + "I")) {
                     level = 2;
-                    listE = player.getNearbyEntities(
+                    listE = p.getNearbyEntities(
                             main.getConfig().getInt("Fearsight.radius-of-glowing-2"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-2"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-2"));
                 }
                 if (a.equals(String.valueOf(EnchantName) + "II")) {
                     level = 3;
-                    listE = player.getNearbyEntities(
+                    listE = p.getNearbyEntities(
                             main.getConfig().getInt("Fearsight.radius-of-glowing-3"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-3"),
                             main.getConfig().getInt("Fearsight.radius-of-glowing-3"));
@@ -178,13 +172,13 @@ public class Fearsight implements Listener {
 //                }
 //            }
 
-            if (main.playerEntities.get(player) != listE) {
-                main.playerEntities.put(player, listE);
+            if (main.playerEntities.get(p) != listE) {
+                main.playerEntities.put(p, listE);
             }else
-            if (!main.ColorTask.containsKey(player)) {
-                main.ColorTask.put(player, (new BukkitRunnable() {
+            if (!main.ColorTask.containsKey(p)) {
+                main.ColorTask.put(p, (new BukkitRunnable() {
                     public void run() {
-                        for (Entity entity : player.getNearbyEntities(55.0D, 55.0D, 55.0D)) {
+                        for (Entity entity : p.getNearbyEntities(55.0D, 55.0D, 55.0D)) {
 //                            glowRed.removeHolders(entity);
                         }
                     }
