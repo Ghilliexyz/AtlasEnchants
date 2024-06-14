@@ -5,28 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/BlackSmithCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/ShopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/ShopCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Rare/Fearsight.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/shop.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onInventoryClick.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onPlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/onPlayerJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Fearsight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Fearsight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/BlackSmithCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/BlackSmithCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/ShopCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Commands/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Enchants/Fearsight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Fearsight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/BlackSmithGUI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/FearSight/FearsightShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/FearSight/FearsightShop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/GUIs/ShopGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/GUIs/ShopGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Listeners/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/InventoryClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Listeners/onPlayerJoin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/helix/atlasenchants/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.0-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.0-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.0.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +29,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
