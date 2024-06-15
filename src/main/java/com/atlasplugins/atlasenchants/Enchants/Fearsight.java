@@ -1,20 +1,16 @@
 package com.atlasplugins.atlasenchants.Enchants;
 
-import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,19 +25,6 @@ public class Fearsight implements Listener {
     private Main main;
     public Fearsight (Main main) {
         this.main = main;
-    }
-
-    public boolean isHelmet(Material type) {
-        if ((type == Material.LEATHER_HELMET) ||
-                (type == Material.IRON_HELMET) ||
-                (type == Material.CHAINMAIL_HELMET) ||
-                (type == Material.GOLDEN_HELMET) ||
-                (type == Material.DIAMOND_HELMET) ||
-                (type == Material.NETHERITE_HELMET) ||
-                (type == Material.TURTLE_HELMET)) {
-            return true;
-        }
-        return false;
     }
 
     public int getEmptySlots(Player p) {
