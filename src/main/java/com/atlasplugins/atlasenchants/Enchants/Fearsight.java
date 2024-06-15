@@ -72,9 +72,9 @@ public class Fearsight implements Listener {
         Player p = e.getPlayer();
         List<Entity> listE = p.getNearbyEntities(15, 15, 15);
 
-        String hostileMobColor = main.getConfig().getString("FEARSIGHT.Hostile-GLOW-Colour").toUpperCase();
-        String passiveMobColor = main.getConfig().getString("FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
-        String normalMobColor = main.getConfig().getString("FEARSIGHT.Player-Villager").toUpperCase();
+        String hostileMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Hostile-GLOW-Colour").toUpperCase();
+        String passiveMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
+        String normalMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase();
 
         for (Entity entity: listE)
         {
@@ -139,23 +139,23 @@ public class Fearsight implements Listener {
                 if (a.equals(EnchantName)) {
                     level = 1;
                     listE = p.getNearbyEntities(
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-1"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-1"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-1"));
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-1"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-1"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-1"));
                 }
                 if (a.equals(String.valueOf(EnchantName) + "I")) {
                     level = 2;
                     listE = p.getNearbyEntities(
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-2"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-2"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-2"));
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-2"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-2"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-2"));
                 }
                 if (a.equals(String.valueOf(EnchantName) + "II")) {
                     level = 3;
                     listE = p.getNearbyEntities(
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-3"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-3"),
-                            main.getConfig().getInt("Fearsight.radius-of-glowing-3"));
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-3"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-3"),
+                            main.getConfig().getInt("Enchantments.Fearsight.radius-of-glowing-3"));
                 }
             }
 
