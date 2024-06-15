@@ -44,53 +44,60 @@ public class Fearsight implements Listener {
     }
 
     public boolean hasCustomEnchant(Player player) {
-        ItemStack enchantItem = new ItemStack(Material.valueOf(main.getConfig().getString("EnchantItems.CustomItem")));
-        ItemMeta enchantMeta = enchantItem.getItemMeta();
-        if(enchantItem != null && enchantMeta.hasLore() && enchantMeta.getLore().contains(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Lore")))
-        {
-            for (ItemStack item : player.getInventory().getContents())
-            {
-                if(item != null && item.isSimilar(enchantItem))
-                {
+        String enchantTitle = Main.color(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Title"));
+
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item != null && item.hasItemMeta()) {
+                ItemMeta meta = item.getItemMeta();
+                if (meta.hasDisplayName() && meta.getDisplayName().equals(enchantTitle)) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent invEvent)
-    {
-        if(invEvent.getClickedInventory() != null && invEvent.getClickedInventory().getType() == InventoryType.PLAYER)
-        {
+    public void onInventoryClick(InventoryClickEvent invEvent) {
+        if (invEvent.getClickedInventory() != null && invEvent.getClickedInventory().getType() == InventoryType.PLAYER) {
             Player player = (Player) invEvent.getWhoClicked();
             ItemStack clickedItem = invEvent.getCurrentItem();
+            ItemStack cursorItem = invEvent.getCursor();
 
-            if (clickedItem != null && (
-                    clickedItem.getType() == Material.LEATHER_HELMET ||
-                    clickedItem.getType() == Material.CHAINMAIL_HELMET ||
-                    clickedItem.getType() == Material.IRON_HELMET ||
-                    clickedItem.getType() == Material.GOLDEN_HELMET ||
-                    clickedItem.getType() == Material.TURTLE_HELMET ||
-                    clickedItem.getType() == Material.DIAMOND_HELMET ||
-                    clickedItem.getType() == Material.NETHERITE_HELMET))
-            {
-                if(hasCustomEnchant(player))
-                {
-                    ItemMeta itemMeta = clickedItem.getItemMeta();
-                    if(itemMeta != null)
-                    {
-                        List<String> lore = new ArrayList<>();
-                        if (itemMeta.hasLore())
-                        {
-                            lore = itemMeta.getLore();
+            // Check if player already has the custom enchantment item
+            if (!hasCustomEnchant(player)) {
+                return; // Exit if player does not have the custom enchantment item
+            }
+
+            // Ensure the cursor item has the custom enchant by checking the display name
+            String enchantTitle = Main.color(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Title"));
+
+            if (cursorItem != null && cursorItem.hasItemMeta()) {
+                ItemMeta cursorMeta = cursorItem.getItemMeta();
+                if (cursorMeta.hasDisplayName() && cursorMeta.getDisplayName().equals(enchantTitle)) {
+                    // Check if the clicked item is a helmet
+                    if (clickedItem != null && (
+                            clickedItem.getType() == Material.LEATHER_HELMET ||
+                                    clickedItem.getType() == Material.CHAINMAIL_HELMET ||
+                                    clickedItem.getType() == Material.IRON_HELMET ||
+                                    clickedItem.getType() == Material.GOLDEN_HELMET ||
+                                    clickedItem.getType() == Material.TURTLE_HELMET ||
+                                    clickedItem.getType() == Material.DIAMOND_HELMET ||
+                                    clickedItem.getType() == Material.NETHERITE_HELMET)) {
+
+                        ItemMeta itemMeta = clickedItem.getItemMeta();
+                        if (itemMeta != null) {
+                            List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+                            lore.add(Main.color(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Lore")));
+                            itemMeta.setLore(lore);
+                            clickedItem.setItemMeta(itemMeta);
+
+                            // Remove the item from the cursor
+                            invEvent.setCursor(new ItemStack(Material.AIR));
+
+                            // Update the inventory to reflect changes
+                            player.updateInventory();
                         }
-
-                        lore.add(Main.color(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Lore")));
-                        itemMeta.setLore(lore);
-                        clickedItem.setItemMeta(itemMeta);
                     }
                 }
             }

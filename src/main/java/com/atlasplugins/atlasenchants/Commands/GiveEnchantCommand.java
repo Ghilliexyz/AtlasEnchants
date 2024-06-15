@@ -107,7 +107,11 @@ public class GiveEnchantCommand implements CommandExecutor {
         ItemStack enchant = new ItemStack(Material.valueOf(main.getConfig().getString("EnchantItems.CustomItem")));
         ItemMeta enchantMeta = enchant.getItemMeta();
 
-        enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title") + " &eLvl: " + enchantmentLevel));
+        enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))
+                    .replace("{lvl}", String.valueOf(enchantmentLevel))
+                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel + " Blocks")))
+                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel + "s"))));
+
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
         List<String> loreList = main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Lore");
