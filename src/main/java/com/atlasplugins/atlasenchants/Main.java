@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants;
 import com.atlasplugins.atlasenchants.Commands.BlackSmithCommands;
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
 import com.atlasplugins.atlasenchants.Commands.ShopCommand;
+import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Fearsight;
 import com.atlasplugins.atlasenchants.GUIs.FearSight.FearsightShop;
 import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
@@ -71,6 +72,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getCommand("blacksmith").setExecutor(new BlackSmithCommands(this));
         this.getCommand("shop").setExecutor(new ShopCommand(this));
         this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
+        this.getCommand("test").setExecutor(new TestCommand(this));
     }
 
     @Override
