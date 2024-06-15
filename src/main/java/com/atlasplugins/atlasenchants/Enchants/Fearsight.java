@@ -1,17 +1,12 @@
 package com.atlasplugins.atlasenchants.Enchants;
 
 import com.atlasplugins.atlasenchants.Main;
-import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -186,7 +181,11 @@ public class Fearsight implements Listener {
     public void PlayerDeathEvent(PlayerDeathEvent e) throws ReflectiveOperationException {
         Player player = e.getEntity();
         for (Entity entity : player.getNearbyEntities(50.0D, 50.0D, 50.0D)) {
-            main.glowingEntities.unsetGlowing(entity, player);
+            try {
+                main.glowingEntities.unsetGlowing(entity, player);
+            } catch (ReflectiveOperationException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -202,6 +201,13 @@ public class Fearsight implements Listener {
     @EventHandler
     public void PlayerLeaveEvent(PlayerQuitEvent e) {
         Player player = e.getPlayer();
+        for (Entity entity : player.getNearbyEntities(50.0D, 50.0D, 50.0D)) {
+            try {
+                main.glowingEntities.unsetGlowing(entity, player);
+            } catch (ReflectiveOperationException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
         if (main.ColorTask.containsKey(player)) {
             Bukkit.getScheduler().cancelTask(((BukkitTask)main.ColorTask.get(player)).getTaskId());
             main.ColorTask.remove(player);

@@ -53,7 +53,6 @@ public final class Main extends JavaPlugin implements Listener {
         glowingEntities = new GlowingEntities(this);
         glowingBlocks = new GlowingBlocks(this);
 
-
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -63,11 +62,8 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
 
         //All Events
-//        this.getServer().getPluginManager().registerEvents((Listener) new BlackSmithGUI(this),this);
         this.getServer().getPluginManager().registerEvents(new BlackSmithCommands(this),this);
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
-
-//        this.getServer().getPluginManager().registerEvents((Listener) new ShopGUI(this),this);
         this.getServer().getPluginManager().registerEvents(new InventoryClick(this),this);
         this.getServer().getPluginManager().registerEvents(new FearsightShop(this),this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
