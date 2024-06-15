@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Fearsight implements Listener {
@@ -73,6 +72,9 @@ public class Fearsight implements Listener {
         Player p = e.getPlayer();
         List<Entity> listE = p.getNearbyEntities(15, 15, 15);
 
+        String hostileMobColor = main.getConfig().getString("Fearsight.Hostile-GLOW-Colour").toUpperCase();
+        String passiveMobColor = main.getConfig().getString("Fearsight.Passive-GLOW-Colour").toUpperCase();
+        String normalMobColor = main.getConfig().getString("Fearsight.Player-Villager").toUpperCase();
 
         for (Entity entity: listE)
         {
@@ -82,7 +84,7 @@ public class Fearsight implements Listener {
                     entity instanceof org.bukkit.entity.Boss)
             {
                     try {
-                        Main.instance.glowingEntities.setGlowing(entity, p, ChatColor.RED);
+                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(hostileMobColor));
                     } catch (ReflectiveOperationException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -93,7 +95,7 @@ public class Fearsight implements Listener {
             {
 
                     try {
-                        Main.instance.glowingEntities.setGlowing(entity, p, ChatColor.GREEN);
+                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(passiveMobColor));
                     } catch (ReflectiveOperationException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -104,17 +106,17 @@ public class Fearsight implements Listener {
                     entity instanceof org.bukkit.entity.IronGolem )
             {
                     try {
-                        Main.instance.glowingEntities.setGlowing(entity, p, ChatColor.WHITE);
+                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(normalMobColor));
                     } catch (ReflectiveOperationException ex) {
                         throw new RuntimeException(ex);
                     }
             }
 
-//            if (p.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + 15))
+//            if (entity.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Fearsight.radius-of-glowing-" + 15))
             if(entity.getLocation().distance(p.getLocation()) >= 15)
             {
                 try {
-                    Main.instance.glowingEntities.unsetGlowing(entity, p);
+                    main.glowingEntities.unsetGlowing(entity, p);
 
                 } catch (ReflectiveOperationException ex) {
                     throw new RuntimeException(ex);

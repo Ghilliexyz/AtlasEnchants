@@ -72,7 +72,7 @@ public class BlackSmithCommands implements CommandExecutor, Listener {
             if (args.length == 3)
                 if (Bukkit.getPlayer(args[1]) != null) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    String typeItem = main.getConfig().getString("Fearsight.customItem");
+                    String typeItem = main.getConfig().getString("EnchantItems.CustomItem");
                     typeItem = typeItem.toUpperCase();
                     if (Material.getMaterial(typeItem) != null) {
                         ItemStack item = new ItemStack(Material.getMaterial(typeItem), Integer.parseInt(args[2]));

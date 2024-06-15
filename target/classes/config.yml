@@ -13,6 +13,10 @@
 #    Plugin Version 1.0
 #
 
+EnchantItems:
+  #Type of Item the Enchant is
+  CustomItem: HEART_OF_THE_SEA
+
 BlackSmith:
   InventoryName: "&9&lBlackSmith!"
 
@@ -79,14 +83,12 @@ Messages:
   not-enought-diamonds: "&cYou don't have enough diamonds to buy this item."
 
 Fearsight:
-  #Type of Item the Enchant is
-  customItem: HEART_OF_THE_SEA
   #Lore for the Enchant
   lore-for-Fearsight: "&7This enchantment gives the ability to see mobs through blocks!"
   #Colour of the Glow per Mob Type
-  Monster-GLOW-Colour: DARK_RED
-  Passive-GLOW-Colour: DARK_GREEN
-  Player-Villager: WHITE
+  Hostile-GLOW-Colour: "RED"
+  Passive-GLOW-Colour: "GREEN"
+  Player-Villager: "WHITE"
   #Radius of how far the glow goes per Tier
   radius-of-glowing-1: 5
   radius-of-glowing-2: 10
