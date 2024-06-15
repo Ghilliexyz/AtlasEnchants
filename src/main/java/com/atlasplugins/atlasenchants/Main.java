@@ -54,12 +54,6 @@ public final class Main extends JavaPlugin implements Listener {
         glowingBlocks = new GlowingBlocks(this);
 
 
-        if (getServer().getPluginManager().getPlugin("ProtocolLib") == null) {
-            getLogger().severe("ProtocolLib is not installed! Disabling plugin.");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
