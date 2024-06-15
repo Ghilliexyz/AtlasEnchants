@@ -36,6 +36,8 @@ public final class Main extends JavaPlugin implements Listener {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
+    public GlowingEntities glowingEntities;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -45,6 +47,8 @@ public final class Main extends JavaPlugin implements Listener {
         if (!file.exists()) {
             saveDefaultConfig();
         }
+
+        glowingEntities = new GlowingEntities(this);
 
         if (getServer().getPluginManager().getPlugin("ProtocolLib") == null) {
             getLogger().severe("ProtocolLib is not installed! Disabling plugin.");
@@ -80,5 +84,6 @@ public final class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        glowingEntities.disable();
     }
 }

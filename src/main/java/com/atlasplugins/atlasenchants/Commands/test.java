@@ -1,22 +1,14 @@
 package com.atlasplugins.atlasenchants.Commands;
 
 import com.atlasplugins.atlasenchants.Main;
-import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import ru.xezard.glow.data.glow.Glow;
 
 public class test implements CommandExecutor, Listener {
 
@@ -34,8 +26,6 @@ public class test implements CommandExecutor, Listener {
 
         Player player = (Player) sender;
 
-        GlowingEntities GlowE = new GlowingEntities(main);
-
         for (Entity entity : player.getNearbyEntities(15,15,15))
         {
             if (entity instanceof Slime)
@@ -43,44 +33,15 @@ public class test implements CommandExecutor, Listener {
                 try {
                     // Debugging information
                     player.sendMessage("Processing entity: " + entity.getName() + " (ID: " + entity.getEntityId() + ")");
-                    System.out.println("Processing entity: " + entity.getName() + " (ID: " + entity.getEntityId() + ")");
 
-                    GlowE.setGlowing(entity, player, ChatColor.RED);
+                    Main.instance.glowingEntities.setGlowing(entity, player, ChatColor.RED);
                     // Ensure entity type is valid for glow effect
                         player.sendMessage("Glow effect applied to entity: " + entity.getName());
                 } catch (Exception e) {
-                    e.printStackTrace();
                     player.sendMessage("Failed to apply glow effect to entity: " + entity.getName());
                 }
             }
         }
-
-//        try {
-//            player.sendMessage("Glow effect created successfully.");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            player.sendMessage("Failed to create glow effect.");
-//            return true;
-//        }
-//
-//        for (Entity entity : player.getNearbyEntities(50,50,50))
-//        {
-//            if (entity instanceof Slime)
-//            {
-//                try {
-//                    // Debugging information
-//                    player.sendMessage("Processing entity: " + entity.getName() + " (ID: " + entity.getEntityId() + ")");
-//                    System.out.println("Processing entity: " + entity.getName() + " (ID: " + entity.getEntityId() + ")");
-//
-//                    // Ensure entity type is valid for glow effect
-//                    GlowE.setGlowing(entity, player, ChatColor.DARK_RED);
-//                        player.sendMessage("Glow effect applied to entity: " + entity.getName());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    player.sendMessage("Failed to apply glow effect to entity: " + entity.getName());
-//                }
-//            }
-//        }
 
         return true; // Command was handled
     }
