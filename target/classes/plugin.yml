@@ -10,3 +10,5 @@ commands:
     description: Opens The Enchant Shop
   giveenchant:
     description: Gives a player any enchantment
+  test:
+    description: Give Items to test

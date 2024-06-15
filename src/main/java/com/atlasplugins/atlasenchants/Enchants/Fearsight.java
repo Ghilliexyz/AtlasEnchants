@@ -1,21 +1,27 @@
 package com.atlasplugins.atlasenchants.Enchants;
 
+import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fearsight implements Listener {
@@ -54,16 +60,58 @@ public class Fearsight implements Listener {
         return 36 - i;
     }
 
-    public boolean hasCustomEnchant(ItemStack helmet) {
-        ItemMeta helmetMeta = helmet.getItemMeta();
-        if (helmetMeta.hasLore()) {
-            for (String lore: helmetMeta.getLore()) {
-                if ((lore.equals(Main.color("&cFearsight I"))) || (lore.equals(Main.color("&cFearsight II"))) || (lore.equals(Main.color("&cFearsight III")))) {
+    public boolean hasCustomEnchant(Player player) {
+        ItemStack enchantItem = new ItemStack(Material.valueOf(main.getConfig().getString("EnchantItems.CustomItem")));
+        ItemMeta enchantMeta = enchantItem.getItemMeta();
+        if(enchantItem != null && enchantMeta.hasLore() && enchantMeta.getLore().contains(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Lore")))
+        {
+            for (ItemStack item : player.getInventory().getContents())
+            {
+                if(item != null && item.isSimilar(enchantItem))
+                {
                     return true;
                 }
             }
         }
+
         return false;
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent invEvent)
+    {
+        if(invEvent.getClickedInventory() != null && invEvent.getClickedInventory().getType() == InventoryType.PLAYER)
+        {
+            Player player = (Player) invEvent.getWhoClicked();
+            ItemStack clickedItem = invEvent.getCurrentItem();
+
+            if (clickedItem != null && (
+                    clickedItem.getType() == Material.LEATHER_HELMET ||
+                    clickedItem.getType() == Material.CHAINMAIL_HELMET ||
+                    clickedItem.getType() == Material.IRON_HELMET ||
+                    clickedItem.getType() == Material.GOLDEN_HELMET ||
+                    clickedItem.getType() == Material.TURTLE_HELMET ||
+                    clickedItem.getType() == Material.DIAMOND_HELMET ||
+                    clickedItem.getType() == Material.NETHERITE_HELMET))
+            {
+                if(hasCustomEnchant(player))
+                {
+                    ItemMeta itemMeta = clickedItem.getItemMeta();
+                    if(itemMeta != null)
+                    {
+                        List<String> lore = new ArrayList<>();
+                        if (itemMeta.hasLore())
+                        {
+                            lore = itemMeta.getLore();
+                        }
+
+                        lore.add(Main.color(main.getConfig().getString("Enchantments.FEARSIGHT.Enchantment-Lore")));
+                        itemMeta.setLore(lore);
+                        clickedItem.setItemMeta(itemMeta);
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -77,7 +125,7 @@ public class Fearsight implements Listener {
         String normalMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase();
 
 
-        if  (!p.getInventory().getHelmet().getItemMeta().getLore().contains("&cFearsight I")) {
+//        if (!p.getInventory().getHelmet().getItemMeta().getLore().contains("&cFearsight I")) {
             for (Entity entity : listE) {
                 if (entity instanceof org.bukkit.entity.Monster ||
                         entity instanceof org.bukkit.entity.Flying ||
@@ -117,7 +165,7 @@ public class Fearsight implements Listener {
                     }
                 }
             }
-        }
+//        }
 
         if (main.hasHelmet.containsKey(p)) {
             if (main.ColorTask.containsKey(p)) {
@@ -186,14 +234,14 @@ public class Fearsight implements Listener {
         }
     }
 
-    @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent e){
-        Player player = e.getPlayer();
-        if (player.getInventory().getHelmet() != null &&
-                isHelmet(player.getInventory().getHelmet().getType()) && hasCustomEnchant(player.getInventory().getHelmet()) &&
-                !main.hasHelmet.containsKey(player))
-            main.hasHelmet.put(player, Boolean.valueOf(true));
-    }
+//    @EventHandler
+//    public void PlayerJoinEvent(PlayerJoinEvent e){
+//        Player player = e.getPlayer();
+//        if (player.getInventory().getHelmet() != null &&
+//                isHelmet(player.getInventory().getHelmet().getType()) && hasCustomEnchant(player.getInventory().getHelmet()) &&
+//                !main.hasHelmet.containsKey(player))
+//            main.hasHelmet.put(player, Boolean.valueOf(true));
+//    }
 
     @EventHandler
     public void PlayerLeaveEvent(PlayerQuitEvent e) {
