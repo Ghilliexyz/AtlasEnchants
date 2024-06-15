@@ -2,6 +2,11 @@ package com.atlasplugins.atlasenchants.Commands;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.type.GlassPane;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,20 +30,28 @@ public class test implements CommandExecutor, Listener {
         }
 
         Player player = (Player) sender;
+        World world = player.getWorld();
+        Material mat = Material.SPAWNER;
 
-        for (Entity entity : player.getNearbyEntities(15,15,15))
+        for (Chunk chunk : world.getLoadedChunks())
         {
-            if (entity instanceof Slime)
-            {
-                try {
-                    // Debugging information
-                    player.sendMessage("Processing entity: " + entity.getName() + " (ID: " + entity.getEntityId() + ")");
-
-                    Main.instance.glowingEntities.setGlowing(entity, player, ChatColor.RED);
-                    // Ensure entity type is valid for glow effect
-                        player.sendMessage("Glow effect applied to entity: " + entity.getName());
-                } catch (Exception e) {
-                    player.sendMessage("Failed to apply glow effect to entity: " + entity.getName());
+            for (int x = 0; x < 16; x++) {
+                for (int y = 0; y < world.getMaxHeight(); y++){
+                    for (int z = 0; z < 16; z++)
+                    {
+                        Block block = chunk.getBlock(x, y, z);
+                        if(block.getType() == mat)
+                        {
+                            try {
+                            // Debugging information
+                                Main.instance.glowingBlocks.setGlowing(block, player, ChatColor.GOLD);
+                            // Ensure entity type is valid for glow effect
+                            player.sendMessage("Glow effect applied to entity: " + block.getType());
+                        } catch (Exception e) {
+                            player.sendMessage("Failed to apply glow effect to entity: " + block.getType());
+                        }
+                        }
+                    }
                 }
             }
         }

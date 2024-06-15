@@ -6,6 +6,7 @@ import com.atlasplugins.atlasenchants.Commands.test;
 import com.atlasplugins.atlasenchants.Enchants.Fearsight;
 import com.atlasplugins.atlasenchants.GUIs.FearSight.FearsightShop;
 import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
+import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,6 +38,7 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public GlowingEntities glowingEntities;
+    public GlowingBlocks glowingBlocks;
 
     @Override
     public void onEnable() {
@@ -49,6 +51,8 @@ public final class Main extends JavaPlugin implements Listener {
         }
 
         glowingEntities = new GlowingEntities(this);
+        glowingBlocks = new GlowingBlocks(this);
+
 
         if (getServer().getPluginManager().getPlugin("ProtocolLib") == null) {
             getLogger().severe("ProtocolLib is not installed! Disabling plugin.");
@@ -85,5 +89,6 @@ public final class Main extends JavaPlugin implements Listener {
     public void onDisable() {
         // Plugin shutdown logic
         glowingEntities.disable();
+        glowingBlocks.disable();
     }
 }

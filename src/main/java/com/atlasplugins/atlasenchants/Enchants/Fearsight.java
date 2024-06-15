@@ -77,6 +77,7 @@ public class Fearsight implements Listener {
         Player p = e.getPlayer();
         List<Entity> listE = p.getNearbyEntities(15, 15, 15);
 
+
         for (Entity entity: listE)
         {
             if (entity instanceof org.bukkit.entity.Monster ||
@@ -84,7 +85,6 @@ public class Fearsight implements Listener {
                     entity instanceof org.bukkit.entity.Slime ||
                     entity instanceof org.bukkit.entity.Boss)
             {
-
                     try {
                         Main.instance.glowingEntities.setGlowing(entity, p, ChatColor.RED);
                     } catch (ReflectiveOperationException ex) {
