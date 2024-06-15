@@ -72,9 +72,9 @@ public class Fearsight implements Listener {
         Player p = e.getPlayer();
         List<Entity> listE = p.getNearbyEntities(15, 15, 15);
 
-        String hostileMobColor = main.getConfig().getString("Fearsight.Hostile-GLOW-Colour").toUpperCase();
-        String passiveMobColor = main.getConfig().getString("Fearsight.Passive-GLOW-Colour").toUpperCase();
-        String normalMobColor = main.getConfig().getString("Fearsight.Player-Villager").toUpperCase();
+        String hostileMobColor = main.getConfig().getString("FEARSIGHT.Hostile-GLOW-Colour").toUpperCase();
+        String passiveMobColor = main.getConfig().getString("FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
+        String normalMobColor = main.getConfig().getString("FEARSIGHT.Player-Villager").toUpperCase();
 
         for (Entity entity: listE)
         {

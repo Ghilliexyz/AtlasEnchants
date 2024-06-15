@@ -8,5 +8,7 @@ commands:
     description: Opens the Blacksmith
   Shop:
     description: Opens The Enchant Shop
+  giveenchant:
+    description: Gives a player any enchantment
   test:
     description: For Testing only

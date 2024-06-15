@@ -82,9 +82,20 @@ Messages:
   no-diamond: "&cYou don't have enough diamonds to upgrade it."
   not-enought-diamonds: "&cYou don't have enough diamonds to buy this item."
 
-Fearsight:
+FEARSIGHT:
+  #Enchant Name
+  Fearsight-Title: "&c&lGODLY &7FearSight"
   #Lore for the Enchant
-  lore-for-Fearsight: "&7This enchantment gives the ability to see mobs through blocks!"
+  Fearsight-Lore:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Enchant Lvl: &c&l{lvl}"
+    - ""
+    - "&c● &7Range: &c&l{range} blocks"
+    - ""
+    - "&c● &7This enchantment allows you to &eSee Entities Through Walls"
+    - ""
+    - "&c&m&l-------------------------------------"
   #Colour of the Glow per Mob Type
   Hostile-GLOW-Colour: "RED"
   Passive-GLOW-Colour: "GREEN"

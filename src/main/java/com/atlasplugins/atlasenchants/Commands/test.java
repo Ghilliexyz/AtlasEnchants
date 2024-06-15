@@ -6,13 +6,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.GlassPane;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.Listener;
 
 public class test implements CommandExecutor, Listener {
@@ -31,7 +28,7 @@ public class test implements CommandExecutor, Listener {
 
         Player player = (Player) sender;
         World world = player.getWorld();
-        Material mat = Material.SPAWNER;
+        Material mat = Material.GRASS_BLOCK;
 
         for (Chunk chunk : world.getLoadedChunks())
         {
