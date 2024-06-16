@@ -111,8 +111,8 @@ public class GiveEnchantCommand implements CommandExecutor {
 
         enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))
                     .replace("{lvl}", String.valueOf(enchantmentLevel))
-                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel + " Blocks")))
-                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel + "s"))));
+                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
+                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel))));
 
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -120,8 +120,8 @@ public class GiveEnchantCommand implements CommandExecutor {
         for (String lore : loreList) {
             enchantmentLore.add(Main.color(lore)
                     .replace("{lvl}", String.valueOf(enchantmentLevel))
-                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel + " Blocks")))
-                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel + "s"))));
+                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
+                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel))));
         }
 
         PersistentDataContainer pdc = enchantMeta.getPersistentDataContainer();

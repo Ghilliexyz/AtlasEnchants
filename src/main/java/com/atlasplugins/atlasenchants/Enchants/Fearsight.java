@@ -1,14 +1,12 @@
 package com.atlasplugins.atlasenchants.Enchants;
 
 import com.atlasplugins.atlasenchants.Main;
+import net.splodgebox.armorequip.events.ArmorEquipEvent;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +17,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Fearsight implements Listener {
@@ -45,6 +42,28 @@ public class Fearsight implements Listener {
         return 36 - i;
     }
 
+
+    public boolean hasHelmet (Player p)
+    {
+        // Get the players inventory
+        ItemStack helmet = p.getInventory().getHelmet();
+
+        List<String> helmetMat = main.getConfig().getStringList("Enchantments.FEARSIGHT.Enchantment-Apply-Item");
+
+        Material newMat = null;
+
+        if(helmet != null)
+        {
+            if(helmetMat.contains(helmet.getType().toString()))
+            {
+                newMat = helmet.getType();
+            }
+        }
+
+        return helmet != null && helmet.getType() == newMat;
+    }
+
+
     @EventHandler
     public void PlayerMoveEvent(PlayerMoveEvent e) {
 
@@ -55,47 +74,57 @@ public class Fearsight implements Listener {
         String passiveMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
         String normalMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase();
 
-//        if (!p.getInventory().getHelmet().getItemMeta().getLore().contains("&cFearsight I")) {
-            for (Entity entity : listE) {
-                if (entity instanceof org.bukkit.entity.Monster ||
-                        entity instanceof org.bukkit.entity.Flying ||
-                        entity instanceof org.bukkit.entity.Slime ||
-                        entity instanceof org.bukkit.entity.Boss) {
-                    try {
-                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(hostileMobColor));
-                    } catch (ReflectiveOperationException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else if (entity instanceof org.bukkit.entity.Animals ||
-                        entity instanceof org.bukkit.entity.Ambient ||
-                        entity instanceof org.bukkit.entity.WaterMob) {
+        if(!hasHelmet(p)){return;}
 
-                    try {
-                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(passiveMobColor));
-                    } catch (ReflectiveOperationException ex) {
-                        throw new RuntimeException(ex);
+        PersistentDataContainer enchantedItemPDC = p.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
+        String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+
+        if(enchantedItemData != null) {
+            String[] enchantParts = enchantedItemData.split(":");
+            String enchantName = enchantParts[0];
+            int enchantLevel = Integer.parseInt(enchantParts[1]);
+
+            if (enchantName.contains("FEARSIGHT"))
+                for (Entity entity : listE) {
+                    if (entity instanceof Monster ||
+                            entity instanceof Flying ||
+                            entity instanceof Slime ||
+                            entity instanceof Boss) {
+                        try {
+                            main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(hostileMobColor));
+                        } catch (ReflectiveOperationException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } else if (entity instanceof Animals ||
+                            entity instanceof Ambient ||
+                            entity instanceof WaterMob) {
+
+                        try {
+                            main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(passiveMobColor));
+                        } catch (ReflectiveOperationException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } else if (entity instanceof Player ||
+                            entity instanceof Villager ||
+                            entity instanceof WanderingTrader ||
+                            entity instanceof IronGolem) {
+                        try {
+                            main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(normalMobColor));
+                        } catch (ReflectiveOperationException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
-                } else if (entity instanceof Player ||
-                        entity instanceof org.bukkit.entity.Villager ||
-                        entity instanceof org.bukkit.entity.WanderingTrader ||
-                        entity instanceof org.bukkit.entity.IronGolem) {
-                    try {
-                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(normalMobColor));
-                    } catch (ReflectiveOperationException ex) {
-                        throw new RuntimeException(ex);
+
+                    if (entity.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + enchantLevel)) {
+                        try {
+                            main.glowingEntities.unsetGlowing(entity, p);
+
+                        } catch (ReflectiveOperationException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
-
-                if (entity.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + 3)) {
-                    try {
-                        main.glowingEntities.unsetGlowing(entity, p);
-
-                    } catch (ReflectiveOperationException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-//        }
+        }
 
         if (main.hasHelmet.containsKey(p)) {
             if (main.ColorTask.containsKey(p)) {

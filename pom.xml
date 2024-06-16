@@ -76,11 +76,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.jeff-media</groupId>
-            <artifactId>armor-equip-event</artifactId>
-            <version>1.0.2</version>
-            <scope>compile</scope>
-        </dependency>
+            <groupId>com.github.Splodgebox</groupId>
+            <artifactId>armorequip</artifactId>
+        <version>1.0.9</version>
+    </dependency>
         <dependency>
             <groupId>io.github.skytasul</groupId>
             <artifactId>glowingentities</artifactId>

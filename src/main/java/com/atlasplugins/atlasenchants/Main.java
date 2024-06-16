@@ -7,7 +7,7 @@ import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Fearsight;
 import com.atlasplugins.atlasenchants.GUIs.FearSight.FearsightShop;
 import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
-import com.atlasplugins.atlasenchants.Listeners.onInventoryClick;
+import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
@@ -73,7 +73,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new BlackSmithCommands(this),this);
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
         this.getServer().getPluginManager().registerEvents(new InventoryClick(this),this);
-        this.getServer().getPluginManager().registerEvents(new onInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new FearsightShop(this),this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         //All Commands

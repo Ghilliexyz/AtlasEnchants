@@ -132,7 +132,7 @@ Enchantments:
       - ""
       - "&c● &7Enchant Lvl: &c&l{lvl}"
       - ""
-      - "&c● &7Time: &c&l{time}"
+      - "&c● &7Time: &c&l{time}s"
       - ""
       - "&c● &7This enchantment allows you to &eBreath Underwater for {time}"
       - ""
