@@ -16,6 +16,8 @@
 EnchantItems:
   #Type of Item the Enchant is
   CustomItem: ENCHANTED_BOOK
+  #The sound that will play when the player applies a new enchant to an item.
+  CustomItemSound: BLOCK_ANVIL_USE
 
 BlackSmith:
   InventoryName: "&9&lBlackSmith!"

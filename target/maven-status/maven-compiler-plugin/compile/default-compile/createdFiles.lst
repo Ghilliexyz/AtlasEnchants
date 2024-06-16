@@ -1,10 +1,4 @@
-com\atlasplugins\atlasenchants\Listeners\InventoryClick.class
 com\atlasplugins\atlasenchants\Commands\TestCommand.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
-com\atlasplugins\atlasenchants\GUIs\ShopGUI.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
-com\atlasplugins\atlasenchants\Enchants\Fearsight$1.class
-com\atlasplugins\atlasenchants\Commands\ShopCommand.class
 com\atlasplugins\atlasenchants\Enchants\Fearsight.class
-com\atlasplugins\atlasenchants\Commands\BlackSmithCommands.class
-com\atlasplugins\atlasenchants\GUIs\FearSight\FearsightShop.class

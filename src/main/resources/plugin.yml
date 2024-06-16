@@ -4,10 +4,6 @@ main: com.atlasplugins.atlasenchants.Main
 api-version: '1.20'
 description: Custom Enchants
 commands:
-  blacksmith:
-    description: Opens the Blacksmith
-  Shop:
-    description: Opens The Enchant Shop
   giveenchant:
     description: Gives a player any enchantment
   test:
