@@ -15,7 +15,7 @@
 
 EnchantItems:
   #Type of Item the Enchant is
-  CustomItem: BOOK
+  CustomItem: ENCHANTED_BOOK
 
 BlackSmith:
   InventoryName: "&9&lBlackSmith!"
@@ -105,6 +105,11 @@ Enchantments:
     Enchantment-Apply-Item:
       - LEATHER_HELMET
       - CHAINMAIL_HELMET
+      - IRON_HELMET
+      - GOLDEN_HELMET
+      - TURTLE_HELMET
+      - DIAMOND_HELMET
+      - NETHERITE_HELMET
     #Colour of the Glow per Mob Type
     Hostile-GLOW-Colour: "RED"
     Passive-GLOW-Colour: "GREEN"
@@ -138,5 +143,10 @@ Enchantments:
     Enchantment-Apply-Item:
       - LEATHER_HELMET
       - CHAINMAIL_HELMET
+      - IRON_HELMET
+      - GOLDEN_HELMET
+      - TURTLE_HELMET
+      - DIAMOND_HELMET
+      - NETHERITE_HELMET
     #Time of how long you can beath underwater per tier (time is in seconds)
     Time-underwater-1: 300
