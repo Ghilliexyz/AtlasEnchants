@@ -7,10 +7,12 @@ import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Fearsight;
 import com.atlasplugins.atlasenchants.GUIs.FearSight.FearsightShop;
 import com.atlasplugins.atlasenchants.Listeners.InventoryClick;
+import com.atlasplugins.atlasenchants.Listeners.onInventoryClick;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -41,6 +43,8 @@ public final class Main extends JavaPlugin implements Listener {
     public GlowingEntities glowingEntities;
     public GlowingBlocks glowingBlocks;
 
+    public static NamespacedKey customEnchantKeys;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -54,6 +58,9 @@ public final class Main extends JavaPlugin implements Listener {
         glowingEntities = new GlowingEntities(this);
         glowingBlocks = new GlowingBlocks(this);
 
+        //Custom Enchant Data
+        customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
+
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -66,6 +73,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new BlackSmithCommands(this),this);
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
         this.getServer().getPluginManager().registerEvents(new InventoryClick(this),this);
+        this.getServer().getPluginManager().registerEvents(new onInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new FearsightShop(this),this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         //All Commands

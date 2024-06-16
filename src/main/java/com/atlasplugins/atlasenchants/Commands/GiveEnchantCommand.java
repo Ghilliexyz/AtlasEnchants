@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +123,9 @@ public class GiveEnchantCommand implements CommandExecutor {
                     .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel + " Blocks")))
                     .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel + "s"))));
         }
+
+        PersistentDataContainer pdc = enchantMeta.getPersistentDataContainer();
+        pdc.set(Main.customEnchantKeys, PersistentDataType.STRING, enchantName + ":" + enchantmentLevel);
 
         enchantMeta.setLore(enchantmentLore);
         enchant.setItemMeta(enchantMeta);

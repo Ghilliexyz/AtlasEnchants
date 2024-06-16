@@ -99,6 +99,12 @@ Enchantments:
       - "&c● &7This enchantment allows you to &eSee Entities Through Walls"
       - ""
       - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&c● &7{enchantmentName} &eLvl: {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - LEATHER_HELMET
+      - CHAINMAIL_HELMET
     #Colour of the Glow per Mob Type
     Hostile-GLOW-Colour: "RED"
     Passive-GLOW-Colour: "GREEN"
@@ -126,5 +132,11 @@ Enchantments:
       - "&c● &7This enchantment allows you to &eBreath Underwater for {time}"
       - ""
       - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&c● &7{enchantmentName} &eLvl: {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - LEATHER_HELMET
+      - CHAINMAIL_HELMET
     #Time of how long you can beath underwater per tier (time is in seconds)
     Time-underwater-1: 300
