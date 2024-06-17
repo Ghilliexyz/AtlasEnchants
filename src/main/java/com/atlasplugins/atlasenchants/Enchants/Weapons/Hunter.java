@@ -1,7 +1,6 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,10 +11,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
-public class Death implements Listener
+public class Hunter implements Listener
 {
     private Main main;
-    public Death (Main main) {
+    public Hunter(Main main) {
         this.main = main;
     }
 
@@ -24,7 +23,7 @@ public class Death implements Listener
         ItemStack sword = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> swordMat = main.getConfig().getStringList("Enchantments.DEATH.Enchantment-Apply-Item");
+        List<String> swordMat = main.getConfig().getStringList("Enchantments.HUNTER.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return sword != null && swordMat.contains(sword.getType().toString());
@@ -33,6 +32,8 @@ public class Death implements Listener
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent e)
     {
+        if(!(e.getDamager() instanceof Player)) {return;}
+
         Player p = (Player) e.getDamager();
 
         // Check if the player has an enchanted sword
@@ -52,14 +53,18 @@ public class Death implements Listener
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                        double damageMultiplier = main.getConfig().getDouble("Enchantments.DEATH.Death-Damage-Amount-" + enchantLevel);
 
-                        if (enchantName.contains("DEATH"))
+                        if (enchantName.contains("HUNTER"))
                         {
                             //PUT ENCHANT LOGIC HERE
-                            if(e.getEntity() instanceof Monster)
+                            if(e.getEntity() instanceof Animals || e.getEntity() instanceof Ambient || e.getEntity() instanceof WaterMob)
                             {
-                                e.setDamage(damageMultiplier);
+                                double damageMultiplier = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
+                                double damageBase = e.getDamage();
+
+                                double applyDamage = damageBase + damageMultiplier;
+
+                                e.setDamage(applyDamage);
                             }
                             //END ENCHANT LOGIC
                         }

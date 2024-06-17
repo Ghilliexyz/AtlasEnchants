@@ -21,19 +21,22 @@ EnchantItems:
 
 Enchantments:
   FEARSIGHT:
-    #Max Level of this enchant (Make sure this lines up with radius-of-glowing-# or it won't work so if you have 3 different level types, then the max level is 3)
+    #Max Level of this enchant
     Enchantment-MaxLvl: 3
     #Enchant Name
-    Enchantment-Title: "&c&lGODLY &7FearSight &e{lvl}"
+    Enchantment-Title: "&c&lGODLY &7FearSight"
     #Lore for the Enchant
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Enchant Lvl: &c&l{lvl}"
+      - "&c● &7Effect: &e&l{range} blocks       &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
-      - "&c● &7Range: &c&l{range} blocks"
+      - "&c● &7Description:"
+      - "  &eAllows the wearer to see Entities through walls."
       - ""
-      - "&c● &7This enchantment allows you to &eSee Entities Through Walls"
+      - "&c● &7Type: &eHelmet Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Helmet to enchant."
       - ""
       - "&c&m&l-----------------------------------------"
     #The lore that will be added to the enchanted Item.
@@ -55,56 +58,61 @@ Enchantments:
     Radius-of-glowing-1: 5
     Radius-of-glowing-2: 10
     Radius-of-glowing-3: 15
-    #Cost per Upgrade
-    Amount-of-diamonds-to-level-2: 10
-    Amount-of-diamonds-to-level-3: 15
-  IRONLUNG:
-    #Max Level of this enchant (Make sure this lines up with radius-of-glowing-# or it won't work so if you have 3 different level types, then the max level is 3)
-    Enchantment-MaxLvl: 1
+  LEECH:
+    #Max Level of this enchant
+    Enchantment-MaxLvl: 3
     #Enchant Name
-    Enchantment-Title: "&5&lEPIC &7Iron Lung &e{lvl}"
+    Enchantment-Title: "&6&lLEGENDARY &7Leech"
     #Lore for the Enchant
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Enchant Lvl: &c&l{lvl}"
+      - "&c● &7Effect: &e&l{percent}% healing       &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
-      - "&c● &7Time: &c&l{time}s"
+      - "&c● &7Description:"
+      - "  &e{percent}% of the damage done to any mob will"
+      - "  &eheal the user's health"
       - ""
-      - "&c● &7This enchantment allows you to &eBreath Underwater for {time}"
+      - "&c● &7Type: &eSword Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
       - ""
       - "&c&m&l-----------------------------------------"
     #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&c● &7{enchantmentName} &eLvl: {lvl}"
+    Enchantment-Apply-Lore: "&6● &7{enchantmentName} &eLvl: {lvl}"
     #The Item that the enchantment can be applied to.
     Enchantment-Apply-Item:
-      - LEATHER_HELMET
-      - CHAINMAIL_HELMET
-      - IRON_HELMET
-      - GOLDEN_HELMET
-      - TURTLE_HELMET
-      - DIAMOND_HELMET
-      - NETHERITE_HELMET
-    #Time of how long you can beath underwater per tier (time is in seconds)
-    Time-underwater-1: 300
-  DEATH:
-      #Max Level of this enchant (Make sure this lines up with radius-of-glowing-# or it won't work so if you have 3 different level types, then the max level is 3)
-      Enchantment-MaxLvl: 2
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+    #The amount of damage the enchant does.
+    Leech-Healing-Amount-Percent-1: 5
+    Leech-Healing-Amount-Percent-2: 15
+    Leech-Healing-Amount-Percent-3: 30
+  HUNTER:
+      #Max Level of this enchant
+      Enchantment-MaxLvl: 3
       #Enchant Name
-      Enchantment-Title: "&c&lGODLY &7Death &e{lvl}"
+      Enchantment-Title: "&b&lRARE &7Hunter"
       #Lore for the Enchant
       Enchantment-Lore:
         - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
         - ""
-        - "&c● &7Enchant Lvl: &c&l{lvl}"
+        - "&c● &7Effect: &e&l{damage} heart(s)      &c● &7Enchant Lvl: &e&l{lvl}"
         - ""
-        - "&c● &7Time: &c&l{damage} damage"
+        - "&c● &7Description:"
+        - "  &eIncrease Base Damage to Passive Creatures."
         - ""
-        - "&c● &7This enchantment allows you to &eInstantly kill any mob"
+        - "&c● &7Type: &eSword & Bow Enchantment"
+        - ""
+        - "&c● &7Usage: &eDrag n' Drop onto Sword/Bow to enchant."
         - ""
         - "&c&m&l-----------------------------------------"
       #The lore that will be added to the enchanted Item.
-      Enchantment-Apply-Lore: "&c● &7{enchantmentName} &eLvl: {lvl}"
+      Enchantment-Apply-Lore: "&b● &7{enchantmentName} &eLvl: {lvl}"
       #The Item that the enchantment can be applied to.
       Enchantment-Apply-Item:
         - WOODEN_SWORD
@@ -113,6 +121,8 @@ Enchantments:
         - GOLDEN_SWORD
         - DIAMOND_SWORD
         - NETHERITE_SWORD
+        - BOW
       #The amount of damage the enchant does.
-      Death-Damage-Amount-1: 500
-      Death-Damage-Amount-2: 1000
+      Hunter-Damage-Amount-1: 1
+      Hunter-Damage-Amount-2: 1.5
+      Hunter-Damage-Amount-3: 2
