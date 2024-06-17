@@ -1,7 +1,11 @@
 package com.atlasplugins.atlasenchants.Commands;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,18 +58,6 @@ public class TestCommand implements CommandExecutor, Listener {
 //                }
 //            }
 //        }
-
-        Player player = (Player) sender;
-
-        ItemStack vetro = new ItemStack(Material.IRON_HELMET);
-        ItemMeta vetroMeta = vetro.getItemMeta();
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add(Main.color("&cFearsight I"));
-        vetroMeta.setLore(lore);
-        vetro.setItemMeta(vetroMeta);
-
-        PlayerInventory inv = player.getInventory();
-        inv.addItem(new ItemStack[] { vetro });
 
         return false;
     }

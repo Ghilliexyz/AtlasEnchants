@@ -108,6 +108,7 @@ Enchantments:
       #The Item that the enchantment can be applied to.
       Enchantment-Apply-Item:
         - WOODEN_SWORD
+        - STONE_SWORD
         - IRON_SWORD
         - GOLDEN_SWORD
         - DIAMOND_SWORD
