@@ -2,7 +2,6 @@ package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,13 +9,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class Leech implements Listener
+public class Propel implements Listener
 {
+
     private Main main;
-    public Leech (Main main) {
+    public Propel (Main main) {
         this.main = main;
     }
 
@@ -26,7 +27,7 @@ public class Leech implements Listener
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.LEECH.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getConfig().getStringList("Enchantments.PROPEL.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -57,25 +58,22 @@ public class Leech implements Listener
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                        if (enchantName.contains("LEECH")) {
-                            //PUT ENCHANT LOGIC HERE
+                        if (enchantName.contains("PROPEL")) {
+                            // PUT ENCHANT LOGIC HERE
                             if (e.getEntity() instanceof LivingEntity) {
-                                double healingPercent = main.getConfig().getDouble("Enchantments.LEECH.Leech-Healing-Amount-Percent-" + enchantLevel);
+                                // Get the block height from the configuration
+                                int blockHeight = main.getConfig().getInt("Enchantments.PROPEL.Propel-Height-Amount-" + enchantLevel);
 
-                                double playerCurrentHealth = p.getHealth();
-                                double damageDealt = e.getDamage();
+                                // Get the entity to launch
+                                LivingEntity entityToLaunch = (LivingEntity) e.getEntity();
 
-                                double healingPlayerAmount = (healingPercent / 100 * damageDealt);
-
-                                double healing = playerCurrentHealth + healingPlayerAmount;
-
-                                double clampedHealth = Math.min(healing, p.getMaxHealth());
-
-                                p.setHealth(clampedHealth);
+                                // Add a small vertical offset to the entity's position to ensure it gets launched
+                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0, blockHeight, 0));
                             }
                             //END ENCHANT LOGIC
                         }
-                    }else {
+                    }else
+                    {
                         // Handle unexpected format
                         System.out.println("Unexpected enchantment format: " + enchantment);
                     }

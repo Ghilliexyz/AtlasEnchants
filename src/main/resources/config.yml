@@ -88,10 +88,44 @@ Enchantments:
       - GOLDEN_SWORD
       - DIAMOND_SWORD
       - NETHERITE_SWORD
-    #The amount of damage the enchant does.
+    #The amount of healing the enchant does.
     Leech-Healing-Amount-Percent-1: 5
     Leech-Healing-Amount-Percent-2: 15
     Leech-Healing-Amount-Percent-3: 30
+  RUSH:
+    #Max Level of this enchant
+    Enchantment-MaxLvl: 1
+    #Enchant Name
+    Enchantment-Title: "&d&lEPIC &7Rush"
+    #Lore for the Enchant
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&l{speedLvl}x Speed       &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eYou will gain a burst of speed of Level: {speedLvl} for {speedTimer}s"
+      - "  &ewhen you are hit by a Monster, Boss or Player."
+      - ""
+      - "&c● &7Type: &eLeggings Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Leggings to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&d● &7{enchantmentName} &eLvl: {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - LEATHER_LEGGINGS
+      - CHAINMAIL_LEGGINGS
+      - IRON_LEGGINGS
+      - GOLDEN_LEGGINGS
+      - DIAMOND_LEGGINGS
+      - NETHERITE_LEGGINGS
+    #The amount of Speed the enchant gives.
+    Rush-Speed-Amount-1: 1
+    #The amount of time the Speed effect will last. (Timer is in seconds 5 = 5 seconds)
+    Rush-Speed-Timer-1: 5
   HUNTER:
       #Max Level of this enchant
       Enchantment-MaxLvl: 3
@@ -126,3 +160,35 @@ Enchantments:
       Hunter-Damage-Amount-1: 1
       Hunter-Damage-Amount-2: 1.5
       Hunter-Damage-Amount-3: 2
+  PROPEL:
+    #Max Level of this enchant
+    Enchantment-MaxLvl: 2
+    #Enchant Name
+    Enchantment-Title: "&b&lRARE &7Propel"
+    #Lore for the Enchant
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&l{block} block(s)      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eLaunch a hit entity up {block} blocks into the sky."
+      - ""
+      - "&c● &7Type: &eSword Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&b● &7{enchantmentName} &eLvl: {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+    #The amount of blocks the entity gets launched.
+    Propel-Height-Amount-1: 3
+    Propel-Height-Amount-2: 5

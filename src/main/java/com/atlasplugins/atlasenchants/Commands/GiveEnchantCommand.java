@@ -114,6 +114,9 @@ public class GiveEnchantCommand implements CommandExecutor {
                     .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                     .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                     .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
+                    .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
+                    .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
+                    .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
 
@@ -125,6 +128,9 @@ public class GiveEnchantCommand implements CommandExecutor {
                     .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                     .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                     .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
+                    .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
+                    .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
+                    .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

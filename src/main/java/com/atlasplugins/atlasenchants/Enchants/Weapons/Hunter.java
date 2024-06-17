@@ -18,26 +18,28 @@ public class Hunter implements Listener
         this.main = main;
     }
 
-    public boolean hasWeapon (Player p) {
+    public boolean hasWeapon (Player p)
+    {
         // Get the player's sword item
-        ItemStack sword = p.getInventory().getItemInMainHand();
+        ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> swordMat = main.getConfig().getStringList("Enchantments.HUNTER.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getConfig().getStringList("Enchantments.PROPEL.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
-        return sword != null && swordMat.contains(sword.getType().toString());
+        return weapon != null && weaponMat.contains(weapon.getType().toString());
     }
 
     @EventHandler
-    public void onPlayerAttack(EntityDamageByEntityEvent e)
-    {
-        if(!(e.getDamager() instanceof Player)) {return;}
+    public void onPlayerAttack(EntityDamageByEntityEvent e) {
+        if (!(e.getDamager() instanceof Player)) {
+            return;
+        }
 
         Player p = (Player) e.getDamager();
 
         // Check if the player has an enchanted sword
-        if(hasWeapon(p)) {
+        if (hasWeapon(p)) {
             PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
@@ -54,11 +56,9 @@ public class Hunter implements Listener
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
 
-                        if (enchantName.contains("HUNTER"))
-                        {
+                        if (enchantName.contains("HUNTER")) {
                             //PUT ENCHANT LOGIC HERE
-                            if(e.getEntity() instanceof Animals || e.getEntity() instanceof Ambient || e.getEntity() instanceof WaterMob)
-                            {
+                            if (e.getEntity() instanceof Animals || e.getEntity() instanceof Ambient || e.getEntity() instanceof WaterMob) {
                                 double damageMultiplier = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
                                 double damageBase = e.getDamage();
 
@@ -78,5 +78,4 @@ public class Hunter implements Listener
             }
         }
     }
-
 }

@@ -3,8 +3,10 @@ package com.atlasplugins.atlasenchants;
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
+import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Hunter;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Leech;
+import com.atlasplugins.atlasenchants.Enchants.Weapons.Propel;
 import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
@@ -57,6 +59,8 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
         this.getServer().getPluginManager().registerEvents(new Leech(this), this);
         this.getServer().getPluginManager().registerEvents(new Hunter(this), this);
+        this.getServer().getPluginManager().registerEvents(new Rush(this), this);
+        this.getServer().getPluginManager().registerEvents(new Propel(this), this);
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);

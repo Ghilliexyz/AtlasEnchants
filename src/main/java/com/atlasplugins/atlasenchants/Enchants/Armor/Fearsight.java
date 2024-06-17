@@ -14,7 +14,8 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
-public class Fearsight implements Listener {
+public class Fearsight implements Listener
+{
 
     private Main main;
     public Fearsight (Main main) {
@@ -23,15 +24,15 @@ public class Fearsight implements Listener {
 
     private List<Entity> ListEntity;
 
-    public boolean hasHelmet (Player p) {
+    public boolean hasArmor (Player p) {
         // Get the player's helmet item
-        ItemStack helmet = p.getInventory().getHelmet();
+        ItemStack armor = p.getInventory().getHelmet();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> helmetMat = main.getConfig().getStringList("Enchantments.FEARSIGHT.Enchantment-Apply-Item");
+        List<String> armorMat = main.getConfig().getStringList("Enchantments.FEARSIGHT.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable helmet
-        return helmet != null && helmetMat.contains(helmet.getType().toString());
+        return armor != null && armorMat.contains(armor.getType().toString());
     }
 
     @EventHandler
@@ -39,7 +40,7 @@ public class Fearsight implements Listener {
         Player p = e.getPlayer();
 
         // Check if the player has an enchanted helmet
-        if(hasHelmet(p)) {
+        if(hasArmor(p)) {
             PersistentDataContainer enchantedItemPDC = p.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
@@ -63,7 +64,9 @@ public class Fearsight implements Listener {
                         String passiveMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
                         String normalMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase();
 
-                        if (enchantName.contains("FEARSIGHT")) {
+                        if (enchantName.contains("FEARSIGHT"))
+                        {
+                            //PUT ENCHANT LOGIC HERE
                             for (Entity entity : ListEntity) {
                                 try {
                                     if (entity instanceof Monster || entity instanceof Flying || entity instanceof Slime || entity instanceof Boss) {
@@ -82,6 +85,7 @@ public class Fearsight implements Listener {
                                     throw new RuntimeException(ex);
                                 }
                             }
+                            //END ENCHANT LOGIC
                         }
                     } else {
                         // Handle unexpected format
