@@ -19,71 +19,6 @@ EnchantItems:
   #The sound that will play when the player applies a new enchant to an item.
   CustomItemSound: BLOCK_ANVIL_USE
 
-BlackSmith:
-  InventoryName: "&9&lBlackSmith!"
-
-Shop:
-  InventoryName: "&9&lShop!"
-  FillerName: "&c&lT&6&lE&e&lS&2&lT &b&lD&9&lI&5&lE&f&l!!!"
-  FillerLore:
-    - "&c&lL&6&lO&e&lR&2&lE &b&lD&9&lI&5&lE&f&l!!!"
-  GodlyEnchantsList:
-    GodlyEnchantsName: "&c&lGodly Enchants!"
-    FearSightName: "&c&lFearSight Enchantment"
-    FearSightLore:
-      - "&eThis &cGODLY Enchantment &eGives the ability to see mobs through blocks!"
-      - "&c&lFearSight &ealso has 3 Different levels granting different effects."
-      - "&edependent on how high of a level the enchantment may be."
-      - ""
-      - "&c&l◆ &9Tier I &7| &95 Block Distance &7| &ePrice &9&l21 &eDiamonds"
-      - "&c&l◆ &9Tier II &7| &910 Block Distance &7| &ePrice &9&l32 &eDiamonds"
-      - "&c&l◆ &9Tier III &7| &915 Block Distance &7| &ePrice &9&l64 &eDiamonds"
-  FearSightShop:
-    FearSightShopName: "&c&lFearSight Shop!"
-    FearSight1: "&c&lFearSight I"
-    FearSight1Lore:
-      - "&eThis enchantment gives the ability to see mobs through &c5 &eblocks!"
-      - ""
-      - "&c&lBUY NOW!"
-      - "&921 Diamonds!"
-      - ""
-      - "&c&lHow To Apply"
-      - "&7Drag and drop this Enchant onto a &eHelmet!"
-      - ""
-      - "&4&lWARNING NO REFUND"
-    FearSight2: "&c&lFearSight II"
-    FearSight2Lore:
-      - "&eThis enchantment gives the ability to see mobs through &c10 &eblocks!"
-      - ""
-      - "&c&lBUY NOW!"
-      - "&932 Diamonds!"
-      - ""
-      - "&c&lHow To Apply"
-      - "&7Drag and drop this Enchant onto a &eHelmet!"
-      - ""
-      - "&4&lWARNING NO REFUND"
-    FearSight3: "&c&lFearSight III"
-    FearSight3Lore:
-      - "&eThis enchantment gives the ability to see mobs through &c15 &eblocks!"
-      - ""
-      - "&c&lBUY NOW!"
-      - "&964 Diamonds!"
-      - ""
-      - "&c&lHow To Apply"
-      - "&7Drag and drop this Enchant onto a &eHelmet!"
-      - ""
-      - "&4&lWARNING NO REFUND"
-
-Messages:
-  tag-prefix: "&6&lAtlasEnchants"
-  inventory-full: "&cYour Inventory is full so cant open blacksmith"
-  max-enchant-message: "&cYou already reached the max level of the enchant"
-  enchant-error-message: "&cYou can't use more than one enchant item."
-  inventory-full-message-onopen: "&cYour inventory is full or you haven't 2 free slots."
-  inventory-full-message-onclose: "&cYour inventory is full. Your items are on the ground!"
-  no-diamond: "&cYou don't have enough diamonds to upgrade it."
-  not-enought-diamonds: "&cYou don't have enough diamonds to buy this item."
-
 Enchantments:
   FEARSIGHT:
     #Max Level of this enchant (Make sure this lines up with radius-of-glowing-# or it won't work so if you have 3 different level types, then the max level is 3)
@@ -152,3 +87,32 @@ Enchantments:
       - NETHERITE_HELMET
     #Time of how long you can beath underwater per tier (time is in seconds)
     Time-underwater-1: 300
+  DEATH:
+      #Max Level of this enchant (Make sure this lines up with radius-of-glowing-# or it won't work so if you have 3 different level types, then the max level is 3)
+      Enchantment-MaxLvl: 2
+      #Enchant Name
+      Enchantment-Title: "&c&lGODLY &7Death &e{lvl}"
+      #Lore for the Enchant
+      Enchantment-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7Enchant Lvl: &c&l{lvl}"
+        - ""
+        - "&c● &7Time: &c&l{damage} damage"
+        - ""
+        - "&c● &7This enchantment allows you to &eInstantly kill any mob"
+        - ""
+        - "&c&m&l-----------------------------------------"
+      #The lore that will be added to the enchanted Item.
+      Enchantment-Apply-Lore: "&c● &7{enchantmentName} &eLvl: {lvl}"
+      #The Item that the enchantment can be applied to.
+      Enchantment-Apply-Item:
+        - WOODEN_SWORD
+        - STONE_SWORD
+        - IRON_SWORD
+        - GOLDEN_SWORD
+        - DIAMOND_SWORD
+        - NETHERITE_SWORD
+      #The amount of damage the enchant does.
+      Death-Damage-Amount-1: 500
+      Death-Damage-Amount-2: 1000

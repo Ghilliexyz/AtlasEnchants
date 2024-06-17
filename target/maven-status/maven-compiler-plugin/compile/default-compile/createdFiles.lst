@@ -1,4 +1,5 @@
 com\atlasplugins\atlasenchants\Commands\TestCommand.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
+com\atlasplugins\atlasenchants\Enchants\Weapons\Death.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
-com\atlasplugins\atlasenchants\Enchants\Fearsight.class
+com\atlasplugins\atlasenchants\Enchants\Armor\Fearsight.class

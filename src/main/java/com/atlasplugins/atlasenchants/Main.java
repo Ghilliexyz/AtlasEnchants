@@ -2,7 +2,8 @@ package com.atlasplugins.atlasenchants;
 
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
-import com.atlasplugins.atlasenchants.Enchants.Fearsight;
+import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
+import com.atlasplugins.atlasenchants.Enchants.Weapons.Death;
 import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
@@ -51,8 +52,10 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &aEnabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
 
-        //All Events
+        //All Enchants
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
+        this.getServer().getPluginManager().registerEvents(new Death(this), this);
+        //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         //All Commands
