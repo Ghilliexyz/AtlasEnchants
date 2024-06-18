@@ -5,6 +5,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -24,7 +25,7 @@ public class Hunter implements Listener
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.PROPEL.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getConfig().getStringList("Enchantments.HUNTER.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -58,14 +59,9 @@ public class Hunter implements Listener
 
                         if (enchantName.contains("HUNTER")) {
                             //PUT ENCHANT LOGIC HERE
-                            if (e.getEntity() instanceof Animals || e.getEntity() instanceof Ambient || e.getEntity() instanceof WaterMob) {
-                                double damageMultiplier = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
-                                double damageBase = e.getDamage();
+                            LivingEntity entity = (LivingEntity) e.getEntity();
 
-                                double applyDamage = damageBase + damageMultiplier;
-
-                                e.setDamage(applyDamage);
-                            }
+                            ApplyDamage(entity, enchantLevel, p);
                             //END ENCHANT LOGIC
                         }
                     } else {
@@ -76,6 +72,60 @@ public class Hunter implements Listener
             } else {
                 System.out.println("No enchantments found on the item.");
             }
+        }
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent e) {
+        if (!(e.getEntity().getShooter() instanceof Player)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity().getShooter();
+
+        if (hasWeapon(p)) {
+            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+
+            // Ensure the enchantment data is not null or empty
+            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
+                String[] enchantments = enchantedItemData.split(",");
+
+                for (String enchantment : enchantments) {
+                    String[] enchantParts = enchantment.split(":");
+
+                    // Ensure the format is correct
+                    if (enchantParts.length == 2) {
+                        String enchantName = enchantParts[0];
+                        int enchantLevel = Integer.parseInt(enchantParts[1]);
+
+                        if (enchantName.contains("HUNTER")) {
+                            //PUT ENCHANT LOGIC HERE
+                            LivingEntity hitEntity = (LivingEntity) e.getHitEntity();
+
+                            ApplyDamage(hitEntity, enchantLevel, p);
+                            //END ENCHANT LOGIC
+                        }
+                    } else {
+                        // Handle unexpected format
+                        System.out.println("Unexpected enchantment format: " + enchantment);
+                    }
+                }
+            } else {
+                System.out.println("No enchantments found on the item.");
+            }
+        }
+    }
+
+    private void ApplyDamage(LivingEntity entity, int enchantLevel, Player player)
+    {
+        if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
+            double extraDamage = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
+
+            entity.damage(extraDamage);
+
+            player.sendMessage(Main.color("&aEntity: &7" + entity));
+            player.sendMessage(Main.color("&cExtra Damage: &7" + extraDamage));
         }
     }
 }

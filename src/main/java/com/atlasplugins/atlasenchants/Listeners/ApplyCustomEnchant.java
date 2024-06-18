@@ -149,7 +149,11 @@ public class ApplyCustomEnchant implements Listener {
                                 // Cancel the event to prevent default behavior
                                 invEvent.setCancelled(true);
 
-                                System.out.println("Enchantment applied successfully.");
+                                player.sendMessage(Main.color("&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"));
+                                player.sendMessage(Main.color(""));
+                                player.sendMessage(Main.color("&c● &7You &a&lSuccessfully &7Applied: &e" + enchantName + " &7lvl: &e" + enchantLevel));
+                                player.sendMessage(Main.color(""));
+                                player.sendMessage(Main.color("&c&m&l-----------------------------------------"));
                             } else {
                                 System.out.println("Item type does not match the applicable items for this enchantment.");
                             }
@@ -164,7 +168,7 @@ public class ApplyCustomEnchant implements Listener {
 
     private String formatEnchantName(String enchantName) {
         // Replace periods with spaces
-        String formattedName = enchantName.replace('.', ' ');
+        String formattedName = enchantName.replace('-', ' ');
 
         // Split the name into words
         String[] words = formattedName.split(" ");

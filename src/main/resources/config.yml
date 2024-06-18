@@ -194,7 +194,7 @@ Enchantments:
     #The amount of blocks the entity gets launched.
     Propel-Height-Amount-1: 3
     Propel-Height-Amount-2: 5
-  FREEZING.SHOT:
+  FREEZING-SHOT:
     #Max Level of this enchant
     Enchantment-MaxLvl: 3
     #Enchant Name
@@ -217,6 +217,7 @@ Enchantments:
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
     Enchantment-Apply-Item:
+      - WOODEN_SWORD
       - BOW
       - CROSSBOW
     #The amount of time the Freeze effect will last. (Timer is in seconds 5 = 5 seconds)
