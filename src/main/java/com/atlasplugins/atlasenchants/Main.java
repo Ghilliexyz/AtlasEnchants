@@ -4,6 +4,7 @@ import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
+import com.atlasplugins.atlasenchants.Enchants.Weapons.FreezingShot;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Hunter;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Leech;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Propel;
@@ -61,11 +62,13 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Hunter(this), this);
         this.getServer().getPluginManager().registerEvents(new Rush(this), this);
         this.getServer().getPluginManager().registerEvents(new Propel(this), this);
+        this.getServer().getPluginManager().registerEvents(new FreezingShot(this), this);
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         //All Commands
         this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
+        this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
     }
 

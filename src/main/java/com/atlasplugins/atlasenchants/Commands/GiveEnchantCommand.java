@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,9 +14,11 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class GiveEnchantCommand implements CommandExecutor {
+public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
 
     private Main main;
 
@@ -50,6 +53,7 @@ public class GiveEnchantCommand implements CommandExecutor {
             sender.sendMessage(Main.color("&c● &7Player Not Found"));
             sender.sendMessage(Main.color(""));
             sender.sendMessage(Main.color("&c&m&l-----------------------------------------"));
+
             return true;
         }
 
@@ -110,15 +114,15 @@ public class GiveEnchantCommand implements CommandExecutor {
         ItemMeta enchantMeta = enchant.getItemMeta();
 
         enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))
-                    .replace("{lvl}", String.valueOf(enchantmentLevel))
-                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
-                    .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
-                    .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
-                    .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
-                    .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
-                    .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
-                    .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
-
+                .replace("{lvl}", String.valueOf(enchantmentLevel))
+                .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
+                .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
+                .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
+                .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
+                .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
+                .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
+                .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
+                .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
         List<String> loreList = main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Lore");
@@ -131,6 +135,7 @@ public class GiveEnchantCommand implements CommandExecutor {
                     .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
                     .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
                     .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
+                    .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 
@@ -145,5 +150,30 @@ public class GiveEnchantCommand implements CommandExecutor {
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 2) { // Tab completing the second argument (enchant name)
+            String input = args[1].toUpperCase(); // Current input typed by the player
+            List<String> enchantments = main.getConfig().getConfigurationSection("Enchantments").getKeys(false).stream()
+                    .map(String::toUpperCase)
+                    .filter(name -> name.toUpperCase().contains(input))
+                    .collect(Collectors.toList());
+            return enchantments.isEmpty() ? null : enchantments;
+        } else if (args.length == 3) { // Tab completing the third argument (level)
+            String enchantName = args[1].toUpperCase();
+            if (main.getConfig().contains("Enchantments." + enchantName)) {
+                int maxLevel = main.getConfig().getInt("Enchantments." + enchantName + ".Enchantment-MaxLvl");
+                List<String> levels = new ArrayList<>();
+                for (int i = 1; i <= maxLevel; i++) {
+                    levels.add(String.valueOf(i));
+                }
+                return levels;
+            }
+        } else if (args.length == 4) { // Tab completing the fourth argument (amount)
+            return Collections.singletonList("[1-64]");
+        }
+        return null; // Return null if no tab completions are found
     }
 }

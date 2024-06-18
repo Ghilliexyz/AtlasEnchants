@@ -1,5 +1,6 @@
 com\atlasplugins\atlasenchants\Enchants\Weapons\Propel.class
 com\atlasplugins\atlasenchants\Commands\TestCommand.class
+com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Rush.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class

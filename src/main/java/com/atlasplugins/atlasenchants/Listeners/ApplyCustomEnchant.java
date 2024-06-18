@@ -23,6 +23,15 @@ public class ApplyCustomEnchant implements Listener {
         this.main = main;
     }
 
+    private String ConvertToRomanNumeral(int number) {
+        if (number < 1 || number > 10) {
+            System.out.println("Invalid enchantment level: " + number);
+            return null;
+        }
+        String[] numerals = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+        return numerals[number - 1];
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent invEvent) {
         // Check if the clicked inventory is not null and if it's the player's inventory
@@ -63,6 +72,8 @@ public class ApplyCustomEnchant implements Listener {
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
+                        player.sendMessage(Main.color("&a1: " + enchantName + "&c" + enchantLevel));
+
                         boolean shouldApplyEnchantment = true;
                         // Get the lore of the clicked item, or create a new list if none exists
                         List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
@@ -80,13 +91,17 @@ public class ApplyCustomEnchant implements Listener {
                                 String existingEnchantName = existingEnchantParts[0];
                                 int existingEnchantLevel = Integer.parseInt(existingEnchantParts[1]);
 
+                                player.sendMessage(Main.color("&a2: " + existingEnchantName + "&c" + existingEnchantLevel));
+                                player.sendMessage(Main.color("&a2: " + enchantName + "&c" + enchantLevel));
+
                                 // If the enchantment already exists and is of equal or higher level, do not apply the new one
                                 if (existingEnchantName.equals(enchantName)) {
                                     if (existingEnchantLevel >= enchantLevel) {
                                         shouldApplyEnchantment = false;
                                     } else {
                                         // Remove the old enchantment from the lore
-                                        lore.removeIf(line -> line.contains(existingEnchantName));
+                                        String fakeExistingEnchantName = formatEnchantName(existingEnchantName);
+                                        lore.removeIf(line -> line.contains(fakeExistingEnchantName));
                                     }
                                 } else {
                                     newEnchantments.add(existingEnchant);
@@ -106,10 +121,15 @@ public class ApplyCustomEnchant implements Listener {
                             // Check if clickedItem type is in the list of applicable items
                             Material clickedItemType = clickedItem.getType();
                             if (applicableItems.contains(clickedItemType.toString())) {
+                                // Format the enchant name
+                                String formattedEnchantName = formatEnchantName(enchantName);
+                                String fakeEnchantLvl = ConvertToRomanNumeral(enchantLevel);
                                 // Create the enchantment lore text
                                 String enchantLore = Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore")
-                                        .replace("{enchantmentName}", enchantName)
-                                        .replace("{lvl}", String.valueOf(enchantLevel)));
+                                        .replace("{enchantmentName}", formattedEnchantName)
+                                        .replace("{lvl}", fakeEnchantLvl));
+
+                                player.sendMessage(Main.color("&a3: " + enchantName + "&c" + enchantLevel));
                                 // Add the enchantment lore to the item's lore
                                 lore.add(enchantLore);
                                 itemMeta.setLore(lore);
@@ -141,4 +161,26 @@ public class ApplyCustomEnchant implements Listener {
             }
         }
     }
+
+    private String formatEnchantName(String enchantName) {
+        // Replace periods with spaces
+        String formattedName = enchantName.replace('.', ' ');
+
+        // Split the name into words
+        String[] words = formattedName.split(" ");
+
+        // Capitalize the first letter of each word
+        StringBuilder result = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                result.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase())
+                        .append(" ");
+            }
+        }
+
+        // Remove trailing space and return the formatted name
+        return result.toString().trim();
+    }
+
 }
