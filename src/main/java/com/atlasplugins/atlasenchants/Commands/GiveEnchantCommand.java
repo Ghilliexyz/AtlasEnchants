@@ -110,7 +110,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        ItemStack enchant = new ItemStack(Material.valueOf(main.getConfig().getString("EnchantItems.CustomItem")));
+        ItemStack enchant = new ItemStack(Material.valueOf(main.getConfig().getString("EnchantItems.EnchantItem")));
         ItemMeta enchantMeta = enchant.getItemMeta();
 
         enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))

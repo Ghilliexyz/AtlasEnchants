@@ -17,9 +17,28 @@
 
 EnchantItems:
   #Type of Item the Enchant is
-  CustomItem: ENCHANTED_BOOK
+  EnchantItem: ENCHANTED_BOOK
   #The sound that will play when the player applies a new enchant to an item.
-  CustomItemSound: BLOCK_ANVIL_USE
+  #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft
+  EnchantItemApplySound:
+    #If True the applied enchant sound will play
+    EnchantItemApply-Sound-Toggle: true
+    #The sound that plays when applying a custom enchant
+    EnchantItemApply-Sound: ENTITY_IRON_GOLEM_REPAIR
+    #The volume the sound that plays at when applying a custom enchant
+    EnchantItemApply-Volume: 1
+    #The pitch the sound that plays at when applying a custom enchant
+    EnchantItemApply-Pitch: 0.1
+  EnchantItemMessages:
+    #If True the success message will be sent into the chat
+    EnchantItem-Success-Message-Toggle: true
+    #The message that will be sent when applying a custom enchant to an item
+    EnchantItem-Success-Message:
+      -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Applied: &e{enchantName} &7lvl: &e{enchantLevel}"
+      -  ""
+      -  "&c&m&l-----------------------------------------"
 
 Enchantments:
   FEARSIGHT:

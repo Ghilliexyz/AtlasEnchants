@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants.Listeners;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,10 +48,10 @@ public class ApplyCustomEnchant implements Listener {
             if (clickedItem == null || cursorItem == null) return;
 
             // Get the custom item material type from the config
-            Material customItem = Material.valueOf(main.getConfig().getString("EnchantItems.CustomItem"));
+            Material enchantItem = Material.valueOf(main.getConfig().getString("EnchantItems.EnchantItem"));
 
             // If the item on the cursor is not the custom item, return
-            if (cursorItem.getType() != customItem) return;
+            if (cursorItem.getType() != enchantItem) return;
 
             // Check if the cursor item has metadata
             if (cursorItem.hasItemMeta()) {
@@ -72,8 +73,6 @@ public class ApplyCustomEnchant implements Listener {
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                        player.sendMessage(Main.color("&a1: " + enchantName + "&c" + enchantLevel));
-
                         boolean shouldApplyEnchantment = true;
                         // Get the lore of the clicked item, or create a new list if none exists
                         List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
@@ -90,9 +89,6 @@ public class ApplyCustomEnchant implements Listener {
                                 if (existingEnchantParts.length < 2) continue; // Ensure correct format
                                 String existingEnchantName = existingEnchantParts[0];
                                 int existingEnchantLevel = Integer.parseInt(existingEnchantParts[1]);
-
-                                player.sendMessage(Main.color("&a2: " + existingEnchantName + "&c" + existingEnchantLevel));
-                                player.sendMessage(Main.color("&a2: " + enchantName + "&c" + enchantLevel));
 
                                 // If the enchantment already exists and is of equal or higher level, do not apply the new one
                                 if (existingEnchantName.equals(enchantName)) {
@@ -128,8 +124,6 @@ public class ApplyCustomEnchant implements Listener {
                                 String enchantLore = Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore")
                                         .replace("{enchantmentName}", formattedEnchantName)
                                         .replace("{lvl}", fakeEnchantLvl));
-
-                                player.sendMessage(Main.color("&a3: " + enchantName + "&c" + enchantLevel));
                                 // Add the enchantment lore to the item's lore
                                 lore.add(enchantLore);
                                 itemMeta.setLore(lore);
@@ -137,8 +131,20 @@ public class ApplyCustomEnchant implements Listener {
                                 // Set the updated item meta to the clicked item
                                 clickedItem.setItemMeta(itemMeta);
 
-                                // Play sound for when player applies new enchant.
-                                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f ,1f);
+                                // Get apply sound via config.
+                                Sound applySound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemApplySound.EnchantItemApply-Sound"));
+                                float applyVolume = main.getConfig().getInt("EnchantItems.EnchantItemApplySound.EnchantItemApply-Volume");
+                                float applyPitch = main.getConfig().getInt("EnchantItems.EnchantItemApplySound.EnchantItemApply-Pitch");
+
+                                // Get the bool to check if the user wants to play the successful enchant sound
+                                boolean playSound = main.getConfig().getBoolean("EnchantItems.EnchantItemApplySound.EnchantItemApply-Sound-Toggle");
+
+                                // check if the user wants to plau the success sound
+                                if (playSound)
+                                {
+                                    // Play sound for when player applies new enchant.
+                                    player.playSound(player.getLocation(), applySound, applyVolume, applyPitch);
+                                }
 
                                 // Remove the item from the cursor
                                 invEvent.setCursor(new ItemStack(Material.AIR));
@@ -149,11 +155,22 @@ public class ApplyCustomEnchant implements Listener {
                                 // Cancel the event to prevent default behavior
                                 invEvent.setCancelled(true);
 
-                                player.sendMessage(Main.color("&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"));
-                                player.sendMessage(Main.color(""));
-                                player.sendMessage(Main.color("&c● &7You &a&lSuccessfully &7Applied: &e" + enchantName + " &7lvl: &e" + enchantLevel));
-                                player.sendMessage(Main.color(""));
-                                player.sendMessage(Main.color("&c&m&l-----------------------------------------"));
+                                // Get the bool to check if the user wants to show the successful enchant message
+                                boolean sendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message-Toggle");
+
+                                // check if the user wants to show the success message
+                                if (sendMessage)
+                                {
+                                    // Send Success Message in chat when applying a enchant.
+                                    List<String> EnchantAppliedMessage = new ArrayList<>();
+                                    for (String ApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message")) {
+                                        String message = Main.color(ApplyMessage)
+                                                .replace("{enchantName}", enchantName)
+                                                .replace("{enchantLevel}", String.valueOf(enchantLevel));
+                                        player.sendMessage(message);
+                                        EnchantAppliedMessage.add(message);
+                                    }
+                                }
                             } else {
                                 System.out.println("Item type does not match the applicable items for this enchantment.");
                             }
@@ -182,9 +199,7 @@ public class ApplyCustomEnchant implements Listener {
                         .append(" ");
             }
         }
-
         // Remove trailing space and return the formatted name
         return result.toString().trim();
     }
-
 }
