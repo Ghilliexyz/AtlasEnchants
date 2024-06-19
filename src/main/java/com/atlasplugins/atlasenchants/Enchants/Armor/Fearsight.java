@@ -78,7 +78,7 @@ public class Fearsight implements Listener
                                     }
 
                                     // Remove glow if entity is out of range
-                                    if (entity.getLocation().distance(p.getLocation()) >= main.getConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + enchantLevel)) {
+                                    if (entity.getLocation().distance(p.getLocation()) >= enchantRadius) {
                                         main.glowingEntities.unsetGlowing(entity, p);
                                     }
                                 } catch (ReflectiveOperationException ex) {

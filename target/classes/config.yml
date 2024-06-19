@@ -10,29 +10,29 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.0
+#    Plugin Version 1.2
 #
 #    NOTE: Roman Numerals are only supported up to "10" AKA "X" this means you cannot increase your enchantment levels beyond 10 otherwise you will cause issues.
 #
 
 EnchantItems:
-  #Type of Item the Enchant is
+  #Type of Item the Enchantments will be.
   EnchantItem: ENCHANTED_BOOK
   #The sound that will play when the player applies a new enchant to an item.
-  #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft
+  #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
   EnchantItemApplySound:
-    #If True the applied enchant sound will play
+    #If True the custom enchant apply sound will play.
     EnchantItemApply-Sound-Toggle: true
-    #The sound that plays when applying a custom enchant
+    #The sound that plays when applying a custom enchant.
     EnchantItemApply-Sound: ENTITY_IRON_GOLEM_REPAIR
-    #The volume the sound that plays at when applying a custom enchant
+    #The volume the sound that plays at when applying a custom enchant.
     EnchantItemApply-Volume: 1
-    #The pitch the sound that plays at when applying a custom enchant
+    #The pitch the sound that plays at when applying a custom enchant.
     EnchantItemApply-Pitch: 0.1
   EnchantItemMessages:
-    #If True the success message will be sent into the chat
+    #If True the success message will be sent into the chat.
     EnchantItem-Success-Message-Toggle: true
-    #The message that will be sent when applying a custom enchant to an item
+    #The message that will be sent when applying a custom enchant to an item.
     EnchantItem-Success-Message:
       -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       -  ""
@@ -42,15 +42,15 @@ EnchantItems:
 
 Enchantments:
   FEARSIGHT:
-    #Max Level of this enchant
+    #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #Enchant Name
+    #The name of the Enchantment.
     Enchantment-Title: "&c&lGODLY &7FearSight"
-    #Lore for the Enchant
+    #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l{range} blocks       &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&l{glowRange} blocks       &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eAllows the wearer to see Entities through walls."
@@ -71,20 +71,52 @@ Enchantments:
       - TURTLE_HELMET
       - DIAMOND_HELMET
       - NETHERITE_HELMET
-    #Colour of the Glow per Mob Type
+    #Colour of the Glow per Mob Type.
     Hostile-GLOW-Colour: "RED"
     Passive-GLOW-Colour: "GREEN"
     Player-Villager: "WHITE"
-    #Radius of how far the glow goes per Tier
+    #Radius of how far the glow goes per Tier.
     Radius-of-glowing-1: 5
     Radius-of-glowing-2: 10
     Radius-of-glowing-3: 15
+  BLESSING-OF-KNOWLEDGE:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 1
+    #The name of the Enchantment.
+    Enchantment-Title: "&c&lGODLY &7Blessing of Knowledge"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&l{healthTimer} Seconds     &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eShows a health bar above any mobs head for {healthTimer}s"
+      - ""
+      - "&c● &7Type: &eHelmet Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Helmet to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - LEATHER_HELMET
+      - CHAINMAIL_HELMET
+      - IRON_HELMET
+      - GOLDEN_HELMET
+      - TURTLE_HELMET
+      - DIAMOND_HELMET
+      - NETHERITE_HELMET
+    #The amount of time the Health Bar effect will Show. (Timer is in seconds 5 = 5 seconds)
+    Healthbar-Timer-1: 5
   LEECH:
-    #Max Level of this enchant
+    #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #Enchant Name
+    #The name of the Enchantment.
     Enchantment-Title: "&6&lLEGENDARY &7Leech"
-    #Lore for the Enchant
+    #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
@@ -114,11 +146,11 @@ Enchantments:
     Leech-Healing-Amount-Percent-2: 15
     Leech-Healing-Amount-Percent-3: 30
   RUSH:
-    #Max Level of this enchant
+    #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #Enchant Name
+    #The name of the Enchantment.
     Enchantment-Title: "&d&lEPIC &7Rush"
-    #Lore for the Enchant
+    #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
@@ -148,45 +180,45 @@ Enchantments:
     #The amount of time the Speed effect will last. (Timer is in seconds 5 = 5 seconds)
     Rush-Speed-Timer-1: 5
   HUNTER:
-      #Max Level of this enchant
-      Enchantment-MaxLvl: 3
-      #Enchant Name
-      Enchantment-Title: "&b&lRARE &7Hunter"
-      #Lore for the Enchant
-      Enchantment-Lore:
-        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-        - ""
-        - "&c● &7Effect: &e&l{damage} heart(s)      &c● &7Enchant Lvl: &e&l{lvl}"
-        - ""
-        - "&c● &7Description:"
-        - "  &eIncrease Base Damage to Passive Creatures."
-        - ""
-        - "&c● &7Type: &eSword & Bow Enchantment"
-        - ""
-        - "&c● &7Usage: &eDrag n' Drop onto Sword/Bow to enchant."
-        - ""
-        - "&c&m&l-----------------------------------------"
-      #The lore that will be added to the enchanted Item.
-      Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
-      #The Item that the enchantment can be applied to.
-      Enchantment-Apply-Item:
-        - WOODEN_SWORD
-        - STONE_SWORD
-        - IRON_SWORD
-        - GOLDEN_SWORD
-        - DIAMOND_SWORD
-        - NETHERITE_SWORD
-        - BOW
-      #The amount of damage the enchant does.
-      Hunter-Damage-Amount-1: 1
-      Hunter-Damage-Amount-2: 1.5
-      Hunter-Damage-Amount-3: 2
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 3
+    #The name of the Enchantment.
+    Enchantment-Title: "&b&lRARE &7Hunter"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&l{damage} heart(s)      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eIncrease Base Damage to Passive Creatures."
+      - ""
+      - "&c● &7Type: &eSword & Bow Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword/Bow to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      - BOW
+    #The amount of damage the enchant does.
+    Hunter-Damage-Amount-1: 1
+    Hunter-Damage-Amount-2: 1.5
+    Hunter-Damage-Amount-3: 2
   PROPEL:
-    #Max Level of this enchant
+    #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #Enchant Name
+    #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Propel"
-    #Lore for the Enchant
+    #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
@@ -214,18 +246,18 @@ Enchantments:
     Propel-Height-Amount-1: 3
     Propel-Height-Amount-2: 5
   FREEZING-SHOT:
-    #Max Level of this enchant
+    #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #Enchant Name
+    #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Freezing Shot"
-    #Lore for the Enchant
+    #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&lFreeze Entity      &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&lFreeze Mobs      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
-      - "  &eFreezes an entity for {freezingTimer}s"
+      - "  &eFreezes any Mob for {freezingTimer}s"
       - ""
       - "&c● &7Type: &eBow & Crossbow Enchantment"
       - ""
@@ -236,7 +268,6 @@ Enchantments:
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
     Enchantment-Apply-Item:
-      - WOODEN_SWORD
       - BOW
       - CROSSBOW
     #The amount of time the Freeze effect will last. (Timer is in seconds 5 = 5 seconds)

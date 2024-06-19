@@ -2,6 +2,7 @@ package com.atlasplugins.atlasenchants;
 
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
+import com.atlasplugins.atlasenchants.Enchants.Armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.FreezingShot;
@@ -49,7 +50,7 @@ public final class Main extends JavaPlugin implements Listener {
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.1"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.2"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -63,6 +64,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Rush(this), this);
         this.getServer().getPluginManager().registerEvents(new Propel(this), this);
         this.getServer().getPluginManager().registerEvents(new FreezingShot(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlessingofKnowledge(this), this);
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);

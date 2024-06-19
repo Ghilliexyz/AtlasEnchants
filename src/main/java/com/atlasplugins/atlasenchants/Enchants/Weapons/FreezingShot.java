@@ -13,6 +13,9 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 
@@ -60,6 +63,10 @@ public class FreezingShot implements Listener {
 
                         if (enchantName.contains("FREEZING-SHOT")) {
                             //PUT ENCHANT LOGIC HERE
+                            // get the item in the player hand
+                            Material itemInHand = p.getInventory().getItemInMainHand().getType();
+                            // return if user tries to hit the entity with their bow
+                            if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
                             ApplyFreezingShotEffect(e.getEntity(), enchantLevel, p);
                             //END ENCHANT LOGIC
                         }
@@ -117,13 +124,25 @@ public class FreezingShot implements Listener {
 
     private void ApplyFreezingShotEffect(Entity entity, int enchantLevel, Player player) {
         if (entity instanceof LivingEntity) {
-            double freezingShotTimer = main.getConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-Freeze-Timer-" + enchantLevel);
-            freezingShotTimer = freezingShotTimer * 20;
+            int freezingShotTimer = main.getConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-Freeze-Timer-" + enchantLevel);
+            int freezeDurationTicks = freezingShotTimer * 20; // Convert seconds to ticks
 
-            entity.setFreezeTicks((int) freezingShotTimer);
+            ((LivingEntity) entity).setAI(false); // Disable AI or apply the effect
 
             player.sendMessage(Main.color("&aEntity: &7" + entity));
-            player.sendMessage(Main.color("&cTimer: &7" + freezingShotTimer));
+            player.sendMessage(Main.color("&cTimer: &7" + freezingShotTimer + " seconds"));
+
+            // Schedule a task to run after freezeDurationTicks ticks
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    // This code will run after the freeze duration has elapsed
+                    ((LivingEntity) entity).setAI(true); // Re-enable AI or remove the effect
+
+                    player.sendMessage(Main.color("&aEntity: &7" + entity));
+                    player.sendMessage(Main.color("&cFreezing Shot effect has ended."));
+                }
+            }.runTaskLater(main, freezeDurationTicks);
         }
     }
 }

@@ -115,13 +115,14 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
 
         enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))
                 .replace("{lvl}", String.valueOf(enchantmentLevel))
-                .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
+                .replace("{glowRange}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                 .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                 .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
                 .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
                 .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
                 .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                 .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
+                .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -129,13 +130,14 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
         for (String lore : loreList) {
             enchantmentLore.add(Main.color(lore)
                     .replace("{lvl}", String.valueOf(enchantmentLevel))
-                    .replace("{range}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
+                    .replace("{glowRange}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                     .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                     .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
                     .replace("{speedLvl}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Amount-" + enchantmentLevel)))
                     .replace("{speedTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Rush-Speed-Timer-" + enchantmentLevel)))
                     .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                     .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
+                    .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

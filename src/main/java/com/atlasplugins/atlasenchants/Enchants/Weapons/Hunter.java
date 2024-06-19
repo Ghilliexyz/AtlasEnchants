@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -59,8 +60,12 @@ public class Hunter implements Listener
 
                         if (enchantName.contains("HUNTER")) {
                             //PUT ENCHANT LOGIC HERE
-                            LivingEntity entity = (LivingEntity) e.getEntity();
+                            // get the item in the player hand
+                            Material itemInHand = p.getInventory().getItemInMainHand().getType();
+                            // return if user tries to hit the entity with their bow
+                            if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
 
+                            LivingEntity entity = (LivingEntity) e.getEntity();
                             ApplyDamage(entity, enchantLevel, p);
                             //END ENCHANT LOGIC
                         }

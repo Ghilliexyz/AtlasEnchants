@@ -1,8 +1,10 @@
 com\atlasplugins\atlasenchants\Enchants\Weapons\Propel.class
 com\atlasplugins\atlasenchants\Commands\TestCommand.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot.class
+com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot$1.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Rush.class
+com\atlasplugins\atlasenchants\Enchants\Armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Leech.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
