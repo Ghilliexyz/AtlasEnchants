@@ -12,6 +12,7 @@ import com.atlasplugins.atlasenchants.Enchants.Weapons.Hunter;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Leech;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.Propel;
 import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
+import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
@@ -76,6 +77,8 @@ public final class Main extends JavaPlugin implements Listener {
         this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
         this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
+
+        ArmorEquipEvent.registerListener(this);
     }
 
     @Override

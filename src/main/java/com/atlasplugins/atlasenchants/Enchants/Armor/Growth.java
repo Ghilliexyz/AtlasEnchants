@@ -1,17 +1,13 @@
 package com.atlasplugins.atlasenchants.Enchants.Armor;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -67,10 +63,9 @@ public class Growth implements Listener
     }
 
     @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-
-        p.sendMessage(Main.color("&aPlayer moved"));
+    public void onArmorApply(ArmorEquipEvent event) {
+        Player p = event.getPlayer();
+        if (event.getNewArmorPiece() == null){return;}
         // Check if the player has an enchanted sword
         if(hasHelmet(p) || hasChestplate(p) || hasLeggings(p) || hasBoots(p)) {
             PersistentDataContainer enchantedItemPDC = null;
