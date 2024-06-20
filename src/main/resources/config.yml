@@ -411,3 +411,33 @@ Enchantments:
     FreezingShot-Freeze-Timer-1: 1
     FreezingShot-Freeze-Timer-2: 1.5
     FreezingShot-Freeze-Timer-3: 2
+  SAFE-MINER:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 1
+    #The name of the Enchantment.
+    Enchantment-Title: "&b&lRARE &7Safe Miner"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lAuto Collect     &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eAny item you mine gos straight in to your inventory"
+      - "  &eBut if Inventory is full it will drop items on the ground"
+      - ""
+      - "&c● &7Type: &ePickaxe Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Pickaxe to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - WOODEN_PICKAXE
+      - STONE_PICKAXE
+      - IRON_PICKAXE
+      - GOLDEN_PICKAXE
+      - DIAMOND_PICKAXE
+      - NETHERITE_PICKAXE
