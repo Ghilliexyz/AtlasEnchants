@@ -128,9 +128,6 @@ public class Hunter implements Listener
             double extraDamage = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
 
             entity.damage(extraDamage);
-
-            player.sendMessage(Main.color("&aEntity: &7" + entity));
-            player.sendMessage(Main.color("&cExtra Damage: &7" + extraDamage));
         }
     }
 }

@@ -123,6 +123,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                 .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                 .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
                 .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
+                .replace("{extraHearts}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Growth-Heart-Increase-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -138,6 +139,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                     .replace("{block}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Propel-Height-Amount-" + enchantmentLevel)))
                     .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
                     .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
+                    .replace("{extraHearts}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Growth-Heart-Increase-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

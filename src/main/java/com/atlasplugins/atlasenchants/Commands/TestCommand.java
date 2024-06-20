@@ -34,7 +34,7 @@ public class TestCommand implements CommandExecutor, Listener {
 //
 //        Player player = (Player) sender;
 //        World world = player.getWorld();
-//        Material mat = Material.CROSSBOW;
+//        Material mat = Material.CHAINMAIL_BOOTS;
 //
 //        for (Chunk chunk : world.getLoadedChunks())
 //        {

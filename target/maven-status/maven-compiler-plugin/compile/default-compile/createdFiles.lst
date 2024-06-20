@@ -8,4 +8,5 @@ com\atlasplugins\atlasenchants\Enchants\Armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Leech.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
+com\atlasplugins\atlasenchants\Enchants\Armor\Growth.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Fearsight.class

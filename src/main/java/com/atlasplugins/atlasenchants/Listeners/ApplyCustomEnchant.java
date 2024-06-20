@@ -1,9 +1,11 @@
 package com.atlasplugins.atlasenchants.Listeners;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class ApplyCustomEnchant implements Listener {
 
@@ -73,6 +76,7 @@ public class ApplyCustomEnchant implements Listener {
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
+
                         boolean shouldApplyEnchantment = true;
                         // Get the lore of the clicked item, or create a new list if none exists
                         List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
@@ -90,10 +94,70 @@ public class ApplyCustomEnchant implements Listener {
                                 String existingEnchantName = existingEnchantParts[0];
                                 int existingEnchantLevel = Integer.parseInt(existingEnchantParts[1]);
 
+                                // Get the bool to check if the user wants enable the blacklist System
+                                boolean blacklistSystem = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Toggle");
+
+                                // Retrieve the blacklist from the config
+                                List<String> blacklist = main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants");
+
+                                // Get the bool to check if the user wants to show the blacklisted enchant message
+                                boolean blacklistSendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Message-Toggle");
+
+                                // Get apply sound via config.
+                                Sound blacklistedSound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItemBlacklisted-Sound"));
+                                float blacklistedVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemBlacklisted-Volume");
+                                float blacklistedPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemBlacklisted-Pitch");
+
+                                // Get the bool to check if the user wants to play the blacklisted enchant sound
+                                boolean blacklistedPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItemBlacklisted-Sound-Toggle");
+
+                                // Check if the user wants to enable the blacklist system
+                                if (blacklistSystem) {
+                                    // Check if any existing enchantment is blacklisted
+                                    if (blacklist.contains(existingEnchantName)) {
+                                        // Prevent applying the new enchantment if a blacklisted enchantment is present
+                                        shouldApplyEnchantment = false;
+                                        // Check if the user wants to show the blacklisted message
+                                        if (blacklistSendMessage) {
+                                            // Send blacklisted Message in chat
+                                            for (String BlacklistMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Message")) {
+                                                String message = Main.color(BlacklistMessage)
+                                                        .replace("{enchantName}", formatEnchantName(enchantName))
+                                                        .replace("{enchantLevel}", String.valueOf(enchantLevel))
+                                                        .replace("{blackListedEnchantName}", formatEnchantName(existingEnchantName))
+                                                        .replace("{blackListedEnchantLevel}", String.valueOf(existingEnchantLevel));
+                                                player.sendMessage(message);
+                                            }
+                                        }
+
+                                        // check if the user wants to play the blacklisted sound
+                                        if (blacklistedPlaySound)
+                                        {
+                                            // Play sound for when enchant is blacklisted.
+                                            player.playSound(player.getLocation(), blacklistedSound, blacklistedVolume, blacklistedPitch);
+                                        }
+                                        break;
+                                    }
+                                }
+
+                                // Get apply sound via config.
+                                Sound enchantAlreadyAppliedSound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItemAlreadyApplied-Sound"));
+                                float enchantAlreadyAppliedVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemAlreadyApplied-Volume");
+                                float enchantAlreadyAppliedPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemAlreadyApplied-Pitch");
+
+                                // Get the bool to check if the user wants to play the blacklisted enchant sound
+                                boolean enchantAlreadyAppliedPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItemAlreadyApplied-Sound-Toggle");
+
+
                                 // If the enchantment already exists and is of equal or higher level, do not apply the new one
                                 if (existingEnchantName.equals(enchantName)) {
                                     if (existingEnchantLevel >= enchantLevel) {
                                         shouldApplyEnchantment = false;
+                                        // check if the user wants to play the blacklisted sound
+                                        if(enchantAlreadyAppliedPlaySound){
+                                            // Play sound for when enchant is blacklisted.
+                                            player.playSound(player.getLocation(), enchantAlreadyAppliedSound, enchantAlreadyAppliedVolume, enchantAlreadyAppliedPitch);
+                                        }
                                     } else {
                                         // Remove the old enchantment from the lore
                                         String fakeExistingEnchantName = formatEnchantName(existingEnchantName);
@@ -132,15 +196,15 @@ public class ApplyCustomEnchant implements Listener {
                                 clickedItem.setItemMeta(itemMeta);
 
                                 // Get apply sound via config.
-                                Sound applySound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemApplySound.EnchantItemApply-Sound"));
-                                float applyVolume = main.getConfig().getInt("EnchantItems.EnchantItemApplySound.EnchantItemApply-Volume");
-                                float applyPitch = main.getConfig().getInt("EnchantItems.EnchantItemApplySound.EnchantItemApply-Pitch");
+                                Sound applySound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItemApply-Sound"));
+                                float applyVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemApply-Volume");
+                                float applyPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItemApply-Pitch");
 
                                 // Get the bool to check if the user wants to play the successful enchant sound
-                                boolean playSound = main.getConfig().getBoolean("EnchantItems.EnchantItemApplySound.EnchantItemApply-Sound-Toggle");
+                                boolean applyPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItemApply-Sound-Toggle");
 
                                 // check if the user wants to plau the success sound
-                                if (playSound)
+                                if (applyPlaySound)
                                 {
                                     // Play sound for when player applies new enchant.
                                     player.playSound(player.getLocation(), applySound, applyVolume, applyPitch);
@@ -156,26 +220,24 @@ public class ApplyCustomEnchant implements Listener {
                                 invEvent.setCancelled(true);
 
                                 // Get the bool to check if the user wants to show the successful enchant message
-                                boolean sendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message-Toggle");
+                                boolean ApplySendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message-Toggle");
 
                                 // check if the user wants to show the success message
-                                if (sendMessage)
+                                if (ApplySendMessage)
                                 {
                                     // Send Success Message in chat when applying a enchant.
-                                    List<String> EnchantAppliedMessage = new ArrayList<>();
                                     for (String ApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message")) {
                                         String message = Main.color(ApplyMessage)
-                                                .replace("{enchantName}", enchantName)
+                                                .replace("{enchantName}", formatEnchantName(enchantName))
                                                 .replace("{enchantLevel}", String.valueOf(enchantLevel));
                                         player.sendMessage(message);
-                                        EnchantAppliedMessage.add(message);
                                     }
                                 }
                             } else {
-                                System.out.println("Item type does not match the applicable items for this enchantment.");
+                                main.getLogger().log(Level.WARNING, "Item type does not match the applicable items for this enchantment.");
                             }
                         } else {
-                            System.out.println("Item already has the same or higher level enchantment.");
+                            main.getLogger().log(Level.WARNING, "Item already has the same or higher level enchantment.");
                         }
                     }
                 }

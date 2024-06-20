@@ -12,6 +12,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,19 @@ public class BlessingofKnowledge implements Listener {
     public BlessingofKnowledge(Main main) {this.main = main;}
 
     final HashMap<UUID, String> mobs = new HashMap<>();
+
+    public double roundToOneDecimalPlace(double value) {
+        return Math.round(value * 10.0) / 10.0;
+    }
+
+    private boolean hasArmor(Player player) {
+        ItemStack helmet = player.getInventory().getHelmet();
+        if (helmet == null) {
+            return false;
+        }
+        List<String> armorMat = main.getConfig().getStringList("Enchantments.BLESSING-OF-KNOWLEDGE.Enchantment-Apply-Item");
+        return armorMat.contains(helmet.getType().toString());
+    }
 
     @EventHandler
     public void onEntityHit(EntityDamageByEntityEvent e) {
@@ -53,7 +67,7 @@ public class BlessingofKnowledge implements Listener {
                         if (enchantName.contains("BLESSING-OF-KNOWLEDGE")) {
                             LivingEntity entity = (LivingEntity) e.getEntity();
 
-                            int healthBarShowTimer = main.getConfig().getInt("Enchantments.BLESSING-OF-KNOWLEDGE.Healthbar-Timer-" + enchantLevel);
+                            int healthBarShowTimer = main.getConfig().getInt("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Timer-" + enchantLevel);
                             int healthBarDurationTicks = healthBarShowTimer * 20; // Convert seconds to ticks
 
                             String entityName;
@@ -80,7 +94,39 @@ public class BlessingofKnowledge implements Listener {
 
                             // Display health bar
                             entity.setCustomNameVisible(true);
-                            entity.setCustomName(Main.color("&a" + (entity.getHealth() - finalDamage) + "/" + entity.getMaxHealth()));
+
+                            double entityHealth = entity.getHealth() - finalDamage;
+                            entityHealth = roundToOneDecimalPlace(entityHealth); // Assuming roundToOneDecimalPlace is a method that rounds to one decimal place
+
+                            double healthPercentage = (entityHealth / entity.getMaxHealth()) * 100;
+
+                            String healthStyleBelow10 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
+                            String healthStyleBelow25 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
+                            String healthStyleBelow50 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-50");
+                            String healthStyleBelow75 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-75");
+                            String healthStyleBelow100 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-100");
+
+                            if(healthPercentage <= 10.0) {
+                                entity.setCustomName(Main.color(healthStyleBelow10
+                                        .replace("{entityHealth}", String.valueOf(entityHealth))
+                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Dark Red for <= 10%
+                            } else if (healthPercentage <= 25.0) {
+                                entity.setCustomName(Main.color(healthStyleBelow25
+                                        .replace("{entityHealth}", String.valueOf(entityHealth))
+                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Red for <= 25%
+                            } else if (healthPercentage <= 50.0) {
+                                entity.setCustomName(Main.color(healthStyleBelow50
+                                        .replace("{entityHealth}", String.valueOf(entityHealth))
+                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Yellow for <= 50%
+                            } else if (healthPercentage <= 75.0) {
+                                entity.setCustomName(Main.color(healthStyleBelow75
+                                        .replace("{entityHealth}", String.valueOf(entityHealth))
+                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Light Yellow (or another color) for <= 75%
+                            } else {
+                                entity.setCustomName(Main.color(healthStyleBelow100
+                                        .replace("{entityHealth}", String.valueOf(entityHealth))
+                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Green for > 75%
+                            }
                         }
                     } else {
                         main.getLogger().log(Level.WARNING, "Unexpected enchantment format: " + enchantment);
@@ -90,14 +136,5 @@ public class BlessingofKnowledge implements Listener {
                 main.getLogger().log(Level.INFO, "No enchantments found on the item.");
             }
         }
-    }
-
-    private boolean hasArmor(Player player) {
-        ItemStack helmet = player.getInventory().getHelmet();
-        if (helmet == null) {
-            return false;
-        }
-        List<String> armorMat = main.getConfig().getStringList("Enchantments.BLESSING-OF-KNOWLEDGE.Enchantment-Apply-Item");
-        return armorMat.contains(helmet.getType().toString());
     }
 }
