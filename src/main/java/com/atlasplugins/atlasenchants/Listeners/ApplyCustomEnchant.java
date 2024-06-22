@@ -117,6 +117,13 @@ public class ApplyCustomEnchant implements Listener {
                                     if (blacklist.contains(existingEnchantName)) {
                                         // Prevent applying the new enchantment if a blacklisted enchantment is present
                                         shouldApplyEnchantment = false;
+                                        if(clickedItem.getType().equals(enchantItem)){return;}
+                                        // check if the user wants to play the blacklisted sound
+                                        if (blacklistedPlaySound)
+                                        {
+                                            // Play sound for when enchant is blacklisted.
+                                            player.playSound(player.getLocation(), blacklistedSound, blacklistedVolume, blacklistedPitch);
+                                        }
                                         // Check if the user wants to show the blacklisted message
                                         if (blacklistSendMessage) {
                                             // Send blacklisted Message in chat
@@ -128,13 +135,6 @@ public class ApplyCustomEnchant implements Listener {
                                                         .replace("{blackListedEnchantLevel}", String.valueOf(existingEnchantLevel));
                                                 player.sendMessage(message);
                                             }
-                                        }
-
-                                        // check if the user wants to play the blacklisted sound
-                                        if (blacklistedPlaySound)
-                                        {
-                                            // Play sound for when enchant is blacklisted.
-                                            player.playSound(player.getLocation(), blacklistedSound, blacklistedVolume, blacklistedPitch);
                                         }
                                         break;
                                     }
@@ -156,23 +156,23 @@ public class ApplyCustomEnchant implements Listener {
                                 if (existingEnchantName.equals(enchantName)) {
                                     if (existingEnchantLevel >= enchantLevel) {
                                         shouldApplyEnchantment = false;
-                                        // check if the user wants to play the blacklisted sound
+                                        if(clickedItem.getType().equals(enchantItem)){return;}
+                                        // check if the user wants to play the Already Applied sound
                                         if(enchantAlreadyAppliedPlaySound){
-                                            // Play sound for when enchant is blacklisted.
+                                            // Play sound for when enchant is Already Applied.
                                             player.playSound(player.getLocation(), enchantAlreadyAppliedSound, enchantAlreadyAppliedVolume, enchantAlreadyAppliedPitch);
-
-                                            // check if the user wants to show the Already Applied message
-                                            if (enchantAlreadyAppliedSendMessage)
-                                            {
-                                                // Send Already Applied Message in chat when applying a enchant.
-                                                for (String AlreadyApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-AlreadyApplied-Message")) {
-                                                    String message = Main.color(AlreadyApplyMessage)
-                                                            .replace("{enchantName}", formatEnchantName(enchantName))
-                                                            .replace("{enchantLevel}", String.valueOf(enchantLevel))
-                                                            .replace("{existingEnchantName}", formatEnchantName(existingEnchantName))
-                                                            .replace("{existingEnchantLevel}", String.valueOf(existingEnchantLevel));
-                                                    player.sendMessage(message);
-                                                }
+                                        }
+                                        // check if the user wants to show the Already Applied message
+                                        if (enchantAlreadyAppliedSendMessage)
+                                        {
+                                            // Send Already Applied Message in chat when applying a enchant.
+                                            for (String AlreadyApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-AlreadyApplied-Message")) {
+                                                String message = Main.color(AlreadyApplyMessage)
+                                                        .replace("{enchantName}", formatEnchantName(enchantName))
+                                                        .replace("{enchantLevel}", String.valueOf(enchantLevel))
+                                                        .replace("{existingEnchantName}", formatEnchantName(existingEnchantName))
+                                                        .replace("{existingEnchantLevel}", String.valueOf(existingEnchantLevel));
+                                                player.sendMessage(message);
                                             }
                                         }
                                     } else {
