@@ -130,6 +130,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                 .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                 .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                 .replace("{iceTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
+                .replace("{extractorMultiplier}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -152,6 +153,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                     .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                     .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                     .replace("{iceTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
+                    .replace("{extractorMultiplier}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 
