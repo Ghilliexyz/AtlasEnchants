@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -69,41 +70,62 @@ public class PoisonAspect implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
-                                stopParticleLoop();
 
                                 int poisonTimer = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Timer-" + enchantLevel);
                                 int poisonLevel = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Level-" + enchantLevel);
 
-                                final int finalPoisonTimer = poisonTimer * 20;
+                                int finalPoisonTimer = poisonTimer * 20;
 
                                 // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel, true, false, true);
+                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel, false, false, true);
 
                                 // Apply the potion effect to the entity
                                 ((LivingEntity) entity).addPotionEffect(potionType);
 
-                                particleTask = new BukkitRunnable() {
-                                    int count = 0;
+                                // Particle Settings Controlled Via Config
+                                // Get the bool to see if the user wants to display the particles
+                                boolean useParticles = main.getConfig().getBoolean("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-Toggle");
+                                // Get the Particle 1 Name
+                                Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Name-1"));
+                                // Get the Particle 1 Amount
+                                int particle1Amount = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Amount-1");
+                                // Get the Particle 1 Size
+                                float particle1Size = (float) main.getConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Size-1");
+                                // Get the Particle 2 Name
+                                Particle particle2Name = Particle.valueOf(main.getConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Name-2"));
+                                // Get the Particle 2 Amount
+                                int particle2Amount = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Amount-2");
+                                // Get the Particle 2 Size
+                                float particle2Size = (float) main.getConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Size-2");
 
-                                    @Override
-                                    public void run() {
-                                        if (count >= poisonTimer) {
-                                            cancel(); // Stop the task after maxCount iterations
-                                            return;
+                                if(useParticles) {
+                                    stopParticleLoop(); // Reset the Particle Loop
+
+                                    particleTask = new BukkitRunnable() {
+                                        int count = 0;
+
+                                        @Override
+                                        public void run() {
+                                            if (count >= poisonTimer) {
+                                                cancel(); // Stop the task after maxCount iterations
+                                                return;
+                                            }
+
+                                            // Update location in case entity moves
+                                            Location entityLoc = entity.getLocation();
+
+                                            // Spawn particle effect
+                                            entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+                                            entity.getWorld().spawnParticle(particle2Name, entityLoc, particle2Amount, 1, 1, 1, particle2Size);
+//                                        entity.getWorld().spawnParticle(Particle.SOUL, entityLoc, 50, 1, 1, 1, 0.1);
+//                                        entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, entityLoc, 15, 1, 1, 1, 0.1);
+
+                                            count++;
                                         }
+                                    };
 
-                                        // Update location in case entity moves
-                                        Location entityLoc = entity.getLocation();
-
-                                        // Spawn particle effect
-                                        entity.getWorld().spawnParticle(Particle.SOUL, entityLoc, 50, 1, 1, 1, 0.1);
-                                        entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, entityLoc, 15, 1, 1, 1, 0.1);
-
-                                        count++;
-                                    }
-                                };
-
-                                particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
+                                    particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
+                                }
                             }
                             //END ENCHANT LOGIC
                         }

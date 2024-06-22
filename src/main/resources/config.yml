@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.2
+#    Plugin Version 1.3
 #
 #    NOTE: Roman Numerals are only supported up to "10" AKA "X" this means you cannot increase your enchantment levels beyond 10 otherwise you will cause issues.
 #
@@ -125,7 +125,7 @@ Enchantments:
       - NETHERITE_HELMET
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (FEARSIGHT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #Colour of the Glow per Mob Type.
@@ -168,7 +168,7 @@ Enchantments:
       - NETHERITE_HELMET
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (BLESSING-OF-KNOWLEDGE) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #The amount of time the Health bar effect will Show. (Timer is in seconds 5 = 5 seconds)
@@ -200,7 +200,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
       - ""
-      - "&c● &7Blacklist: {blacklistEnchant}"
+      - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
       - "&c&m&l-----------------------------------------"
     #The lore that will be added to the enchanted Item.
@@ -215,7 +215,7 @@ Enchantments:
       - NETHERITE_SWORD
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (LEECH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - HUNTER
     #The amount of healing the enchant does.
@@ -276,7 +276,7 @@ Enchantments:
       - NETHERITE_BOOTS
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (GROWTH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #The amount of extra hearts the enchant gives.
@@ -312,6 +312,11 @@ Enchantments:
       - GOLDEN_PICKAXE
       - DIAMOND_PICKAXE
       - NETHERITE_PICKAXE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
+    #Note 2: Make sure to add this enchant Name (SAFE-MINER) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
 # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.
@@ -345,7 +350,7 @@ Enchantments:
       - NETHERITE_LEGGINGS
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (RUSH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #The amount of Speed the enchant gives.
@@ -392,9 +397,20 @@ Enchantments:
       - NETHERITE_AXE
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (STUNNING) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
+    #Particle Settings for Poison Aspect
+    Stunning-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      Stunning-Particle-Toggle: true
+      Stunning-Particle-1:
+        #Particle Name (The particle that will spawn)
+        Stunning-Particle-Name-1: ASH
+        #Particle Amount (50 = 50 Particles)
+        Stunning-Particle-Amount-1: 100
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        Stunning-Particle-Size-1: 1
     #The amount of time the Stun effect will last. (Slowness and Weakness)
     Stunning-Stun-Timer-1: 3
     Stunning-Stun-Timer-2: 6
@@ -420,6 +436,8 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword/Bow to enchant."
       - ""
+      - "&c● &7Blacklist: &c{blacklistEnchant}"
+      - ""
       - "&c&m&l-----------------------------------------"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
@@ -434,7 +452,7 @@ Enchantments:
       - BOW
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (HUNTER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - LEECH
     #The amount of damage the enchant does.
@@ -472,7 +490,7 @@ Enchantments:
       - NETHERITE_SWORD
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (PROPEL) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #The amount of blocks the entity gets launched.
@@ -505,7 +523,7 @@ Enchantments:
       - CROSSBOW
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (FREEZING-SHOT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
     #The amount of time the Freeze effect will last. (Timer is in seconds 5 = 5 seconds)
@@ -552,9 +570,27 @@ Enchantments:
       - NETHERITE_AXE
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (POISON-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
+    #Particle Settings for Poison Aspect
+    PoisonAspect-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      PoisonAspect-Particle-Toggle: true
+      PoisonAspect-Particle-1:
+        #Particle Name (The particle that will spawn)
+        PoisonAspect-Particle-Name-1: SQUID_INK
+        #Particle Amount (50 = 50 Particles)
+        PoisonAspect-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        PoisonAspect-Particle-Size-1: 0.1
+      PoisonAspect-Particle-2:
+        #Particle Name (The particle that will spawn)
+        PoisonAspect-Particle-Name-2: NAUTILUS
+        #Particle Amount (50 = 50 Particles)
+        PoisonAspect-Particle-Amount-2: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        PoisonAspect-Particle-Size-2: 0.5
     #The amount of time the poison effect will last.
     PoisonAspect-Poison-Timer-1: 3
     PoisonAspect-Poison-Timer-2: 6
@@ -574,7 +610,7 @@ Enchantments:
       - ""
       - "&c● &7Description:"
       - "  &eApplies the Frozen Effect to any hit entity"
-      - "  &ethe effect lasts {frozenTimer}s"
+      - "  &ethe effect lasts {iceTimer}s"
       - ""
       - "&c● &7Type: &eSword & Axe Enchantment"
       - ""
@@ -601,9 +637,20 @@ Enchantments:
       - NETHERITE_AXE
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
-    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    #Note 2: Make sure to add this enchant Name (ICE-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-      #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
-    FrozenAspect-Frozen-Timer-1: 15
-    FrozenAspect-Frozen-Timer-2: 30
+    #Particle Settings for Poison Aspect
+    IceAspect-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      IceAspect-Particle-Toggle: true
+      IceAspect-Particle-1:
+        #Particle Name (The particle that will spawn)
+        IceAspect-Particle-Name-1: SNOWFLAKE
+        #Particle Amount (50 = 50 Particles)
+        IceAspect-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        IceAspect-Particle-Size-1: 0.1
+    #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
+    IceAspect-Frozen-Timer-1: 15
+    IceAspect-Frozen-Timer-2: 30

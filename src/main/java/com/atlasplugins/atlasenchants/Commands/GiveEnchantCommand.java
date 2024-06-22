@@ -115,7 +115,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
 
         enchantMeta.setDisplayName(Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Title"))
                 .replace("{lvl}", String.valueOf(enchantmentLevel))
-                .replace("{blacklistEnchant}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants")))
+                .replace("{blacklistEnchant}", String.valueOf(main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants")))
                 .replace("{glowRange}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                 .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                 .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
@@ -129,8 +129,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                 .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
                 .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                 .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
-                .replace("{frozenTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Timer-" + enchantmentLevel)))
-                .replace("{frozenLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Level-" + enchantmentLevel)))
+                .replace("{iceTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -138,6 +137,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
         for (String lore : loreList) {
             enchantmentLore.add(Main.color(lore)
                     .replace("{lvl}", String.valueOf(enchantmentLevel))
+                    .replace("{blacklistEnchant}", String.valueOf(main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants")))
                     .replace("{glowRange}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Radius-of-glowing-" + enchantmentLevel)))
                     .replace("{time}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Time-underwater-" + enchantmentLevel)))
                     .replace("{damage}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
@@ -151,8 +151,7 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                     .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
                     .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                     .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
-                    .replace("{frozenTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Timer-" + enchantmentLevel)))
-                    .replace("{frozenLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Level-" + enchantmentLevel)))
+                    .replace("{iceTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

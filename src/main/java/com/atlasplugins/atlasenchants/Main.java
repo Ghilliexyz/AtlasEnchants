@@ -50,7 +50,7 @@ public final class Main extends JavaPlugin implements Listener {
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.2"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -87,5 +87,13 @@ public final class Main extends JavaPlugin implements Listener {
         // Plugin shutdown logic
         glowingEntities.disable();
         glowingBlocks.disable();
+
+        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3"));
+        Bukkit.getConsoleSender().sendMessage(color(""));
+        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
+        Bukkit.getConsoleSender().sendMessage(color(""));
+        Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Enabled"));
+        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
     }
 }

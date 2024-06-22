@@ -1,7 +1,6 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -13,17 +12,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
 public class IceAspect implements Listener {
     private Main main;
-    public IceAspect (Main main) {
-        this.main = main;
-    }
+    public IceAspect (Main main) { this.main = main; }
 
     private BukkitRunnable particleTask;
 
@@ -70,35 +65,47 @@ public class IceAspect implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
-                                stopParticleLoop();
+                                int frozenTimer = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Frozen-Timer-" + enchantLevel);
 
-                                int frozenTimer = main.getConfig().getInt("Enchantments.ICE-ASPECT.FrozenAspect-Frozen-Timer-" + enchantLevel);
-
-                                final int finalFrozenTimer = frozenTimer * 20;
+                                int finalFrozenTimer = frozenTimer * 20;
 
                                 entity.setFreezeTicks(finalFrozenTimer * 2);
 
-                                particleTask = new BukkitRunnable() {
-                                    int count = 0;
+                                // Particle Settings Controlled Via Config
+                                // Get the bool to see if the user wants to display the particles
+                                boolean useParticles = main.getConfig().getBoolean("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-Toggle");
+                                // Get the Particle 1 Name
+                                Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Name-1"));
+                                // Get the Particle 1 Amount
+                                int particle1Amount = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Amount-1");
+                                // Get the Particle 1 Size
+                                int particle1Size = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Size-1");
 
-                                    @Override
-                                    public void run() {
-                                        if (count >= frozenTimer) {
-                                            cancel(); // Stop the task after maxCount iterations
-                                            return;
+                                if(useParticles) {
+                                    stopParticleLoop(); // Reset the Particle Loop
+
+                                    particleTask = new BukkitRunnable() {
+                                        int count = 0;
+
+                                        @Override
+                                        public void run() {
+                                            if (count >= frozenTimer) {
+                                                cancel(); // Stop the task after maxCount iterations
+                                                return;
+                                            }
+
+                                            // Update location in case entity moves
+                                            Location entityLoc = entity.getLocation();
+
+                                            // Spawn particle effect
+                                            entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+
+                                            count++;
                                         }
+                                    };
 
-                                        // Update location in case entity moves
-                                        Location entityLoc = entity.getLocation();
-
-                                        // Spawn particle effect
-                                        entity.getWorld().spawnParticle(Particle.SNOWFLAKE, entityLoc, 50, 1, 1, 1, 0.1);
-
-                                        count++;
-                                    }
-                                };
-
-                                particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
+                                    particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
+                                }
                             }
                             //END ENCHANT LOGIC
                         }

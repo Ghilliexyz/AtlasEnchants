@@ -10,6 +10,7 @@ com\atlasplugins\atlasenchants\Enchants\Weapons\Propel.class
 com\atlasplugins\atlasenchants\Commands\TestCommand.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\IceAspect.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot.class
+com\atlasplugins\atlasenchants\Enchants\Weapons\Stunning$1.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot$1.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
