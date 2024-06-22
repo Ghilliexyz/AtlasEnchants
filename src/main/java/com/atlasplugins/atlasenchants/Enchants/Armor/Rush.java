@@ -76,7 +76,7 @@ public class Rush implements Listener
                                 speedTimer = speedTimer * 20;
 
                                 // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.SPEED, speedTimer, speedLvl, false, false, true);
+                                PotionEffect potionType = new PotionEffect(PotionEffectType.SPEED, speedTimer, speedLvl, true, false, true);
 
                                 // Apply the potion effect to the player
                                 p.addPotionEffect(potionType);

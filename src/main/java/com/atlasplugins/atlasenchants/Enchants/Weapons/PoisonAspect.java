@@ -1,6 +1,8 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,6 +14,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -20,6 +23,8 @@ public class PoisonAspect implements Listener {
     public PoisonAspect (Main main) {
         this.main = main;
     }
+
+    private BukkitRunnable particleTask;
 
     public boolean hasWeapon (Player p)
     {
@@ -64,16 +69,41 @@ public class PoisonAspect implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
+                                stopParticleLoop();
+
                                 int poisonTimer = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Timer-" + enchantLevel);
                                 int poisonLevel = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Level-" + enchantLevel);
 
-                                poisonTimer = poisonTimer * 20;
+                                final int finalPoisonTimer = poisonTimer * 20;
 
                                 // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, poisonTimer, poisonLevel, true, true, true);
+                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel, true, false, true);
 
                                 // Apply the potion effect to the entity
                                 ((LivingEntity) entity).addPotionEffect(potionType);
+
+                                particleTask = new BukkitRunnable() {
+                                    int count = 0;
+
+                                    @Override
+                                    public void run() {
+                                        if (count >= poisonTimer) {
+                                            cancel(); // Stop the task after maxCount iterations
+                                            return;
+                                        }
+
+                                        // Update location in case entity moves
+                                        Location entityLoc = entity.getLocation();
+
+                                        // Spawn particle effect
+                                        entity.getWorld().spawnParticle(Particle.SOUL, entityLoc, 50, 1, 1, 1, 0.1);
+                                        entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, entityLoc, 15, 1, 1, 1, 0.1);
+
+                                        count++;
+                                    }
+                                };
+
+                                particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
                             }
                             //END ENCHANT LOGIC
                         }
@@ -85,6 +115,14 @@ public class PoisonAspect implements Listener {
             } else {
                 System.out.println("No enchantments found on the item.");
             }
+        }
+    }
+
+    // Method to stop particle task
+    private void stopParticleLoop() {
+        if (particleTask != null) {
+            particleTask.cancel();
+            particleTask = null;
         }
     }
 }

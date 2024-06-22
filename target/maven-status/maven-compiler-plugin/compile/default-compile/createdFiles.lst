@@ -11,6 +11,7 @@ com\atlasplugins\atlasenchants\Commands\TestCommand.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\IceAspect.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot$1.class
+com\atlasplugins\atlasenchants\Enchants\Weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Rush.class
 com\atlasplugins\atlasenchants\Enchants\Tools\SafeMiner.class

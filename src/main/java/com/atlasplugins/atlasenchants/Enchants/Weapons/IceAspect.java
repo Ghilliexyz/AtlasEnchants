@@ -78,7 +78,6 @@ public class IceAspect implements Listener {
 
                                 entity.setFreezeTicks(finalFrozenTimer * 2);
 
-
                                 particleTask = new BukkitRunnable() {
                                     int count = 0;
 
