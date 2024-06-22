@@ -1,6 +1,9 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,6 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -20,6 +24,8 @@ public class IceAspect implements Listener {
     public IceAspect (Main main) {
         this.main = main;
     }
+
+    private BukkitRunnable particleTask;
 
     public boolean hasWeapon (Player p)
     {
@@ -64,11 +70,36 @@ public class IceAspect implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
+                                stopParticleLoop();
+
                                 int frozenTimer = main.getConfig().getInt("Enchantments.ICE-ASPECT.FrozenAspect-Frozen-Timer-" + enchantLevel);
 
-                                frozenTimer = frozenTimer * 20;
+                                final int finalFrozenTimer = frozenTimer * 20;
 
-                                entity.setFreezeTicks(frozenTimer * 2);
+                                entity.setFreezeTicks(finalFrozenTimer * 2);
+
+
+                                particleTask = new BukkitRunnable() {
+                                    int count = 0;
+
+                                    @Override
+                                    public void run() {
+                                        if (count >= frozenTimer) {
+                                            cancel(); // Stop the task after maxCount iterations
+                                            return;
+                                        }
+
+                                        // Update location in case entity moves
+                                        Location entityLoc = entity.getLocation();
+
+                                        // Spawn particle effect
+                                        entity.getWorld().spawnParticle(Particle.SNOWFLAKE, entityLoc, 50, 1, 1, 1, 0.1);
+
+                                        count++;
+                                    }
+                                };
+
+                                particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
                             }
                             //END ENCHANT LOGIC
                         }
@@ -80,6 +111,14 @@ public class IceAspect implements Listener {
             } else {
                 System.out.println("No enchantments found on the item.");
             }
+        }
+    }
+
+    // Method to stop particle task
+    private void stopParticleLoop() {
+        if (particleTask != null) {
+            particleTask.cancel();
+            particleTask = null;
         }
     }
 }
