@@ -128,6 +128,8 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                 .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
                 .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                 .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
+                .replace("{frozenTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Timer-" + enchantmentLevel)))
+                .replace("{frozenLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Level-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -148,6 +150,8 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                     .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
                     .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
                     .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
+                    .replace("{frozenTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Timer-" + enchantmentLevel)))
+                    .replace("{frozenLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".FrozenAspect-Frozen-Level-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

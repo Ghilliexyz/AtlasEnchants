@@ -69,6 +69,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new SafeMiner(this), this); // Added By Helix
         this.getServer().getPluginManager().registerEvents(new PoisonAspect(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Stunning(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new IceAspect(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);

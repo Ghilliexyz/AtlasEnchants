@@ -101,10 +101,11 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l{glowRange} blocks       &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&lGlowing Entities      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eAllows the wearer to see Entities through walls."
+      - "  &eDistance of enchant: {glowRange} blocks "
       - ""
       - "&c● &7Type: &eHelmet Enchantment"
       - ""
@@ -144,7 +145,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l{healthTimer} Seconds     &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&lHealth Bar      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eShows a health bar above any mobs head for {healthTimer}s"
@@ -189,7 +190,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l{percent}% healing       &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&l{percent}% healing      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &e{percent}% of the damage done to any mob will"
@@ -228,7 +229,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l+{extraHearts} hearts     &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&l+{extraHearts} hearts      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eGives the wearer an extra {extraHearts} hearts"
@@ -288,7 +289,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&lAuto Collect     &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&lAuto Collect      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eAny item you mine will go straight into your inventory"
@@ -319,7 +320,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&l{speedLvl}x Speed       &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&l{speedLvl}x Speed      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eYou will gain a burst of speed of Level: {speedLvl} for {speedTimer}s"
@@ -518,7 +519,7 @@ Enchantments:
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
       - ""
-      - "&c● &7Effect: &e&lPoison {poisonLevel}      &c● &7Enchant Lvl: &e&l{lvl}"
+      - "&c● &7Effect: &e&lPoison      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
       - "  &eApplies the Poison Lvl: {poisonLevel} Effect to any hit entity"
@@ -558,3 +559,49 @@ Enchantments:
     #The Level the poison effect will be.
     PoisonAspect-Poison-Level-1: 1
     PoisonAspect-Poison-Level-2: 2
+  ICE-ASPECT:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 2
+    #The name of the Enchantment.
+    Enchantment-Title: "&b&lRARE &7Ice Aspect"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lFrozen      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eApplies the Frozen Effect to any hit entity"
+      - "  &ethe effect lasts {frozenTimer}s"
+      - ""
+      - "&c● &7Type: &eSword & Axe Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      # Swords
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      # Axes
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config or it won't work
+    #Note 2: Make sure to add the Name of the enchantment you want blocked back to the other enchantment as well.
+    Enchantment-Blacklist-Enchants:
+      -
+      #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
+    FrozenAspect-Frozen-Timer-1: 15
+    FrozenAspect-Frozen-Timer-2: 30
