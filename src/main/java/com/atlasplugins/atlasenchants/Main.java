@@ -7,12 +7,9 @@ import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Growth;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
 import com.atlasplugins.atlasenchants.Enchants.Tools.SafeMiner;
-import com.atlasplugins.atlasenchants.Enchants.Weapons.FreezingShot;
-import com.atlasplugins.atlasenchants.Enchants.Weapons.Hunter;
-import com.atlasplugins.atlasenchants.Enchants.Weapons.Leech;
-import com.atlasplugins.atlasenchants.Enchants.Weapons.Propel;
+import com.atlasplugins.atlasenchants.Enchants.Weapons.*;
 import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
-import com.jeff_media.armorequipevent.ArmorEquipEvent;
+import com.atlasplugins.atlasenchants.Listeners.ArmorEquipListener;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
@@ -61,15 +58,17 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
 
         //All Enchants
-        this.getServer().getPluginManager().registerEvents(new Fearsight(this),this);
-        this.getServer().getPluginManager().registerEvents(new Leech(this), this);
-        this.getServer().getPluginManager().registerEvents(new Hunter(this), this);
-        this.getServer().getPluginManager().registerEvents(new Rush(this), this);
-        this.getServer().getPluginManager().registerEvents(new Propel(this), this);
-        this.getServer().getPluginManager().registerEvents(new FreezingShot(this), this);
-        this.getServer().getPluginManager().registerEvents(new BlessingofKnowledge(this), this);
-        this.getServer().getPluginManager().registerEvents(new Growth(this), this);
-        this.getServer().getPluginManager().registerEvents(new SafeMiner(this), this);
+        this.getServer().getPluginManager().registerEvents(new Fearsight(this),this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Leech(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Hunter(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Rush(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Propel(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new FreezingShot(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new BlessingofKnowledge(this), this); // Added By Ghillie
+//        this.getServer().getPluginManager().registerEvents(new Growth(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new SafeMiner(this), this); // Added By Helix
+        this.getServer().getPluginManager().registerEvents(new PoisonAspect(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Stunning(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
@@ -78,7 +77,8 @@ public final class Main extends JavaPlugin implements Listener {
         this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
 
-        ArmorEquipEvent.registerListener(this);
+        //Custom Lister/Events
+        getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
     }
 
     @Override

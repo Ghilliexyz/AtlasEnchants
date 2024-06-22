@@ -124,6 +124,10 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                 .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
                 .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
                 .replace("{extraHearts}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Growth-Heart-Increase-" + enchantmentLevel)))
+                .replace("{poisonTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)))
+                .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
+                .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
+                .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -140,6 +144,10 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
                     .replace("{freezingTimer}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
                     .replace("{healthTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Healthbar-Timer-" + enchantmentLevel)))
                     .replace("{extraHearts}", String.valueOf(main.getConfig().getDouble("Enchantments." + enchantName + ".Growth-Heart-Increase-" + enchantmentLevel)))
+                    .replace("{poisonTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)))
+                    .replace("{poisonLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
+                    .replace("{stunTimer}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
+                    .replace("{stunLevel}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getConfig().getInt("Enchantments." + enchantName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 
