@@ -458,11 +458,11 @@ Enchantments:
       Extractor-Particle-Toggle: true
       Extractor-Particle-1:
         #Particle Name (The particle that will spawn)
-        Extractor-Particle-Name-1: ASH
+        Extractor-Particle-Name-1: SOUL_FIRE_FLAME
         #Particle Amount (50 = 50 Particles)
-        Extractor-Particle-Amount-1: 100
+        Extractor-Particle-Amount-1: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        Extractor-Particle-Size-1: 1
+        Extractor-Particle-Size-1: 0.1
     #The amount of time the Stun effect will last. (Slowness and Weakness)
     Extractor-EXP-Multiplier-1: 1.5
     Extractor-EXP-Multiplier-2: 2

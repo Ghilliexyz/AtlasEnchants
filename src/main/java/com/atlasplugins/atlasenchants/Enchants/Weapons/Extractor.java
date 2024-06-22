@@ -1,6 +1,8 @@
 package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +36,8 @@ public class Extractor implements Listener {
     {
         Player p = (Player) e.getEntity().getKiller();
 
+        if(p == null){return;}
+
         // Check if the player has an enchanted sword
         if(hasWeapon(p)) {
             PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
@@ -61,6 +65,26 @@ public class Extractor implements Listener {
                             int finalEXP = (int) (droppedEXP * expMultiplier);
 
                             e.setDroppedExp(finalEXP);
+
+                            // GEt the location of the dead entity
+                            Location entityLoc = e.getEntity().getLocation();
+
+                            // Particle Settings Controlled Via Config
+                            // Get the bool to see if the user wants to display the particles
+                            boolean useParticles = main.getConfig().getBoolean("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-Toggle");
+                            // Get the Particle 1 Name
+                            Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Name-1"));
+                            // Get the Particle 1 Amount
+                            int particle1Amount = main.getConfig().getInt("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Amount-1");
+                            // Get the Particle 1 Size
+                            float particle1Size = (float) main.getConfig().getDouble("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Size-1");
+                            // Get the Particle 2 Name
+
+                            if(useParticles)
+                            {
+                                // Spawn particle effect
+                                e.getEntity().getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+                            }
                             //END ENCHANT LOGIC
                         }
                     }else {
