@@ -31,7 +31,7 @@ public class FreezingShot implements Listener {
         // Get the player's sword item
         ItemStack weapon = p.getInventory().getItemInMainHand();
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.FREEZING-SHOT.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.FREEZING-SHOT.Enchantment-Apply-Item");
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
     }
@@ -124,7 +124,7 @@ public class FreezingShot implements Listener {
 
     private void ApplyFreezingShotEffect(Entity entity, int enchantLevel, Player player) {
         if (entity instanceof LivingEntity) {
-            int freezingShotTimer = main.getConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-Freeze-Timer-" + enchantLevel);
+            int freezingShotTimer = main.getEnchantmentsConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-Freeze-Timer-" + enchantLevel);
             int freezeDurationTicks = freezingShotTimer * 20; // Convert seconds to ticks
 
             ((LivingEntity) entity).setAI(false); // Disable AI or apply the effect

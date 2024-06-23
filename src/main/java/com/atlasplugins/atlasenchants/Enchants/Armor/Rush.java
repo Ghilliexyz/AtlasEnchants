@@ -28,7 +28,7 @@ public class Rush implements Listener
         ItemStack armor = p.getInventory().getLeggings();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getConfig().getStringList("Enchantments.RUSH.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.RUSH.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return armor != null && armorMat.contains(armor.getType().toString());
@@ -69,8 +69,8 @@ public class Rush implements Listener
                                     || damagingEntity instanceof Player)
                             {
                                 // Get speed level and duration from the configuration
-                                int speedLvl = main.getConfig().getInt("Enchantments.RUSH.Rush-Speed-Amount-" + enchantLevel);
-                                int speedTimer = main.getConfig().getInt("Enchantments.RUSH.Rush-Speed-Timer-" + enchantLevel);
+                                int speedLvl = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-Speed-Amount-" + enchantLevel);
+                                int speedTimer = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-Speed-Timer-" + enchantLevel);
 
                                 // Ensure the timer is in ticks (20 ticks = 1 second)
                                 speedTimer = speedTimer * 20;

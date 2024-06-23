@@ -22,11 +22,11 @@ public class LootTableEvent implements Listener {
 
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
-        List<String> enchantments = main.getConfig().getConfigurationSection("Enchantments").getKeys(false).stream()
+        List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false).stream()
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
 
-        double chanceToSpawnEnchants = main.getConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
+        double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
 
         if (random.nextDouble() < chanceToSpawnEnchants)
         {
@@ -36,7 +36,7 @@ public class LootTableEvent implements Listener {
             for (String enchantment : enchantments)
             {
                 // Get the Enchantment Max Level
-                int enchantmentMaxLevel = main.getConfig().getInt("Enchantments." + enchantment + ".Enchantment-MaxLvl"); // Example enchantment level
+                int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + enchantment + ".Enchantment-MaxLvl"); // Example enchantment level
                 int enchantmentAmount = 1; // Example number of items to generate
 
                 // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
@@ -47,7 +47,7 @@ public class LootTableEvent implements Listener {
                 ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(enchantment, enchantmentLevel, enchantmentAmount, null);
 
                 // Get Enchantment Spawn Chance
-                double enchantItemChance = main.getConfig().getDouble("Enchantments." + enchantment + ".Enchantment-Spawn-Chance");
+                double enchantItemChance = main.getEnchantmentsConfig().getDouble("Enchantments." + enchantment + ".Enchantment-Spawn-Chance");
 
                 // Increase Count
                 count++;

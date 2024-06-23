@@ -19,7 +19,7 @@ public class Growth implements Listener {
 //
 //    public boolean isArmorMaterialValid(ItemStack item) {
 //        if (item == null) return false;
-//        List<String> armorMat = main.getConfig().getStringList("Enchantments.GROWTH.Enchantment-Apply-Item");
+//        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.GROWTH.Enchantment-Apply-Item");
 //        return armorMat.contains(item.getType().toString());
 //    }
 //
@@ -58,7 +58,7 @@ public class Growth implements Listener {
 //
 //                    if (enchantName.contains("GROWTH")) {
 //                        // PUT ENCHANT LOGIC HERE
-//                        double extraConfigHealth = main.getConfig().getDouble("Enchantments.GROWTH.Growth-Heart-Increase-" + enchantLevel);
+//                        double extraConfigHealth = main.getEnchantmentsConfig().getDouble("Enchantments.GROWTH.Growth-Heart-Increase-" + enchantLevel);
 //
 //                        if(equippedArmor.getType() == Material.AIR || unequippedArmor.getType() != Material.AIR){return;}
 //

@@ -1,0 +1,174 @@
+#
+#      /$$$$$$  /$$$$$$$$ /$$        /$$$$$$   /$$$$$$        /$$$$$$$$ /$$   /$$  /$$$$$$  /$$   /$$  /$$$$$$  /$$   /$$ /$$$$$$$$ /$$$$$$
+#     /$$__  $$|__  $$__/| $$       /$$__  $$ /$$__  $$      | $$_____/| $$$ | $$ /$$__  $$| $$  | $$ /$$__  $$| $$$ | $$|__  $$__//$$__  $$
+#    | $$  \ $$   | $$   | $$      | $$  \ $$| $$  \__/      | $$      | $$$$| $$| $$  \__/| $$  | $$| $$  \ $$| $$$$| $$   | $$  | $$  \__/
+#    | $$$$$$$$   | $$   | $$      | $$$$$$$$|  $$$$$$       | $$$$$   | $$ $$ $$| $$      | $$$$$$$$| $$$$$$$$| $$ $$ $$   | $$  |  $$$$$$
+#    | $$__  $$   | $$   | $$      | $$__  $$ \____  $$      | $$__/   | $$  $$$$| $$      | $$__  $$| $$__  $$| $$  $$$$   | $$   \____  $$
+#    | $$  | $$   | $$   | $$      | $$  | $$ /$$  \ $$      | $$      | $$\  $$$| $$    $$| $$  | $$| $$  | $$| $$\  $$$   | $$   /$$  \ $$
+#    | $$  | $$   | $$   | $$$$$$$$| $$  | $$|  $$$$$$/      | $$$$$$$$| $$ \  $$|  $$$$$$/| $$  | $$| $$  | $$| $$ \  $$   | $$  |  $$$$$$/
+#    |__/  |__/   |__/   |________/|__/  |__/ \______/       |________/|__/  \__/ \______/ |__/  |__/|__/  |__/|__/  \__/   |__/   \______/
+#
+#    This plugin was made by _Ghillie & Helix
+#
+#    Plugin Version 1.3
+#
+
+EnchantItems:
+  #Type of Item the Enchantments will be.
+  EnchantItem: ENCHANTED_BOOK
+  #Players will need to either have this permission or be Oped in order to use /giveenchant <player> <enchant> <level> <amount>
+  EnchantItem-GiveEnchant-Command-Permission: "permission.GiveEnchantment"
+  #Players will need to either have this permission or be Oped in order to use /reloadconfig
+  EnchantItem-ReloadConfig-Command-Permission: "permission.ReloadConfig"
+  #This chance determines if it should give the spawning enchant logic an attempt to spawn an enchantment
+  #Default Spawn Chance = 0.5 (0.5 = 50% chance that it will allow the spawning system to loop through all the enchants)
+  #if the spawning chance fails no enchantment attempt to be spawned.
+  EnchantItem-Spawn-Chance: 0.5
+
+#The sound that will play when the player applies a new enchant to an item.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+EnchantItemSounds:
+  #------------------APPLYING ENCHANT SOUNDS------------------#
+  #If True the custom enchant apply sound will play.
+  EnchantItem-Apply-Sound-Toggle: true
+  #The sound that plays when applying a custom enchant.
+  EnchantItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+  #The volume the sound that plays at when applying a custom enchant.
+  EnchantItem-Apply-Volume: 1
+  #The pitch the sound that plays at when applying a custom enchant.
+  EnchantItem-Apply-Pitch: 0.1
+  #------------------ENCHANT ALREADY APPLIED SOUNDS------------------#
+  #If True the custom enchant apply sound will play.
+  EnchantItem-AlreadyApplied-Sound-Toggle: true
+  #The sound that plays when a custom enchant is already applied.
+  EnchantItem-AlreadyApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
+  #The volume the sound that plays when a custom enchant is already applied.
+  EnchantItem-AlreadyApplied-Volume: 1
+  #The pitch the sound that plays when a custom enchant is already applied.
+  EnchantItem-AlreadyApplied-Pitch: 0.1
+  #------------------BLACK LISTED SOUNDS------------------#
+  #If True the custom enchant apply sound will play.
+  EnchantItem-Blacklisted-Sound-Toggle: true
+  #The sound that plays when a blacklisted enchant is found.
+  EnchantItem-Blacklisted-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound that plays when a blacklisted enchant is found.
+  EnchantItem-Blacklisted-Volume: 1
+  #The pitch the sound that plays when a blacklisted enchant is found.
+  EnchantItem-Blacklisted-Pitch: 0.1
+
+EnchantItemMessages:
+  #------------------APPLYING ENCHANT Message------------------#
+  #If True the success message will be sent to the player.
+  EnchantItem-Success-Message-Toggle: true
+  #The message that will be sent when applying a custom enchant to an item.
+  EnchantItem-Success-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Applied: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------ENCHANT ALREADY APPLIED Message------------------#
+  #If True the Already Applied message will be sent to the player.
+  EnchantItem-AlreadyApplied-Message-Toggle: true
+  #The message that will be sent when trying to apply an enchant to an item that has the same enchant already applied.
+  EnchantItem-AlreadyApplied-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+    -  ""
+    -  "&c● &7Because the item already has &c&l{existingEnchantName} &7applied."
+    -  ""
+    -  "&c● &7Existing Enchant: &c&l{existingEnchantName} &7has the same or lower level to &e&l{enchantName}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------BLACK LISTED Message------------------#
+  #If True blacklist system will work.
+  EnchantItem-Blacklisted-Toggle: true
+  #If True the blacklist message will be sent to the player.
+  EnchantItem-Blacklisted-Message-Toggle: true
+  #The message that will be sent when a blacklisted a custom enchant has been found on the item already.
+  EnchantItem-Blacklisted-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+    -  ""
+    -  "&c● &7Because there is a &c&lBlacklisted Enchant &7already."
+    -  ""
+    -  "&c● &7Blacklisted Enchant: &c&l{blackListedEnchantName} &7lvl: &c&l{blackListedEnchantLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+
+EnchantItem-GiveEnchant-Messages:
+  EnchantItem-GiveEnchant-NoPermissions-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You do not have the correct &cpermissions &7Or you are not &cOped"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-NotAPlayer-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7This command can only be used by players."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-Usage-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Usage: &c/giveenchant &e<player> <enchant> <level> <amount>"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-PlayerNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-EnchantmentNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Enchantment Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-InvalidLevel-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Level, Level must be between &e1 &7and &e{enchantMaxLvl}"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-LevelRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Level must be between &e1 &7and &e{enchantMaxLvl}"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-InvalidAmount-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-GiveEnchant-AmountRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+EnchantItem-ReloadConfig-Messages:
+  EnchantItem-ReloadConfig-NoPermissions-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You do not have the correct &cpermissions &7Or you are not &cOped"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-ReloadConfig-NotAPlayer-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7This command can only be used by players."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  EnchantItem-ReloadConfig-ConfigReloaded-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You have &aReloaded &7all the configs"
+    - ""
+    - "&c&m&l-----------------------------------------"

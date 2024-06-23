@@ -26,7 +26,7 @@ public class Leech implements Listener
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.LEECH.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.LEECH.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -60,7 +60,7 @@ public class Leech implements Listener
                         if (enchantName.contains("LEECH")) {
                             //PUT ENCHANT LOGIC HERE
                             if (e.getEntity() instanceof LivingEntity) {
-                                double healingPercent = main.getConfig().getDouble("Enchantments.LEECH.Leech-Healing-Amount-Percent-" + enchantLevel);
+                                double healingPercent = main.getEnchantmentsConfig().getDouble("Enchantments.LEECH.Leech-Healing-Amount-Percent-" + enchantLevel);
 
                                 double playerCurrentHealth = p.getHealth();
                                 double damageDealt = e.getDamage();

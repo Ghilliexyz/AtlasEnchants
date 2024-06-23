@@ -26,7 +26,7 @@ public class Hunter implements Listener
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.HUNTER.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.HUNTER.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -125,7 +125,7 @@ public class Hunter implements Listener
     private void ApplyDamage(LivingEntity entity, int enchantLevel, Player player)
     {
         if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
-            double extraDamage = main.getConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
+            double extraDamage = main.getEnchantmentsConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
 
             entity.damage(extraDamage);
         }

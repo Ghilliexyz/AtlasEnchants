@@ -51,7 +51,7 @@ public class ApplyCustomEnchant implements Listener {
             if (clickedItem == null || cursorItem == null) return;
 
             // Get the custom item material type from the config
-            Material enchantItem = Material.valueOf(main.getConfig().getString("EnchantItems.EnchantItem"));
+            Material enchantItem = Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem"));
 
             // If the item on the cursor is not the custom item, return
             if (cursorItem.getType() != enchantItem) return;
@@ -95,21 +95,21 @@ public class ApplyCustomEnchant implements Listener {
                                 int existingEnchantLevel = Integer.parseInt(existingEnchantParts[1]);
 
                                 // Get the bool to check if the user wants enable the blacklist System
-                                boolean blacklistSystem = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Toggle");
+                                boolean blacklistSystem = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-Blacklisted-Toggle");
 
                                 // Retrieve the blacklist from the config
-                                List<String> blacklist = main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants");
+                                List<String> blacklist = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants");
 
                                 // Get the bool to check if the user wants to show the blacklisted enchant message
-                                boolean blacklistSendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Message-Toggle");
+                                boolean blacklistSendMessage = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-Blacklisted-Message-Toggle");
 
                                 // Get apply sound via config.
-                                Sound blacklistedSound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItem-Blacklisted-Sound"));
-                                float blacklistedVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-Blacklisted-Volume");
-                                float blacklistedPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-Blacklisted-Pitch");
+                                Sound blacklistedSound = Sound.valueOf(main.getSettingsConfig().getString("EnchantItemSounds.EnchantItem-Blacklisted-Sound"));
+                                float blacklistedVolume = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-Blacklisted-Volume");
+                                float blacklistedPitch = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-Blacklisted-Pitch");
 
                                 // Get the bool to check if the user wants to play the blacklisted enchant sound
-                                boolean blacklistedPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItem-Blacklisted-Sound-Toggle");
+                                boolean blacklistedPlaySound = main.getSettingsConfig().getBoolean("EnchantItemSounds.EnchantItem-Blacklisted-Sound-Toggle");
 
                                 // Check if the user wants to enable the blacklist system
                                 if (blacklistSystem) {
@@ -127,7 +127,7 @@ public class ApplyCustomEnchant implements Listener {
                                         // Check if the user wants to show the blacklisted message
                                         if (blacklistSendMessage) {
                                             // Send blacklisted Message in chat
-                                            for (String BlacklistMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-Blacklisted-Message")) {
+                                            for (String BlacklistMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-Blacklisted-Message")) {
                                                 String message = Main.color(BlacklistMessage)
                                                         .replace("{enchantName}", formatEnchantName(enchantName))
                                                         .replace("{enchantLevel}", String.valueOf(enchantLevel))
@@ -141,15 +141,15 @@ public class ApplyCustomEnchant implements Listener {
                                 }
 
                                 // Get apply sound via config.
-                                Sound enchantAlreadyAppliedSound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItem-AlreadyApplied-Sound"));
-                                float enchantAlreadyAppliedVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-AlreadyApplied-Volume");
-                                float enchantAlreadyAppliedPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-AlreadyApplied-Pitch");
+                                Sound enchantAlreadyAppliedSound = Sound.valueOf(main.getSettingsConfig().getString("EnchantItemSounds.EnchantItem-AlreadyApplied-Sound"));
+                                float enchantAlreadyAppliedVolume = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-AlreadyApplied-Volume");
+                                float enchantAlreadyAppliedPitch = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-AlreadyApplied-Pitch");
 
                                 // Get the bool to check if the user wants to play the blacklisted enchant sound
-                                boolean enchantAlreadyAppliedPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItem-AlreadyApplied-Sound-Toggle");
+                                boolean enchantAlreadyAppliedPlaySound = main.getSettingsConfig().getBoolean("EnchantItemSounds.EnchantItem-AlreadyApplied-Sound-Toggle");
 
                                 // Get the bool to check if the user wants to show the successful enchant message
-                                boolean enchantAlreadyAppliedSendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-AlreadyApplied-Message-Toggle");
+                                boolean enchantAlreadyAppliedSendMessage = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-AlreadyApplied-Message-Toggle");
 
 
                                 // If the enchantment already exists and is of equal or higher level, do not apply the new one
@@ -166,7 +166,7 @@ public class ApplyCustomEnchant implements Listener {
                                         if (enchantAlreadyAppliedSendMessage)
                                         {
                                             // Send Already Applied Message in chat when applying a enchant.
-                                            for (String AlreadyApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-AlreadyApplied-Message")) {
+                                            for (String AlreadyApplyMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-AlreadyApplied-Message")) {
                                                 String message = Main.color(AlreadyApplyMessage)
                                                         .replace("{enchantName}", formatEnchantName(enchantName))
                                                         .replace("{enchantLevel}", String.valueOf(enchantLevel))
@@ -193,7 +193,7 @@ public class ApplyCustomEnchant implements Listener {
                             itemPDC.set(Main.customEnchantKeys, PersistentDataType.STRING, updatedEnchantData);
 
                             // Retrieve list of applicable item types from configuration
-                            List<String> applicableItems = main.getConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Apply-Item");
+                            List<String> applicableItems = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Apply-Item");
 
                             // Check if clickedItem type is in the list of applicable items
                             Material clickedItemType = clickedItem.getType();
@@ -202,7 +202,7 @@ public class ApplyCustomEnchant implements Listener {
                                 String formattedEnchantName = formatEnchantName(enchantName);
                                 String fakeEnchantLvl = ConvertToRomanNumeral(enchantLevel);
                                 // Create the enchantment lore text
-                                String enchantLore = Main.color(main.getConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore")
+                                String enchantLore = Main.color(main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore")
                                         .replace("{enchantmentName}", formattedEnchantName)
                                         .replace("{lvl}", fakeEnchantLvl));
                                 // Add the enchantment lore to the item's lore
@@ -213,12 +213,12 @@ public class ApplyCustomEnchant implements Listener {
                                 clickedItem.setItemMeta(itemMeta);
 
                                 // Get apply sound via config.
-                                Sound applySound = Sound.valueOf(main.getConfig().getString("EnchantItems.EnchantItemSounds.EnchantItem-Apply-Sound"));
-                                float applyVolume = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-Apply-Volume");
-                                float applyPitch = main.getConfig().getInt("EnchantItems.EnchantItemSounds.EnchantItem-Apply-Pitch");
+                                Sound applySound = Sound.valueOf(main.getSettingsConfig().getString("EnchantItemSounds.EnchantItem-Apply-Sound"));
+                                float applyVolume = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-Apply-Volume");
+                                float applyPitch = main.getSettingsConfig().getInt("EnchantItemSounds.EnchantItem-Apply-Pitch");
 
                                 // Get the bool to check if the user wants to play the successful enchant sound
-                                boolean applyPlaySound = main.getConfig().getBoolean("EnchantItems.EnchantItemSounds.EnchantItem-Apply-Sound-Toggle");
+                                boolean applyPlaySound = main.getSettingsConfig().getBoolean("EnchantItemSounds.EnchantItem-Apply-Sound-Toggle");
 
                                 // check if the user wants to plau the success sound
                                 if (applyPlaySound)
@@ -237,13 +237,13 @@ public class ApplyCustomEnchant implements Listener {
                                 invEvent.setCancelled(true);
 
                                 // Get the bool to check if the user wants to show the successful enchant message
-                                boolean ApplySendMessage = main.getConfig().getBoolean("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message-Toggle");
+                                boolean ApplySendMessage = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-Success-Message-Toggle");
 
                                 // check if the user wants to show the success message
                                 if (ApplySendMessage)
                                 {
-                                    // Send Success Message in chat when applying a enchant.
-                                    for (String ApplyMessage : main.getConfig().getStringList("EnchantItems.EnchantItemMessages.EnchantItem-Success-Message")) {
+                                    // Send Apply Message in chat when applying a enchant.
+                                    for (String ApplyMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-Success-Message")) {
                                         String message = Main.color(ApplyMessage)
                                                 .replace("{enchantName}", formatEnchantName(enchantName))
                                                 .replace("{enchantLevel}", String.valueOf(enchantLevel));

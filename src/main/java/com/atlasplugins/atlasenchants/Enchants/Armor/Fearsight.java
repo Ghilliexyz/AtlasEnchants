@@ -29,7 +29,7 @@ public class Fearsight implements Listener
         ItemStack armor = p.getInventory().getHelmet();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getConfig().getStringList("Enchantments.FEARSIGHT.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FEARSIGHT.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable helmet
         return armor != null && armorMat.contains(armor.getType().toString());
@@ -56,13 +56,13 @@ public class Fearsight implements Listener
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                        double enchantRadius = main.getConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + enchantLevel);
+                        double enchantRadius = main.getEnchantmentsConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + enchantLevel);
 
                         ListEntity = p.getNearbyEntities(enchantRadius, enchantRadius, enchantRadius);
 
-                        String hostileMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Hostile-GLOW-Colour").toUpperCase();
-                        String passiveMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase();
-                        String normalMobColor = main.getConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase();
+                        ChatColor hostileMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Hostile-GLOW-Colour").toUpperCase());
+                        ChatColor passiveMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase());
+                        ChatColor normalMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase());
 
                         if (enchantName.contains("FEARSIGHT"))
                         {
@@ -70,11 +70,11 @@ public class Fearsight implements Listener
                             for (Entity entity : ListEntity) {
                                 try {
                                     if (entity instanceof Monster || entity instanceof Flying || entity instanceof Slime || entity instanceof Boss) {
-                                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(hostileMobColor));
+                                        main.glowingEntities.setGlowing(entity, p, hostileMobColor);
                                     } else if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
-                                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(passiveMobColor));
+                                        main.glowingEntities.setGlowing(entity, p, passiveMobColor);
                                     } else if (entity instanceof Player || entity instanceof Villager || entity instanceof WanderingTrader || entity instanceof IronGolem) {
-                                        main.glowingEntities.setGlowing(entity, p, ChatColor.valueOf(normalMobColor));
+                                        main.glowingEntities.setGlowing(entity, p, normalMobColor);
                                     }
 
                                     // Remove glow if entity is out of range

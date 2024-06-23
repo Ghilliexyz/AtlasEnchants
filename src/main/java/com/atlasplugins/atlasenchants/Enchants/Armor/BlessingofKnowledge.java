@@ -12,7 +12,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +33,7 @@ public class BlessingofKnowledge implements Listener {
         if (helmet == null) {
             return false;
         }
-        List<String> armorMat = main.getConfig().getStringList("Enchantments.BLESSING-OF-KNOWLEDGE.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.BLESSING-OF-KNOWLEDGE.Enchantment-Apply-Item");
         return armorMat.contains(helmet.getType().toString());
     }
 
@@ -67,7 +66,7 @@ public class BlessingofKnowledge implements Listener {
                         if (enchantName.contains("BLESSING-OF-KNOWLEDGE")) {
                             LivingEntity entity = (LivingEntity) e.getEntity();
 
-                            int healthBarShowTimer = main.getConfig().getInt("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Timer-" + enchantLevel);
+                            int healthBarShowTimer = main.getEnchantmentsConfig().getInt("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Timer-" + enchantLevel);
                             int healthBarDurationTicks = healthBarShowTimer * 20; // Convert seconds to ticks
 
                             String entityName;
@@ -100,11 +99,11 @@ public class BlessingofKnowledge implements Listener {
 
                             double healthPercentage = (entityHealth / entity.getMaxHealth()) * 100;
 
-                            String healthStyleBelow10 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
-                            String healthStyleBelow25 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
-                            String healthStyleBelow50 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-50");
-                            String healthStyleBelow75 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-75");
-                            String healthStyleBelow100 = main.getConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-100");
+                            String healthStyleBelow10 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
+                            String healthStyleBelow25 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
+                            String healthStyleBelow50 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-50");
+                            String healthStyleBelow75 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-75");
+                            String healthStyleBelow100 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-100");
 
                             if(healthPercentage <= 10.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow10

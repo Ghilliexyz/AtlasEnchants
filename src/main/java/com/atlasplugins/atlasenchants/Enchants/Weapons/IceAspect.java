@@ -28,7 +28,7 @@ public class IceAspect implements Listener {
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.ICE-ASPECT.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.ICE-ASPECT.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -65,7 +65,7 @@ public class IceAspect implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
-                                int frozenTimer = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Frozen-Timer-" + enchantLevel);
+                                int frozenTimer = main.getEnchantmentsConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Frozen-Timer-" + enchantLevel);
 
                                 int finalFrozenTimer = frozenTimer * 20;
 
@@ -73,13 +73,13 @@ public class IceAspect implements Listener {
 
                                 // Particle Settings Controlled Via Config
                                 // Get the bool to see if the user wants to display the particles
-                                boolean useParticles = main.getConfig().getBoolean("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-Toggle");
+                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-Toggle");
                                 // Get the Particle 1 Name
-                                Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Name-1"));
+                                Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Name-1"));
                                 // Get the Particle 1 Amount
-                                int particle1Amount = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Amount-1");
+                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Amount-1");
                                 // Get the Particle 1 Size
-                                int particle1Size = main.getConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Size-1");
+                                int particle1Size = main.getEnchantmentsConfig().getInt("Enchantments.ICE-ASPECT.IceAspect-Particle-Settings.IceAspect-Particle-1.IceAspect-Particle-Size-1");
 
                                 if(useParticles) {
                                     stopParticleLoop(); // Reset the Particle Loop

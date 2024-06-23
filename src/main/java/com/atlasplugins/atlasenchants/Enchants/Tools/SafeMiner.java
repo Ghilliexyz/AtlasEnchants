@@ -25,7 +25,7 @@ public class SafeMiner implements Listener {
         ItemStack tool = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getConfig().getStringList("Enchantments.SAFE-MINER.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.SAFE-MINER.Enchantment-Apply-Item");
 
         // Check if the player has a tool in their hand
         return tool != null && armorMat.contains(tool.getType().toString());

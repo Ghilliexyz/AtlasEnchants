@@ -33,7 +33,7 @@ public class PoisonAspect implements Listener {
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.POISON-ASPECT.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.POISON-ASPECT.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -71,8 +71,8 @@ public class PoisonAspect implements Listener {
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
 
-                                int poisonTimer = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Timer-" + enchantLevel);
-                                int poisonLevel = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Level-" + enchantLevel);
+                                int poisonTimer = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Timer-" + enchantLevel);
+                                int poisonLevel = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Level-" + enchantLevel);
 
                                 int finalPoisonTimer = poisonTimer * 20;
 
@@ -84,19 +84,19 @@ public class PoisonAspect implements Listener {
 
                                 // Particle Settings Controlled Via Config
                                 // Get the bool to see if the user wants to display the particles
-                                boolean useParticles = main.getConfig().getBoolean("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-Toggle");
+                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-Toggle");
                                 // Get the Particle 1 Name
-                                Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Name-1"));
+                                Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Name-1"));
                                 // Get the Particle 1 Amount
-                                int particle1Amount = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Amount-1");
+                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Amount-1");
                                 // Get the Particle 1 Size
-                                float particle1Size = (float) main.getConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Size-1");
+                                float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Size-1");
                                 // Get the Particle 2 Name
-                                Particle particle2Name = Particle.valueOf(main.getConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Name-2"));
+                                Particle particle2Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Name-2"));
                                 // Get the Particle 2 Amount
-                                int particle2Amount = main.getConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Amount-2");
+                                int particle2Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Amount-2");
                                 // Get the Particle 2 Size
-                                float particle2Size = (float) main.getConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Size-2");
+                                float particle2Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Size-2");
 
                                 if(useParticles) {
                                     stopParticleLoop(); // Reset the Particle Loop

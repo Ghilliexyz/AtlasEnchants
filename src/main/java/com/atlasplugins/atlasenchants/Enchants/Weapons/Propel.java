@@ -27,7 +27,7 @@ public class Propel implements Listener
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.PROPEL.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.PROPEL.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -62,7 +62,7 @@ public class Propel implements Listener
                             // PUT ENCHANT LOGIC HERE
                             if (e.getEntity() instanceof LivingEntity) {
                                 // Get the block height from the configuration
-                                int blockHeight = main.getConfig().getInt("Enchantments.PROPEL.Propel-Height-Amount-" + enchantLevel);
+                                int blockHeight = main.getEnchantmentsConfig().getInt("Enchantments.PROPEL.Propel-Height-Amount-" + enchantLevel);
 
                                 // Get the entity to launch
                                 LivingEntity entityToLaunch = (LivingEntity) e.getEntity();

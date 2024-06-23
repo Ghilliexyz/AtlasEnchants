@@ -2,6 +2,7 @@ com\atlasplugins\atlasenchants\Enchants\Armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipEvent$EquipMethod.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener$1.class
+com\atlasplugins\atlasenchants\Commands\ReloadConfigsCommand.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
 com\atlasplugins\atlasenchants\Listeners\CreateCustomEnchant.class

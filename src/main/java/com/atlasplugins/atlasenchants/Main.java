@@ -1,10 +1,11 @@
 package com.atlasplugins.atlasenchants;
 
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
+import com.atlasplugins.atlasenchants.Commands.ReloadConfigsCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
-import com.atlasplugins.atlasenchants.Enchants.Armor.Growth;
+//import com.atlasplugins.atlasenchants.Enchants.Armor.Growth;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
 import com.atlasplugins.atlasenchants.Enchants.Tools.SafeMiner;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.*;
@@ -17,10 +18,13 @@ import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -35,6 +39,11 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static NamespacedKey customEnchantKeys;
 
+    private FileConfiguration enchantmentsConfig;
+    private File enchantmentsConfigFile;
+    private FileConfiguration settingsConfig;
+    private File settingsConfigFile;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -42,10 +51,9 @@ public final class Main extends JavaPlugin implements Listener {
 
         CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(this);
 
-        File file = new File(getDataFolder(), "config.yml");
-        if (!file.exists()) {
-            saveDefaultConfig();
-        }
+        // Load custom configs
+        loadEnchantmentsConfig();
+        loadSettingsConfig();
 
         glowingEntities = new GlowingEntities(this);
         glowingBlocks = new GlowingBlocks(this);
@@ -84,6 +92,7 @@ public final class Main extends JavaPlugin implements Listener {
         //All Commands
         this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
         this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
+        this.getCommand("reloadconfig").setExecutor(new ReloadConfigsCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
     }
 
@@ -100,5 +109,44 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Enabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
+    }
+    public FileConfiguration getEnchantmentsConfig() {
+        return enchantmentsConfig;
+    }
+
+    public void saveEnchantmentsConfig() {
+        try {
+            enchantmentsConfig.save(enchantmentsConfigFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadEnchantmentsConfig() {
+        enchantmentsConfigFile = new File(getDataFolder(), "enchantments.yml");
+        if (!enchantmentsConfigFile.exists()) {
+            saveResource("enchantments.yml", false);
+        }
+        enchantmentsConfig = YamlConfiguration.loadConfiguration(enchantmentsConfigFile);
+    }
+
+    public FileConfiguration getSettingsConfig() {
+        return settingsConfig;
+    }
+
+    public void saveSettingsConfig() {
+        try {
+            settingsConfig.save(settingsConfigFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadSettingsConfig() {
+        settingsConfigFile = new File(getDataFolder(), "settings.yml");
+        if (!settingsConfigFile.exists()) {
+            saveResource("settings.yml", false);
+        }
+        settingsConfig = YamlConfiguration.loadConfiguration(settingsConfigFile);
     }
 }

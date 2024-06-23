@@ -6,5 +6,7 @@ description: Custom Enchants
 commands:
   giveenchant:
     description: Gives a player any enchantment
+  reloadconfig:
+    description: Reloads all the configs
   test:
     description: Give Items to test

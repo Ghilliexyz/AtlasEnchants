@@ -30,7 +30,7 @@ public class Stunning implements Listener {
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.STUNNING.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.STUNNING.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
@@ -67,8 +67,8 @@ public class Stunning implements Listener {
 
                             //PUT ENCHANT LOGIC HERE
                             if (entity instanceof LivingEntity) {
-                                int poisonTimer = main.getConfig().getInt("Enchantments.STUNNING.Stunning-Stun-Timer-" + enchantLevel);
-                                int poisonLevel = main.getConfig().getInt("Enchantments.STUNNING.Stunning-Stun-Levels-" + enchantLevel);
+                                int poisonTimer = main.getEnchantmentsConfig().getInt("Enchantments.STUNNING.Stunning-Stun-Timer-" + enchantLevel);
+                                int poisonLevel = main.getEnchantmentsConfig().getInt("Enchantments.STUNNING.Stunning-Stun-Levels-" + enchantLevel);
 
                                 int finalPoisonTimer = poisonTimer * 20;
 
@@ -83,13 +83,13 @@ public class Stunning implements Listener {
 
                                 // Particle Settings Controlled Via Config
                                 // Get the bool to see if the user wants to display the particles
-                                boolean useParticles = main.getConfig().getBoolean("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-Toggle");
+                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-Toggle");
                                 // Get the Particle 1 Name
-                                Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Name-1"));
+                                Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Name-1"));
                                 // Get the Particle 1 Amount
-                                int particle1Amount = main.getConfig().getInt("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Amount-1");
+                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Amount-1");
                                 // Get the Particle 1 Size
-                                int particle1Size = main.getConfig().getInt("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Size-1");
+                                int particle1Size = main.getEnchantmentsConfig().getInt("Enchantments.STUNNING.Stunning-Particle-Settings.Stunning-Particle-1.Stunning-Particle-Size-1");
 
                                 if(useParticles) {
                                     stopParticleLoop(); // Reset the Particle Loop

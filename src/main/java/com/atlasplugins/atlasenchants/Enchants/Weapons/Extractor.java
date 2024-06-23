@@ -58,7 +58,7 @@ public class Extractor implements Listener {
 
                         if (enchantName.contains("EXTRACTOR")) {
                             //PUT ENCHANT LOGIC HERE
-                            double expMultiplier = main.getConfig().getDouble("Enchantments.EXTRACTOR.Extractor-EXP-Multiplier-" + enchantLevel);
+                            double expMultiplier = main.getEnchantmentsConfig().getDouble("Enchantments.EXTRACTOR.Extractor-EXP-Multiplier-" + enchantLevel);
 
                             int droppedEXP = e.getDroppedExp();
 
@@ -71,13 +71,13 @@ public class Extractor implements Listener {
 
                             // Particle Settings Controlled Via Config
                             // Get the bool to see if the user wants to display the particles
-                            boolean useParticles = main.getConfig().getBoolean("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-Toggle");
+                            boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-Toggle");
                             // Get the Particle 1 Name
-                            Particle particle1Name = Particle.valueOf(main.getConfig().getString("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Name-1"));
+                            Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Name-1"));
                             // Get the Particle 1 Amount
-                            int particle1Amount = main.getConfig().getInt("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Amount-1");
+                            int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Amount-1");
                             // Get the Particle 1 Size
-                            float particle1Size = (float) main.getConfig().getDouble("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Size-1");
+                            float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.EXTRACTOR.Extractor-Particle-Settings.Extractor-Particle-1.Extractor-Particle-Size-1");
                             // Get the Particle 2 Name
 
                             if(useParticles)
