@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/CreateCustomEnchant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Listeners/LootTableEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Weapons/Extractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Weapons/Extractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Weapons/PoisonAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Enchants/Weapons/PoisonAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />

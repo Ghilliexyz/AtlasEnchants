@@ -92,8 +92,6 @@ public class Fearsight implements Listener
                         System.out.println("Unexpected enchantment format: " + enchantment);
                     }
                 }
-            } else {
-                System.out.println("No enchantments found on the item.");
             }
         } else {
             // If no helmet is worn, remove glow from all entities

@@ -18,6 +18,10 @@
 EnchantItems:
   #Type of Item the Enchantments will be.
   EnchantItem: ENCHANTED_BOOK
+  #This chance determines if it should give the spawning enchant logic an attempt to spawn an enchantment
+  #Default Spawn Chance = 0.5 (0.5 = 50% chance that it will allow the spawning system to loop through all the enchants)
+  #if the spawning chance fails no enchantment attempt to be spawned.
+  EnchantItem-Spawn-Chance: 0.5
   #The sound that will play when the player applies a new enchant to an item.
   #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
   EnchantItemSounds:
@@ -95,6 +99,8 @@ Enchantments:
   FEARSIGHT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.1
     #The name of the Enchantment.
     Enchantment-Title: "&c&lGODLY &7FearSight"
     #Lore for the Enchantment.
@@ -139,6 +145,8 @@ Enchantments:
   BLESSING-OF-KNOWLEDGE:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.05
     #The name of the Enchantment.
     Enchantment-Title: "&c&lGODLY &7Blessing of Knowledge"
     #Lore for the Enchantment.
@@ -184,6 +192,8 @@ Enchantments:
   LEECH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.15
     #The name of the Enchantment.
     Enchantment-Title: "&6&lLEGENDARY &7Leech"
     #Lore for the Enchantment.
@@ -225,6 +235,8 @@ Enchantments:
   GROWTH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.15
     #The name of the Enchantment.
     Enchantment-Title: "&6&lLEGENDARY &7Leech"
     #Lore for the Enchantment.
@@ -285,6 +297,8 @@ Enchantments:
   SAFE-MINER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.15
     #The name of the Enchantment.
     Enchantment-Title: "&6&lLEGENDARY &7Safe Miner"
     #Lore for the Enchantment.
@@ -321,6 +335,8 @@ Enchantments:
   RUSH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.3
     #The name of the Enchantment.
     Enchantment-Title: "&d&lEPIC &7Rush"
     #Lore for the Enchantment.
@@ -360,6 +376,8 @@ Enchantments:
   STUNNING:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.3
     #The name of the Enchantment.
     Enchantment-Title: "&d&lEPIC &7Stunning"
     #Lore for the Enchantment.
@@ -420,6 +438,8 @@ Enchantments:
   EXTRACTOR:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.3
     #The name of the Enchantment.
     Enchantment-Title: "&d&lEPIC &7Extractor"
     #Lore for the Enchantment.
@@ -470,6 +490,8 @@ Enchantments:
   HUNTER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.5
     #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Hunter"
     #Lore for the Enchantment.
@@ -511,6 +533,8 @@ Enchantments:
   PROPEL:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.5
     #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Propel"
     #Lore for the Enchantment.
@@ -548,6 +572,8 @@ Enchantments:
   FREEZING-SHOT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.5
     #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Freezing Shot"
     #Lore for the Enchantment.
@@ -582,6 +608,8 @@ Enchantments:
   POISON-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.5
     #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Poison Aspect"
     #Lore for the Enchantment.
@@ -649,6 +677,8 @@ Enchantments:
   ICE-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.5
     #The name of the Enchantment.
     Enchantment-Title: "&b&lRARE &7Ice Aspect"
     #Lore for the Enchantment.

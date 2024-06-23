@@ -66,7 +66,7 @@ public class Extractor implements Listener {
 
                             e.setDroppedExp(finalEXP);
 
-                            // GEt the location of the dead entity
+                            // Get the location of the dead entity
                             Location entityLoc = e.getEntity().getLocation();
 
                             // Particle Settings Controlled Via Config

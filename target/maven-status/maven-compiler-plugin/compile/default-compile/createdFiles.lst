@@ -4,6 +4,7 @@ com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener$1.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
+com\atlasplugins\atlasenchants\Listeners\CreateCustomEnchant.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\PoisonAspect.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipEvent.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Propel.class
@@ -22,4 +23,5 @@ com\atlasplugins\atlasenchants\Enchants\Weapons\IceAspect$1.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Stunning.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipEvent$ArmorType.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Growth.class
+com\atlasplugins\atlasenchants\Listeners\LootTableEvent.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Fearsight.class

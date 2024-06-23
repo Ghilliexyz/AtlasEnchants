@@ -2,6 +2,7 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Commands\TestCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Tools\SafeMiner.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Armor\Rush.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Listeners\CreateCustomEnchant.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Weapons\Stunning.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Weapons\Propel.java
@@ -9,6 +10,7 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Weapons\FreezingShot.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Armor\Fearsight.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Weapons\Leech.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Listeners\LootTableEvent.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Armor\BlessingofKnowledge.java

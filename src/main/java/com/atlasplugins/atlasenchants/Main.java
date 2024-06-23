@@ -10,6 +10,8 @@ import com.atlasplugins.atlasenchants.Enchants.Tools.SafeMiner;
 import com.atlasplugins.atlasenchants.Enchants.Weapons.*;
 import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
 import com.atlasplugins.atlasenchants.Listeners.ArmorEquipListener;
+import com.atlasplugins.atlasenchants.Listeners.CreateCustomEnchant;
+import com.atlasplugins.atlasenchants.Listeners.LootTableEvent;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import org.bukkit.Bukkit;
@@ -37,6 +39,8 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+
+        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(this);
 
         File file = new File(getDataFolder(), "config.yml");
         if (!file.exists()) {
@@ -73,14 +77,14 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Extractor(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
+        this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         //All Commands
         this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
         this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
-
-        //Custom Lister/Events
-        getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
     }
 
     @Override
