@@ -25,7 +25,7 @@ public class Extractor implements Listener {
         ItemStack weapon = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> weaponMat = main.getConfig().getStringList("Enchantments.EXTRACTOR.Enchantment-Apply-Item");
+        List<String> weaponMat = main.getEnchantmentsConfig().getStringList("Enchantments.EXTRACTOR.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable sword
         return weapon != null && weaponMat.contains(weapon.getType().toString());
