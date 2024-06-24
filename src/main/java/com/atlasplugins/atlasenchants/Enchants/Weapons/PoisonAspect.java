@@ -2,6 +2,7 @@ package com.atlasplugins.atlasenchants.Enchants.Weapons;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Color;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -117,8 +118,12 @@ public class PoisonAspect implements Listener {
                                             // Spawn particle effect
                                             entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
                                             entity.getWorld().spawnParticle(particle2Name, entityLoc, particle2Amount, 1, 1, 1, particle2Size);
-//                                        entity.getWorld().spawnParticle(Particle.SOUL, entityLoc, 50, 1, 1, 1, 0.1);
-//                                        entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, entityLoc, 15, 1, 1, 1, 0.1);
+
+                                            // check if the entity has died and if so then stop the particles
+                                            if(((LivingEntity) entity).getHealth() <= 0)
+                                            {
+                                                stopParticleLoop();
+                                            }
 
                                             count++;
                                         }

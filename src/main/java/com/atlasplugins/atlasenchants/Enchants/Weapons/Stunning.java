@@ -110,6 +110,12 @@ public class Stunning implements Listener {
                                             // Spawn particle effect
                                             entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
 
+                                            // check if the entity has died and if so then stop the particles
+                                            if(((LivingEntity) entity).getHealth() <= 0)
+                                            {
+                                                stopParticleLoop();
+                                            }
+
                                             count++;
                                         }
                                     };
