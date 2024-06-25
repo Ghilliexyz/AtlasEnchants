@@ -15,7 +15,6 @@ import com.atlasplugins.atlasenchants.Listeners.CreateCustomEnchant;
 import com.atlasplugins.atlasenchants.Listeners.LootTableEvent;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -96,10 +95,9 @@ public final class Main extends JavaPlugin implements Listener {
         this.getCommand("reloadconfig").setExecutor(new ReloadConfigsCommand(this));
         this.getCommand("test").setExecutor(new TestCommand(this));
 
-
-        //BStats Info
-        int pluginId = 22376; // <-- Replace with the id of your plugin!
-        Metrics metrics = new Metrics(this, pluginId);
+        // BStats Info
+//        int pluginId = 22376; // <-- Replace with the id of your plugin!
+//        Metrics metrics = new Metrics(this, pluginId);
     }
 
     @Override

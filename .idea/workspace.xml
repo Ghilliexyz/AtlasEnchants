@@ -9,6 +9,11 @@
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Commands/GiveEnchantCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.0.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,21 +45,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.AtlasEnchants [install].executor": "Run",
-    "Maven.AtlasEnchants package.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ItsBa/Downloads/creeper-boss-1967.jar",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.36091954",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.AtlasEnchants [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.AtlasEnchants package.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ItsBa/Downloads/creeper-boss-1967.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Tools" />
