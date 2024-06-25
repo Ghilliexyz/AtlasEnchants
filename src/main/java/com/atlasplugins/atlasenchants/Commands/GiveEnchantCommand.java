@@ -22,9 +22,9 @@ public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        String permissiongString = main.getSettingsConfig().getString("EnchantItems.EnchantItem-GiveEnchant-Command-Permission");
-        if(permissiongString == null) {return true;}
-        if(!sender.hasPermission(permissiongString) || !sender.isOp())
+        String permissionString = main.getSettingsConfig().getString("EnchantItems.EnchantItem-GiveEnchant-Command-Permission");
+        if(permissionString == null) {return true;}
+        if(!sender.hasPermission(permissionString) || !sender.isOp())
         {
             // Send NoPermissions Message in chat when called.
             for (String NoPermMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-NoPermissions-Message")) {
