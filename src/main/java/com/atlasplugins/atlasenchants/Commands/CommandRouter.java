@@ -66,13 +66,16 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         }
 
         String permission = target.getPermission();
-        if (permission != null && !permission.isEmpty() && !sender.hasPermission(permission)) {
-            // Send noPermission Message in chat when called.
-            for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
-                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, noPermission) : noPermission;
-                sender.sendMessage(Main.color(withPAPISet));
+        if (permission != null && !permission.isEmpty()) {
+            // Check if the sender does not have the permission and is not an operator
+            if (!sender.hasPermission(permission) && !sender.isOp()) {
+                // Send noPermission Message in chat when called.
+                for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
+                    String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, noPermission) : noPermission;
+                    sender.sendMessage(Main.color(withPAPISet));
+                }
+                return true;
             }
-            return true;
         }
 
         target.execute(main, sender, search, Arrays.asList(Arrays.copyOfRange(args, 1, args.length)));

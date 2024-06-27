@@ -19,10 +19,10 @@ commands:
 permissions:
   atlasenchants.help:
     description: Permission needed to use the help command.
-    default: true
+    default: false
   atlasenchants.reloadconfig:
     description: Permission needed to use the reload command.
-    default: true
+    default: false
   atlasenchants.giveenchant:
     description: Permission needed to use the give enchant command.
-    default: true
+    default: false
