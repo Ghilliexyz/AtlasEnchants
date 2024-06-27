@@ -1,11 +1,9 @@
 package com.atlasplugins.atlasenchants.Enchants.Armor;
 
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.Effect;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;

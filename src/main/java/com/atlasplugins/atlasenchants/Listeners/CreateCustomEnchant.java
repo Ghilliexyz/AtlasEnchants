@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.Listeners;
 
 import com.atlasplugins.atlasenchants.Main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -24,7 +25,9 @@ public class CreateCustomEnchant implements Listener {
         ItemStack enchant = new ItemStack(Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem")));
         ItemMeta enchantMeta = enchant.getItemMeta();
 
-        enchantMeta.setDisplayName(Main.color(main.getEnchantmentsConfig().getString("Enchantments." + enchantmentName + ".Enchantment-Title"))
+        String displayName = main.getEnchantmentsConfig().getString("Enchantments." + enchantmentName + ".Enchantment-Title");
+        String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(p, displayName) : displayName;
+        enchantMeta.setDisplayName(Main.color(withPAPISet)
                 .replace("{lvl}", String.valueOf(enchantmentLevel))
                 .replace("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")))
                 .replace("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)))
@@ -47,7 +50,8 @@ public class CreateCustomEnchant implements Listener {
         ArrayList<String> enchantmentLore = new ArrayList<>();
         List<String> loreList = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Lore");
         for (String lore : loreList) {
-            enchantmentLore.add(Main.color(lore)
+            String withPAPISet1 = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(p, lore) : lore;
+            enchantmentLore.add(Main.color(withPAPISet1)
                     .replace("{lvl}", String.valueOf(enchantmentLevel))
                     .replace("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")))
                     .replace("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)))

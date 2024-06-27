@@ -2,150 +2,144 @@ package com.atlasplugins.atlasenchants.Commands;
 
 import com.atlasplugins.atlasenchants.Listeners.CreateCustomEnchant;
 import com.atlasplugins.atlasenchants.Main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GiveEnchantCommand implements CommandExecutor, TabCompleter {
+public class GiveEnchantCommand extends AbstractCommand{
 
-    private Main main;
+    private final Main main;
     public GiveEnchantCommand(Main main) {this.main = main;}
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        String permissiongString = main.getSettingsConfig().getString("EnchantItems.EnchantItem-GiveEnchant-Command-Permission");
-        if(permissiongString == null) {return true;}
-        if(!sender.hasPermission(permissiongString) || !sender.isOp())
-        {
-            // Send NoPermissions Message in chat when called.
-            for (String NoPermMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-NoPermissions-Message")) {
-                String message = Main.color(NoPermMessage);
-                sender.sendMessage(message);
-            }
-            return true;
-        }
-
-        if (!(sender instanceof Player)) {
-            // Send NotAPlayer Message in chat when called.
-            for (String NotAPlayerMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-NotAPlayer-Message")) {
-                String message = Main.color(NotAPlayerMessage);
-                sender.sendMessage(message);
-            }
-            return true;
-        }
-
-        if (args.length < 4) {
+    public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
+        if (args.size() < 4) {
             // Send Usage Message in chat when called.
-            for (String UsageMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-Usage-Message")) {
-                String message = Main.color(UsageMessage);
+            for (String UsageMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-Usage-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, UsageMessage) : UsageMessage;
+                String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
-        Player player = Bukkit.getPlayer(args[0]);
+        Player player = Bukkit.getPlayer(args.get(0));
         if (player == null) {
             // Send PlayerNotFound Message in chat when called.
-            for (String PlayerNotFoundMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-PlayerNotFound-Message")) {
-                String message = Main.color(PlayerNotFoundMessage);
+            for (String PlayerNotFoundMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-PlayerNotFound-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, PlayerNotFoundMessage) : PlayerNotFoundMessage;
+                String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
-        String enchantmentName = args[1].toUpperCase();
+        String enchantmentName = args.get(1).toUpperCase();
         if (!main.getEnchantmentsConfig().contains("Enchantments." + enchantmentName)) {
             // Send EnchantmentNotFound Message in chat when called.
-            for (String EnchantmentNotFoundMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-EnchantmentNotFound-Message")) {
-                String message = Main.color(EnchantmentNotFoundMessage);
+            for (String EnchantmentNotFoundMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-EnchantmentNotFound-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, EnchantmentNotFoundMessage) : EnchantmentNotFoundMessage;
+                String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
         int enchantmentLevel;
         int enchantMaxLvl = main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Enchantment-MaxLvl");
         try {
-            enchantmentLevel = Integer.parseInt(args[2]);
+            enchantmentLevel = Integer.parseInt(args.get(2));
         } catch (NumberFormatException e) {
             // Send InvalidLevel Message in chat when called.
-            for (String InvalidLevelMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-InvalidLevel-Message")) {
-                String message = Main.color(InvalidLevelMessage)
+            for (String InvalidLevelMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-InvalidLevel-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, InvalidLevelMessage) : InvalidLevelMessage;
+                String message = Main.color(withPAPISet)
                         .replace("{enchantMaxLvl}", String.valueOf(enchantMaxLvl));
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
         if (enchantmentLevel < 1 || enchantmentLevel > enchantMaxLvl) {
             // Send LevelRange Message in chat when called.
-            for (String LevelRangeMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-LevelRange-Message")) {
-                String message = Main.color(LevelRangeMessage)
+            for (String LevelRangeMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-LevelRange-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, LevelRangeMessage) : LevelRangeMessage;
+                String message = Main.color(withPAPISet)
                         .replace("{enchantMaxLvl}", String.valueOf(enchantMaxLvl));
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
         int enchantmentAmount;
         try {
-            enchantmentAmount = Integer.parseInt(args[3]);
+            enchantmentAmount = Integer.parseInt(args.get(3));
         } catch (NumberFormatException e) {
             // Send InvalidAmount Message in chat when called.
-            for (String InvalidAmountMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-InvalidAmount-Message")) {
-                String message = Main.color(InvalidAmountMessage);
+            for (String InvalidAmountMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-InvalidAmount-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, InvalidAmountMessage) : InvalidAmountMessage;
+                String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
         if (enchantmentAmount < 1 || enchantmentAmount > 64) {
             // Send AmountRange Message in chat when called.
-            for (String AmountRangeMessage : main.getSettingsConfig().getStringList("EnchantItem-GiveEnchant-Messages.EnchantItem-GiveEnchant-AmountRange-Message")) {
-                String message = Main.color(AmountRangeMessage);
+            for (String AmountRangeMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveEnchant-AmountRange-Message")) {
+                String withPAPISet = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders((Player) sender, AmountRangeMessage) : AmountRangeMessage;
+                String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
             }
-            return true;
+            return;
         }
 
         // Create an instance of CreateCustomEnchant and call the method
         CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
         createCustomEnchant.CreateCustomEnchantmentItem(enchantmentName, enchantmentLevel, enchantmentAmount, player);
-
-        return true;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (args.length == 2) { // Tab completing the second argument (enchant name)
-            String input = args[1].toUpperCase(); // Current input typed by the player
+    public void complete(JavaPlugin plugin, CommandSender sender, String label, List<String> args, List<String> completions) {
+        if (args.size() == 1) { // Tab completing the first argument (player name)
+            String input = args.get(0).toLowerCase(); // Current input typed by the player
+            Bukkit.getServer().getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .filter(name -> name.toLowerCase().startsWith(input))
+                    .forEach(completions::add);
+        } else if (args.size() == 2) { // Tab completing the second argument (enchant name)
+            String input = args.get(1).toUpperCase(); // Current input typed by the player
             List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false).stream()
                     .map(String::toUpperCase)
-                    .filter(name -> name.toUpperCase().contains(input))
+                    .filter(name -> name.contains(input))
                     .collect(Collectors.toList());
-            return enchantments.isEmpty() ? null : enchantments;
-        } else if (args.length == 3) { // Tab completing the third argument (level)
-            String enchantName = args[1].toUpperCase();
+            completions.addAll(enchantments);
+        } else if (args.size() == 3) { // Tab completing the third argument (level)
+            String enchantName = args.get(1).toUpperCase();
             if (main.getEnchantmentsConfig().contains("Enchantments." + enchantName)) {
                 int maxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + enchantName + ".Enchantment-MaxLvl");
-                List<String> levels = new ArrayList<>();
                 for (int i = 1; i <= maxLevel; i++) {
-                    levels.add(String.valueOf(i));
+                    completions.add(String.valueOf(i));
                 }
-                return levels;
             }
-        } else if (args.length == 4) { // Tab completing the fourth argument (amount)
-            return Collections.singletonList("[1-64]");
+        } else if (args.size() == 4) { // Tab completing the fourth argument (amount)
+            completions.add("[1-64]");
         }
-        return null; // Return null if no tab completions are found
+    }
+
+    @Override
+    public List<String> getLabels() {
+        return Collections.singletonList("giveenchant");
+    }
+
+    @Override
+    public String getPermission() {
+        return "atlasenchants.giveenchant";
     }
 }

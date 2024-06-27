@@ -1,16 +1,8 @@
 package com.atlasplugins.atlasenchants.Enchants.Armor;
 
-import com.atlasplugins.atlasenchants.Listeners.ArmorEquipEvent;
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
 
 public class Growth implements Listener {
 

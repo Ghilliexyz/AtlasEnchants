@@ -1,9 +1,10 @@
+com\atlasplugins\atlasenchants\Commands\HelpCommand.class
 com\atlasplugins\atlasenchants\Enchants\Armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipEvent$EquipMethod.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Hunter.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener$1.class
-com\atlasplugins\atlasenchants\Commands\ReloadConfigsCommand.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipListener.class
+com\atlasplugins\atlasenchants\Commands\AbstractCommand.class
 com\atlasplugins\atlasenchants\Listeners\ApplyCustomEnchant.class
 com\atlasplugins\atlasenchants\Listeners\CreateCustomEnchant.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\PoisonAspect.class
@@ -18,8 +19,10 @@ com\atlasplugins\atlasenchants\Enchants\Weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\Commands\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Enchants\Armor\Rush.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Extractor.class
+com\atlasplugins\atlasenchants\Commands\ReloadCommand.class
 com\atlasplugins\atlasenchants\Enchants\Tools\SafeMiner.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Leech.class
+com\atlasplugins\atlasenchants\Commands\CommandRouter.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\IceAspect$1.class
 com\atlasplugins\atlasenchants\Enchants\Weapons\Stunning.class
 com\atlasplugins\atlasenchants\Listeners\ArmorEquipEvent$ArmorType.class

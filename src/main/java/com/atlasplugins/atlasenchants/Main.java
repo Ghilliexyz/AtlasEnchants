@@ -1,7 +1,8 @@
 package com.atlasplugins.atlasenchants;
 
+import com.atlasplugins.atlasenchants.Commands.CommandRouter;
 import com.atlasplugins.atlasenchants.Commands.GiveEnchantCommand;
-import com.atlasplugins.atlasenchants.Commands.ReloadConfigsCommand;
+import com.atlasplugins.atlasenchants.Commands.ReloadCommand;
 import com.atlasplugins.atlasenchants.Commands.TestCommand;
 import com.atlasplugins.atlasenchants.Enchants.Armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
@@ -21,6 +22,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -44,8 +46,20 @@ public final class Main extends JavaPlugin implements Listener {
     private FileConfiguration settingsConfig;
     private File settingsConfigFile;
 
+    private CommandRouter commandRouter;
+
+    private boolean isPlaceholderAPIPresent;
+
     @Override
     public void onEnable() {
+
+        // check if placeholderAPI is present on the server.
+        isPlaceholderAPIPresent = checkForPlaceholderAPI();
+        if (isPlaceholderAPIPresent) {
+            getLogger().info("PlaceholderAPI found, placeholders will be used.");
+        } else {
+            getLogger().info("PlaceholderAPI not found, placeholders will not be used.");
+        }
         // Plugin startup logic
         instance = this;
 
@@ -89,11 +103,11 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
-        //All Commands
-        this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
-        this.getCommand("giveenchant").setTabCompleter(new GiveEnchantCommand(this));
-        this.getCommand("reloadconfig").setExecutor(new ReloadConfigsCommand(this));
-        this.getCommand("test").setExecutor(new TestCommand(this));
+
+        // Register commands
+        this.commandRouter = new CommandRouter(this);
+        getCommand("atlasenchants").setExecutor(commandRouter);
+        getCommand("atlasenchants").setTabCompleter(commandRouter);
 
         // BStats Info
 //        int pluginId = 22376; // <-- Replace with the id of your plugin!
@@ -114,6 +128,16 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Enabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
     }
+
+    private boolean checkForPlaceholderAPI() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+        return plugin != null && plugin.isEnabled();
+    }
+
+    public boolean isPlaceholderAPIPresent() {
+        return checkForPlaceholderAPI();
+    }
+
     public FileConfiguration getEnchantmentsConfig() {
         return enchantmentsConfig;
     }

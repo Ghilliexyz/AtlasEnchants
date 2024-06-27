@@ -1,11 +1,9 @@
 package com.atlasplugins.atlasenchants.Listeners;
 
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.Bukkit;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.Statistic;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,17 +21,34 @@ import java.util.logging.Level;
 public class ApplyCustomEnchant implements Listener {
 
     private Main main;
-    public ApplyCustomEnchant(Main main) {
-        this.main = main;
-    }
+    public ApplyCustomEnchant(Main main) {this.main = main;}
 
     private String ConvertToRomanNumeral(int number) {
-        if (number < 1 || number > 10) {
-            System.out.println("Invalid enchantment level: " + number);
+        if (number < 1 || number > 1000) {
+            System.out.println("Invalid number: " + number);
             return null;
         }
-        String[] numerals = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        return numerals[number - 1];
+
+        // Arrays for the different parts of Roman numerals
+        String[] thousands = {"", "M", "MM", "MMM"}; // 1 to 1000
+        String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"}; // 1 to 900
+        String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"}; // 1 to 90
+        String[] units = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"}; // 1 to 9
+
+        // Extract each part of the number
+        int thousandsDigit = number / 1000;
+        int hundredsDigit = (number % 1000) / 100;
+        int tensDigit = (number % 100) / 10;
+        int unitsDigit = number % 10;
+
+        // Build the Roman numeral
+        StringBuilder romanNumeral = new StringBuilder();
+        romanNumeral.append(thousands[thousandsDigit]);
+        romanNumeral.append(hundreds[hundredsDigit]);
+        romanNumeral.append(tens[tensDigit]);
+        romanNumeral.append(units[unitsDigit]);
+
+        return romanNumeral.toString();
     }
 
     @EventHandler
@@ -128,7 +143,8 @@ public class ApplyCustomEnchant implements Listener {
                                         if (blacklistSendMessage) {
                                             // Send blacklisted Message in chat
                                             for (String BlacklistMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-Blacklisted-Message")) {
-                                                String message = Main.color(BlacklistMessage)
+                                                String withPAPISet1 = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(player, BlacklistMessage) : BlacklistMessage;
+                                                String message = Main.color(withPAPISet1)
                                                         .replace("{enchantName}", formatEnchantName(enchantName))
                                                         .replace("{enchantLevel}", String.valueOf(enchantLevel))
                                                         .replace("{blackListedEnchantName}", formatEnchantName(existingEnchantName))
@@ -167,7 +183,8 @@ public class ApplyCustomEnchant implements Listener {
                                         {
                                             // Send Already Applied Message in chat when applying a enchant.
                                             for (String AlreadyApplyMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-AlreadyApplied-Message")) {
-                                                String message = Main.color(AlreadyApplyMessage)
+                                                String withPAPISet2 = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(player, AlreadyApplyMessage) : AlreadyApplyMessage;
+                                                String message = Main.color(withPAPISet2)
                                                         .replace("{enchantName}", formatEnchantName(enchantName))
                                                         .replace("{enchantLevel}", String.valueOf(enchantLevel))
                                                         .replace("{existingEnchantName}", formatEnchantName(existingEnchantName))
@@ -202,9 +219,11 @@ public class ApplyCustomEnchant implements Listener {
                                 String formattedEnchantName = formatEnchantName(enchantName);
                                 String fakeEnchantLvl = ConvertToRomanNumeral(enchantLevel);
                                 // Create the enchantment lore text
-                                String enchantLore = Main.color(main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore")
+                                String enchantLore1 = Main.color(main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore"));
+                                String withPAPISet4 = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(player, enchantLore1) : enchantLore1;
+                                String enchantLore = Main.color(withPAPISet4)
                                         .replace("{enchantmentName}", formattedEnchantName)
-                                        .replace("{lvl}", fakeEnchantLvl));
+                                        .replace("{lvl}", fakeEnchantLvl);
                                 // Add the enchantment lore to the item's lore
                                 lore.add(enchantLore);
                                 itemMeta.setLore(lore);
@@ -244,7 +263,8 @@ public class ApplyCustomEnchant implements Listener {
                                 {
                                     // Send Apply Message in chat when applying a enchant.
                                     for (String ApplyMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-Success-Message")) {
-                                        String message = Main.color(ApplyMessage)
+                                        String withPAPISet3 = main.isPlaceholderAPIPresent() ? PlaceholderAPI.setPlaceholders(player, ApplyMessage) : ApplyMessage;
+                                        String message = Main.color(withPAPISet3)
                                                 .replace("{enchantName}", formatEnchantName(enchantName))
                                                 .replace("{enchantLevel}", String.valueOf(enchantLevel));
                                         player.sendMessage(message);

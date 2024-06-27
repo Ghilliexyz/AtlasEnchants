@@ -1,12 +1,28 @@
 name: AtlasEnchants
-version: '${project.version}'
 main: com.atlasplugins.atlasenchants.Main
+
+version: '${project.version}'
+authors: [_Ghillie]
+
 api-version: '1.20'
-description: Custom Enchants
+description: Custom enchant plugin.
+
+# This sets PlaceholderAPI as an optional dependency for your plugin.
+softdepend: [PlaceholderAPI]
+
 commands:
-  giveenchant:
-    description: Gives a player any enchantment
-  reloadconfig:
-    description: Reloads all the configs
-  test:
-    description: Give Items to test
+  atlasenchants:
+    description: Atlas Enchants Command
+    usage: /atlasenchants [subcommand]
+    aliases: [aenchants, ae]
+
+permissions:
+  atlasenchants.help:
+    description: Permission needed to use the help command.
+    default: true
+  atlasenchants.reloadconfig:
+    description: Permission needed to use the reload command.
+    default: true
+  atlasenchants.giveenchant:
+    description: Permission needed to use the give enchant command.
+    default: true
