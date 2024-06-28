@@ -21,7 +21,7 @@ Enchantments:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
     #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.1
+    Enchantment-Spawn-Chance: 0.05
     #The name of the Enchantment.
     Enchantment-Title: "&c&lGODLY &7FearSight"
     #Lore for the Enchantment.

@@ -1,23 +1,24 @@
 package com.atlasplugins.atlasenchants;
 
-import com.atlasplugins.atlasenchants.Commands.CommandRouter;
-import com.atlasplugins.atlasenchants.Enchants.Armor.BlessingofKnowledge;
-import com.atlasplugins.atlasenchants.Enchants.Armor.Fearsight;
-import com.atlasplugins.atlasenchants.Enchants.Armor.Rush;
-import com.atlasplugins.atlasenchants.Enchants.Tools.SafeMiner;
-import com.atlasplugins.atlasenchants.Enchants.Weapons.*;
-import com.atlasplugins.atlasenchants.Listeners.ApplyCustomEnchant;
-import com.atlasplugins.atlasenchants.Listeners.ArmorEquipListener;
-import com.atlasplugins.atlasenchants.Listeners.CreateCustomEnchant;
-import com.atlasplugins.atlasenchants.Listeners.LootTableEvent;
+import com.atlasplugins.atlasenchants.commands.CommandRouter;
+import com.atlasplugins.atlasenchants.enchants.armor.BlessingofKnowledge;
+import com.atlasplugins.atlasenchants.enchants.armor.Fearsight;
+import com.atlasplugins.atlasenchants.enchants.armor.Rush;
+import com.atlasplugins.atlasenchants.enchants.tools.SafeMiner;
+import com.atlasplugins.atlasenchants.enchants.weapons.*;
+import com.atlasplugins.atlasenchants.listeners.ApplyCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.ArmorEquipListener;
+import com.atlasplugins.atlasenchants.listeners.CreateCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.LootTableEvent;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
-import org.bstats.bukkit.Metrics;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -126,13 +127,19 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
     }
 
+    public String setPlaceholders(Player p, String text)
+    {
+        if(checkForPlaceholderAPI())
+        {
+            return PlaceholderAPI.setPlaceholders(p, text);
+        }else{
+            return text;
+        }
+    }
+
     private boolean checkForPlaceholderAPI() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
         return plugin != null && plugin.isEnabled();
-    }
-
-    public boolean isPlaceholderAPIPresent() {
-        return checkForPlaceholderAPI();
     }
 
     public FileConfiguration getEnchantmentsConfig() {
