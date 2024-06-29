@@ -49,6 +49,12 @@ public class PoisonAspect implements Listener {
 
         // Check if the player has an enchanted sword
         if(hasWeapon(p)) {
+
+            // Get Enchantment Enabled Status
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.POISON-ASPECT.Enchantment-Enabled");
+            // if Enchantment Enabled = false return.
+            if(!isEnchantmentEnabled) return;
+
             PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 

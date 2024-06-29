@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.commands.users;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,7 @@ public class TestCommand implements CommandExecutor, Listener {
 //
 //        Player player = (Player) sender;
 //        World world = player.getWorld();
-//        Material mat = Material.GOLDEN_AXE;
+//        Material mat = Material.SHIELD;
 //
 //        for (Chunk chunk : world.getLoadedChunks())
 //        {

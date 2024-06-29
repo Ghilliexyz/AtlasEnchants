@@ -35,6 +35,11 @@ public class LootTableEvent implements Listener {
 
             for (String enchantment : enchantments)
             {
+                // Get Enchantment Enabled Status
+                boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + enchantment + ".Enchantment-Enabled");
+                // if Enchantment Enabled = false skip.
+                if(!isEnchantmentEnabled) continue;
+
                 // Get the Enchantment Max Level
                 int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + enchantment + ".Enchantment-MaxLvl"); // Example enchantment level
                 int enchantmentAmount = 1; // Example number of items to generate

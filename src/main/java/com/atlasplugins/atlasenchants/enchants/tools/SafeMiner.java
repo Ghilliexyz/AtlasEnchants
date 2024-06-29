@@ -38,6 +38,12 @@ public class SafeMiner implements Listener {
 
         // Check if the player has an enchanted tool
         if(hasTool(p)) {
+
+            // Get Enchantment Enabled Status
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.SAFE-MINER.Enchantment-Enabled");
+            // if Enchantment Enabled = false return.
+            if(!isEnchantmentEnabled) return;
+
             PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 

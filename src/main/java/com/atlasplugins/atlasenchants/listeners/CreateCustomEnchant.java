@@ -44,6 +44,8 @@ public class CreateCustomEnchant implements Listener {
                 .replace("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                 .replace("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
                 .replace("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
+                .replace("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)))
+                .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
                 .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -68,6 +70,8 @@ public class CreateCustomEnchant implements Listener {
                     .replace("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
                     .replace("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
                     .replace("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
+                    .replace("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)))
+                    .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
                     .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

@@ -41,6 +41,12 @@ public class Fearsight implements Listener
 
         // Check if the player has an enchanted helmet
         if(hasArmor(p)) {
+
+            // Get Enchantment Enabled Status
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.FEARSIGHT.Enchantment-Enabled");
+            // if Enchantment Enabled = false return.
+            if(!isEnchantmentEnabled) return;
+
             PersistentDataContainer enchantedItemPDC = p.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 

@@ -41,6 +41,12 @@ public class Rush implements Listener
 
         // Check if the player has an enchanted sword
         if(hasArmor(p)) {
+
+            // Get Enchantment Enabled Status
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.RUSH.Enchantment-Enabled");
+            // if Enchantment Enabled = false return.
+            if(!isEnchantmentEnabled) return;
+
             PersistentDataContainer enchantedItemPDC = p.getInventory().getLeggings().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 

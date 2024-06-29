@@ -47,12 +47,13 @@ public class BlessingofKnowledge implements Listener {
 
         // Check if the player has an enchanted helmet
         if (hasArmor(player)) {
-            ItemStack helmet = player.getInventory().getHelmet();
-            if (helmet == null) {
-                return;
-            }
 
-            PersistentDataContainer container = helmet.getItemMeta().getPersistentDataContainer();
+            // Get Enchantment Enabled Status
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.BLESSING-OF-KNOWLEDGE.Enchantment-Enabled");
+            // if Enchantment Enabled = false return.
+            if(!isEnchantmentEnabled) return;
+
+            PersistentDataContainer container = player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
             String enchantmentData = container.getOrDefault(Main.customEnchantKeys, PersistentDataType.STRING, "");
 
             if (!enchantmentData.isEmpty()) {
