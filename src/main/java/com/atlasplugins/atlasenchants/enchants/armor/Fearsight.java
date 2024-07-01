@@ -93,9 +93,6 @@ public class Fearsight implements Listener
                             }
                             //END ENCHANT LOGIC
                         }
-                    } else {
-                        // Handle unexpected format
-                        System.out.println("Unexpected enchantment format: " + enchantment);
                     }
                 }
             }

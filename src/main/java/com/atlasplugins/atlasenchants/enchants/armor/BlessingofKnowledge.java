@@ -136,12 +136,8 @@ public class BlessingofKnowledge implements Listener {
                                         .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Green for > 75%
                             }
                         }
-                    } else {
-                        main.getLogger().log(Level.WARNING, "Unexpected enchantment format: " + enchantment);
                     }
                 }
-            } else {
-                main.getLogger().log(Level.INFO, "No enchantments found on the item.");
             }
         }
     }

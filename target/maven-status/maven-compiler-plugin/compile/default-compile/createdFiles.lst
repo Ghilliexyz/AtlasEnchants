@@ -31,6 +31,7 @@ com\atlasplugins\atlasenchants\commands\users\HelpCommand.class
 com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\enchants\armor\Growth.class
+com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedBarChart.class
 com\atlasplugins\atlasenchants\listeners\ArmorEquipEvent.class
 com\atlasplugins\atlasenchants\Metrics$JsonObjectBuilder$JsonObject.class

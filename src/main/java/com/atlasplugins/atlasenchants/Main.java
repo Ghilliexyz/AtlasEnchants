@@ -5,6 +5,7 @@ import com.atlasplugins.atlasenchants.enchants.armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.enchants.armor.Fearsight;
 import com.atlasplugins.atlasenchants.enchants.armor.Rush;
 import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
+import com.atlasplugins.atlasenchants.enchants.tools.Regrowth;
 import com.atlasplugins.atlasenchants.enchants.tools.SafeMiner;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.listeners.ApplyCustomEnchant;
@@ -104,6 +105,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new IceAspect(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Extractor(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new EnergyAbsorption(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Regrowth(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);

@@ -61,24 +61,21 @@ public class SafeMiner implements Listener {
 
                         if (enchantName.contains("SAFE-MINER")) {
                             // PUT ENCHANT LOGIC HERE
-                                //This grabs the item the user mined
-                                Collection<ItemStack> drops = e.getBlock().getDrops();
-                                //This gets the item dropped
-                                for(ItemStack drop : drops) {
-                                    e.setDropItems(false);
-                                    //This checks if their inventory is full
-                                    //If it is full it will return message.
-                                    HashMap<Integer, ItemStack> leftItems = p.getInventory().addItem(drop);
-                                    if(leftItems.size() == 1){
-                                        e.setDropItems(true);
-                                    }
+                            //This grabs the item the user mined
+                            Collection<ItemStack> drops = e.getBlock().getDrops();
+                            //This gets the item dropped
+                            for(ItemStack drop : drops) {
+                                e.setDropItems(false);
+                                //This checks if their inventory is full
+                                //If it is full it will return message.
+                                HashMap<Integer, ItemStack> leftItems = p.getInventory().addItem(drop);
+                                if(leftItems.size() == 1){
+                                    e.setDropItems(true);
                                 }
-                        } else {
-                            // Handle unexpected format
-                            System.out.println("Unexpected enchantment format: " + enchantment);
+                            }
+
+                            //END ENCHANT LOGIC
                         }
-                    } else {
-                        System.out.println("No enchantments found on the item.");
                     }
                 }
             }
