@@ -66,11 +66,7 @@ public class Rush implements Listener
                         {
                             // PUT ENCHANT LOGIC HERE
                             Entity damagingEntity = e.getDamageSource().getDirectEntity();
-                            if (damagingEntity instanceof Monster
-                                    || damagingEntity instanceof Flying
-                                    || damagingEntity instanceof Slime
-                                    || damagingEntity instanceof Boss
-                                    || damagingEntity instanceof Player)
+                            if (damagingEntity instanceof LivingEntity)
                             {
                                 // Get speed level and duration from the configuration
                                 int speedLvl = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-Speed-Amount-" + enchantLevel);

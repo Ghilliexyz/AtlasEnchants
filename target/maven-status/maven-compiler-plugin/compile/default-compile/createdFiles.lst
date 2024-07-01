@@ -4,7 +4,6 @@ com\atlasplugins\atlasenchants\Metrics$SimpleBarChart.class
 com\atlasplugins\atlasenchants\commands\users\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Metrics.class
 com\atlasplugins\atlasenchants\commands\users\ReloadCommand.class
-com\atlasplugins\atlasenchants\enchants\armor\Resilience.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect.class
 com\atlasplugins\atlasenchants\listeners\ArmorEquipEvent$EquipMethod.class
 com\atlasplugins\atlasenchants\listeners\ArmorEquipListener.class

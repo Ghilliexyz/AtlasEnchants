@@ -31,26 +31,33 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static Main instance;
 
+    // Change chat colors
     public static String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
+    // Glowing Stuff
     public GlowingEntities glowingEntities;
     public GlowingBlocks glowingBlocks;
 
+    // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
 
+    // Config Stuff
     private FileConfiguration enchantmentsConfig;
     private File enchantmentsConfigFile;
     private FileConfiguration settingsConfig;
     private File settingsConfigFile;
 
+    // Command Router Stuff
     private CommandRouter commandRouter;
 
     private boolean isPlaceholderAPIPresent;
 
     @Override
     public void onEnable() {
+        // Plugin startup logic
+        instance = this;
 
         // check if placeholderAPI is present on the server.
         isPlaceholderAPIPresent = checkForPlaceholderAPI();
@@ -59,21 +66,22 @@ public final class Main extends JavaPlugin implements Listener {
         } else {
             getLogger().info("PlaceholderAPI not found, placeholders will not be used.");
         }
-        // Plugin startup logic
-        instance = this;
 
+        // Set up custom enchants
         CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(this);
 
         // Load custom configs
         loadEnchantmentsConfig();
         loadSettingsConfig();
 
+        // Set up Glowing
         glowingEntities = new GlowingEntities(this);
         glowingBlocks = new GlowingBlocks(this);
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
 
+        // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -90,7 +98,6 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Propel(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new FreezingShot(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new BlessingofKnowledge(this), this); // Added By Ghillie
-//        this.getServer().getPluginManager().registerEvents(new Growth(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new SafeMiner(this), this); // Added By Helix
         this.getServer().getPluginManager().registerEvents(new PoisonAspect(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Stunning(this), this); // Added By Ghillie
@@ -125,7 +132,7 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
         Bukkit.getConsoleSender().sendMessage(color(""));
-        Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Enabled"));
+        Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Disabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
     }
 

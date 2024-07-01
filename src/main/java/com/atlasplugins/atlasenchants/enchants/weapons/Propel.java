@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -72,20 +73,33 @@ public class Propel implements Listener
                                 // Get the entity to launch
                                 LivingEntity entityToLaunch = (LivingEntity) e.getEntity();
 
+                                // Default Jump Height = 1.25220 (same as 0.42 Velocity)
+                                // Velocity: 0.42 = 1.25220
+                                // Velocity: 0.40 = 1.15311
+
+                                double velocityY = calculateInitialVelocity(blockHeight);
+
+                                double entityDamage = e.getDamage();
+
                                 // Add a small vertical offset to the entity's position to ensure it gets launched
-                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0, blockHeight, 0));
+                                Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
+//                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0, blockHeight, 0));
+//                                entityToLaunch.setVelocity(new Vector(entityToLaunch.getVelocity().getX(), 1, entityToLaunch.getVelocity().getZ()));
+                                entityToLaunch.setVelocity(entityVelocity);
+                                entityToLaunch.damage(entityDamage);
+                                e.setCancelled(true);
                             }
                             //END ENCHANT LOGIC
                         }
-                    }else
-                    {
-                        // Handle unexpected format
-                        System.out.println("Unexpected enchantment format: " + enchantment);
                     }
                 }
-            } else {
-                System.out.println("No enchantments found on the item.");
             }
         }
+    }
+
+    // Method to calculate initial jump velocity for a given block height
+    public static double calculateInitialVelocity(double blockHeight) {
+        double gravity = 0.08; // Gravity in Minecraft
+        return Math.sqrt(2 * gravity * blockHeight);
     }
 }

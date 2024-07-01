@@ -104,7 +104,7 @@ EnchantItems:
   #This chance determines if it should give the spawning enchant logic an attempt to spawn an enchantment
   #Default Spawn Chance = 0.5 (0.5 = 50% chance that it will allow the spawning system to loop through all the enchants)
   #if the spawning chance fails no enchantment attempt to be spawned.
-  EnchantItem-Spawn-Chance: 0.5
+  EnchantItem-Spawn-Chance: 0.05
 
 #The sound that will play when the player applies a new enchant to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.

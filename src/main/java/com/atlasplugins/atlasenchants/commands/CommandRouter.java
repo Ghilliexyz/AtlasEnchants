@@ -101,4 +101,3 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         return suggestions;
     }
 }
-

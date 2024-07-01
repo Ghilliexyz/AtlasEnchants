@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HelpCommand extends AbstractCommand {
 
-    private final Main main;
+    private Main main;
     public HelpCommand(Main main) {this.main = main;}
 
     @Override

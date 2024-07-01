@@ -57,7 +57,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (FEARSIGHT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-      #Colour of the Glow per Mob Type.
+    #Colour of the Glow per Mob Type.
     Hostile-GLOW-Colour: RED
     Passive-GLOW-Colour: GREEN
     Player-Villager: WHITE
@@ -198,45 +198,60 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (SAFE-MINER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-  RESILIENCE:
-    #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
-    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
-    Enchantment-Enabled: true
-    #The name of the Enchantment.
-    Enchantment-Title: "&6&lLEGENDARY &7Resilience"
-    #Lore for the Enchantment.
-    Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-      - ""
-      - "&c● &7Effect: &e&lUnlimited Sprint      &c● &7Enchant Lvl: &e&l{lvl}"
-      - ""
-      - "&c● &7Description:"
-      - "  &eDoes not disable sprinting when below 3 Hunger"
-      - ""
-      - "&c● &7Type: &eBoots Enchantment"
-      - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Boots to enchant."
-      - ""
-      - "&c&m&l-----------------------------------------"
-    #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
-    #The Item that the enchantment can be applied to.
-    Enchantment-Apply-Item:
-      - WOODEN_BOOTS
-      - STONE_BOOTS
-      - IRON_BOOTS
-      - GOLDEN_BOOTS
-      - DIAMOND_BOOTS
-      - NETHERITE_BOOTS
-    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
-    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (LEECH) to the enchantment Blacklist of the other enchantments you have listed below.
-    Enchantment-Blacklist-Enchants:
-      -
-      # --------------------- EPIC ENCHANTS --------------------- #
+    EXTRACTOR:
+      #Max Level of this Enchantment.
+      Enchantment-MaxLvl: 2
+      #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+      Enchantment-Spawn-Chance: 0.15
+      #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+      Enchantment-Enabled: true
+      #The name of the Enchantment.
+      Enchantment-Title: "&6&lLEGENDARY &7Extractor"
+      #Lore for the Enchantment.
+      Enchantment-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7Effect: &e&lMore XP     &c● &7Enchant Lvl: &e&l{lvl}"
+        - ""
+        - "&c● &7Description:"
+        - "  &eGives {extractorMultiplier}x more EXP from each kill."
+        - ""
+        - "&c● &7Type: &eSword & Axe Enchantment"
+        - ""
+        - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
+        - ""
+        - "&c&m&l-----------------------------------------"
+      #The lore that will be added to the enchanted Item.
+      Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
+      #The Item that the enchantment can be applied to.
+      Enchantment-Apply-Item:
+        # Swords
+        - WOODEN_SWORD
+        - STONE_SWORD
+        - IRON_SWORD
+        - GOLDEN_SWORD
+        - DIAMOND_SWORD
+        - NETHERITE_SWORD
+      #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+      #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+      #Note 2: Make sure to add this enchant Name (STUNNING) to the enchantment Blacklist of the other enchantments you have listed below.
+      Enchantment-Blacklist-Enchants:
+        -
+        #Particle Settings for Extractor
+      Extractor-Particle-Settings:
+        #Particle Toggle (if true the particles will show)
+        Extractor-Particle-Toggle: true
+        Extractor-Particle-1:
+          #Particle Name (The particle that will spawn)
+          Extractor-Particle-Name-1: SOUL_FIRE_FLAME
+          #Particle Amount (50 = 50 Particles)
+          Extractor-Particle-Amount-1: 50
+          #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+          Extractor-Particle-Size-1: 0.1
+      #The amount of time the Stun effect will last. (Slowness and Weakness)
+      Extractor-EXP-Multiplier-1: 1.5
+      Extractor-EXP-Multiplier-2: 2
+  # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -344,59 +359,6 @@ Enchantments:
     #The Level the Stun effect will be. (Slowness and Weakness)
     Stunning-Stun-Levels-1: 1
     Stunning-Stun-Levels-2: 2
-  EXTRACTOR:
-    #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
-    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
-    Enchantment-Enabled: true
-    #The name of the Enchantment.
-    Enchantment-Title: "&d&lEPIC &7Extractor"
-    #Lore for the Enchantment.
-    Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-      - ""
-      - "&c● &7Effect: &e&lMore XP     &c● &7Enchant Lvl: &e&l{lvl}"
-      - ""
-      - "&c● &7Description:"
-      - "  &eGives {extractorMultiplier}x more EXP from each kill."
-      - ""
-      - "&c● &7Type: &eSword & Axe Enchantment"
-      - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
-      - ""
-      - "&c&m&l-----------------------------------------"
-    #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
-    #The Item that the enchantment can be applied to.
-    Enchantment-Apply-Item:
-      # Swords
-      - WOODEN_SWORD
-      - STONE_SWORD
-      - IRON_SWORD
-      - GOLDEN_SWORD
-      - DIAMOND_SWORD
-      - NETHERITE_SWORD
-    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
-    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (STUNNING) to the enchantment Blacklist of the other enchantments you have listed below.
-    Enchantment-Blacklist-Enchants:
-      -
-      #Particle Settings for Poison Aspect
-    Extractor-Particle-Settings:
-      #Particle Toggle (if true the particles will show)
-      Extractor-Particle-Toggle: true
-      Extractor-Particle-1:
-        #Particle Name (The particle that will spawn)
-        Extractor-Particle-Name-1: SOUL_FIRE_FLAME
-        #Particle Amount (50 = 50 Particles)
-        Extractor-Particle-Amount-1: 50
-        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        Extractor-Particle-Size-1: 0.1
-    #The amount of time the Stun effect will last. (Slowness and Weakness)
-    Extractor-EXP-Multiplier-1: 1.5
-    Extractor-EXP-Multiplier-2: 2
   ENERGY-ABSORPTION:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -447,6 +409,138 @@ Enchantments:
     EnergyAbsorption-Healing-Amount-1: 0.5
     #The amount of hearts given when hit (3 = 3 hearts).
     EnergyAbsorption-Start-Healing-Amount-1: 3
+  POISON-ASPECT:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.3
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&d&lEPIC &7Poison Aspect"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lPoison      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eApplies the Poison {poisonLevel} Effect to any hit entity"
+      - "  &ethe effect lasts {poisonTimer}s"
+      - ""
+      - "&c● &7Type: &eSword & Axe Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      # Swords
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      # Axes
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (POISON-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      - ICE-ASPECT
+    #Particle Settings for Poison Aspect
+    PoisonAspect-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      PoisonAspect-Particle-Toggle: true
+      PoisonAspect-Particle-1:
+        #Particle Name (The particle that will spawn)
+        PoisonAspect-Particle-Name-1: SQUID_INK
+        #Particle Amount (50 = 50 Particles)
+        PoisonAspect-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        PoisonAspect-Particle-Size-1: 0.1
+      PoisonAspect-Particle-2:
+        #Particle Name (The particle that will spawn)
+        PoisonAspect-Particle-Name-2: NAUTILUS
+        #Particle Amount (50 = 50 Particles)
+        PoisonAspect-Particle-Amount-2: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        PoisonAspect-Particle-Size-2: 0.5
+    #The amount of time the poison effect will last.
+    PoisonAspect-Poison-Timer-1: 3
+    PoisonAspect-Poison-Timer-2: 6
+    #The Level the poison effect will be.
+    PoisonAspect-Poison-Level-1: 1
+    PoisonAspect-Poison-Level-2: 2
+  ICE-ASPECT:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 2
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.3
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&d&lEPIC &7Ice Aspect"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lFrozen      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eApplies the Frozen Effect to any hit entity"
+      - "  &ethe effect lasts {iceTimer}s"
+      - ""
+      - "&c● &7Type: &eSword & Axe Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      # Swords
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      # Axes
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (ICE-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      - POISON-ASPECT
+    #Particle Settings for Poison Aspect
+    IceAspect-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      IceAspect-Particle-Toggle: true
+      IceAspect-Particle-1:
+        #Particle Name (The particle that will spawn)
+        IceAspect-Particle-Name-1: SNOWFLAKE
+        #Particle Amount (50 = 50 Particles)
+        IceAspect-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        IceAspect-Particle-Size-1: 0.1
+    #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
+    IceAspect-Frozen-Timer-1: 15
+    IceAspect-Frozen-Timer-2: 30
   # --------------------- RARE ENCHANTS --------------------- #
   HUNTER:
     #Max Level of this Enchantment.
@@ -572,135 +666,3 @@ Enchantments:
     FreezingShot-Freeze-Timer-1: 1
     FreezingShot-Freeze-Timer-2: 1.5
     FreezingShot-Freeze-Timer-3: 2
-  POISON-ASPECT:
-    #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
-    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
-    Enchantment-Enabled: true
-    #The name of the Enchantment.
-    Enchantment-Title: "&b&lRARE &7Poison Aspect"
-    #Lore for the Enchantment.
-    Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-      - ""
-      - "&c● &7Effect: &e&lPoison      &c● &7Enchant Lvl: &e&l{lvl}"
-      - ""
-      - "&c● &7Description:"
-      - "  &eApplies the Poison {poisonLevel} Effect to any hit entity"
-      - "  &ethe effect lasts {poisonTimer}s"
-      - ""
-      - "&c● &7Type: &eSword & Axe Enchantment"
-      - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
-      - ""
-      - "&c&m&l-----------------------------------------"
-    #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
-    #The Item that the enchantment can be applied to.
-    Enchantment-Apply-Item:
-      # Swords
-      - WOODEN_SWORD
-      - STONE_SWORD
-      - IRON_SWORD
-      - GOLDEN_SWORD
-      - DIAMOND_SWORD
-      - NETHERITE_SWORD
-      # Axes
-      - WOODEN_AXE
-      - STONE_AXE
-      - IRON_AXE
-      - GOLDEN_AXE
-      - DIAMOND_AXE
-      - NETHERITE_AXE
-    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
-    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (POISON-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
-    Enchantment-Blacklist-Enchants:
-      -
-      #Particle Settings for Poison Aspect
-    PoisonAspect-Particle-Settings:
-      #Particle Toggle (if true the particles will show)
-      PoisonAspect-Particle-Toggle: true
-      PoisonAspect-Particle-1:
-        #Particle Name (The particle that will spawn)
-        PoisonAspect-Particle-Name-1: SQUID_INK
-        #Particle Amount (50 = 50 Particles)
-        PoisonAspect-Particle-Amount-1: 50
-        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoisonAspect-Particle-Size-1: 0.1
-      PoisonAspect-Particle-2:
-        #Particle Name (The particle that will spawn)
-        PoisonAspect-Particle-Name-2: NAUTILUS
-        #Particle Amount (50 = 50 Particles)
-        PoisonAspect-Particle-Amount-2: 50
-        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoisonAspect-Particle-Size-2: 0.5
-    #The amount of time the poison effect will last.
-    PoisonAspect-Poison-Timer-1: 3
-    PoisonAspect-Poison-Timer-2: 6
-    #The Level the poison effect will be.
-    PoisonAspect-Poison-Level-1: 1
-    PoisonAspect-Poison-Level-2: 2
-  ICE-ASPECT:
-    #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
-    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
-    Enchantment-Enabled: true
-    #The name of the Enchantment.
-    Enchantment-Title: "&b&lRARE &7Ice Aspect"
-    #Lore for the Enchantment.
-    Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-      - ""
-      - "&c● &7Effect: &e&lFrozen      &c● &7Enchant Lvl: &e&l{lvl}"
-      - ""
-      - "&c● &7Description:"
-      - "  &eApplies the Frozen Effect to any hit entity"
-      - "  &ethe effect lasts {iceTimer}s"
-      - ""
-      - "&c● &7Type: &eSword & Axe Enchantment"
-      - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
-      - ""
-      - "&c&m&l-----------------------------------------"
-    #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
-    #The Item that the enchantment can be applied to.
-    Enchantment-Apply-Item:
-      # Swords
-      - WOODEN_SWORD
-      - STONE_SWORD
-      - IRON_SWORD
-      - GOLDEN_SWORD
-      - DIAMOND_SWORD
-      - NETHERITE_SWORD
-      # Axes
-      - WOODEN_AXE
-      - STONE_AXE
-      - IRON_AXE
-      - GOLDEN_AXE
-      - DIAMOND_AXE
-      - NETHERITE_AXE
-    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
-    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (ICE-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
-    Enchantment-Blacklist-Enchants:
-      -
-      #Particle Settings for Poison Aspect
-    IceAspect-Particle-Settings:
-      #Particle Toggle (if true the particles will show)
-      IceAspect-Particle-Toggle: true
-      IceAspect-Particle-1:
-        #Particle Name (The particle that will spawn)
-        IceAspect-Particle-Name-1: SNOWFLAKE
-        #Particle Amount (50 = 50 Particles)
-        IceAspect-Particle-Amount-1: 50
-        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        IceAspect-Particle-Size-1: 0.1
-    #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
-    IceAspect-Frozen-Timer-1: 15
-    IceAspect-Frozen-Timer-2: 30
