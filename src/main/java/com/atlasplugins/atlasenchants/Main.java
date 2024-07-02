@@ -7,11 +7,14 @@ import com.atlasplugins.atlasenchants.enchants.armor.Rush;
 import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
 import com.atlasplugins.atlasenchants.enchants.tools.Regrowth;
 import com.atlasplugins.atlasenchants.enchants.tools.SafeMiner;
+import com.atlasplugins.atlasenchants.enchants.tools.TreeHugger;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
-import com.atlasplugins.atlasenchants.listeners.ApplyCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.ArmorEquipListener;
-import com.atlasplugins.atlasenchants.listeners.CreateCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.LootTableEvent;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.LootTableEvent;
+import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
+import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -43,6 +46,10 @@ public final class Main extends JavaPlugin implements Listener {
 
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
+    // Logs Placed Stuff
+    private LogsPlacedManager logsPlacedManager;
+    // Block Radius Finder Stuff
+    public BlockRadiusFinder blockRadiusFinder;
 
     // Config Stuff
     private FileConfiguration enchantmentsConfig;
@@ -81,6 +88,10 @@ public final class Main extends JavaPlugin implements Listener {
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
+        // Initialize PlayerPlacedBlocksManager
+        logsPlacedManager = new LogsPlacedManager(this);
+        // Initialize BlockUtils instance
+        blockRadiusFinder = new BlockRadiusFinder(this);
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
@@ -106,6 +117,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Extractor(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new EnergyAbsorption(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Regrowth(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new TreeHugger(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
@@ -129,6 +141,9 @@ public final class Main extends JavaPlugin implements Listener {
         glowingEntities.disable();
         glowingBlocks.disable();
 
+        // Save data to file on plugin disable
+        logsPlacedManager.saveDataToFile();
+
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -136,6 +151,10 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Disabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
+    }
+
+    public LogsPlacedManager getLogsPlacedManager() {
+        return logsPlacedManager;
     }
 
     public String setPlaceholders(Player p, String text)

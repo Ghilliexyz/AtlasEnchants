@@ -88,7 +88,7 @@ public class Propel implements Listener
                                 // Launch Entity Up
                                 entityToLaunch.setVelocity(entityVelocity);
                                 // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
-//                                entityToLaunch.damage(entityDamage);
+                                entityToLaunch.damage(entityDamage);
 
                                 e.setCancelled(true);
                             }

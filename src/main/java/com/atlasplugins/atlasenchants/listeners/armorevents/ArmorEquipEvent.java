@@ -1,4 +1,4 @@
-package com.atlasplugins.atlasenchants.listeners;
+package com.atlasplugins.atlasenchants.listeners.armorevents;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

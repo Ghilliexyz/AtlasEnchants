@@ -1,7 +1,7 @@
 package com.atlasplugins.atlasenchants.commands.users;
 
 import com.atlasplugins.atlasenchants.commands.AbstractCommand;
-import com.atlasplugins.atlasenchants.listeners.CreateCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

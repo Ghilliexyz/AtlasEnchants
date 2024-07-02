@@ -1,4 +1,4 @@
-package com.atlasplugins.atlasenchants.listeners;
+package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.event.EventHandler;
