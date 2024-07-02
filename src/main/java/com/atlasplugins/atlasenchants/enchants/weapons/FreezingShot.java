@@ -73,13 +73,8 @@ public class FreezingShot implements Listener {
                             ApplyFreezingShotEffect(e.getEntity(), enchantLevel, p);
                             //END ENCHANT LOGIC
                         }
-                    } else {
-                        // Handle unexpected format
-                        System.out.println("Unexpected enchantment format: " + enchantment);
                     }
                 }
-            } else {
-                System.out.println("No enchantments found on the item.");
             }
         }
     }
@@ -133,8 +128,8 @@ public class FreezingShot implements Listener {
 
             ((LivingEntity) entity).setAI(false); // Disable AI or apply the effect
 
-            player.sendMessage(Main.color("&aEntity: &7" + entity));
-            player.sendMessage(Main.color("&cTimer: &7" + freezingShotTimer + " seconds"));
+//            player.sendMessage(Main.color("&aEntity: &7" + entity));
+//            player.sendMessage(Main.color("&cTimer: &7" + freezingShotTimer + " seconds"));
 
             // Schedule a task to run after freezeDurationTicks ticks
             new BukkitRunnable() {
@@ -143,8 +138,8 @@ public class FreezingShot implements Listener {
                     // This code will run after the freeze duration has elapsed
                     ((LivingEntity) entity).setAI(true); // Re-enable AI or remove the effect
 
-                    player.sendMessage(Main.color("&aEntity: &7" + entity));
-                    player.sendMessage(Main.color("&cFreezing Shot effect has ended."));
+//                    player.sendMessage(Main.color("&aEntity: &7" + entity));
+//                    player.sendMessage(Main.color("&cFreezing Shot effect has ended."));
                 }
             }.runTaskLater(main, freezeDurationTicks);
         }

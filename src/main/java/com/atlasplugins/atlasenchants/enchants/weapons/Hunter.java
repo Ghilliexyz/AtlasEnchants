@@ -75,13 +75,8 @@ public class Hunter implements Listener
                             ApplyDamage(entity, enchantLevel, p);
                             //END ENCHANT LOGIC
                         }
-                    } else {
-                        // Handle unexpected format
-                        System.out.println("Unexpected enchantment format: " + enchantment);
                     }
                 }
-            } else {
-                System.out.println("No enchantments found on the item.");
             }
         }
     }

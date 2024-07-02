@@ -1,11 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -83,10 +85,11 @@ public class Propel implements Listener
 
                                 // Add a small vertical offset to the entity's position to ensure it gets launched
                                 Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
-//                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0, blockHeight, 0));
-//                                entityToLaunch.setVelocity(new Vector(entityToLaunch.getVelocity().getX(), 1, entityToLaunch.getVelocity().getZ()));
+                                // Launch Entity Up
                                 entityToLaunch.setVelocity(entityVelocity);
-                                entityToLaunch.damage(entityDamage);
+                                // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
+//                                entityToLaunch.damage(entityDamage);
+
                                 e.setCancelled(true);
                             }
                             //END ENCHANT LOGIC
