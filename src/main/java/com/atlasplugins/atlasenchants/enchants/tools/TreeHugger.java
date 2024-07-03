@@ -95,7 +95,7 @@ public class TreeHugger implements Listener {
                             Block block = e.getBlock();
                             if (LOGS.contains(block.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
 
-                                chopTree(block);
+                                chopTree(block, item);
 
                                 if(itemMeta instanceof Damageable)
                                 {
@@ -119,11 +119,11 @@ public class TreeHugger implements Listener {
     }
 
     // Breaks the blocks.
-    private void chopTree(Block block) {
+    private void chopTree(Block block, ItemStack tool) {
         Set<Block> logsToChop = new HashSet<>();
         findLogs(block, logsToChop);
         for (Block log : logsToChop) {
-            log.breakNaturally();
+            log.breakNaturally(tool);
             removeDurability++;
         }
     }
