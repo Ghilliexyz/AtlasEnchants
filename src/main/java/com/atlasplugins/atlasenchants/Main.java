@@ -12,6 +12,7 @@ import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.LootTableEvent;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
+import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
 import fr.skytasul.glowingentities.GlowingBlocks;
@@ -34,6 +35,8 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static Main instance;
 
+    private ExperienceManager experienceManager;
+
     // Change chat colors
     public static String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
@@ -53,7 +56,6 @@ public final class Main extends JavaPlugin implements Listener {
     private OresPlacedManager oresPlacedManager;
     // Block Radius Finder Stuff
     public BlockRadiusFinder blockRadiusFinder;
-
     // Config Stuff
     private FileConfiguration enchantmentsConfig;
     private File enchantmentsConfigFile;
@@ -99,6 +101,8 @@ public final class Main extends JavaPlugin implements Listener {
         oresPlacedManager = new OresPlacedManager(this);
         // Initialize BlockUtils instance
         blockRadiusFinder = new BlockRadiusFinder(this);
+        // Register experienceManager
+        experienceManager = new ExperienceManager(this);
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
@@ -162,6 +166,10 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Disabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
+    }
+
+    public ExperienceManager getExperienceManager(){
+        return experienceManager;
     }
 
     public LogsPlacedManager getLogsPlacedManager() {

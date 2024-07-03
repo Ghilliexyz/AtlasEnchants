@@ -68,7 +68,7 @@ public class SafeMiner implements Listener {
 
                             Block blockMined = e.getBlock();
 
-                            blockMined.breakNaturally(item);
+//                            blockMined.breakNaturally(item);
 
                             //This grabs the item the user mined
                             Collection<ItemStack> drops = blockMined.getDrops();
