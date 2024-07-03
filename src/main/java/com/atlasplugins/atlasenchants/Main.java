@@ -5,10 +5,7 @@ import com.atlasplugins.atlasenchants.enchants.armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.enchants.armor.Fearsight;
 import com.atlasplugins.atlasenchants.enchants.armor.Rush;
 import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
-import com.atlasplugins.atlasenchants.enchants.tools.MinersTouch;
-import com.atlasplugins.atlasenchants.enchants.tools.Regrowth;
-import com.atlasplugins.atlasenchants.enchants.tools.SafeMiner;
-import com.atlasplugins.atlasenchants.enchants.tools.TreeHugger;
+import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
@@ -16,6 +13,7 @@ import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchan
 import com.atlasplugins.atlasenchants.listeners.enchantevents.LootTableEvent;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
+import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -51,6 +49,8 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
     private LogsPlacedManager logsPlacedManager;
+    // Ores Placed Stuff
+    private OresPlacedManager oresPlacedManager;
     // Block Radius Finder Stuff
     public BlockRadiusFinder blockRadiusFinder;
 
@@ -95,6 +95,8 @@ public final class Main extends JavaPlugin implements Listener {
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
         logsPlacedManager = new LogsPlacedManager(this);
+        // Initialize PlayerPlacedBlocksManager
+        oresPlacedManager = new OresPlacedManager(this);
         // Initialize BlockUtils instance
         blockRadiusFinder = new BlockRadiusFinder(this);
 
@@ -124,6 +126,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Regrowth(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new TreeHugger(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new MinersTouch(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new VeinSeeker(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
@@ -149,6 +152,8 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Save data to file on plugin disable
         logsPlacedManager.saveDataToFile();
+        // Save data to file on plugin disable
+        oresPlacedManager.saveDataToFile();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.1"));
@@ -161,6 +166,10 @@ public final class Main extends JavaPlugin implements Listener {
 
     public LogsPlacedManager getLogsPlacedManager() {
         return logsPlacedManager;
+    }
+
+    public OresPlacedManager getOresPlacedManager() {
+        return oresPlacedManager;
     }
 
     public String setPlaceholders(Player p, String text)

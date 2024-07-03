@@ -66,9 +66,9 @@ public class SafeMiner implements Listener {
                             //This gets the item dropped
                             for(ItemStack drop : drops) {
                                 e.setDropItems(false);
-                                //This checks if their inventory is full
                                 //If it is full it will return message.
                                 HashMap<Integer, ItemStack> leftItems = p.getInventory().addItem(drop);
+                                //This checks if their inventory is full
                                 if(leftItems.size() == 1){
                                     e.setDropItems(true);
                                 }

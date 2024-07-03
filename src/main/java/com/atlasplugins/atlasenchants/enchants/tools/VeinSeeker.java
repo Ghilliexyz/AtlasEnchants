@@ -15,32 +15,45 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class TreeHugger implements Listener {
+public class VeinSeeker implements Listener {
 
     private Main main;
-    public TreeHugger (Main main) {
+    public VeinSeeker (Main main) {
         this.main = main;
     }
 
     private int removeDurability = 0;
 
-    private static final Set<Material> LOGS;
+    private static final Set<Material> ORES;
     static {
-        Set<Material> logs = new HashSet<>();
-        Collections.addAll(logs,
-                Material.OAK_LOG,
-                Material.SPRUCE_LOG,
-                Material.BIRCH_LOG,
-                Material.JUNGLE_LOG,
-                Material.ACACIA_LOG,
-                Material.DARK_OAK_LOG,
-                Material.CHERRY_LOG,
-                Material.MANGROVE_LOG,
-                Material.MANGROVE_ROOTS
+        Set<Material> ores = new HashSet<>();
+        Collections.addAll(ores,
+                Material.COAL_ORE,
+                Material.COPPER_ORE,
+                Material.IRON_ORE,
+                Material.LAPIS_ORE,
+                Material.REDSTONE_ORE,
+                Material.GOLD_ORE,
+                Material.EMERALD_ORE,
+                Material.DIAMOND_ORE,
+                Material.DEEPSLATE_COAL_ORE,
+                Material.DEEPSLATE_COPPER_ORE,
+                Material.DEEPSLATE_IRON_ORE,
+                Material.DEEPSLATE_LAPIS_ORE,
+                Material.DEEPSLATE_REDSTONE_ORE,
+                Material.DEEPSLATE_GOLD_ORE,
+                Material.DEEPSLATE_EMERALD_ORE,
+                Material.DEEPSLATE_DIAMOND_ORE,
+                Material.NETHER_QUARTZ_ORE,
+                Material.NETHER_GOLD_ORE,
+                Material.ANCIENT_DEBRIS
         );
-        LOGS = Collections.unmodifiableSet(logs);
+        ORES = Collections.unmodifiableSet(ores);
     }
 
     public boolean hasTool (Player p) {
@@ -48,7 +61,7 @@ public class TreeHugger implements Listener {
         ItemStack tool = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.VEIN-SEEKER.Enchantment-Apply-Item");
 
         // Check if the player has a tool in their hand
         return tool != null && armorMat.contains(tool.getType().toString());
@@ -60,15 +73,15 @@ public class TreeHugger implements Listener {
         Player p = e.getPlayer();
 
         // Remove block location data
-        main.getLogsPlacedManager().removePlayerPlacedLog(e.getBlock());
+        main.getOresPlacedManager().removePlayerPlacedLog(e.getBlock());
         // Save data to file
-        main.getLogsPlacedManager().saveDataToFile();
+        main.getOresPlacedManager().saveDataToFile();
 
         // Check if the player has an enchanted tool
         if(hasTool(p)) {
 
             // Get Enchantment Enabled Status
-            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.TREE-HUGGER.Enchantment-Enabled");
+            boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.VEIN-SEEKER.Enchantment-Enabled");
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
@@ -87,15 +100,15 @@ public class TreeHugger implements Listener {
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                        if (enchantName.contains("TREE-HUGGER")) {
+                        if (enchantName.contains("VEIN-SEEKER")) {
                             // PUT ENCHANT LOGIC HERE
                             ItemStack item = p.getInventory().getItemInMainHand();
                             ItemMeta itemMeta = item.getItemMeta();
 
                             Block block = e.getBlock();
-                            if (LOGS.contains(block.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
+                            if (ORES.contains(block.getType()) && !main.getOresPlacedManager().isPlayerPlacedLog(block)) {
 
-                                chopTree(block);
+                                mineOres(block, item);
 
                                 if(itemMeta instanceof Damageable)
                                 {
@@ -119,25 +132,25 @@ public class TreeHugger implements Listener {
     }
 
     // Breaks the blocks.
-    private void chopTree(Block block) {
-        Set<Block> logsToChop = new HashSet<>();
-        findLogs(block, logsToChop);
-        for (Block log : logsToChop) {
-            log.breakNaturally();
+    private void mineOres(Block block, ItemStack tool) {
+        Set<Block> oresToMine = new HashSet<>();
+        findOres(block, oresToMine);
+        for (Block ore : oresToMine) {
+            ore.breakNaturally(tool);
             removeDurability++;
         }
     }
 
     // Finds the blocks to break.
-    private void findLogs(Block block, Set<Block> logsToChop) {
+    private void findOres(Block block, Set<Block> logsToChop) {
         if (logsToChop.contains(block)) return;
         logsToChop.add(block);
 
         List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
 
         for (Block nblock : nearbyBlocks) {
-            if (LOGS.contains(nblock.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {
-                findLogs(nblock, logsToChop);
+            if (ORES.contains(nblock.getType()) && !main.getOresPlacedManager().isPlayerPlacedLog(nblock)) {
+                findOres(nblock, logsToChop);
             }
         }
     }
@@ -147,10 +160,10 @@ public class TreeHugger implements Listener {
         Block blockPlaced = e.getBlockPlaced();
         Material blockMaterial = blockPlaced.getType();
 
-        if(LOGS.contains(blockMaterial)) {
-            main.getLogsPlacedManager().markPlayerPlacedLog(blockPlaced);
+        if(ORES.contains(blockMaterial)) {
+            main.getOresPlacedManager().markPlayerPlacedLog(blockPlaced);
             // Save data to file
-            main.getLogsPlacedManager().saveDataToFile();
+            main.getOresPlacedManager().saveDataToFile();
         }
     }
 }
