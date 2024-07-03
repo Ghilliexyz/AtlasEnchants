@@ -47,7 +47,7 @@ public class PoisonAspect implements Listener {
 
         Entity entity = e.getEntity();
 
-        // Check if the player has an enchanted sword
+        // Check if the player has an enchanted swordd
         if(hasWeapon(p)) {
 
             // Get Enchantment Enabled Status

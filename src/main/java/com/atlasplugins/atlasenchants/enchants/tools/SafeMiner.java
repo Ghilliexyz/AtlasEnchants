@@ -1,6 +1,8 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +12,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,8 +64,14 @@ public class SafeMiner implements Listener {
 
                         if (enchantName.contains("SAFE-MINER")) {
                             // PUT ENCHANT LOGIC HERE
+                            ItemStack item = p.getInventory().getItemInMainHand();
+
+                            Block blockMined = e.getBlock();
+
+                            blockMined.breakNaturally(item);
+
                             //This grabs the item the user mined
-                            Collection<ItemStack> drops = e.getBlock().getDrops();
+                            Collection<ItemStack> drops = blockMined.getDrops();
                             //This gets the item dropped
                             for(ItemStack drop : drops) {
                                 e.setDropItems(false);
@@ -73,7 +82,6 @@ public class SafeMiner implements Listener {
                                     e.setDropItems(true);
                                 }
                             }
-
                             //END ENCHANT LOGIC
                         }
                     }
