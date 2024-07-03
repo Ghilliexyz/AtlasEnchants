@@ -5,6 +5,7 @@ import com.atlasplugins.atlasenchants.enchants.armor.BlessingofKnowledge;
 import com.atlasplugins.atlasenchants.enchants.armor.Fearsight;
 import com.atlasplugins.atlasenchants.enchants.armor.Rush;
 import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
+import com.atlasplugins.atlasenchants.enchants.tools.MinersTouch;
 import com.atlasplugins.atlasenchants.enchants.tools.Regrowth;
 import com.atlasplugins.atlasenchants.enchants.tools.SafeMiner;
 import com.atlasplugins.atlasenchants.enchants.tools.TreeHugger;
@@ -46,6 +47,8 @@ public final class Main extends JavaPlugin implements Listener {
 
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
+    // Spawner Stuff
+    public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
     private LogsPlacedManager logsPlacedManager;
     // Block Radius Finder Stuff
@@ -88,6 +91,8 @@ public final class Main extends JavaPlugin implements Listener {
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
+        //Spawner Data
+        spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
         logsPlacedManager = new LogsPlacedManager(this);
         // Initialize BlockUtils instance
@@ -95,7 +100,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.0"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.1"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -118,6 +123,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new EnergyAbsorption(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Regrowth(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new TreeHugger(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new MinersTouch(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
@@ -145,7 +151,7 @@ public final class Main extends JavaPlugin implements Listener {
         logsPlacedManager.saveDataToFile();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.0"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.1"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
         Bukkit.getConsoleSender().sendMessage(color(""));

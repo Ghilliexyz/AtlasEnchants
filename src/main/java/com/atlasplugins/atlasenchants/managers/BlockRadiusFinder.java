@@ -15,16 +15,16 @@ public class BlockRadiusFinder {
         this.main = main;
     }
 
-    public List<Block> getBlocks(Block start, int radius) {
+    public List<Block> getBlocks(Block start, int radiusX, int radiusY, int radiusZ) {
         List<Block> blocks = new ArrayList<>();
 
         // Calculate the bounds of the cube
-        int minX = start.getX() - radius;
-        int minY = start.getY() - radius;
-        int minZ = start.getZ() - radius;
-        int maxX = start.getX() + radius;
-        int maxY = start.getY() + radius;
-        int maxZ = start.getZ() + radius;
+        int minX = start.getX() - radiusX;
+        int minY = start.getY() - radiusY;
+        int minZ = start.getZ() - radiusZ;
+        int maxX = start.getX() + radiusX;
+        int maxY = start.getY() + radiusY;
+        int maxZ = start.getZ() + radiusZ;
 
         World world = start.getWorld();
 

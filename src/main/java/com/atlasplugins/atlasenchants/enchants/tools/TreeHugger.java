@@ -145,7 +145,7 @@ public class TreeHugger implements Listener {
         if (logsToChop.contains(block)) return;
         logsToChop.add(block);
 
-        List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1);
+        List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
 
         for (Block nblock : nearbyBlocks) {
             if (LOGS.contains(nblock.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {

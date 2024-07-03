@@ -5,41 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/managers/BlockRadiusFinder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/managers/LogsPlacedManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/MinersTouch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/users/GiveEnchantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/users/GiveEnchantCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/ApplyCustomEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/ApplyCustomEnchant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/ArmorEquipEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/ArmorEquipListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/CreateCustomEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateCustomEnchant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/LootTableEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/LootTableEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/PoisonAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/PoisonAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Stunning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Stunning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/managers/BlockRadiusFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/managers/BlockRadiusFinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/enchantments.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/enchantments.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/users/GiveEnchantCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/users/GiveEnchantCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Hunter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Hunter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ApplyCustomEnchant.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ArmorEquipEvent$ArmorType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ArmorEquipEvent$EquipMethod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ArmorEquipEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ArmorEquipListener$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/ArmorEquipListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/CreateCustomEnchant.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/LootTableEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/enchantments.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/enchantments.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/settings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0-shaded.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/managers/BlockRadiusFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/managers/BlockRadiusFinder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.0.jar" beforeDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
     <option name="SHOW_DIALOG" value="false" />

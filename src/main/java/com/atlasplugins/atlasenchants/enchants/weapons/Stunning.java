@@ -125,7 +125,6 @@ public class Stunning implements Listener {
                                             count++;
                                         }
                                     };
-
                                     particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
                                 }
                             }
