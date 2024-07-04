@@ -218,7 +218,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (LEECH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - HUNTER
-    #The amount of healing the enchant does.
+    #The amount of healing % the enchant does (5 = 5% of the damage done will be turned into health).
     Leech-Healing-Amount-Percent-1: 5
     Leech-Healing-Amount-Percent-2: 15
     Leech-Healing-Amount-Percent-3: 30
@@ -357,8 +357,68 @@ Enchantments:
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
     #Note 2: Make sure to add this enchant Name (VEIN-SEEKER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
-      - SAFE-MINER
       - MINERS-TOUCH
+      - SAFE-MINER
+    #The list of blocks/ores this enchant will seek out and mine.
+    VeinSeeker-Block-List:
+      - COAL_ORE
+      - COPPER_ORE
+      - IRON_ORE
+      - LAPIS_ORE
+      - REDSTONE_ORE
+      - GOLD_ORE
+      - EMERALD_ORE
+      - DIAMOND_ORE
+      - DEEPSLATE_COAL_ORE
+      - DEEPSLATE_COPPER_ORE
+      - DEEPSLATE_IRON_ORE
+      - DEEPSLATE_LAPIS_ORE
+      - DEEPSLATE_REDSTONE_ORE
+      - DEEPSLATE_GOLD_ORE
+      - DEEPSLATE_EMERALD_ORE
+      - DEEPSLATE_DIAMOND_ORE
+      - NETHER_QUARTZ_ORE
+      - NETHER_GOLD_ORE
+      - ANCIENT_DEBRIS
+  WINGS-OF-AEGIS:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 4
+    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
+    Enchantment-Spawn-Chance: 0.15
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&6&lLEGENDARY &7Wings Of Aegis"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lProtection     &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eGain a damage reduction of {wingsDamageReduction}%"
+      - ""
+      - "&c● &7Type: &eElytra Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Elytra to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - ELYTRA
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (VEIN-SEEKER) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
+    #The amount of Protection resistance you gain per level (0.04 = 4% Damage reduction 1 = 100% Damage Reduction)
+    #These values follow Vanilla minecraft protection stats
+    WingsOfAegis-Protection-Percentage-1: 4
+    WingsOfAegis-Protection-Percentage-2: 8
+    WingsOfAegis-Protection-Percentage-3: 12
+    WingsOfAegis-Protection-Percentage-4: 16
   # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.
@@ -693,6 +753,17 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (ICE-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
+    #The list of blocks/ores this enchant will seek out and mine.
+    TreeHugger-Block-List:
+      - OAK_LOG
+      - SPRUCE_LOG
+      - BIRCH_LOG
+      - JUNGLE_LOG
+      - ACACIA_LOG
+      - DARK_OAK_LOG
+      - CHERRY_LOG
+      - MANGROVE_LOG
+      - MANGROVE_ROOTS
   # --------------------- RARE ENCHANTS --------------------- #
   HUNTER:
     #Max Level of this Enchantment.

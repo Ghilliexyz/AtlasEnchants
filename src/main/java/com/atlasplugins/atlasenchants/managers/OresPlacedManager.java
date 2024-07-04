@@ -20,7 +20,7 @@ public class OresPlacedManager {
 
     public OresPlacedManager(Main main) {
         this.main = main;
-        this.dataFile = new File(main.getDataFolder(), "player_placed_logs.json");
+        this.dataFile = new File(main.getDataFolder(), "player_placed_ores.json");
         this.playerPlacedLogs = new HashMap<>();
         this.objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
@@ -56,20 +56,20 @@ public class OresPlacedManager {
         }
     }
 
-    public boolean isPlayerPlacedLog(Block block) {
+    public boolean isPlayerPlacedOre(Block block) {
         Location location = block.getLocation();
         String key = getKey(location);
         return playerPlacedLogs.containsKey(key) && playerPlacedLogs.get(key);
     }
 
-    public void markPlayerPlacedLog(Block block) {
+    public void markPlayerPlacedOre(Block block) {
         Location location = block.getLocation();
         String key = getKey(location);
         playerPlacedLogs.put(key, true);
         saveDataToFile();
     }
 
-    public void removePlayerPlacedLog(Block block) {
+    public void removePlayerPlacedOre(Block block) {
         Location location = block.getLocation();
         String key = getKey(location);
         if (playerPlacedLogs.containsKey(key)) {

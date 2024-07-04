@@ -26,22 +26,7 @@ public class TreeHugger implements Listener {
 
     private int removeDurability = 0;
 
-    private static final Set<Material> LOGS;
-    static {
-        Set<Material> logs = new HashSet<>();
-        Collections.addAll(logs,
-                Material.OAK_LOG,
-                Material.SPRUCE_LOG,
-                Material.BIRCH_LOG,
-                Material.JUNGLE_LOG,
-                Material.ACACIA_LOG,
-                Material.DARK_OAK_LOG,
-                Material.CHERRY_LOG,
-                Material.MANGROVE_LOG,
-                Material.MANGROVE_ROOTS
-        );
-        LOGS = Collections.unmodifiableSet(logs);
-    }
+    private List<String> LOGS;
 
     public boolean hasTool (Player p) {
         // Get the player's tool(s)
@@ -72,6 +57,9 @@ public class TreeHugger implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
+            // Get the block list.
+            LOGS = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
+
             PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
             String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
@@ -93,7 +81,7 @@ public class TreeHugger implements Listener {
                             ItemMeta itemMeta = item.getItemMeta();
 
                             Block block = e.getBlock();
-                            if (LOGS.contains(block.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
+                            if (LOGS.contains(block.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
 
                                 chopTree(block, item);
 
@@ -136,7 +124,7 @@ public class TreeHugger implements Listener {
         List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
 
         for (Block nblock : nearbyBlocks) {
-            if (LOGS.contains(nblock.getType()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {
+            if (LOGS.contains(nblock.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {
                 findLogs(nblock, logsToChop);
             }
         }
@@ -147,7 +135,10 @@ public class TreeHugger implements Listener {
         Block blockPlaced = e.getBlockPlaced();
         Material blockMaterial = blockPlaced.getType();
 
-        if(LOGS.contains(blockMaterial)) {
+        // Get the block list.
+        LOGS = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
+
+        if(LOGS.contains(blockMaterial.toString())) {
             main.getLogsPlacedManager().markPlayerPlacedLog(blockPlaced);
             // Save data to file
             main.getLogsPlacedManager().saveDataToFile();

@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -89,6 +90,13 @@ public class Propel implements Listener
                                 entityToLaunch.setVelocity(entityVelocity);
                                 // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
                                 entityToLaunch.damage(entityDamage);
+
+                                // check if the entity has died and if so then stop the particles
+//                                if(entityToLaunch.getHealth() <= 0)
+//                                {
+//                                    ExperienceOrb experienceOrb = entityToLaunch.getWorld().spawn(entityToLaunch.getLocation(), ExperienceOrb.class);
+//                                    experienceOrb.setExperience((int) onEntityDeath((EntityDeathEvent) entityToLaunch));
+//                                }
 
                                 e.setCancelled(true);
                             }
