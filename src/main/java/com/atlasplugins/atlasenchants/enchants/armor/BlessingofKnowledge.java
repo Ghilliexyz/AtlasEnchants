@@ -100,6 +100,8 @@ public class BlessingofKnowledge implements Listener {
 
                             double healthPercentage = (entityHealth / entity.getMaxHealth()) * 100;
 
+                            int entityMaxHealth = (int) entity.getMaxHealth();
+
                             String healthStyleBelow10 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
                             String healthStyleBelow25 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
                             String healthStyleBelow50 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-50");
@@ -120,23 +122,23 @@ public class BlessingofKnowledge implements Listener {
                             if(healthPercentage <= 10.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow10PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
-                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Dark Red for <= 10%
+                                        .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Dark Red for <= 10%
                             } else if (healthPercentage <= 25.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow25PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
-                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Red for <= 25%
+                                        .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Red for <= 25%
                             } else if (healthPercentage <= 50.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow50PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
-                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Yellow for <= 50%
+                                        .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Yellow for <= 50%
                             } else if (healthPercentage <= 75.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow75PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
-                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Light Yellow (or another color) for <= 75%
+                                        .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Light Yellow (or another color) for <= 75%
                             } else {
                                 entity.setCustomName(Main.color(healthStyleBelow100PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
-                                        .replace("{entityMaxHealth}", String.valueOf(entity.getMaxHealth())))); // Green for > 75%
+                                        .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Green for > 75%
                             }
                         }
                     }
