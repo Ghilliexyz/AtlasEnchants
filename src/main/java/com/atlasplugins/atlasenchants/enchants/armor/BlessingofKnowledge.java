@@ -112,7 +112,10 @@ public class BlessingofKnowledge implements Listener {
                             String healthStyleBelow75PAPISet = main.setPlaceholders(player, healthStyleBelow75);
                             String healthStyleBelow100PAPISet =  main.setPlaceholders(player, healthStyleBelow100);
 
-
+                            if(entityHealth <= 0)
+                            {
+                                entityHealth = 0;
+                            }
 
                             if(healthPercentage <= 10.0) {
                                 entity.setCustomName(Main.color(healthStyleBelow10PAPISet

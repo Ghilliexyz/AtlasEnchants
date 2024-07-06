@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/MinersTouch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/MinersTouch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/VeinSeeker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/VeinSeeker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/BlessingofKnowledge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/BlessingofKnowledge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.1-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.1-shaded.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.1.jar" afterDir="false" />
     </list>
