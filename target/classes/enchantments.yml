@@ -153,7 +153,6 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (MINERS-TOUCH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
-      - VEIN-SEEKER
     #Particle Settings for Miners Touch
     MinersTouch-Particle-Settings:
       #Particle Toggle (if true the particles will show)
@@ -357,7 +356,6 @@ Enchantments:
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
     #Note 2: Make sure to add this enchant Name (VEIN-SEEKER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
-      - MINERS-TOUCH
       - SAFE-MINER
     #The list of blocks/ores this enchant will seek out and mine.
     VeinSeeker-Block-List:
@@ -415,10 +413,10 @@ Enchantments:
       -
     #The amount of Protection resistance you gain per level (0.04 = 4% Damage reduction 1 = 100% Damage Reduction)
     #These values follow Vanilla minecraft protection stats
-    WingsOfAegis-Protection-Percentage-1: 4
-    WingsOfAegis-Protection-Percentage-2: 8
-    WingsOfAegis-Protection-Percentage-3: 12
-    WingsOfAegis-Protection-Percentage-4: 16
+    WingsOfAegis-Protection-Percentage-1: 0.04
+    WingsOfAegis-Protection-Percentage-2: 0.08
+    WingsOfAegis-Protection-Percentage-3: 0.12
+    WingsOfAegis-Protection-Percentage-4: 0.16
   # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.
