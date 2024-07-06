@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants.enchants.tools;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -85,7 +86,9 @@ public class VeinSeeker implements Listener {
                 Block block = e.getBlock();
                 if (ORES.contains(block.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(block)) {
 
-                    mineOres(block, item, p);
+                    double blockXP = e.getExpToDrop();
+
+                    mineOres(block, blockXP, item, p);
 
                     if(itemMeta instanceof Damageable)
                     {
@@ -106,25 +109,39 @@ public class VeinSeeker implements Listener {
     }
 
     // Breaks the blocks.
-    private void mineOres(Block block, ItemStack tool, Player p) {
+    private void mineOres(Block block, double blockXP, ItemStack tool, Player p) {
         Set<Block> oresToMine = new HashSet<>();
         findOres(block, oresToMine);
+            ExperienceOrb experienceOrb = null;
         for (Block ore : oresToMine) {
+            // Break the block
             ore.breakNaturally(tool);
+
+            // Drop the blocks XP
+            if(blockXP > 0){
+                experienceOrb = ore.getWorld().spawn(ore.getLocation(), ExperienceOrb.class);
+            }
+
+            // Increase Durability counter
             removeDurability++;
+        }
+        
+        // Set the blocks xp
+        if(blockXP > 0){
+            experienceOrb.setExperience((int) blockXP * oresToMine.size());
         }
     }
 
     // Finds the blocks to break.
-    private void findOres(Block block, Set<Block> logsToChop) {
-        if (logsToChop.contains(block)) return;
-        logsToChop.add(block);
+    private void findOres(Block block, Set<Block> oresToMine) {
+        if (oresToMine.contains(block)) return;
+        oresToMine.add(block);
 
         List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
 
         for (Block nblock : nearbyBlocks) {
             if (ORES.contains(nblock.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(nblock)) {
-                findOres(nblock, logsToChop);
+                findOres(nblock, oresToMine);
             }
         }
     }
