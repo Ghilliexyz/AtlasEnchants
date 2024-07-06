@@ -120,6 +120,9 @@ public class MinersTouch implements Listener {
                             // Drop the spawner item on the ground
                             block.getWorld().dropItemNaturally(block.getLocation(), fakeSpawner);
 
+                            // Set Block Exp to 0 so they can't gain an infinite amount of xp.
+                            e.setExpToDrop(0);
+
                             // Particle Settings Controlled Via Config
                             // Get the bool to see if the user wants to display the particles
                             boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.MINERS-TOUCH.MinersTouch-Particle-Settings.MinersTouch-Particle-Toggle");
