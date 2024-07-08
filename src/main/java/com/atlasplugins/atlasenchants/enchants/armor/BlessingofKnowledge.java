@@ -15,7 +15,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class BlessingofKnowledge implements Listener {
 
@@ -44,6 +43,8 @@ public class BlessingofKnowledge implements Listener {
         }
 
         Player player = (Player) e.getDamager();
+
+        if(e.getEntity() instanceof Fireball){return;}
 
         // Check if the player has an enchanted helmet
         if (hasArmor(player)) {
