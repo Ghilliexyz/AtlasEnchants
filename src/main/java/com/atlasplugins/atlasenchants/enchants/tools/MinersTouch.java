@@ -79,8 +79,7 @@ public class MinersTouch implements Listener {
                             // if block isn't an instance of CreatureSpawner return
                             if(!(block.getState() instanceof CreatureSpawner)) return;
 
-                            p.sendMessage("WHY DID I GET CALLED");
-                            // Set Block Exp to 0 so they can't gain an infinite amount of xp.
+                            // Set Block Exp to 0, so they can't gain an infinite amount of xp.
                             e.setExpToDrop(0);
 
                             // Get the CreatureSpawner State

@@ -72,6 +72,10 @@ public class SafeMiner implements Listener {
 
                 // Prevent default drops
                 e.setDropItems(false);
+
+                // Break the block naturally
+                // fix for deleting touches on the block.
+//                blockMined.breakNaturally();
                 //END ENCHANT LOGIC
             }
         }
