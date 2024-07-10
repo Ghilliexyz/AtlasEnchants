@@ -240,9 +240,9 @@ Enchantments:
       - "  &eAny item you mine will go straight into your inventory"
       - "  &eif your Inventory is full the items will drop on the ground"
       - ""
-      - "&c● &7Type: &ePickaxe Enchantment"
+      - "&c● &7Type: &ePickaxe, Axe, Shovel Enchantment"
       - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Pickaxe to enchant."
+      - "&c● &7Usage: &eDrag n' Drop onto Pickaxe, Axe & Shovel to enchant."
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
@@ -251,12 +251,27 @@ Enchantments:
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
     Enchantment-Apply-Item:
+    #Pickaxe
       - WOODEN_PICKAXE
       - STONE_PICKAXE
       - IRON_PICKAXE
       - GOLDEN_PICKAXE
       - DIAMOND_PICKAXE
       - NETHERITE_PICKAXE
+    #Axe
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+    #Shovel
+      - WOODEN_SHOVEL
+      - STONE_SHOVEL
+      - IRON_SHOVEL
+      - GOLDEN_SHOVEL
+      - DIAMOND_SHOVEL
+      - NETHERITE_SHOVEL
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
     #Note 2: Make sure to add this enchant Name (SAFE-MINER) to the enchantment Blacklist of the other enchantments you have listed below.
