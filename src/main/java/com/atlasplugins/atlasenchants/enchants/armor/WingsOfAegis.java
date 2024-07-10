@@ -62,18 +62,15 @@ public class WingsOfAegis implements Listener {
                             Entity damagingEntity = e.getDamageSource().getDirectEntity();
                             if(damagingEntity instanceof LivingEntity) {
 
-                                double damageRecutionPercent = main.getEnchantmentsConfig().getDouble("Enchantments.WINGS-OF-AEGIS.WingsOfAegis-Protection-Percentage-" + enchantLevel);
+                                double damageReductionPercent = main.getEnchantmentsConfig().getDouble("Enchantments.WINGS-OF-AEGIS.WingsOfAegis-Protection-Percentage-" + enchantLevel);
                                 double damageDealt = e.getDamage();
-                                double damageReduction = calculateReducedDamage(damageRecutionPercent, damageDealt);
+                                double damageReduction = calculateReducedDamage(damageReductionPercent, damageDealt);
 
                                 double damageFinal = damageDealt - damageReduction;
 
                                 player.damage(damageFinal);
-
-                                e.setCancelled(true);
-
-                                //END ENCHANT LOGIC
                             }
+                            //END ENCHANT LOGIC
                         }
                     }
                 }
