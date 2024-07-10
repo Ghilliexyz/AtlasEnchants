@@ -134,8 +134,8 @@ public class SafeMiner implements Listener {
 
         // If the block is a container (e.g., chest), add its contents to the drops
         Inventory containerInventory = ((Container) blockState).getInventory();
+        if(block.getType().equals(Material.SHULKER_BOX)) return;
         if(!containerInventory.isEmpty()){
-            player.sendMessage("Break YES");
             for (ItemStack item : containerInventory.getContents()) {
                 if (item != null) {
                     drops.add(item);
@@ -145,7 +145,7 @@ public class SafeMiner implements Listener {
     }
 
     private void handleAttachedItems(Block block, ItemStack tool, Collection<ItemStack> drops) {
-        block.breakNaturally(tool);
+//        block.breakNaturally(tool);
 
         // Check for attached items like torches
 //        for (BlockFace face : BlockFace.values()) {

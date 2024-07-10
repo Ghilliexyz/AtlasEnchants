@@ -20,8 +20,8 @@ Enchantments:
   FEARSIGHT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.05
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "GODLY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -68,8 +68,8 @@ Enchantments:
   BLESSING-OF-KNOWLEDGE:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.05
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "GODLY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -116,8 +116,8 @@ Enchantments:
   MINERS-TOUCH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.05
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "GODLY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -179,8 +179,8 @@ Enchantments:
   LEECH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -224,8 +224,8 @@ Enchantments:
   SAFE-MINER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -278,11 +278,12 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - MINERS-TOUCH
       - VEIN-SEEKER
+      - TREE-HUGGER
   EXTRACTOR:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -334,8 +335,8 @@ Enchantments:
   VEIN-SEEKER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -396,8 +397,8 @@ Enchantments:
   WINGS-OF-AEGIS:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 4
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.15
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -436,8 +437,8 @@ Enchantments:
   RUSH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -479,8 +480,8 @@ Enchantments:
   STUNNING:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -543,8 +544,8 @@ Enchantments:
   ENERGY-ABSORPTION:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -593,8 +594,8 @@ Enchantments:
   POISON-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -666,8 +667,8 @@ Enchantments:
   ICE-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -729,8 +730,8 @@ Enchantments:
   TREE-HUGGER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "EPIC"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -763,9 +764,9 @@ Enchantments:
       - NETHERITE_AXE
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (ICE-ASPECT) to the enchantment Blacklist of the other enchantments you have listed below.
+    #Note 2: Make sure to add this enchant Name (TREE-HUGGER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
-      -
+      - SAFE-MINER
     #The list of blocks/ores this enchant will seek out and mine.
     TreeHugger-Block-List:
       - OAK_LOG
@@ -781,8 +782,8 @@ Enchantments:
   HUNTER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "RARE"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -826,8 +827,8 @@ Enchantments:
   PROPEL:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "RARE"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -867,8 +868,8 @@ Enchantments:
   FREEZING-SHOT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "RARE"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
@@ -905,8 +906,8 @@ Enchantments:
   REGROWTH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
-    #The chance the enchantment has to spawn (0.5 = 50% chance of spawning).
-    Enchantment-Spawn-Chance: 0.5
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "RARE"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.

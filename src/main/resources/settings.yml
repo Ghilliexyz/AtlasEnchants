@@ -101,10 +101,23 @@ Command-Messages:
 EnchantItems:
   #Type of Item the Enchantments will be.
   EnchantItem: ENCHANTED_BOOK
-  #This chance determines if it should give the spawning enchant logic an attempt to spawn an enchantment
-  #Default Spawn Chance = 0.5 (0.5 = 50% chance that it will allow the spawning system to loop through all the enchants)
+  #This chance determines if it should run the spawning enchant logic to spawn an enchantment
+  #Default Spawn Chance = 0.05 (0.05 = 5% chance that it will allow the spawning system to loop through all the enchants)
   #if the spawning chance fails no enchantment attempt to be spawned.
   EnchantItem-Spawn-Chance: 0.05
+  #A list of all rarity's in the plugin. (0.5 = 50%)
+  EnchantItem-Rarity-List:
+    #Chance to get a Godly enchantment.
+    GODLY: 0.05
+    #Chance to get a Legendary enchantment.
+    LEGENDARY: 0.15
+    #Chance to get a Epic enchantment.
+    EPIC: 0.30
+    #Chance to get a Rare enchantment.
+    RARE: 0.5
+  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly#
+  #if false then it will check Godly first and make its way down to Rares.
+  EnchantItem-Flip-List: true
 
 #The sound that will play when the player applies a new enchant to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
