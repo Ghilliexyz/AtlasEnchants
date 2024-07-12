@@ -778,6 +778,8 @@ Enchantments:
       - CHERRY_LOG
       - MANGROVE_LOG
       - MANGROVE_ROOTS
+      - CRIMSON_STEM
+      - WARPED_STEM
   # --------------------- RARE ENCHANTS --------------------- #
   HUNTER:
     #Max Level of this Enchantment.
