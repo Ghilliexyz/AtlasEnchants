@@ -14,9 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootContext;
-import org.bukkit.loot.LootTables;
-import org.bukkit.loot.Lootable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -94,12 +91,18 @@ public class SafeMiner implements Listener {
         } else if (blockMined.getBlockData() instanceof Door) {
             // Handle breaking Doors to make sure you can mine any part of it.
             handleDoor(blockMined, tool, drops);
+        } else if (isTallFlower(blockMined)) {
+            // Handle breaking tall flowers
+            handleTallFlower(blockMined, tool, drops);
+        } else if (isPiston(blockMined)) {
+            // Handle breaking Pistons
+            handlePiston(blockMined, tool, drops);
         } else if (blockMined.getState() instanceof Container) {
             // Check for loot inside Containers like Chests, half working still need to open it to generate the loot.
             handleContainers(blockMined, tool, drops, player);
         }else {
             // Check for attached items like Torches
-            handleAttachedItems(blockMined, tool, drops);
+//            handleAttachedItems(blockMined, tool, drops);
         }
 
         // Add drops to the player's inventory or drop them if the inventory is full
@@ -112,6 +115,41 @@ public class SafeMiner implements Listener {
             }
         }
     }
+
+    private boolean isTallFlower(Block block) {
+        return block.getType().equals(Material.ROSE_BUSH) ||
+                block.getType().equals(Material.SUNFLOWER) ||
+                block.getType().equals(Material.LILAC) ||
+                block.getType().equals(Material.PEONY) ||
+                block.getType().equals(Material.PITCHER_PLANT);
+    }
+
+    private boolean isPiston(Block block) {
+        return block.getType().equals(Material.PISTON_HEAD) ||
+                block.getType().equals(Material.PISTON) ||
+                block.getType().equals(Material.STICKY_PISTON);
+    }
+
+    private boolean isShulkerBox(Block block) {
+        return block.getType().equals(Material.SHULKER_BOX) ||
+                block.getType().equals(Material.WHITE_SHULKER_BOX) ||
+                block.getType().equals(Material.LIGHT_GRAY_SHULKER_BOX) ||
+                block.getType().equals(Material.GRAY_SHULKER_BOX) ||
+                block.getType().equals(Material.BLACK_SHULKER_BOX) ||
+                block.getType().equals(Material.BROWN_SHULKER_BOX) ||
+                block.getType().equals(Material.RED_SHULKER_BOX) ||
+                block.getType().equals(Material.ORANGE_SHULKER_BOX) ||
+                block.getType().equals(Material.YELLOW_SHULKER_BOX) ||
+                block.getType().equals(Material.GREEN_SHULKER_BOX) ||
+                block.getType().equals(Material.LIME_SHULKER_BOX) ||
+                block.getType().equals(Material.LIGHT_BLUE_SHULKER_BOX) ||
+                block.getType().equals(Material.BLUE_SHULKER_BOX) ||
+                block.getType().equals(Material.CYAN_SHULKER_BOX) ||
+                block.getType().equals(Material.PURPLE_SHULKER_BOX) ||
+                block.getType().equals(Material.MAGENTA_SHULKER_BOX) ||
+                block.getType().equals(Material.PINK_SHULKER_BOX);
+    }
+
 
     private void handleBed(Block block, ItemStack tool, Collection<ItemStack> drops) {
         Bed bedData = (Bed) block.getBlockData();
@@ -129,12 +167,45 @@ public class SafeMiner implements Listener {
         drops.addAll(otherPart.getDrops(tool));
     }
 
+    private void handleTallFlower(Block block, ItemStack tool, Collection<ItemStack> drops) {
+        Block upperPart = block.getRelative(BlockFace.UP);
+        Block lowerPart = block.getRelative(BlockFace.DOWN);
+
+        // Check if the upper part is a tall flower and add drops
+        if (upperPart.getType().equals(block.getType())) {
+            drops.addAll(upperPart.getDrops(tool));
+        }
+        // Check if the lower part is a tall flower and add drops
+        if (lowerPart.getType().equals(block.getType())) {
+            drops.addAll(lowerPart.getDrops(tool));
+        }
+    }
+
+    private void handlePiston(Block block, ItemStack tool, Collection<ItemStack> drops) {
+        if (block.getType().equals(Material.PISTON_HEAD)) {
+            // Find the base of the piston and add drops
+            BlockFace[] faces = {BlockFace.DOWN, BlockFace.UP, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST};
+            for (BlockFace face : faces) {
+                Block relative = block.getRelative(face);
+                if (relative.getType().equals(Material.PISTON) || relative.getType().equals(Material.STICKY_PISTON)) {
+                    drops.add((ItemStack) relative);
+                    break;
+                }
+            }
+        } else if (block.getType().equals(Material.PISTON) || block.getType().equals(Material.STICKY_PISTON)) {
+            // Add drops for the piston base
+            drops.add((ItemStack) block.getDrops(tool));
+        }
+    }
+
+
     private void handleContainers(Block block, ItemStack tool, Collection<ItemStack> drops, Player player) {
         BlockState blockState = block.getState();
 
         // If the block is a container (e.g., chest), add its contents to the drops
         Inventory containerInventory = ((Container) blockState).getInventory();
-        if(block.getType().equals(Material.SHULKER_BOX)) return;
+        // return if the container is a shulker box (prevents duping)
+        if(isShulkerBox(block)) return;
         if(!containerInventory.isEmpty()){
             for (ItemStack item : containerInventory.getContents()) {
                 if (item != null) {

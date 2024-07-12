@@ -109,7 +109,7 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.1"));
         Bukkit.getConsoleSender().sendMessage(color(""));
-        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
+        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &aEnabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
@@ -164,7 +164,7 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
         Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.1"));
         Bukkit.getConsoleSender().sendMessage(color(""));
-        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie & Helix"));
+        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Disabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));

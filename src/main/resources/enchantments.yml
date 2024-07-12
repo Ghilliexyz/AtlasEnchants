@@ -429,10 +429,10 @@ Enchantments:
       -
     #The amount of Protection resistance you gain per level (0.04 = 4% Damage reduction 1 = 100% Damage Reduction)
     #These values follow Vanilla minecraft protection stats
-    WingsOfAegis-Protection-Percentage-1: 0.04
-    WingsOfAegis-Protection-Percentage-2: 0.08
-    WingsOfAegis-Protection-Percentage-3: 0.12
-    WingsOfAegis-Protection-Percentage-4: 0.16
+    WingsOfAegis-Protection-Percentage-1: 0.20
+    WingsOfAegis-Protection-Percentage-2: 0.24
+    WingsOfAegis-Protection-Percentage-3: 0.28
+    WingsOfAegis-Protection-Percentage-4: 0.32
   # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.

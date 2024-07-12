@@ -39,6 +39,11 @@ public class OresPlacedManager {
             }
         }
 
+        if (dataFile.length() == 0) {
+//            System.out.println("Data file is empty: " + dataFile.getAbsolutePath());
+            return;
+        }
+
         try {
             // Read JSON content from file and parse into playerPlacedLogs map
             playerPlacedLogs.putAll(objectMapper.readValue(dataFile, Map.class));

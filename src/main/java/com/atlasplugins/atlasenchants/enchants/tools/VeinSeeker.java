@@ -80,24 +80,23 @@ public class VeinSeeker implements Listener {
 
             if (enchantName.contains("VEIN-SEEKER")) {
                 // PUT ENCHANT LOGIC HERE
-                ItemStack item = p.getInventory().getItemInMainHand();
-                ItemMeta itemMeta = item.getItemMeta();
+                ItemStack tool = p.getInventory().getItemInMainHand();
+                ItemMeta toolMeta = tool.getItemMeta();
 
                 Block block = e.getBlock();
                 if (ORES.contains(block.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(block)) {
 
                     double blockXP = e.getExpToDrop();
 
-                    mineOres(block, blockXP, item, p);
+                    mineOres(block, blockXP, tool, p);
 
-                    if(itemMeta instanceof Damageable)
+                    if(toolMeta instanceof Damageable)
                     {
-                        int currentDurability = item.getDurability();
-
-                        int newItemDurability = (currentDurability + removeDurability);
+                        // Get Damageable tool
+                        Damageable damageableToolMeta = (Damageable) toolMeta;
 
                         // Manually remove durability
-                        item.setDurability((short) newItemDurability);
+                        damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
 
                         // Reset durability removal
                         removeDurability = 0;

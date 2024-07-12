@@ -39,6 +39,11 @@ public class LogsPlacedManager {
             }
         }
 
+        if (dataFile.length() == 0) {
+//            System.out.println("Data file is empty: " + dataFile.getAbsolutePath());
+            return;
+        }
+
         try {
             // Read JSON content from file and parse into playerPlacedLogs map
             playerPlacedLogs.putAll(objectMapper.readValue(dataFile, Map.class));
@@ -72,8 +77,7 @@ public class LogsPlacedManager {
     public void removePlayerPlacedLog(Block block){
         Location location = block.getLocation();
         String key = getKey(location);
-        if(playerPlacedLogs.containsKey(key))
-        {
+        if(playerPlacedLogs.containsKey(key)) {
             playerPlacedLogs.remove(key);
         }
     }
@@ -82,4 +86,3 @@ public class LogsPlacedManager {
         return location.getWorld().getName() + ";" + location.getBlockX() + ";" + location.getBlockY() + ";" + location.getBlockZ();
     }
 }
-

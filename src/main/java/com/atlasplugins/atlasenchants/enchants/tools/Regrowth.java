@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -71,6 +73,9 @@ public class Regrowth implements Listener {
                             Material cropBrokenMat = cropBroken.getType();
                             BlockData cropBrokenData = cropBroken.getBlockData();
 
+                            ItemStack tool = p.getInventory().getItemInMainHand();
+                            ItemMeta toolMeta = tool.getItemMeta();
+
                             // Check if the block is ageable (crop)
                             if (!(cropBrokenData instanceof Ageable)) {
                                 return;
@@ -83,7 +88,7 @@ public class Regrowth implements Listener {
                                 return;
                             }
 
-                            if(((Ageable) cropBrokenData).getAge() == ((Ageable) cropBrokenData).getMaximumAge()){
+                            if (((Ageable) cropBrokenData).getAge() == ((Ageable) cropBrokenData).getMaximumAge()) {
                                 // Collect the drops manually
                                 Collection<ItemStack> drops = cropBroken.getDrops();
 
@@ -95,20 +100,25 @@ public class Regrowth implements Listener {
 
                             // Determine the type of crop and replant it as the initial stage
                             Material seedType;
-                            if (cropBrokenMat == Material.WHEAT) {
-                                seedType = Material.WHEAT;
-                            } else if (cropBrokenMat == Material.CARROTS) {
-                                seedType = Material.CARROTS;
-                            } else if (cropBrokenMat == Material.POTATOES) {
-                                seedType = Material.POTATOES;
-                            } else if (cropBrokenMat == Material.BEETROOTS) {
-                                seedType = Material.BEETROOTS;
-                            } else {
-                                return;
+                            switch (cropBrokenMat) {
+                                case WHEAT:
+                                    seedType = Material.WHEAT;
+                                    break;
+                                case CARROTS:
+                                    seedType = Material.CARROT;
+                                    break;
+                                case POTATOES:
+                                    seedType = Material.POTATO;
+                                    break;
+                                case BEETROOTS:
+                                    seedType = Material.BEETROOTS;
+                                    break;
+                                default:
+                                    return;
                             }
 
-                            // Set the block type to the seed type
-                            cropBroken.setType(seedType);
+                            // Plant the crop by setting the block type to the crop type (not the seed)
+                            cropBroken.setType(cropBrokenMat);
 
                             // Set the crop's age to 0 (seedling state)
                             BlockData newCropData = cropLoc.getBlock().getBlockData();
@@ -120,6 +130,14 @@ public class Regrowth implements Listener {
 
                             // Force a block update to ensure the change is reflected
                             cropLoc.getBlock().getState().update(true, false);
+
+                            if (toolMeta instanceof Damageable) {
+                                Damageable damageableToolMeta = (Damageable) toolMeta;
+
+                                damageableToolMeta.setDamage(damageableToolMeta.getDamage() + 1);
+
+                                tool.setItemMeta(toolMeta);  // Don't forget to set the item meta back to the tool
+                            }
 
                             e.setCancelled(true);
                             // END ENCHANT LOGIC

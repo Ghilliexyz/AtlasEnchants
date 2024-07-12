@@ -77,22 +77,21 @@ public class TreeHugger implements Listener {
 
                         if (enchantName.contains("TREE-HUGGER")) {
                             // PUT ENCHANT LOGIC HERE
-                            ItemStack item = p.getInventory().getItemInMainHand();
-                            ItemMeta itemMeta = item.getItemMeta();
+                            ItemStack tool = p.getInventory().getItemInMainHand();
+                            ItemMeta toolMeta = tool.getItemMeta();
 
                             Block block = e.getBlock();
                             if (LOGS.contains(block.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
 
-                                chopTree(block, item);
+                                chopTree(block, tool);
 
-                                if(itemMeta instanceof Damageable)
+                                if(toolMeta instanceof Damageable)
                                 {
-                                    int currentDurability = item.getDurability();
-
-                                    int newItemDurability = (currentDurability + removeDurability);
+                                    // Get Damageable tool
+                                    Damageable damageableToolMeta = (Damageable) toolMeta;
 
                                     // Manually remove durability
-                                    item.setDurability((short) newItemDurability);
+                                    damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
 
                                     // Reset durability removal
                                     removeDurability = 0;
