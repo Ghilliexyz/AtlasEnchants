@@ -175,6 +175,48 @@ Enchantments:
       - "&c● &7Description: &eThis spawner spawns {spawnerType}s"
       - ""
       - "&c&m&l-----------------------------------------"
+  GROWTH:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 1
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "GODLY"
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&c&lGODLY &7Growth"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lHealth Boost      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eAllows the wearer to gain {GrowthHearts} extra hearts"
+      - "  &edepending on the level of the enchantment"
+      - ""
+      - "&c● &7Type: &eChestplate Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Chestplate to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      - LEATHER_CHESTPLATE
+      - CHAINMAIL_CHESTPLATE
+      - IRON_CHESTPLATE
+      - GOLDEN_CHESTPLATE
+      - TURTLE_CHESTPLATE
+      - DIAMOND_CHESTPLATE
+      - NETHERITE_CHESTPLATE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (GROWTH) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
+    #Radius of how far the glow goes per Tier.
+    Growth-HealthBoost-1: 1
   # --------------------- LEGENDARY ENCHANTS --------------------- #
   LEECH:
     #Max Level of this Enchantment.

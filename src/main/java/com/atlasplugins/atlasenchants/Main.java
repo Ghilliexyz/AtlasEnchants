@@ -1,10 +1,7 @@
 package com.atlasplugins.atlasenchants;
 
 import com.atlasplugins.atlasenchants.commands.CommandRouter;
-import com.atlasplugins.atlasenchants.enchants.armor.BlessingofKnowledge;
-import com.atlasplugins.atlasenchants.enchants.armor.Fearsight;
-import com.atlasplugins.atlasenchants.enchants.armor.Rush;
-import com.atlasplugins.atlasenchants.enchants.armor.WingsOfAegis;
+import com.atlasplugins.atlasenchants.enchants.armor.*;
 import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
@@ -133,6 +130,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new MinersTouch(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new VeinSeeker(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new WingsOfAegis(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Growth(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
