@@ -82,7 +82,7 @@ public class PoisonAspect implements Listener {
                                 int finalPoisonTimer = poisonTimer * 20;
 
                                 // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel, false, false, true);
+                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel - 1, false, false, true);
 
                                 // Apply the potion effect to the entity
                                 ((LivingEntity) entity).addPotionEffect(potionType);

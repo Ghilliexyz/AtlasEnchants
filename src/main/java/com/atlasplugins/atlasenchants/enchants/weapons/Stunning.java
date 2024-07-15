@@ -79,9 +79,9 @@ public class Stunning implements Listener {
                                 int finalPoisonTimer = poisonTimer * 20;
 
                                 // Create the Slowness potion effect
-                                PotionEffect potionTypeSlowness = new PotionEffect(PotionEffectType.getByName("SLOWNESS"), finalPoisonTimer, poisonLevel, false, false, true);
+                                PotionEffect potionTypeSlowness = new PotionEffect(PotionEffectType.getByName("SLOWNESS"), finalPoisonTimer, poisonLevel - 1, false, false, true);
                                 // Create the Weakness potion effect
-                                PotionEffect potionTypeWeakness = new PotionEffect(PotionEffectType.WEAKNESS, finalPoisonTimer, poisonLevel, false, false, true);
+                                PotionEffect potionTypeWeakness = new PotionEffect(PotionEffectType.WEAKNESS, finalPoisonTimer, poisonLevel - 1, false, false, true);
 
                                 // Apply the potion effect to the entity
                                 ((LivingEntity) entity).addPotionEffect(potionTypeSlowness);
