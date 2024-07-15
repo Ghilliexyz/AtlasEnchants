@@ -86,21 +86,13 @@ public class Propel implements Listener
                                 double entityDamage = e.getDamage();
 
                                 // Add a small vertical offset to the entity's position to ensure it gets launched
-//                                Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
-                                Vector entityVelocity = new Vector(0, velocityY, 0);
+                                Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
                                 // Launch Entity Up
                                 entityToLaunch.setVelocity(entityVelocity);
                                 // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
                                 entityToLaunch.damage(entityDamage);
 
-                                // check if the entity has died and if so then stop the particles
-//                                if(entityToLaunch.getHealth() <= 0)
-//                                {
-//                                    ExperienceOrb experienceOrb = entityToLaunch.getWorld().spawn(entityToLaunch.getLocation(), ExperienceOrb.class);
-//                                    experienceOrb.setExperience((int) onEntityDeath((EntityDeathEvent) entityToLaunch));
-//                                }
-
-                                e.setCancelled(true);
+//                                e.setCancelled(true);
                             }
                             //END ENCHANT LOGIC
                         }
