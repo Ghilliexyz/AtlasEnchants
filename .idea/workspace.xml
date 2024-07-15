@@ -6,11 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Growth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Growth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Rush.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Rush.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.1-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.1-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/armor/Growth.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/armor/Growth.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent$ArmorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent$ArmorType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent$EquipMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent$EquipMethod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/armorevents/ArmorEquipListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.1.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />

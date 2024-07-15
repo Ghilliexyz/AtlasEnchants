@@ -1,6 +1,9 @@
 package com.atlasplugins.atlasenchants.listeners.armorevents;
 
+import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Warning;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +18,11 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+
 public class ArmorEquipListener implements Listener {
+
+    private Main main;
+    public ArmorEquipListener(Main main) {this.main = main;}
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -29,54 +36,40 @@ public class ArmorEquipListener implements Listener {
         int rawSlot = event.getRawSlot();
         InventoryAction action = event.getAction();
 
-//        main.getLogger().log(Level.INFO, "Action: {0}, Slot: {1}, ClickedItem: {2}, CursorItem: {3}",
-//                new Object[]{action, rawSlot, clickedItem, cursorItem});
+        // Logging for debugging purposes
+        Bukkit.getServer().getLogger().info("Action: " + action + ", RawSlot: " + rawSlot + ", ClickedItem: " + clickedItem + ", CursorItem: " + cursorItem);
 
         // Detecting shift-click to equip or unequip armor
-        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-            if (isArmor(clickedItem)) {
-                ArmorEquipEvent.ArmorType armorType = getArmorType(clickedItem.getType());
-                if (armorType == null) {
-//                    logger.log(Level.WARNING, "ArmorType is null for material: {0}", clickedItem.getType());
-                    return;  // Prevent null ArmorType
-                }
+        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY && isArmor(clickedItem)) {
+            ArmorEquipEvent.ArmorType armorType = getArmorType(clickedItem.getType());
+            ItemStack unequippedArmor = null;
+            ItemStack equippedArmor = null;
 
-                ItemStack unequippedArmor = null; // No armor unequipped during this action
-                ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, clickedItem, armorType, ArmorEquipEvent.EquipMethod.SHIFT_CLICK);
+            // Determine if armor is being equipped or unequipped
+            if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 36 && rawSlot <= 39)) {
+                // Equipping armor
+                equippedArmor = clickedItem;
+                unequippedArmor = cursorItem;
+            } else {
+                // Unequipping armor
+                equippedArmor = cursorItem;
+                unequippedArmor = clickedItem;
+            }
+
+            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.SHIFT_CLICK);
+
+            // Schedule a delayed task to handle messaging and effects after inventory update
+            Bukkit.getScheduler().runTaskLater(main, () -> {
                 player.getServer().getPluginManager().callEvent(armorEquipEvent);
-
-                if (armorEquipEvent.isCancelled()) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-
-        // Detecting click to equip or unequip armor directly
-        if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 36 && rawSlot <= 39)) {
-            ArmorEquipEvent.ArmorType armorType = getArmorType(rawSlot);
-            if (armorType == null) {
-//                logger.log(Level.WARNING, "ArmorType is null for slot: {0}", rawSlot);
-                return;  // Prevent null ArmorType
-            }
-
-            ArmorEquipEvent.EquipMethod equipMethod = (action == InventoryAction.HOTBAR_SWAP || action == InventoryAction.HOTBAR_MOVE_AND_READD) ?
-                    ArmorEquipEvent.EquipMethod.HOTBAR_SWAP : ArmorEquipEvent.EquipMethod.PICK_DROP;
-
-            ItemStack equippedArmor = (clickedItem != null) ? clickedItem : null;
-            ItemStack unequippedArmor = (clickedItem == null && cursorItem != null) ? cursorItem : null;
-
-            if (equippedArmor == null && unequippedArmor == null) {
-                return; // No valid action detected
-            }
-
-            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, equipMethod);
-            player.getServer().getPluginManager().callEvent(armorEquipEvent);
+            }, 1); // Delay of 1 tick (0.05 seconds) to allow inventory to update
 
             if (armorEquipEvent.isCancelled()) {
                 event.setCancelled(true);
+                return;
             }
         }
     }
+
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
@@ -86,7 +79,7 @@ public class ArmorEquipListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
         for (int slot : event.getRawSlots()) {
-            if (slot >= 36 && slot <= 39) {
+            if (slot >= 5 && slot <= 8) {
                 ItemStack equippedArmor = event.getCursor();
                 ArmorEquipEvent.ArmorType armorType = getArmorType(slot);
                 ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, null, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.DRAG);
@@ -203,24 +196,25 @@ public class ArmorEquipListener implements Listener {
             case NETHERITE_BOOTS: // Added Netherite Boots
                 return ArmorEquipEvent.ArmorType.BOOTS;
             default:
-//                logger.log(Level.WARNING, "Unknown material: {0}", material);
+                System.out.println("Unknown material: {0}" + material);
                 return null;
         }
     }
 
     private ArmorEquipEvent.ArmorType getArmorType(int slot) {
         switch (slot) {
-            case 39:
+            case 5:
                 return ArmorEquipEvent.ArmorType.HELMET;
-            case 38:
+            case 6:
                 return ArmorEquipEvent.ArmorType.CHESTPLATE;
-            case 37:
+            case 7:
                 return ArmorEquipEvent.ArmorType.LEGGINGS;
-            case 36:
+            case 8:
                 return ArmorEquipEvent.ArmorType.BOOTS;
             default:
-//                logger.log(Level.WARNING, "Unknown slot: {0}", slot);
+                System.out.println("Unknown slot: {0}" + slot);
                 return null;
         }
     }
+
 }

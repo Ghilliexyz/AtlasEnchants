@@ -133,7 +133,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Growth(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
-        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);

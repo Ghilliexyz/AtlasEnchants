@@ -2,6 +2,7 @@ package com.atlasplugins.atlasenchants.enchants.armor;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipEvent;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,14 +44,13 @@ public class Growth implements Listener {
         ItemStack equippedArmor = event.getEquippedArmor();
         ItemStack unequippedArmor = event.getUnequippedArmor();
         p.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
-        if(equippedArmor != null)
-        {
+        if (equippedArmor != null) {
             p.sendMessage(Main.color("&bEquippedArmor: &f" + equippedArmor.toString()));
         }
-        if(unequippedArmor != null)
-        {
+        if (unequippedArmor != null) {
             p.sendMessage(Main.color("&bUnequippedArmor: &f" + unequippedArmor.toString()));
         }
+        p.sendMessage(Main.color("---------------------------------------"));
 
         // if the armor is not of the correct type then exit the method.
         if(!hasArmor(p)) return;
@@ -70,8 +70,12 @@ public class Growth implements Listener {
 
         if(enchantedItemPDC.isEmpty()) return;
 
-//        p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
-//        p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.getType().toString()));
+        if (equippedArmor != null) {
+            p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.toString()));
+        }
+        if (unequippedArmor != null) {
+            p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.toString()));
+        }
         p.sendMessage(Main.color("---------------------------------------"));
 
         // Ensure the enchantment data is not null or empty
@@ -89,7 +93,7 @@ public class Growth implements Listener {
                     // PUT ENCHANT LOGIC HERE
                     int healthBoostLevel = main.getEnchantmentsConfig().getInt("Enchantments.GROWTH.Growth-HealthBoost-" + enchantLevel);
 
-                    if (equippedArmor != null) {
+                    if (!equippedArmor.getType().equals(Material.AIR)) {
                         // Player equipped new armor
                         p.sendMessage(Main.color("&2You equipped &f" + equippedArmor.getType().toString()));
 
@@ -97,7 +101,7 @@ public class Growth implements Listener {
 
                         p.sendMessage(Main.color("---------------------------------------"));
                         // Handle any effects or logic related to equipping armor
-                    } else if (unequippedArmor != null) {
+                    } else if (!unequippedArmor.getType().equals(Material.AIR)) {
                         // Player unequipped armor
                         p.sendMessage(Main.color("&4You unequipped &f" + unequippedArmor.getType().toString()));
 

@@ -2,7 +2,6 @@ com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot$1.class
 com\atlasplugins\atlasenchants\enchants\armor\Fearsight.class
 com\atlasplugins\atlasenchants\Metrics$SimpleBarChart.class
 com\atlasplugins\atlasenchants\commands\users\GiveEnchantCommand.class
-com\atlasplugins\atlasenchants\Metrics.class
 com\atlasplugins\atlasenchants\commands\users\ReloadCommand.class
 com\atlasplugins\atlasenchants\managers\OresPlacedManager.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect.class
@@ -32,7 +31,6 @@ com\atlasplugins\atlasenchants\Metrics$AdvancedPie.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\commands\AbstractCommand.class
 com\atlasplugins\atlasenchants\Metrics$SingleLineChart.class
-com\atlasplugins\atlasenchants\commands\users\HelpCommand.class
 com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\enchants\armor\Growth.class
@@ -46,11 +44,8 @@ com\atlasplugins\atlasenchants\enchants\weapons\Stunning$1.class
 com\atlasplugins\atlasenchants\enchants\armor\Rush.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$EquipMethod.class
 com\atlasplugins\atlasenchants\enchants\weapons\Stunning.class
-com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.class
 com\atlasplugins\atlasenchants\enchants\weapons\Propel.class
-com\atlasplugins\atlasenchants\enchants\weapons\Hunter.class
 com\atlasplugins\atlasenchants\Metrics$CustomChart.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent.class
 com\atlasplugins\atlasenchants\Metrics$JsonObjectBuilder.class
 com\atlasplugins\atlasenchants\Metrics$MetricsBase.class
-com\atlasplugins\atlasenchants\enchants\weapons\Leech.class
