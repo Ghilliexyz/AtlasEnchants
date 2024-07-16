@@ -19,6 +19,7 @@ com\atlasplugins\atlasenchants\managers\LogsPlacedManager.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.class
 com\atlasplugins\atlasenchants\commands\CommandRouter.class
 com\atlasplugins\atlasenchants\Metrics$1.class
+com\atlasplugins\atlasenchants\enchants\armor\Asclepius.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect$1.class
 com\atlasplugins\atlasenchants\commands\users\TestCommand.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\LootTableEvent.class
@@ -33,7 +34,6 @@ com\atlasplugins\atlasenchants\commands\AbstractCommand.class
 com\atlasplugins\atlasenchants\Metrics$SingleLineChart.class
 com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
-com\atlasplugins\atlasenchants\enchants\armor\Growth.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedBarChart.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCustomEnchant.class

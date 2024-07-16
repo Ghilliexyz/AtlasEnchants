@@ -130,7 +130,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new MinersTouch(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new VeinSeeker(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new WingsOfAegis(this), this); // Added By Ghillie
-        this.getServer().getPluginManager().registerEvents(new Growth(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new Asclepius(this), this); // Added By Ghillie (Old Name Growth)
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this), this);

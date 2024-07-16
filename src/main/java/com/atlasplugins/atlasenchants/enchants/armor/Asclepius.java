@@ -15,10 +15,10 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 
 
-public class Growth implements Listener {
+public class Asclepius implements Listener {
 
     private Main main;
-    public Growth(Main main) {this.main = main;}
+    public Asclepius(Main main) {this.main = main;}
 
     public boolean isArmorMaterialValid(ItemStack item) {
         if (item == null) return false;
@@ -36,7 +36,7 @@ public class Growth implements Listener {
         }
 
         // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.GROWTH.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.ASCLEPIUS.Enchantment-Apply-Item");
 
         // Check if the player is wearing an applicable helmet
         return armor != null && armorMat.contains(armor.getType().toString());
@@ -97,9 +97,9 @@ public class Growth implements Listener {
                 String enchantName = enchantParts[0];
                 int enchantLevel = Integer.parseInt(enchantParts[1]);
 
-                if (enchantName.contains("GROWTH")) {
+                if (enchantName.contains("ASCLEPIUS")) {
                     // PUT ENCHANT LOGIC HERE
-                    int healthBoostLevel = main.getEnchantmentsConfig().getInt("Enchantments.GROWTH.Growth-HealthBoost-" + enchantLevel);
+                    int healthBoostLevel = main.getEnchantmentsConfig().getInt("Enchantments.ASCLEPIUS.Asclepius-HealthBoost-" + enchantLevel);
 
                     if (equippedArmor != null && !equippedArmor.getType().equals(Material.AIR)) {
                         // Player equipped new armor
