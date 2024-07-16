@@ -128,31 +128,32 @@ public class ArmorEquipListener implements Listener {
 
 
 
-    @EventHandler
-    public void onInventoryDrag(InventoryDragEvent event) {
-        if (!(event.getWhoClicked() instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) event.getWhoClicked();
-        ItemStack cursorItem = event.getCursor();
-
-        for (int slot : event.getRawSlots()) {
-            if (slot >= 5 && slot <= 8) {
-                ItemStack equippedArmor = cursorItem;
-                ItemStack unequippedArmor = event.getView().getItem(slot);
-
-                ArmorEquipEvent.ArmorType armorType = getArmorType(slot);
-                ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.DRAG);
-
-                player.getServer().getPluginManager().callEvent(armorEquipEvent);
-
-                if (armorEquipEvent.isCancelled()) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
+//    @EventHandler
+//    public void onInventoryDrag(InventoryDragEvent event) {
+//        if (!(event.getWhoClicked() instanceof Player)) {
+//            return;
+//        }
+//
+//        Player player = (Player) event.getWhoClicked();
+//        player.sendMessage(Main.color("&c----- &6&lInventoryDragEvent EVENT CALLED &c-----"));
+//        ItemStack cursorItem = event.getCursor();
+//
+//        for (int slot : event.getRawSlots()) {
+//            if (slot >= 5 && slot <= 8) {
+//                ItemStack equippedArmor = cursorItem;
+//                ItemStack unequippedArmor = event.getView().getItem(slot);
+//
+//                ArmorEquipEvent.ArmorType armorType = getArmorType(slot);
+//                ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.DRAG);
+//
+//                player.getServer().getPluginManager().callEvent(armorEquipEvent);
+//
+//                if (armorEquipEvent.isCancelled()) {
+//                    event.setCancelled(true);
+//                }
+//            }
+//        }
+//    }
 
     // broken
 //    @EventHandler
