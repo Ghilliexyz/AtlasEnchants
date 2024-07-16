@@ -51,8 +51,8 @@ public class LootTableEvent implements Listener {
             if (random.nextDouble() < rarityChance) {
                 String enchantRarity = rarity.toUpperCase();
 
-                System.out.println("Enchant Rarity: " + enchantRarity);
-                System.out.println("Rarity Chance: " + rarityChance);
+//                System.out.println("Enchant Rarity: " + enchantRarity);
+//                System.out.println("Rarity Chance: " + rarityChance);
 
                 // Filter enchantments by the current rarity
                 List<String> filteredEnchantments = enchantments.stream()
@@ -66,7 +66,7 @@ public class LootTableEvent implements Listener {
                     // Select a random enchantment from the filtered list
                     String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
 
-                    System.out.println("Selected Enchantment: " + selectedEnchantment);
+//                    System.out.println("Selected Enchantment: " + selectedEnchantment);
 
                     // Get Enchantment Enabled Status
                     boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
@@ -84,7 +84,7 @@ public class LootTableEvent implements Listener {
                     CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
                     ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
 
-                    System.out.println("SPAWN ENCHANT: " + selectedEnchantment);
+//                    System.out.println("SPAWN ENCHANT: " + selectedEnchantment);
                     event.getLoot().add(customItem);
                     break; // Exit after adding one enchantment
                 }

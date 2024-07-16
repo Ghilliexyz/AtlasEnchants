@@ -50,10 +50,6 @@ public class Growth implements Listener {
         ItemStack equippedArmor = event.getEquippedArmor();
         ItemStack unequippedArmor = event.getUnequippedArmor();
 
-//        if(armorType == null) return;
-//        if(equippedArmor == null) return;
-//        if(unequippedArmor == null) return;
-
         p.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
         if(equippedArmor != null) {
             p.sendMessage(Main.color("&bEquippedArmor: &f" + equippedArmor.getType().toString()));
@@ -82,7 +78,9 @@ public class Growth implements Listener {
 
         if(enchantedItemPDC.isEmpty()) return;
 
-        p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
+        if(equippedArmor != null) {
+            p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
+        }
         if(unequippedArmor != null) {
             p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.getType().toString()));
         }

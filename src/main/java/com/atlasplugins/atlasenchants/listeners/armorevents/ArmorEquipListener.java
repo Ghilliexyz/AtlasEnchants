@@ -3,14 +3,12 @@ package com.atlasplugins.atlasenchants.listeners.armorevents;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Warning;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseArmorEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -34,69 +32,97 @@ public class ArmorEquipListener implements Listener {
         int rawSlot = event.getRawSlot();
         InventoryAction action = event.getAction();
 
-        // Detecting shift-click or placing armor into armor slot
-        if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY && isArmor(clickedItem)) ||
-                (action == InventoryAction.PLACE_ALL || action == InventoryAction.PLACE_ONE || action == InventoryAction.PLACE_SOME) ||
-                (action == InventoryAction.HOTBAR_SWAP || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
+        ArmorEquipEvent.ArmorType armorType = null;
 
-            ArmorEquipEvent.ArmorType armorType = null;
+        // Determine armor type from clickedItem or cursorItem
+        if (isArmor(clickedItem)) {
+            armorType = getArmorType(clickedItem.getType());
+        } else if (isArmor(cursorItem)) {
+            armorType = getArmorType(cursorItem.getType());
+        }
 
-            // Determine armor type from clickedItem or cursorItem
-            if (isArmor(clickedItem)) {
-                armorType = getArmorType(clickedItem.getType());
-            } else if (isArmor(cursorItem)) {
-                armorType = getArmorType(cursorItem.getType());
-            }
+        // If armorType is still null, it means no valid armor was involved in the action
+        if (armorType == null) {
+            return;
+        }
 
-            // If armorType is still null, it means no valid armor was involved in the action
-            if (armorType == null) {
-                return;
-            }
+        ItemStack unequippedArmor = null;
+        ItemStack equippedArmor = null;
 
-            ItemStack unequippedArmor = null;
-            ItemStack equippedArmor = null;
-
-            // Determine if armor is being equipped or unequipped
+        // Detecting Removing Armor from the armor slots
+        if(action == InventoryAction.PICKUP_ALL || action == InventoryAction.PICKUP_ONE || action == InventoryAction.PICKUP_SOME || action == InventoryAction.PICKUP_HALF) {
             if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
+                player.sendMessage(Main.color("&3Pick Action"));
+                // Determine if the item being Unequipped is armor or not
+                if (isArmor(clickedItem)) {
+                    // Unequipped armor to another slot
+                    equippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
+                    unequippedArmor = clickedItem;
+                }
+            }
+        }
+
+        // Detecting Adding Armor from the armor slots
+        if(action == InventoryAction.PLACE_ALL || action == InventoryAction.PLACE_ONE || action == InventoryAction.PLACE_SOME){
+            if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
+                player.sendMessage(Main.color("&3Place Action"));
+                // Determine if the item being Equipped is armor or not
                 if (isArmor(cursorItem)) {
                     // Equipping armor to another slot
-                    equippedArmor = clickedItem;
-                    unequippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
-                } else if (isArmor(clickedItem)) {
-                    // Unequipping armor to another slot
-                    equippedArmor = cursorItem;
-                    unequippedArmor = clickedItem != null && clickedItem.getType() != Material.AIR ? clickedItem : null;
-                }
-            } else {
-                if(isArmor(clickedItem)) {
-                    // Equipping armor to another slot
-                    equippedArmor = clickedItem;
-                    unequippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
-                } else if (isArmor(cursorItem)) {
-                    // Unequipping armor to another slot
                     equippedArmor = cursorItem;
                     unequippedArmor = clickedItem != null && clickedItem.getType() != Material.AIR ? clickedItem : null;
                 }
             }
+        }
 
-            player.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
-            player.sendMessage(Main.color("&bEquippedArmor: &f" + (equippedArmor != null ? equippedArmor.getType().toString() : "null")));
+        // Detecting shift-click Adding armor
+        if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                || (action == InventoryAction.HOTBAR_SWAP
+                || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
+            player.sendMessage(Main.color("&3Shift Click Action"));
+            // Determine if armor is being equipped or unequipped
+            if(isArmor(clickedItem)) {
+                // Equipping armor to another slot
+                equippedArmor = clickedItem;
+                unequippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
+            }
+        }
 
-            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.SHIFT_CLICK);
+        // Detecting shift-click Removing armor
+        if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY && (rawSlot >= 5 && rawSlot <= 8))
+                || (action == InventoryAction.HOTBAR_SWAP
+                || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
+            player.sendMessage(Main.color("&3Shift Click Action"));
+            // Determine if armor is being equipped or unequipped
+            if(isArmor(clickedItem)) {
+                // Unequipped armor to another slot
+                equippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
+                unequippedArmor = clickedItem;
+            }
+        }
 
-            if(unequippedArmor == null || unequippedArmor.getType().equals(Material.AIR))
-            {
-                // Schedule a delayed task to handle messaging and effects after inventory update
-                Bukkit.getScheduler().runTaskLater(main, () -> {
-                    player.getServer().getPluginManager().callEvent(armorEquipEvent);
-                }, 1); // Delay of 1 tick (0.05 seconds) to allow inventory to update
-            }else {
+        System.out.println("clickedItem: " + clickedItem.getType().toString());
+        System.out.println("cursorItem: " + cursorItem.getType().toString());
+        System.out.println("-------------------------------");
+
+        player.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
+        player.sendMessage(Main.color("&bEquippedArmor: &f" + (equippedArmor != null ? equippedArmor.getType().toString() : "null")));
+        player.sendMessage(Main.color("&bUnequippedArmor: &f" + (unequippedArmor != null ? unequippedArmor.getType().toString() : "null")));
+
+        ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.SHIFT_CLICK);
+
+        if(unequippedArmor == null || unequippedArmor.getType().equals(Material.AIR))
+        {
+            // Schedule a delayed task to handle messaging and effects after inventory update
+            Bukkit.getScheduler().runTaskLater(main, () -> {
                 player.getServer().getPluginManager().callEvent(armorEquipEvent);
-            }
+            }, 1); // Delay of 1 tick (0.05 seconds) to allow inventory to update
+        }else {
+            player.getServer().getPluginManager().callEvent(armorEquipEvent);
+        }
 
-            if (armorEquipEvent.isCancelled()) {
-                event.setCancelled(true);
-            }
+        if (armorEquipEvent.isCancelled()) {
+            event.setCancelled(true);
         }
     }
 
@@ -128,31 +154,41 @@ public class ArmorEquipListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
-        if (isArmor(item)) {
-            ArmorEquipEvent.ArmorType armorType = getArmorType(item.getType());
-            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, null, item, armorType, ArmorEquipEvent.EquipMethod.HOTBAR);
-
-            player.getServer().getPluginManager().callEvent(armorEquipEvent);
-
-            if (armorEquipEvent.isCancelled()) {
-                event.setCancelled(true);
-            }
-        }
-    }
+    // broken
+//    @EventHandler
+//    public void onPlayerInteract(PlayerInteractEvent event) {
+//        Player player = event.getPlayer();
+//        player.sendMessage(Main.color("&c----- &6&lPlayerInteractEvent EVENT CALLED &c-----"));
+//        ItemStack item = player.getInventory().getItemInMainHand();
+//        if (isArmor(item)) {
+//            ArmorEquipEvent.ArmorType armorType = getArmorType(item.getType());
+//            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, null, item, armorType, ArmorEquipEvent.EquipMethod.HOTBAR);
+//
+//            player.getServer().getPluginManager().callEvent(armorEquipEvent);
+//
+//            if (armorEquipEvent.isCancelled()) {
+//                event.setCancelled(true);
+//            }
+//        }
+//    }
 
     @EventHandler
     public void onBlockDispenseArmor(BlockDispenseArmorEvent event) {
         if (event.getTargetEntity() instanceof Player) {
             Player player = (Player) event.getTargetEntity();
+            player.sendMessage(Main.color("&c----- &6&lBlockDispenseArmorEvent EVENT CALLED &c-----"));
             ItemStack equippedArmor = event.getItem();
+
             ArmorEquipEvent.ArmorType armorType = getArmorType(equippedArmor.getType());
             ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, null, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.DISPENSER);
 
-            player.getServer().getPluginManager().callEvent(armorEquipEvent);
+            if(isArmor(equippedArmor))
+            {
+                // Schedule a delayed task to handle messaging and effects after inventory update
+                Bukkit.getScheduler().runTaskLater(main, () -> {
+                    player.getServer().getPluginManager().callEvent(armorEquipEvent);
+                }, 1); // Delay of 1 tick (0.05 seconds) to allow inventory to update
+            }
 
             if (armorEquipEvent.isCancelled()) {
                 event.setCancelled(true);
@@ -163,17 +199,20 @@ public class ArmorEquipListener implements Listener {
     @EventHandler
     public void onPlayerItemBreak(PlayerItemBreakEvent event) {
         Player player = event.getPlayer();
+        player.sendMessage(Main.color("&c----- &6&lPlayerItemBreakEvent EVENT CALLED &c-----"));
         ItemStack brokenArmor = event.getBrokenItem();
-        ArmorEquipEvent.ArmorType armorType = getArmorType(brokenArmor.getType());
-        ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, brokenArmor, null, armorType, ArmorEquipEvent.EquipMethod.BROKE);
+        if(isArmor(brokenArmor)) {
+            ArmorEquipEvent.ArmorType armorType = getArmorType(brokenArmor.getType());
+            ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, brokenArmor, null, armorType, ArmorEquipEvent.EquipMethod.BROKE);
 
-        player.getServer().getPluginManager().callEvent(armorEquipEvent);
+            player.getServer().getPluginManager().callEvent(armorEquipEvent);
 
-        if (armorEquipEvent.isCancelled()) {
-            // Prevent the item from breaking by removing it from the player's inventory
-            PlayerInventory inventory = player.getInventory();
-            if (inventory.contains(brokenArmor)) {
-                inventory.removeItem(brokenArmor);
+            if (armorEquipEvent.isCancelled()) {
+                // Prevent the item from breaking by removing it from the player's inventory
+                PlayerInventory inventory = player.getInventory();
+                if (inventory.contains(brokenArmor)) {
+                    inventory.removeItem(brokenArmor);
+                }
             }
         }
     }
@@ -181,6 +220,7 @@ public class ArmorEquipListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
+        player.sendMessage(Main.color("&c----- &6&lPlayerDeathEvent EVENT CALLED &c-----"));
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor != null) {
                 ArmorEquipEvent.ArmorType armorType = getArmorType(armor.getType());
@@ -231,7 +271,6 @@ public class ArmorEquipListener implements Listener {
             case NETHERITE_BOOTS: // Added Netherite Boots
                 return ArmorEquipEvent.ArmorType.BOOTS;
             default:
-                System.out.println("Unknown material: {0}" + material);
                 return null;
         }
     }
@@ -247,7 +286,6 @@ public class ArmorEquipListener implements Listener {
             case 8:
                 return ArmorEquipEvent.ArmorType.BOOTS;
             default:
-                System.out.println("Unknown slot: {0}" + slot);
                 return null;
         }
     }
