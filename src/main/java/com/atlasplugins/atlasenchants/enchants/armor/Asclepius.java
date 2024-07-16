@@ -76,7 +76,11 @@ public class Asclepius implements Listener {
         PersistentDataContainer enchantedItemPDC = p.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
         String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
-        if(enchantedItemPDC.isEmpty()) return;
+        if(enchantedItemPDC.isEmpty()){
+            // Disable The enchant since the new one doesn't have it active on the armor.
+            removePlayerMaxHealth(p);
+            return;
+        }
 
         if(equippedArmor != null) {
             p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
