@@ -33,11 +33,8 @@ public class LootTableEvent implements Listener {
 
         double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
 
-        double yes = random.nextDouble();
-        System.out.println(yes);
         // return if chance to spawn has failed.
-        if (yes > chanceToSpawnEnchants) return;
-        System.out.println("PASSED CHANCE TO SPAWN ");
+        if (random.nextDouble() > chanceToSpawnEnchants) return;
 
         List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
                 .stream()

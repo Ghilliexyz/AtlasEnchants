@@ -1043,5 +1043,5 @@ Enchantments:
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
         Decapitate-Particle-Size-1: 0.1
     #The Chance of time the enchant working. (0.05 = 5% | 1 = 100%)
-    Decapitate-Proc-Chance-1: 0.05
+    Decapitate-Proc-Chance-1: 0.5
     Decapitate-Proc-Chance-2: 1
