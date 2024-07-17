@@ -207,7 +207,6 @@ Enchantments:
       - CHAINMAIL_CHESTPLATE
       - IRON_CHESTPLATE
       - GOLDEN_CHESTPLATE
-      - TURTLE_CHESTPLATE
       - DIAMOND_CHESTPLATE
       - NETHERITE_CHESTPLATE
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
@@ -985,3 +984,64 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (REGROWTH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
+  DECAPITATE:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 2
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "RARE"
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&b&lRARE &7Decapitate"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lChop Heads Off      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eHas a {decapitateChance}% chance to cut"
+      - "  &eany Mob/Players head off and drop it."
+      - ""
+      - "&c● &7Type: &eSword & Axe Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      # Swords
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+      # Axes
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (DECAPITATE) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
+    #Particle Settings for Extractor
+    Decapitate-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      Decapitate-Particle-Toggle: true
+      Decapitate-Particle-1:
+        #Particle Name (The particle that will spawn)
+        Decapitate-Particle-Name-1: SOUL_FIRE_FLAME
+        #Particle Amount (50 = 50 Particles)
+        Decapitate-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        Decapitate-Particle-Size-1: 0.1
+    #The Chance of time the enchant working. (0.05 = 5% | 1 = 100%)
+    Decapitate-Proc-Chance-1: 0.05
+    Decapitate-Proc-Chance-2: 1

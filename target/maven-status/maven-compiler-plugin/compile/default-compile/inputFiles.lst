@@ -2,6 +2,7 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\Regrowth.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Asclepius.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\WingsOfAegis.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Propel.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\LogsPlacedManager.java
@@ -12,7 +13,6 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\TestCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\TreeHugger.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\ReloadCommand.java
-D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Growth.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\LootTableEvent.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\HelpCommand.java
@@ -33,4 +33,5 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\CommandRouter.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\AbstractCommand.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Decapitate.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Main.java

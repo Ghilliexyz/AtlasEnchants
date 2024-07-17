@@ -33,8 +33,11 @@ public class LootTableEvent implements Listener {
 
         double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
 
+        double yes = random.nextDouble();
+        System.out.println(yes);
         // return if chance to spawn has failed.
-        if (random.nextDouble() > chanceToSpawnEnchants) return;
+        if (yes > chanceToSpawnEnchants) return;
+        System.out.println("PASSED CHANCE TO SPAWN ");
 
         List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
                 .stream()
@@ -48,11 +51,11 @@ public class LootTableEvent implements Listener {
 
         for (String rarity : enchantmentRarity) {
             double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-            if (random.nextDouble() < rarityChance) {
+            if (random.nextDouble() <= rarityChance) {
                 String enchantRarity = rarity.toUpperCase();
 
-//                System.out.println("Enchant Rarity: " + enchantRarity);
-//                System.out.println("Rarity Chance: " + rarityChance);
+                System.out.println("Enchant Rarity: " + enchantRarity);
+                System.out.println("Rarity Chance: " + rarityChance);
 
                 // Filter enchantments by the current rarity
                 List<String> filteredEnchantments = enchantments.stream()
@@ -66,7 +69,7 @@ public class LootTableEvent implements Listener {
                     // Select a random enchantment from the filtered list
                     String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
 
-//                    System.out.println("Selected Enchantment: " + selectedEnchantment);
+                    System.out.println("Selected Enchantment: " + selectedEnchantment);
 
                     // Get Enchantment Enabled Status
                     boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");

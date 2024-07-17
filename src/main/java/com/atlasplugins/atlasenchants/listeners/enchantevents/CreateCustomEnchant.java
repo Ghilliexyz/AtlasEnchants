@@ -48,6 +48,7 @@ public class CreateCustomEnchant implements Listener {
                 .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
                 .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
                 .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
+                .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
                 .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -76,6 +77,7 @@ public class CreateCustomEnchant implements Listener {
                     .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
                     .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
                     .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
+                    .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
                     .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
         }
 

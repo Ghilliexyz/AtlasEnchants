@@ -26,8 +26,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -131,9 +133,10 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new VeinSeeker(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new WingsOfAegis(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new Asclepius(this), this); // Added By Ghillie (Old Name Growth)
+        this.getServer().getPluginManager().registerEvents(new Decapitate(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
-        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
@@ -233,5 +236,19 @@ public final class Main extends JavaPlugin implements Listener {
             saveResource("settings.yml", false);
         }
         settingsConfig = YamlConfiguration.loadConfiguration(settingsConfigFile);
+    }
+
+    private static List<String> getBlockedMaterialNames(Main main) {
+        try (InputStream inputStream = main.getResource("armorequipevent-blocked.txt")) {
+            assert inputStream != null;
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                return reader.lines().collect(Collectors.toList());
+            } catch (Exception ignored1) {
+
+            }
+        } catch (IOException ignored2) {
+            //e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

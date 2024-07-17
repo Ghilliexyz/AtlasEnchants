@@ -60,6 +60,9 @@ public class Asclepius implements Listener {
         }
         p.sendMessage(Main.color("&m&l&c---------------------------------------"));
 
+        // if the armor is not of the correct type return.
+        if(!armorType.equals(ArmorEquipEvent.ArmorType.CHESTPLATE)) return;
+
         // if the armor is not of the correct type then exit the method.
         if(!hasArmor(p)) return;
 
