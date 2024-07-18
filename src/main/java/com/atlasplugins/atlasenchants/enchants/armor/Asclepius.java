@@ -30,10 +30,10 @@ public class Asclepius implements Listener {
         // Get the player's helmet item
         ItemStack armor = p.getInventory().getChestplate();
 
-        if(armor != null)
-        {
-            p.sendMessage(Main.color("&eHasArmor Check: &f" + armor.getType().toString()));
-        }
+//        if(armor != null)
+//        {
+//            p.sendMessage(Main.color("&eHasArmor Check: &f" + armor.getType().toString()));
+//        }
 
         // Get the list of items the Enchant can be applied to from the config
         List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.ASCLEPIUS.Enchantment-Apply-Item");
@@ -45,20 +45,20 @@ public class Asclepius implements Listener {
     @EventHandler
     public void onArmorEquip(ArmorEquipEvent event) {
         Player p = event.getPlayer();
-        p.sendMessage(Main.color("&c----- &6&lArmorEquipEvent EVENT CALLED &c-----"));
+        // p.sendMessage(Main.color("&c----- &6&lArmorEquipEvent EVENT CALLED &c-----"));
         ArmorEquipEvent.ArmorType armorType = event.getArmorType();
         ItemStack equippedArmor = event.getEquippedArmor();
         ItemStack unequippedArmor = event.getUnequippedArmor();
 
-        p.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
-        if(equippedArmor != null) {
-            p.sendMessage(Main.color("&bEquippedArmor: &f" + equippedArmor.getType().toString()));
-        }
-        if(unequippedArmor != null)
-        {
-            p.sendMessage(Main.color("&bUnequippedArmor: &f" + unequippedArmor.getType().toString()));
-        }
-        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
+//        p.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
+//        if(equippedArmor != null) {
+//            p.sendMessage(Main.color("&bEquippedArmor: &f" + equippedArmor.getType().toString()));
+//        }
+//        if(unequippedArmor != null)
+//        {
+//            p.sendMessage(Main.color("&bUnequippedArmor: &f" + unequippedArmor.getType().toString()));
+//        }
+//        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
 
         // if the armor is not of the correct type return.
         if(!armorType.equals(ArmorEquipEvent.ArmorType.CHESTPLATE)) return;
@@ -85,13 +85,13 @@ public class Asclepius implements Listener {
             return;
         }
 
-        if(equippedArmor != null) {
-            p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
-        }
-        if(unequippedArmor != null) {
-            p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.getType().toString()));
-        }
-        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
+//        if(equippedArmor != null) {
+//            p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
+//        }
+//        if(unequippedArmor != null) {
+//            p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.getType().toString()));
+//        }
+//        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
 
         // Ensure the enchantment data is not null or empty
         String[] enchantments = enchantedItemData.split(",");
@@ -110,19 +110,19 @@ public class Asclepius implements Listener {
 
                     if (equippedArmor != null && !equippedArmor.getType().equals(Material.AIR)) {
                         // Player equipped new armor
-                        p.sendMessage(Main.color("&2You equipped: &f" + equippedArmor.getType().toString()));
+                        // p.sendMessage(Main.color("&2You equipped: &f" + equippedArmor.getType().toString()));
 
                         setPlayerMaxHealth(p, healthBoostLevel);
 
-                        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
+                        // p.sendMessage(Main.color("&m&l&c---------------------------------------"));
                         // Handle any effects or logic related to equipping armor
                     } else if (unequippedArmor != null && !unequippedArmor.getType().equals(Material.AIR)) {
                         // Player unequipped armor
-                        p.sendMessage(Main.color("&4You unequipped: &f" + unequippedArmor.getType().toString()));
+                        // p.sendMessage(Main.color("&4You unequipped: &f" + unequippedArmor.getType().toString()));
 
                         removePlayerMaxHealth(p);
 
-                        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
+                        // p.sendMessage(Main.color("&m&l&c---------------------------------------"));
                         // Handle any effects or logic related to unequipping armor
                     }
                     // END ENCHANT LOGIC
@@ -132,19 +132,19 @@ public class Asclepius implements Listener {
     }
 
     private void setPlayerMaxHealth(Player p, int level) {
-        p.sendMessage(Main.color("&aAdded Player's Max Health: &f" + p.getMaxHealth()));
+        // p.sendMessage(Main.color("&aAdded Player's Max Health: &f" + p.getMaxHealth()));
 
         // Create the potion effect
-        PotionEffect potionType = new PotionEffect(PotionEffectType.HEALTH_BOOST, Integer.MAX_VALUE, level - 1, false, false, true);
+        PotionEffect potionType = new PotionEffect(PotionEffectType.HEALTH_BOOST, PotionEffect.INFINITE_DURATION, level - 1, false, false, true);
 
         // Apply the potion effect to the entity
         p.addPotionEffect(potionType);
 
-        p.sendMessage(Main.color("&2Player's NEW Max Health: &f" + p.getMaxHealth()));
+        // p.sendMessage(Main.color("&2Player's NEW Max Health: &f" + p.getMaxHealth()));
     }
 
     private void removePlayerMaxHealth(Player p) {
-        p.sendMessage(Main.color("&cRemoved Player's Max Health: &f" + p.getMaxHealth()));
+        // p.sendMessage(Main.color("&cRemoved Player's Max Health: &f" + p.getMaxHealth()));
 
         // Create the potion effect
         PotionEffectType potionType = PotionEffectType.HEALTH_BOOST;
@@ -152,6 +152,6 @@ public class Asclepius implements Listener {
         // Apply the potion effect to the entity
         p.removePotionEffect(potionType);
 
-        p.sendMessage(Main.color("&4Player's NEW Max Health: &f" + p.getMaxHealth()));
+        // p.sendMessage(Main.color("&4Player's NEW Max Health: &f" + p.getMaxHealth()));
     }
 }
