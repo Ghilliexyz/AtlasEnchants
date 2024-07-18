@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -78,18 +79,14 @@ public class Decapitate implements Listener {
                             if (random.nextDouble() < decapitateProcChance) {
 
                                 Entity deadEntity = e.getEntity();
-
+                                EntityType entityType = deadEntity.getType();
                                 List<ItemStack> drops = e.getDrops();
 
-                                if(deadEntity.getType() == EntityType.PIG)
-                                {
-                                    ItemStack pigHead = new ItemStack(Material.PLAYER_HEAD, 1);
-                                    SkullMeta pigHeadMeta = (SkullMeta) pigHead.getItemMeta();
-                                    pigHeadMeta.setOwningPlayer(Bukkit.getServer().getOfflinePlayer("MHF_Chicken"));
-                                    pigHeadMeta.setDisplayName("YES THANK YOU!");
-                                    pigHead.setItemMeta(pigHeadMeta);
 
-                                    drops.add(pigHead);
+                                if(deadEntity instanceof Player){
+                                    drops.add(CreatePlayerHead(entityType, p));
+                                }else if(deadEntity instanceof Mob) {
+                                    drops.add(CreateMobHead(entityType));
                                 }
 
                                 // Get the location of the dead entity
@@ -104,7 +101,6 @@ public class Decapitate implements Listener {
                                 int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-1.Decapitate-Particle-Amount-1");
                                 // Get the Particle 1 Size
                                 float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-1.Decapitate-Particle-Size-1");
-                                // Get the Particle 2 Name
 
                                 if (useParticles) {
                                     // Spawn particle effect
@@ -116,6 +112,31 @@ public class Decapitate implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    private ItemStack CreatePlayerHead(EntityType entityType, Player player) {
+        if (entityType.equals(EntityType.PLAYER)) {
+            ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
+            SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
+            playerHeadMeta.setDisplayName("SKULL OF " + player.getName());
+            playerHead.setItemMeta(playerHeadMeta);
+            return playerHead;
+        }else{
+            return null;
+        }
+    }
+
+    private ItemStack CreateMobHead(EntityType entityType) {
+        if (entityType.equals(EntityType.CHICKEN)) {
+            ItemStack chickenHead = new ItemStack(Material.PLAYER_HEAD, 1);
+            SkullMeta chickenHeadMeta = (SkullMeta) chickenHead.getItemMeta();
+            chickenHeadMeta.setOwningPlayer(Bukkit.getServer().getOfflinePlayer("MHF_Chicken"));
+            chickenHeadMeta.setDisplayName("SKULL OF " + EntityType.CHICKEN);
+            chickenHead.setItemMeta(chickenHeadMeta);
+            return chickenHead;
+        }else{
+            return null;
         }
     }
 }

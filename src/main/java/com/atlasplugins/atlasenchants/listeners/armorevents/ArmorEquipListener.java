@@ -49,7 +49,7 @@ public class ArmorEquipListener implements Listener {
         InventoryAction action = event.getAction();
         ArmorEquipEvent.ArmorType armorType = null;
 
-        player.sendMessage(Main.color("&c----- &6&lInventoryClickEvent EVENT CALLED &c-----"));
+        // player.sendMessage(Main.color("&c----- &6&lInventoryClickEvent EVENT CALLED &c-----"));
 
         // Determine armor type from clickedItem or cursorItem
         if (isArmor(clickedItem)) {
@@ -69,7 +69,7 @@ public class ArmorEquipListener implements Listener {
         // Detecting Removing Armor from the armor slots
         if(action == InventoryAction.PICKUP_ALL || action == InventoryAction.PICKUP_ONE || action == InventoryAction.PICKUP_SOME || action == InventoryAction.PICKUP_HALF) {
             if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
-                player.sendMessage(Main.color("&3Pick Action"));
+                // player.sendMessage(Main.color("&3Pick Action"));
                 // Determine if the item being Unequipped is armor or not
                 if (isArmor(clickedItem)) {
                     // Unequipped armor to another slot
@@ -82,7 +82,7 @@ public class ArmorEquipListener implements Listener {
         // Detecting Adding Armor from the armor slots
         if(action == InventoryAction.PLACE_ALL || action == InventoryAction.PLACE_ONE || action == InventoryAction.PLACE_SOME){
             if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
-                player.sendMessage(Main.color("&3Place Action"));
+                // player.sendMessage(Main.color("&3Place Action"));
                 // Determine if the item being Equipped is armor or not
                 if (isArmor(cursorItem)) {
                     // Equipping armor to another slot
@@ -96,7 +96,7 @@ public class ArmorEquipListener implements Listener {
         if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY)
                 || (action == InventoryAction.HOTBAR_SWAP
                 || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
-            player.sendMessage(Main.color("&3Shift Click Action"));
+            // player.sendMessage(Main.color("&3Shift Click Action"));
             // Determine if armor is being equipped or unequipped
             if(isArmor(clickedItem)) {
                 // Equipping armor to another slot
@@ -109,7 +109,7 @@ public class ArmorEquipListener implements Listener {
         if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY && (rawSlot >= 5 && rawSlot <= 8))
                 || (action == InventoryAction.HOTBAR_SWAP
                 || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
-            player.sendMessage(Main.color("&3Shift Click Action"));
+            // player.sendMessage(Main.color("&3Shift Click Action"));
             // Determine if armor is being equipped or unequipped
             if(isArmor(clickedItem)) {
                 // Unequipped armor to another slot
@@ -118,22 +118,22 @@ public class ArmorEquipListener implements Listener {
             }
         }
 
-        if(clickedItem != null) {
-            System.out.println("clickedItem: " + clickedItem.getType().toString());
-        }
-        if (cursorItem != null) {
-            System.out.println("cursorItem: " + cursorItem.getType().toString());
-        }
-        System.out.println("-------------------------------");
+//        if(clickedItem != null) {
+//            System.out.println("clickedItem: " + clickedItem.getType().toString());
+//        }
+//        if (cursorItem != null) {
+//            System.out.println("cursorItem: " + cursorItem.getType().toString());
+//        }
+//        System.out.println("-------------------------------");
 
-        player.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
-        if(clickedItem != null) {
-            player.sendMessage(Main.color("&bEquippedArmor: &f" + (equippedArmor != null ? equippedArmor.getType().toString() : "null")));
-        }
-        if (cursorItem != null)
-        {
-            player.sendMessage(Main.color("&bUnequippedArmor: &f" + (unequippedArmor != null ? unequippedArmor.getType().toString() : "null")));
-        }
+//         player.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
+//        if(clickedItem != null) {
+//             player.sendMessage(Main.color("&bEquippedArmor: &f" + (equippedArmor != null ? equippedArmor.getType().toString() : "null")));
+//        }
+//        if (cursorItem != null)
+//        {
+//             player.sendMessage(Main.color("&bUnequippedArmor: &f" + (unequippedArmor != null ? unequippedArmor.getType().toString() : "null")));
+//        }
 
         ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.SHIFT_CLICK);
 
@@ -206,15 +206,12 @@ public class ArmorEquipListener implements Listener {
             return;
         }
 
-        if(event.useInteractedBlock().equals(Event.Result.DENY))
-        {
-            if(event.getClickedBlock() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()){
-                Material mat = event.getClickedBlock().getType();
-                if(blockedMaterials.contains(mat)) return;
-            }
+        if(event.getClickedBlock() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()){
+            Material mat = event.getClickedBlock().getType();
+            if(blockedMaterials.contains(mat)) return;
         }
 
-        player.sendMessage(Main.color("&c----- &6&lPlayerInteractEvent EVENT CALLED &c-----"));
+        // player.sendMessage(Main.color("&c----- &6&lPlayerInteractEvent EVENT CALLED &c-----"));
 
         // Get the armor type
         ArmorEquipEvent.ArmorType armorType = getArmorType(item.getType());
@@ -242,11 +239,11 @@ public class ArmorEquipListener implements Listener {
 
         if (oldArmor == null || !isArmor(oldArmor)) {
             // You do not have any armor in the specific slot.
-            player.sendMessage(Main.color("&cYou do not have any armor in the " + armorType.toString().toLowerCase() + " slot."));
+            // player.sendMessage(Main.color("&cYou do not have any armor in the " + armorType.toString().toLowerCase() + " slot."));
             armorEquipEvent = new ArmorEquipEvent(player, null, item, armorType, ArmorEquipEvent.EquipMethod.HOTBAR);
         } else {
             // You have armor equipped in the specific slot!
-            player.sendMessage(Main.color("&aYou have armor equipped in the " + armorType.toString().toLowerCase() + " slot!"));
+            // player.sendMessage(Main.color("&aYou have armor equipped in the " + armorType.toString().toLowerCase() + " slot!"));
             armorEquipEvent = new ArmorEquipEvent(player, oldArmor, item, armorType, ArmorEquipEvent.EquipMethod.HOTBAR);
         }
 
