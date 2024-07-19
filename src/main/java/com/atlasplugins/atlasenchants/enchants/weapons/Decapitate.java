@@ -119,7 +119,10 @@ public class Decapitate implements Listener {
         if (entityType.equals(EntityType.PLAYER)) {
             ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
+
+            assert playerHeadMeta != null;
             playerHeadMeta.setDisplayName("SKULL OF " + player.getName());
+
             playerHead.setItemMeta(playerHeadMeta);
             return playerHead;
         }else{
@@ -128,15 +131,28 @@ public class Decapitate implements Listener {
     }
 
     private ItemStack CreateMobHead(EntityType entityType) {
-        if (entityType.equals(EntityType.CHICKEN)) {
-            ItemStack chickenHead = new ItemStack(Material.PLAYER_HEAD, 1);
-            SkullMeta chickenHeadMeta = (SkullMeta) chickenHead.getItemMeta();
-            chickenHeadMeta.setOwningPlayer(Bukkit.getServer().getOfflinePlayer("MHF_Chicken"));
-            chickenHeadMeta.setDisplayName("SKULL OF " + EntityType.CHICKEN);
-            chickenHead.setItemMeta(chickenHeadMeta);
-            return chickenHead;
-        }else{
-            return null;
+        ItemStack mobHead = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta skullMeta = (SkullMeta) mobHead.getItemMeta();
+
+        switch (entityType) {
+            case CHICKEN:
+                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("MHF_Chicken"));
+                skullMeta.setDisplayName("Skull of " + entityType.name());
+                break;
+            case COW:
+                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("MHF_Cow"));
+                skullMeta.setDisplayName("Skull of " + entityType.name());
+                break;
+            case PIG:
+                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("MHF_Pig"));
+                skullMeta.setDisplayName("Skull of " + entityType.name());
+                break;
+            // Add cases for other entities as needed
+            default:
+                return null;
         }
+
+        mobHead.setItemMeta(skullMeta);
+        return mobHead;
     }
 }

@@ -20,7 +20,6 @@ com\atlasplugins\atlasenchants\enchants\weapons\IceAspect.class
 com\atlasplugins\atlasenchants\managers\LogsPlacedManager.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.class
 com\atlasplugins\atlasenchants\commands\CommandRouter.class
-com\atlasplugins\atlasenchants\Metrics$1.class
 com\atlasplugins\atlasenchants\enchants\armor\Asclepius.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect$1.class
 com\atlasplugins\atlasenchants\commands\users\TestCommand.class
@@ -49,6 +48,7 @@ com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$EquipMethod
 com\atlasplugins\atlasenchants\enchants\weapons\Stunning.class
 com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.class
 com\atlasplugins\atlasenchants\enchants\weapons\Propel.class
+com\atlasplugins\atlasenchants\enchants\weapons\Decapitate$1.class
 com\atlasplugins\atlasenchants\enchants\weapons\Hunter.class
 com\atlasplugins\atlasenchants\Metrics$CustomChart.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent.class
