@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -141,6 +142,10 @@ public class MinersTouch implements Listener {
                                 // Spawn particle effect
                                 block.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
                             }
+
+                            // Remove an enchant from an item by calling RemoveCustomEnchant and call the method
+//                            RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
+//                            removeCustomEnchant.RemoveEnchantment(e.getPlayer().getInventory().getItemInMainHand(), enchantName);
 
                             //END ENCHANT LOGIC
                         }

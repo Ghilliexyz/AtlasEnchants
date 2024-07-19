@@ -9,6 +9,7 @@ import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.LootTableEvent;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
 import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
@@ -136,9 +137,10 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Decapitate(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
-        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
+        this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Register commands

@@ -1,6 +1,8 @@
 package com.atlasplugins.atlasenchants.enchants.armor;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
