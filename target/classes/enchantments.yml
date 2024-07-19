@@ -986,7 +986,7 @@ Enchantments:
       -
   DECAPITATE:
     #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 2
+    Enchantment-MaxLvl: 3
     #The Rarity of the enchantment.
     Enchantment-Rarity: "RARE"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
@@ -1037,11 +1037,14 @@ Enchantments:
       Decapitate-Particle-Toggle: true
       Decapitate-Particle-1:
         #Particle Name (The particle that will spawn)
-        Decapitate-Particle-Name-1: SOUL_FIRE_FLAME
+        Decapitate-Particle-Name-1: LANDING_LAVA
         #Particle Amount (50 = 50 Particles)
-        Decapitate-Particle-Amount-1: 50
+        Decapitate-Particle-Amount-1: 250
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
         Decapitate-Particle-Size-1: 0.1
     #The Chance of time the enchant working. (0.05 = 5% | 1 = 100%)
-    Decapitate-Proc-Chance-1: 0.5
-    Decapitate-Proc-Chance-2: 1
+    Decapitate-Proc-Chance-1: 0.01
+    Decapitate-Proc-Chance-2: 0.03
+    Decapitate-Proc-Chance-3: 0.05
+    #The style of the Head Title.
+    Decapitate-Head-Title-Style: "&c&lHead of &7{headType}"
