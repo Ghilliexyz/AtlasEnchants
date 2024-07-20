@@ -1,15 +1,12 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.block.spawner.SpawnerEntry;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,11 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 public class MinersTouch implements Listener {
@@ -142,10 +136,6 @@ public class MinersTouch implements Listener {
                                 // Spawn particle effect
                                 block.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
                             }
-
-                            // Remove an enchant from an item by calling RemoveCustomEnchant and call the method
-//                            RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
-//                            removeCustomEnchant.RemoveEnchantment(e.getPlayer().getInventory().getItemInMainHand(), enchantName);
 
                             //END ENCHANT LOGIC
                         }

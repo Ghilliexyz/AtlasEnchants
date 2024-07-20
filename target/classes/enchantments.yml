@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.3.1
+#    Plugin Version 1.3.2
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -258,7 +258,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (LEECH) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - HUNTER
-    #The amount of healing % the enchant does (5 = 5% of the damage done will be turned into health).
+    #The amount of healing % the enchant does (0.05 = 5% of the damage done will be turned into health).
     Leech-Healing-Amount-Percent-1: 0.05
     Leech-Healing-Amount-Percent-2: 0.15
     Leech-Healing-Amount-Percent-3: 0.30
@@ -474,6 +474,119 @@ Enchantments:
     WingsOfAegis-Protection-Percentage-2: 0.24
     WingsOfAegis-Protection-Percentage-3: 0.28
     WingsOfAegis-Protection-Percentage-4: 0.32
+  FINAL-GUARD:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "LEGENDARY"
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&6&lLEGENDARY &7Final Guard"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lItem Protection      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eGrants a {finalGuardProtectionPercent}% chance to not break the item"
+      - "  &eand will repair the item to {finalGuardRepairPercent}% of Max Durabilityee"
+      - ""
+      - "&c● &7Type: &eSword Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      #Helmet
+      - LEATHER_HELMET
+      - CHAINMAIL_HELMET
+      - IRON_HELMET
+      - GOLDEN_HELMET
+      - DIAMOND_HELMET
+      - NETHERITE_HELMET
+      #Chestplate
+      - LEATHER_CHESTPLATE
+      - CHAINMAIL_CHESTPLATE
+      - IRON_CHESTPLATE
+      - GOLDEN_CHESTPLATE
+      - DIAMOND_CHESTPLATE
+      - NETHERITE_CHESTPLATE
+      #Leggings
+      - LEATHER_LEGGINGS
+      - CHAINMAIL_LEGGINGS
+      - IRON_LEGGINGS
+      - GOLDEN_LEGGINGS
+      - DIAMOND_LEGGINGS
+      - NETHERITE_LEGGINGS
+      #Boots
+      - LEATHER_BOOTS
+      - CHAINMAIL_BOOTS
+      - IRON_BOOTS
+      - GOLDEN_BOOTS
+      - DIAMOND_BOOTS
+      - NETHERITE_BOOTS
+      #Pickaxe
+      - WOODEN_PICKAXE
+      - STONE_PICKAXE
+      - IRON_PICKAXE
+      - GOLDEN_PICKAXE
+      - DIAMOND_PICKAXE
+      - NETHERITE_PICKAXE
+      #Axe
+      - WOODEN_AXE
+      - STONE_AXE
+      - IRON_AXE
+      - GOLDEN_AXE
+      - DIAMOND_AXE
+      - NETHERITE_AXE
+      #Shovel
+      - WOODEN_SHOVEL
+      - STONE_SHOVEL
+      - IRON_SHOVEL
+      - GOLDEN_SHOVEL
+      - DIAMOND_SHOVEL
+      - NETHERITE_SHOVEL
+      #Shovel
+      - WOODEN_HOE
+      - STONE_HOE
+      - IRON_HOE
+      - GOLDEN_HOE
+      - DIAMOND_HOE
+      - NETHERITE_HOE
+      # Swords
+      - WOODEN_SWORD
+      - STONE_SWORD
+      - IRON_SWORD
+      - GOLDEN_SWORD
+      - DIAMOND_SWORD
+      - NETHERITE_SWORD
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (LEECH) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
+    #The chance the item will be protected and the max repair percent of the total items durability (0.05 = 5%).
+    FinalGuard-Protection-Percent-1: 0.25
+    FinalGuard-Repair-Percent-1: 0.05
+    FinalGuard-Protection-Percent-2: 0.50
+    FinalGuard-Repair-Percent-2: 0.10
+    FinalGuard-Protection-Percent-3: 0.75
+    FinalGuard-Repair-Percent-3: 0.15
+    #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+    #------------------Success SOUND------------------#
+    #If True the Success sound will play.
+    FinalGuard-Success-Sound-Toggle: true
+    #The sound that plays when the enchantment is successful.
+    FinalGuard-Success-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+    #The volume the sound that plays at when the enchantment is successful.
+    FinalGuard-Success-Volume: 1
+    #The pitch the sound that plays at when the enchantment is successful.
+    FinalGuard-Success-Pitch: 0.1
   # --------------------- EPIC ENCHANTS --------------------- #
   RUSH:
     #Max Level of this Enchantment.

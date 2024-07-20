@@ -1,7 +1,7 @@
 name: AtlasEnchants
 main: com.atlasplugins.atlasenchants.Main
 
-version: '1.3.1'
+version: '1.3.2'
 authors: [_Ghillie]
 
 api-version: '1.20'
