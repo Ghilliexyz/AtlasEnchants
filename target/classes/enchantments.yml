@@ -491,7 +491,7 @@ Enchantments:
       - ""
       - "&c● &7Description:"
       - "  &eGrants a {finalGuardProtectionPercent}% chance to not break the item"
-      - "  &eand will repair the item to {finalGuardRepairPercent}% of Max Durabilityee"
+      - "  &eand will repair the item to {finalGuardRepairPercent}% of Max Durability"
       - ""
       - "&c● &7Type: &eSword Enchantment"
       - ""
