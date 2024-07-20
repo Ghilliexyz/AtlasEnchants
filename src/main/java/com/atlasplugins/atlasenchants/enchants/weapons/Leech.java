@@ -70,7 +70,10 @@ public class Leech implements Listener
                                 double playerCurrentHealth = p.getHealth();
                                 double damageDealt = e.getDamage();
 
-                                double healingPlayerAmount = (healingPercent / 100 * damageDealt);
+//                                double healingPlayerAmount = (healingPercent / 100 * damageDealt);
+                                double healingPlayerAmount = (healingPercent * damageDealt);
+
+                                System.out.println(healingPlayerAmount);
 
                                 double healing = playerCurrentHealth + healingPlayerAmount;
 

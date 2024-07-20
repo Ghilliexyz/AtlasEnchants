@@ -49,7 +49,7 @@ public class CreateCustomEnchant implements Listener {
                 .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
                 .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
                 .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
-                .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
+                .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
         List<String> loreList = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Lore");
@@ -78,7 +78,7 @@ public class CreateCustomEnchant implements Listener {
                     .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
                     .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
                     .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
-                    .replace("{percent}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel))));
+                    .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
         }
 
         PersistentDataContainer pdc = enchantMeta.getPersistentDataContainer();
