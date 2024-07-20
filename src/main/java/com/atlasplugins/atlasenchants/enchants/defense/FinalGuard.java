@@ -51,8 +51,8 @@ public class FinalGuard implements Listener {
         return armor != null && armorMat.contains(armor.getType().toString());
     }
 
-    public boolean hasTool (Player p) {
-        // Get the player's helmet item
+    public boolean hasToolMainHand (Player p) {
+        // Get the items in the main hand
         ItemStack armor = null;
 
         armor = p.getInventory().getItemInMainHand();
@@ -62,6 +62,20 @@ public class FinalGuard implements Listener {
 
         // Check if the player is wearing an applicable helmet
         return armor != null && armorMat.contains(armor.getType().toString());
+    }
+    public boolean hasToolOffHand(Player p) {
+        // Get the items in the offhand
+        ItemStack armor = null;
+
+        armor = p.getInventory().getItemInOffHand();
+
+        // Get the list of items the Enchant can be applied to from the config
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
+
+
+        // Check if the player is holding an applicable item in their hand
+
+        return armorMat.contains(armor.getType().toString());
     }
 
     @EventHandler
@@ -77,7 +91,7 @@ public class FinalGuard implements Listener {
         if(itemDurability > itemDamage) return;
 
         // Check if the player has an enchanted helmet
-        if (!hasArmor(p) && !hasTool(p)) return;
+        if (!hasArmor(p) && !hasToolMainHand(p) && !hasToolOffHand(p)) return;
 
         // Get Enchantment Enabled Status
         boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.FINAL-GUARD.Enchantment-Enabled");
@@ -101,9 +115,12 @@ public class FinalGuard implements Listener {
         else if(p.getInventory().getBoots() != null)
         {
             container = p.getInventory().getBoots().getItemMeta().getPersistentDataContainer();
-        } else if(hasTool(p))
+        } else if(hasToolMainHand(p))
         {
             container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+        } else if(hasToolOffHand(p))
+        {
+            container = p.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer();
         }
 
         String enchantmentData = container.getOrDefault(Main.customEnchantKeys, PersistentDataType.STRING, "");
@@ -123,7 +140,7 @@ public class FinalGuard implements Listener {
                         double protectionChance = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-Protection-Percent-" + enchantLevel);
 
                         // Check if the protection Chance is less than the random double and if not then return
-//                        if(random.nextDouble() > protectionChance) return;
+                        if(random.nextDouble() > protectionChance) return;
 
                         // Get the enchantments repair amount
                         double repairAmount = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-Repair-Percent-" + enchantLevel);
