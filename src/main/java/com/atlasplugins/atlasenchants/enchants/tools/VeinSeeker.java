@@ -1,6 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
@@ -20,8 +27,11 @@ import java.util.*;
 public class VeinSeeker implements Listener {
 
     private Main main;
+    private WorldGuardPlugin worldGuardPlugin;
+
     public VeinSeeker (Main main) {
         this.main = main;
+        this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
 
     private int removeDurability = 0;
@@ -41,9 +51,30 @@ public class VeinSeeker implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-
         //Grabbing the player
         Player p = e.getPlayer();
+        // Grabbing the broken block
+        Block blockBroken = e.getBlock();
+
+        //WorldGuard Checks
+        if(worldGuardPlugin.isEnabled() && !p.isOp())
+        {
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            RegionManager regions = container.get(BukkitAdapter.adapt(blockBroken.getWorld()));
+
+            if (regions != null) {
+                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(blockBroken.getLocation()));
+
+                for (ProtectedRegion region : set) {
+                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(p)) &&
+                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(p))) {
+                        // Cancel the event if the player is not a member or owner of the region
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
 
         // Remove block location data
         main.getOresPlacedManager().removePlayerPlacedOre(e.getBlock());
@@ -83,12 +114,11 @@ public class VeinSeeker implements Listener {
                 ItemStack tool = p.getInventory().getItemInMainHand();
                 ItemMeta toolMeta = tool.getItemMeta();
 
-                Block block = e.getBlock();
-                if (ORES.contains(block.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(block)) {
+                if (ORES.contains(blockBroken.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(blockBroken)) {
 
                     double blockXP = e.getExpToDrop();
 
-                    mineOres(block, blockXP, tool, p);
+                    mineOres(blockBroken, blockXP, tool, p);
 
                     if(toolMeta instanceof Damageable)
                     {

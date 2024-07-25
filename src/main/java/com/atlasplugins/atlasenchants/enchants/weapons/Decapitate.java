@@ -780,9 +780,8 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case PIGLIN:
-                PlayerProfile piglinProfile = getProfile("https://textures.minecraft.net/texture/d71b3aee182b9a99ed26cbf5ecb47ae90c2c3adc0927dde102c7b30fdf7f4545", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.PIGLIN_HEAD);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(piglinProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
@@ -882,9 +881,8 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case CREEPER:
-                PlayerProfile creeperProfile = getProfile("https://textures.minecraft.net/texture/163bf3137b37ff15dca924f681dd78a495d8a30a86140fec66d4fadde577e43b", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.CREEPER_HEAD);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(creeperProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
@@ -993,9 +991,8 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case SKELETON:
-                PlayerProfile skeletonProfile = getProfile("https://textures.minecraft.net/texture/482b78da6ee713d5acfe5fcb0754ee56900831a5098313064108de6e7e406839", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.SKELETON_SKULL);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(skeletonProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
@@ -1042,9 +1039,8 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITHER:
-                PlayerProfile witherProfile = getProfile("https://textures.minecraft.net/texture/74f328f5044129b5d1f96affd1b8c05bcde6bd8e756aff5c5020585eef8a3daf", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.WITHER_SKELETON_SKULL);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(witherProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
@@ -1063,9 +1059,8 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case ZOMBIE:
-                PlayerProfile zombieProfile = getProfile("https://textures.minecraft.net/texture/783aaaee22868cafdaa1f6f4a0e56b0fdb64cd0aeaabd6e83818c312ebe66437", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.ZOMBIE_HEAD);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(zombieProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;

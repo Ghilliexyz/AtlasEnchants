@@ -1,6 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,8 +26,11 @@ import java.util.*;
 public class TreeHugger implements Listener {
 
     private Main main;
+    private WorldGuardPlugin worldGuardPlugin;
+
     public TreeHugger (Main main) {
         this.main = main;
+        this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
 
     private int removeDurability = 0;
@@ -42,6 +52,28 @@ public class TreeHugger implements Listener {
     public void onBreak(BlockBreakEvent e) {
         //Grabbing the player
         Player p = e.getPlayer();
+        // Grabbing the broken block
+        Block blockBroken = e.getBlock();
+
+        //WorldGuard Checks
+        if(worldGuardPlugin.isEnabled() && !p.isOp())
+        {
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            RegionManager regions = container.get(BukkitAdapter.adapt(blockBroken.getWorld()));
+
+            if (regions != null) {
+                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(blockBroken.getLocation()));
+
+                for (ProtectedRegion region : set) {
+                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(p)) &&
+                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(p))) {
+                        // Cancel the event if the player is not a member or owner of the region
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
 
         // Remove block location data
         main.getLogsPlacedManager().removePlayerPlacedLog(e.getBlock());
@@ -79,10 +111,9 @@ public class TreeHugger implements Listener {
                             ItemStack tool = p.getInventory().getItemInMainHand();
                             ItemMeta toolMeta = tool.getItemMeta();
 
-                            Block block = e.getBlock();
-                            if (LOGS.contains(block.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(block)) {
+                            if (LOGS.contains(blockBroken.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(blockBroken)) {
 
-                                chopTree(block, tool);
+                                chopTree(blockBroken, tool);
 
                                 if(toolMeta instanceof Damageable)
                                 {

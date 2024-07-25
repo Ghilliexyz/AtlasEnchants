@@ -1,6 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -24,8 +31,11 @@ import java.util.List;
 public class MinersTouch implements Listener {
 
     private Main main;
+    private WorldGuardPlugin worldGuardPlugin;
+
     public MinersTouch (Main main) {
         this.main = main;
+        this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
 
     public boolean hasTool (Player p) {
@@ -43,6 +53,28 @@ public class MinersTouch implements Listener {
     public void onBreak(BlockBreakEvent e) {
         //Grabbing the player
         Player p = e.getPlayer();
+        // Grabbing the broken block
+        Block blockBroken = e.getBlock();
+
+        //WorldGuard Checks
+        if(worldGuardPlugin.isEnabled() && !p.isOp())
+        {
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            RegionManager regions = container.get(BukkitAdapter.adapt(blockBroken.getWorld()));
+
+            if (regions != null) {
+                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(blockBroken.getLocation()));
+
+                for (ProtectedRegion region : set) {
+                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(p)) &&
+                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(p))) {
+                        // Cancel the event if the player is not a member or owner of the region
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
 
         // Check if the player has an enchanted tool
         if(hasTool(p)) {
@@ -69,16 +101,14 @@ public class MinersTouch implements Listener {
 
                         if (enchantName.contains("MINERS-TOUCH")) {
                             // PUT ENCHANT LOGIC HERE
-                            // Get the block mined
-                            Block block = e.getBlock();
                             // if block isn't an instance of CreatureSpawner return
-                            if(!(block.getState() instanceof CreatureSpawner)) return;
+                            if(!(blockBroken.getState() instanceof CreatureSpawner)) return;
 
                             // Set Block Exp to 0, so they can't gain an infinite amount of xp.
                             e.setExpToDrop(0);
 
                             // Get the CreatureSpawner State
-                            CreatureSpawner spawnerBlock = (CreatureSpawner) block.getState();
+                            CreatureSpawner spawnerBlock = (CreatureSpawner) blockBroken.getState();
 
                             // Get the SpawnerType (Cow, Pig, Zombie etc)
                             EntityType spawnerType = spawnerBlock.getSpawnedType();
@@ -117,7 +147,7 @@ public class MinersTouch implements Listener {
                             fakeSpawner.setItemMeta(fakeSpawnerMeta);
 
                             // Drop the spawner item on the ground
-                            block.getWorld().dropItemNaturally(block.getLocation(), fakeSpawner);
+                            blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), fakeSpawner);
 
                             // Particle Settings Controlled Via Config
                             // Get the bool to see if the user wants to display the particles
@@ -131,10 +161,10 @@ public class MinersTouch implements Listener {
 
                             if(useParticles) {
                                 // Update location in case entity moves
-                                Location entityLoc = block.getLocation();
+                                Location entityLoc = blockBroken.getLocation();
 
                                 // Spawn particle effect
-                                block.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+                                blockBroken.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
                             }
 
                             //END ENCHANT LOGIC

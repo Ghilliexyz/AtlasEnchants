@@ -24,6 +24,7 @@ public class LootTableEvent implements Listener {
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
         System.out.println("--------------------------------------------------");
+        boolean hasFoundEnchantment = false;
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
                 .map(String::toUpperCase)
@@ -46,47 +47,50 @@ public class LootTableEvent implements Listener {
             Collections.reverse(enchantmentRarity);
         }
 
-        for (String rarity : enchantmentRarity) {
-            double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-            if (random.nextDouble() <= rarityChance) {
-                String enchantRarity = rarity.toUpperCase();
+        while (!hasFoundEnchantment) {
+            for (String rarity : enchantmentRarity) {
+                double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
+                if (random.nextDouble() <= rarityChance) {
+                    String enchantRarity = rarity.toUpperCase();
 
-                System.out.println("Enchant Rarity: " + enchantRarity);
-                System.out.println("Rarity Chance: " + rarityChance);
+                    System.out.println("Enchant Rarity: " + enchantRarity);
+                    System.out.println("Rarity Chance: " + rarityChance);
 
-                // Filter enchantments by the current rarity
-                List<String> filteredEnchantments = enchantments.stream()
-                        .filter(enchantment -> {
-                            String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
-                            return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
-                        })
-                        .collect(Collectors.toList());
+                    // Filter enchantments by the current rarity
+                    List<String> filteredEnchantments = enchantments.stream()
+                            .filter(enchantment -> {
+                                String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
+                                return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
+                            })
+                            .collect(Collectors.toList());
 
-                if (!filteredEnchantments.isEmpty()) {
-                    // Select a random enchantment from the filtered list
-                    String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+                    if (!filteredEnchantments.isEmpty()) {
+                        // Select a random enchantment from the filtered list
+                        String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
 
-                    System.out.println("Selected Enchantment: " + selectedEnchantment);
+                        System.out.println("Selected Enchantment: " + selectedEnchantment);
 
-                    // Get Enchantment Enabled Status
-                    boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
-                    // if Enchantment Enabled = false skip.
-                    if (!isEnchantmentEnabled) continue;
+                        // Get Enchantment Enabled Status
+                        boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
+                        // if Enchantment Enabled = false skip.
+                        if (!isEnchantmentEnabled) continue;
 
-                    // Get the Enchantment Max Level
-                    int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
-                    int enchantmentAmount = 1; // Example number of items to generate
+                        // Get the Enchantment Max Level
+                        int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
+                        int enchantmentAmount = 1; // Example number of items to generate
 
-                    // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
-                    int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
+                        // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
+                        int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
 
-                    // Create an instance of CreateCustomEnchant and call the method
-                    CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
-                    ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
+                        // Create an instance of CreateCustomEnchant and call the method
+                        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                        ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
 
 //                    System.out.println("SPAWN ENCHANT: " + selectedEnchantment);
-                    event.getLoot().add(customItem);
-                    break; // Exit after adding one enchantment
+                        event.getLoot().add(customItem);
+                        hasFoundEnchantment = true;
+                        break; // Exit after adding one enchantment
+                    }
                 }
             }
         }

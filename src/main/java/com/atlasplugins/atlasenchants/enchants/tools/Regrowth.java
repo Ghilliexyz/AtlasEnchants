@@ -1,6 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,14 +25,16 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class Regrowth implements Listener {
 
     private Main main;
+    private WorldGuardPlugin worldGuardPlugin;
+
     public Regrowth (Main main) {
         this.main = main;
+        this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
 
     public boolean hasTool (Player p) {
@@ -43,6 +52,28 @@ public class Regrowth implements Listener {
     public void onBreak(BlockBreakEvent e) {
         //Grabbing the player
         Player p = e.getPlayer();
+        // Grabbing the broken block
+        Block cropBroken = e.getBlock();
+
+        //WorldGuard Checks
+        if(worldGuardPlugin.isEnabled() && !p.isOp())
+        {
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            RegionManager regions = container.get(BukkitAdapter.adapt(cropBroken.getWorld()));
+
+            if (regions != null) {
+                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(cropBroken.getLocation()));
+
+                for (ProtectedRegion region : set) {
+                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(p)) &&
+                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(p))) {
+                        // Cancel the event if the player is not a member or owner of the region
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
 
         // Check if the player has an enchanted tool
         if(hasTool(p)) {
@@ -69,7 +100,6 @@ public class Regrowth implements Listener {
 
                         if (enchantName.contains("REGROWTH")) {
                             // PUT ENCHANT LOGIC HERE
-                            Block cropBroken = e.getBlock();
                             Material cropBrokenMat = cropBroken.getType();
                             BlockData cropBrokenData = cropBroken.getBlockData();
 

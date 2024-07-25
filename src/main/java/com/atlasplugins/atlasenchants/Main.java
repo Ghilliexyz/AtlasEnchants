@@ -15,6 +15,7 @@ import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
 import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -67,7 +68,11 @@ public final class Main extends JavaPlugin implements Listener {
     // Command Router Stuff
     private CommandRouter commandRouter;
 
+    // PlaceholderAPI
     private boolean isPlaceholderAPIPresent;
+    // WorldGuardAPI
+    private boolean isWorldGuardAPIPresent;
+    private WorldGuardPlugin worldGuardPlugin;
 
     @Override
     public void onEnable() {
@@ -82,12 +87,23 @@ public final class Main extends JavaPlugin implements Listener {
             getLogger().info("PlaceholderAPI not found, placeholders will not be used.");
         }
 
+        // check if WorldGuardAPI is present on the server.
+        isWorldGuardAPIPresent = checkForWorldGuardAPI();
+        if (isWorldGuardAPIPresent) {
+            getLogger().info("WorldGuardAPI found, worldguard will be used.");
+        } else {
+            getLogger().info("WorldGuardAPI not found, worldguard will not be used.");
+        }
+
         // Set up custom enchants
         CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(this);
 
         // Load custom configs
         loadEnchantmentsConfig();
         loadSettingsConfig();
+
+        // WorldGuard
+        worldGuardPlugin = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("worldguard");
 
         // Set up Glowing
         glowingEntities = new GlowingEntities(this);
@@ -106,14 +122,6 @@ public final class Main extends JavaPlugin implements Listener {
         // Register experienceManager
         experienceManager = new ExperienceManager(this);
 
-        // Plugin Started Message
-        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.2"));
-        Bukkit.getConsoleSender().sendMessage(color(""));
-        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
-        Bukkit.getConsoleSender().sendMessage(color(""));
-        Bukkit.getConsoleSender().sendMessage(color("&cPlugin &aEnabled"));
-        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
 
         //All Enchants
         this.getServer().getPluginManager().registerEvents(new Fearsight(this),this); // Added By Ghillie
@@ -153,6 +161,15 @@ public final class Main extends JavaPlugin implements Listener {
         // BStats Info
         int pluginId = 22376; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
+
+        // Plugin Started Message
+        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.2"));
+        Bukkit.getConsoleSender().sendMessage(color(""));
+        Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
+        Bukkit.getConsoleSender().sendMessage(color(""));
+        Bukkit.getConsoleSender().sendMessage(color("&cPlugin &aEnabled"));
+        Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
     }
 
     @Override
@@ -197,9 +214,23 @@ public final class Main extends JavaPlugin implements Listener {
         }
     }
 
+    public WorldGuardPlugin getWorldGuardPlugin()
+    {
+        return worldGuardPlugin;
+    }
+
     private boolean checkForPlaceholderAPI() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
         return plugin != null && plugin.isEnabled();
+    }
+
+    private boolean checkForWorldGuardAPI() {
+        Plugin plugin = getServer().getPluginManager().getPlugin("worldguard");
+        if (plugin instanceof WorldGuardPlugin) {
+            return plugin.isEnabled();
+        }else {
+            return false;
+        }
     }
 
     public FileConfiguration getEnchantmentsConfig() {

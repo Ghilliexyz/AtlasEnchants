@@ -25,7 +25,7 @@ Enchantments:
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
     Enchantment-Enabled: true
     #The name of the Enchantment.
-    Enchantment-Title: "&c&lGODLY &7FearSight"
+    Enchantment-Title: "&c&lGODLY &7Fearsight"
     #Lore for the Enchantment.
     Enchantment-Lore:
       - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
@@ -177,7 +177,7 @@ Enchantments:
       - "&c&m&l-----------------------------------------"
   ASCLEPIUS:
     #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 1
+    Enchantment-MaxLvl: 2
     #The Rarity of the enchantment.
     Enchantment-Rarity: "GODLY"
     #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
@@ -216,6 +216,7 @@ Enchantments:
       -
     #Radius of how far the glow goes per Tier.
     Asclepius-HealthBoost-1: 1
+    Asclepius-HealthBoost-2: 2
   # --------------------- LEGENDARY ENCHANTS --------------------- #
   LEECH:
     #Max Level of this Enchantment.
@@ -930,7 +931,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (TREE-HUGGER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
-    #The list of blocks/ores this enchant will seek out and mine.
+    #The list of blocks/logs this enchant will seek out and mine.
     TreeHugger-Block-List:
       - OAK_LOG
       - SPRUCE_LOG

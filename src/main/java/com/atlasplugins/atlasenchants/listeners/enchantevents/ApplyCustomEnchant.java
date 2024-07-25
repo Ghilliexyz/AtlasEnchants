@@ -104,23 +104,23 @@ public class ApplyCustomEnchant implements Listener {
                             boolean enchantmentDisabledPlaySound = main.getSettingsConfig().getBoolean("EnchantItemSounds.EnchantItem-DisabledEnchant-Sound-Toggle");
 
                             // check if the user doesn't want to play the sound then return if not.
-                            if(!enchantmentDisabledPlaySound) return;
-
-                            // Play sound for when enchant is blacklisted.
-                            player.playSound(player.getLocation(), enchantmentDisabledSound, enchantmentDisabledVolume, enchantmentDisabledPitch);
+                            if(enchantmentDisabledPlaySound) {
+                                // Play sound for when enchant is blacklisted.
+                                player.playSound(player.getLocation(), enchantmentDisabledSound, enchantmentDisabledVolume, enchantmentDisabledPitch);
+                            }
 
                             // Get the bool to check if the user wants to show the Enchantment Disabled message
                             boolean enchantmentDisabledSendMessage = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-DisabledEnchant-Message-Toggle");
                             // check if the user doesn't want to send the Enchantment Disabled Message, return if not.
-                            if (!enchantmentDisabledSendMessage)  return;
-
-                            // Send blacklisted Message in chat
-                            for (String BlacklistMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-DisabledEnchant-Message")) {
-                                String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
-                                String message = Main.color(withPAPISet1)
-                                        .replace("{disabledEnchantName}", formatEnchantName(enchantName))
-                                        .replace("{disabledEnchantLevel}", String.valueOf(enchantLevel));
-                                player.sendMessage(message);
+                            if (enchantmentDisabledSendMessage) {
+                                // Send blacklisted Message in chat
+                                for (String BlacklistMessage : main.getSettingsConfig().getStringList("EnchantItemMessages.EnchantItem-DisabledEnchant-Message")) {
+                                    String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
+                                    String message = Main.color(withPAPISet1)
+                                            .replace("{disabledEnchantName}", formatEnchantName(enchantName))
+                                            .replace("{disabledEnchantLevel}", String.valueOf(enchantLevel));
+                                    player.sendMessage(message);
+                                }
                             }
                             return;
                         }
