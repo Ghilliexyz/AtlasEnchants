@@ -216,7 +216,11 @@ public final class Main extends JavaPlugin implements Listener {
 
     public WorldGuardPlugin getWorldGuardPlugin()
     {
-        return worldGuardPlugin;
+        if(checkForWorldGuardAPI()){
+            return worldGuardPlugin;
+        } else {
+            return null;
+        }
     }
 
     private boolean checkForPlaceholderAPI() {
