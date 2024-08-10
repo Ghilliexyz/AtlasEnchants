@@ -109,7 +109,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Set up Glowing
         glowingEntities = new GlowingEntities(this);
-        glowingBlocks = new GlowingBlocks(this);
+//        glowingBlocks = new GlowingBlocks(this);
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
