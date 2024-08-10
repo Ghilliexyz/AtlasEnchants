@@ -1039,15 +1039,15 @@ public class Decapitate implements Listener {
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITHER:
-                mobHead.setType(Material.WITHER_SKELETON_SKULL);
+                PlayerProfile witherProfile = getProfile("https://textures.minecraft.net/texture/74f328f5044129b5d1f96affd1b8c05bcde6bd8e756aff5c5020585eef8a3daf", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 assert skullMeta != null;
+                skullMeta.setOwnerProfile(witherProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITHER_SKELETON:
-                PlayerProfile witherSkeletonProfile = getProfile("https://textures.minecraft.net/texture/1e4d204ebc242eca2148f5853e3af00f84f0d674099dc394f6d2924b240ca2e3", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
+                mobHead.setType(Material.WITHER_SKELETON_SKULL);
                 assert skullMeta != null;
-                skullMeta.setOwnerProfile(witherSkeletonProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;

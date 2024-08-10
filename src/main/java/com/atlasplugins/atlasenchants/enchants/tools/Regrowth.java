@@ -8,7 +8,6 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -113,8 +112,8 @@ public class Regrowth implements Listener {
 
                             Location cropLoc = cropBroken.getLocation();
 
-                            // Check if the block below is farmland
-                            if (cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.FARMLAND) {
+                            // Check if the block below is farmland or netherwart
+                            if (cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.FARMLAND && cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.SOUL_SAND) {
                                 return;
                             }
 
@@ -142,6 +141,9 @@ public class Regrowth implements Listener {
                                     break;
                                 case BEETROOTS:
                                     seedType = Material.BEETROOTS;
+                                    break;
+                                case NETHER_WART:
+                                    seedType = Material.NETHER_WART;
                                     break;
                                 default:
                                     return;

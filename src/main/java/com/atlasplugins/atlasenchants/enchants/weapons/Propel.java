@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.sk89q.worldedit.math.Vector3;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,12 +67,9 @@ public class Propel implements Listener
 
                         if (enchantName.contains("PROPEL")) {
                             // PUT ENCHANT LOGIC HERE
-                            if (e.getEntity() instanceof LivingEntity) {
+                            if (e.getEntity() instanceof LivingEntity entityToLaunch) {
                                 // Get the block height from the configuration
                                 int blockHeight = main.getEnchantmentsConfig().getInt("Enchantments.PROPEL.Propel-Height-Amount-" + enchantLevel);
-
-                                // Get the entity to launch
-                                LivingEntity entityToLaunch = (LivingEntity) e.getEntity();
 
                                 // Default Jump Height = 1.25220 (same as 0.42 Velocity)
                                 // Velocity: 0.42 = 1.25220
@@ -79,14 +77,19 @@ public class Propel implements Listener
 
                                 double velocityY = calculateInitialVelocity(blockHeight);
 
-                                double entityDamage = e.getDamage();
+//                                double entityDamage = e.getDamage();
+
+                                main.getLogger().info("velocityY: " + velocityY);
+                                main.getLogger().info("blockHeight: " + blockHeight);
+
+                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0,1,0));
 
                                 // Add a small vertical offset to the entity's position to ensure it gets launched
                                 Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
                                 // Launch Entity Up
                                 entityToLaunch.setVelocity(entityVelocity);
                                 // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
-                                entityToLaunch.damage(entityDamage);
+//                                entityToLaunch.damage(entityDamage);
 
 //                                e.setCancelled(true);
                             }

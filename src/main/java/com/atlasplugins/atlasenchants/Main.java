@@ -15,6 +15,7 @@ import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
 import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
@@ -59,6 +60,13 @@ public final class Main extends JavaPlugin implements Listener {
     private OresPlacedManager oresPlacedManager;
     // Block Radius Finder Stuff
     public BlockRadiusFinder blockRadiusFinder;
+
+    // PlaceholderAPI
+    private boolean isPlaceholderAPIPresent;
+    // WorldGuardAPI
+    private boolean isWorldGuardAPIPresent;
+    private WorldGuardPlugin worldGuardPlugin;
+
     // Config Stuff
     private FileConfiguration enchantmentsConfig;
     private File enchantmentsConfigFile;
@@ -67,12 +75,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     // Command Router Stuff
     private CommandRouter commandRouter;
-
-    // PlaceholderAPI
-    private boolean isPlaceholderAPIPresent;
-    // WorldGuardAPI
-    private boolean isWorldGuardAPIPresent;
-    private WorldGuardPlugin worldGuardPlugin;
 
     @Override
     public void onEnable() {
@@ -103,7 +105,7 @@ public final class Main extends JavaPlugin implements Listener {
         loadSettingsConfig();
 
         // WorldGuard
-        worldGuardPlugin = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("worldguard");
+        worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("worldguard");
 
         // Set up Glowing
         glowingEntities = new GlowingEntities(this);
@@ -229,13 +231,10 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     private boolean checkForWorldGuardAPI() {
-        Plugin plugin = getServer().getPluginManager().getPlugin("worldguard");
-        if (plugin instanceof WorldGuardPlugin) {
-            return plugin.isEnabled();
-        }else {
-            return false;
-        }
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("worldguard");
+        return plugin != null && plugin.isEnabled();
     }
+
 
     public FileConfiguration getEnchantmentsConfig() {
         return enchantmentsConfig;

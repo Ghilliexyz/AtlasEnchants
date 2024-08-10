@@ -40,6 +40,11 @@ public class Hunter implements Listener
 
         Player p = (Player) e.getDamager();
 
+        Entity entity = e.getEntity();
+
+        // Return if the entity is a shulker bullet
+        if(entity instanceof ShulkerBullet) return;
+
         // Check if the player has an enchanted sword
         if (hasWeapon(p)) {
 
@@ -71,8 +76,8 @@ public class Hunter implements Listener
                             // return if user tries to hit the entity with their bow
                             if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
 
-                            LivingEntity entity = (LivingEntity) e.getEntity();
-                            ApplyDamage(entity, enchantLevel, p);
+                            LivingEntity hitEntity = (LivingEntity) entity;
+                            ApplyDamage(hitEntity, enchantLevel, p);
                             //END ENCHANT LOGIC
                         }
                     }
@@ -88,6 +93,11 @@ public class Hunter implements Listener
         }
 
         Player p = (Player) e.getEntity().getShooter();
+
+        Entity entity = e.getEntity();
+
+        // Return if the entity is a shulker bullet
+        if(entity instanceof ShulkerBullet) return;
 
         if (hasWeapon(p)) {
 

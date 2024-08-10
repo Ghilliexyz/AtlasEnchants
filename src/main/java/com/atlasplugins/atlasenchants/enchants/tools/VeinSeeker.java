@@ -120,13 +120,13 @@ public class VeinSeeker implements Listener {
 
                     mineOres(blockBroken, blockXP, tool, p);
 
-                    if(toolMeta instanceof Damageable)
+                    if(toolMeta instanceof Damageable damageableToolMeta)
                     {
-                        // Get Damageable tool
-                        Damageable damageableToolMeta = (Damageable) toolMeta;
-
                         // Manually remove durability
                         damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
+
+                        // Apply the modified meta back to the item
+                        tool.setItemMeta(damageableToolMeta);
 
                         // Reset durability removal
                         removeDurability = 0;
@@ -141,7 +141,7 @@ public class VeinSeeker implements Listener {
     private void mineOres(Block block, double blockXP, ItemStack tool, Player p) {
         Set<Block> oresToMine = new HashSet<>();
         findOres(block, oresToMine);
-            ExperienceOrb experienceOrb = null;
+        ExperienceOrb experienceOrb = null;
         for (Block ore : oresToMine) {
             // Break the block
             ore.breakNaturally(tool);
@@ -164,6 +164,7 @@ public class VeinSeeker implements Listener {
     // Finds the blocks to break.
     private void findOres(Block block, Set<Block> oresToMine) {
         if (oresToMine.contains(block)) return;
+
         oresToMine.add(block);
 
         List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);

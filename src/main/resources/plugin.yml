@@ -7,8 +7,8 @@ authors: [_Ghillie]
 api-version: '1.20'
 description: Custom enchant plugin.
 
-# This sets PlaceholderAPI as an optional dependency for your plugin.
-softdepend: [PlaceholderAPI]
+# This sets PlaceholderAPI and WorldGuardAPI as an optional dependency for your plugin.
+softdepend: [PlaceholderAPI, WorldGuard]
 
 commands:
   atlasenchants:

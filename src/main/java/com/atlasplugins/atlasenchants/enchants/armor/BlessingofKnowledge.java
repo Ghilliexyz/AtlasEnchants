@@ -44,7 +44,13 @@ public class BlessingofKnowledge implements Listener {
 
         Player player = (Player) e.getDamager();
 
-        if(e.getEntity() instanceof Fireball){return;}
+        Entity entity = e.getEntity();
+
+        // Return if the entity is a Fireball
+        if(entity instanceof Fireball){return;}
+
+        // Return if the entity is a ShulkerBullet
+        if(entity instanceof ShulkerBullet) return;
 
         // Check if the player has an enchanted helmet
         if (hasArmor(player)) {
@@ -66,42 +72,42 @@ public class BlessingofKnowledge implements Listener {
                         int enchantLevel = Integer.parseInt(parts[1]);
 
                         if (enchantName.contains("BLESSING-OF-KNOWLEDGE")) {
-                            LivingEntity entity = (LivingEntity) e.getEntity();
+                            LivingEntity hitEntity = (LivingEntity) entity;
 
                             int healthBarShowTimer = main.getEnchantmentsConfig().getInt("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Timer-" + enchantLevel);
                             int healthBarDurationTicks = healthBarShowTimer * 20; // Convert seconds to ticks
 
                             String entityName;
                             if (!this.mobs.containsKey(entity.getUniqueId())) {
-                                if (entity.getCustomName() != null) {
-                                    entityName = entity.getCustomName();
+                                if (hitEntity.getCustomName() != null) {
+                                    entityName = hitEntity.getCustomName();
                                 } else {
-                                    entityName = entity.getName();
+                                    entityName = hitEntity.getName();
                                 }
-                                this.mobs.put(entity.getUniqueId(), entity.getCustomName());
+                                this.mobs.put(hitEntity.getUniqueId(), hitEntity.getCustomName());
                                 Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)this.main, () -> {
-                                    entity.setCustomNameVisible(false);
-                                    entity.setCustomName(this.mobs.get(entity.getUniqueId()));
-                                    this.mobs.remove(entity.getUniqueId());
+                                    hitEntity.setCustomNameVisible(false);
+                                    hitEntity.setCustomName(this.mobs.get(hitEntity.getUniqueId()));
+                                    this.mobs.remove(hitEntity.getUniqueId());
                                 }, healthBarDurationTicks);
-                            } else if (this.mobs.get(entity.getUniqueId()) == null) {
-                                entityName = entity.getType().toString();
+                            } else if (this.mobs.get(hitEntity.getUniqueId()) == null) {
+                                entityName = hitEntity.getType().toString();
                             } else {
-                                entityName = this.mobs.get(entity.getUniqueId());
+                                entityName = this.mobs.get(hitEntity.getUniqueId());
                             }
 
                             EntityDamageEvent entityEvent = (EntityDamageEvent) e;
                             double finalDamage = entityEvent.getFinalDamage();
 
                             // Display health bar
-                            entity.setCustomNameVisible(true);
+                            hitEntity.setCustomNameVisible(true);
 
-                            double entityHealth = entity.getHealth() - finalDamage;
+                            double entityHealth = hitEntity.getHealth() - finalDamage;
                             entityHealth = roundToOneDecimalPlace(entityHealth); // Assuming roundToOneDecimalPlace is a method that rounds to one decimal place
 
-                            double healthPercentage = (entityHealth / entity.getMaxHealth()) * 100;
+                            double healthPercentage = (entityHealth / hitEntity.getMaxHealth()) * 100;
 
-                            int entityMaxHealth = (int) entity.getMaxHealth();
+                            int entityMaxHealth = (int) hitEntity.getMaxHealth();
 
                             String healthStyleBelow10 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
                             String healthStyleBelow25 = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
@@ -121,23 +127,23 @@ public class BlessingofKnowledge implements Listener {
                             }
 
                             if(healthPercentage <= 10.0) {
-                                entity.setCustomName(Main.color(healthStyleBelow10PAPISet
+                                hitEntity.setCustomName(Main.color(healthStyleBelow10PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
                                         .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Dark Red for <= 10%
                             } else if (healthPercentage <= 25.0) {
-                                entity.setCustomName(Main.color(healthStyleBelow25PAPISet
+                                hitEntity.setCustomName(Main.color(healthStyleBelow25PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
                                         .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Red for <= 25%
                             } else if (healthPercentage <= 50.0) {
-                                entity.setCustomName(Main.color(healthStyleBelow50PAPISet
+                                hitEntity.setCustomName(Main.color(healthStyleBelow50PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
                                         .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Yellow for <= 50%
                             } else if (healthPercentage <= 75.0) {
-                                entity.setCustomName(Main.color(healthStyleBelow75PAPISet
+                                hitEntity.setCustomName(Main.color(healthStyleBelow75PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
                                         .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Light Yellow (or another color) for <= 75%
                             } else {
-                                entity.setCustomName(Main.color(healthStyleBelow100PAPISet
+                                hitEntity.setCustomName(Main.color(healthStyleBelow100PAPISet
                                         .replace("{entityHealth}", String.valueOf(entityHealth))
                                         .replace("{entityMaxHealth}", String.valueOf(entityMaxHealth)))); // Green for > 75%
                             }
