@@ -45,6 +45,9 @@ public class Hunter implements Listener
         // Return if the entity is a shulker bullet
         if(entity instanceof ShulkerBullet) return;
 
+        // Return if the entity is a BreezeWindCharge
+        if(entity instanceof BreezeWindCharge) return;
+
         // Check if the player has an enchanted sword
         if (hasWeapon(p)) {
 
@@ -98,6 +101,9 @@ public class Hunter implements Listener
 
         // Return if the entity is a shulker bullet
         if(entity instanceof ShulkerBullet) return;
+
+        // Return if the entity is a BreezeWindCharge
+        if(entity instanceof BreezeWindCharge) return;
 
         if (hasWeapon(p)) {
 

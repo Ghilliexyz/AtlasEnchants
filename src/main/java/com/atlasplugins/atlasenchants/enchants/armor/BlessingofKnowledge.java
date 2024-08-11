@@ -52,6 +52,9 @@ public class BlessingofKnowledge implements Listener {
         // Return if the entity is a ShulkerBullet
         if(entity instanceof ShulkerBullet) return;
 
+        // Return if the entity is a BreezeWindCharge
+        if(entity instanceof BreezeWindCharge) return;
+
         // Check if the player has an enchanted helmet
         if (hasArmor(player)) {
 
