@@ -15,6 +15,24 @@
 #    Discord: https://discord.gg/f9swPR7NnV
 #
 
+OblivionShard:
+  #If true the Oblivion Shard can be Found, and Used. if false the opposite for all happens.
+  OblivionShard-Enabled: true
+  #The name of the Oblivion Shard.
+  OblivionShard-DisplayName: "&c&l&k@ &6&lOblivion Shard &c&l&k@"
+  #Lore for the Oblivion Shard.
+  OblivionShard-Lore:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Description:"
+    - "  &eRemoves a random custom enchant from any item."
+    - ""
+    - "&c● &7Type: &eShard"
+    - ""
+    - "&c● &7Usage: &eDrag n' Drop onto Any Item."
+    - ""
+    - "&c&m&l-----------------------------------------"
+
 Enchantments:
   # --------------------- GODLY ENCHANTS --------------------- #
   FEARSIGHT:

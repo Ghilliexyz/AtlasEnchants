@@ -18,6 +18,7 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\HelpCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\IceAspect.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyShard.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Rush.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveEnchantCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipListener.java
@@ -29,8 +30,10 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\OresPlacedManager.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Leech.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateShard.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\BlockRadiusFinder.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveOblivionShardCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\defense\FinalGuard.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\CommandRouter.java

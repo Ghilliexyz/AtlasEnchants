@@ -23,7 +23,24 @@ public class LootTableEvent implements Listener {
 
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
-        System.out.println("--------------------------------------------------");
+        // Oblivion Shard Spawner
+        boolean isShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
+
+        if(isShardEnabled) {
+            double shardSpawnChance = main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-Spawn-Chance");
+
+            // return if shard chance to spawn has failed
+            if(random.nextDouble() > shardSpawnChance) return;
+
+            // Create an instance of CreateShard and call the method
+            CreateShard createShard = new CreateShard(main);
+            ItemStack customShardItem = createShard.CreateShardItem(1, null);
+
+            event.getLoot().add(customShardItem);
+        }
+
+        // Enchantment Spawner
+//        main.getLogger().info("--------------------------------------------------");
         boolean hasFoundEnchantment = false;
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()

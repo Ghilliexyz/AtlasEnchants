@@ -6,16 +6,12 @@ import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
 import com.atlasplugins.atlasenchants.enchants.defense.FinalGuard;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.LootTableEvent;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
 import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
-import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
@@ -52,6 +48,7 @@ public final class Main extends JavaPlugin implements Listener {
 
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
+    public static NamespacedKey customShardKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
@@ -113,6 +110,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
+        customShardKeys = new NamespacedKey(this, "Custom_Shards");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
@@ -149,8 +147,10 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new FinalGuard(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new ApplyShard(this), this);
         this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);

@@ -26,3 +26,6 @@ permissions:
   atlasenchants.giveenchant:
     description: Permission needed to use the give enchant command.
     default: false
+  atlasenchants.giveshard:
+    description: Permission needed to use the give shard command.
+    default: false

@@ -305,10 +305,10 @@ public class ApplyCustomEnchant implements Listener {
                                     }
                                 }
                             } else {
-                                main.getLogger().log(Level.WARNING, "Item type does not match the applicable items for this enchantment.");
+//                                main.getLogger().log(Level.WARNING, "Item type does not match the applicable items for this enchantment.");
                             }
                         } else {
-                            main.getLogger().log(Level.WARNING, "Item already has the same or higher level enchantment.");
+//                            main.getLogger().log(Level.WARNING, "Item already has the same or higher level enchantment.");
                         }
                     }
                 }
