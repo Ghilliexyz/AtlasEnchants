@@ -15,26 +15,26 @@ What are all the features Atlas Custom Enchants Offers?
 
 📟 All Enchantments & Descriptions
 --
---------------------- GODLY ENCHANTS ---------------------
+ --------------------- GODLY ENCHANTS ---------------------
 1. Fearsight ➪ (Will make Aggressive Mobs glow Red Players/Villages White and non-aggressive Mobs show Green)
 2. Blessing of Knowledge ➪ (Will Shows a health bar above any mob head)
 3. Miners Touch ➪ (This will allow you to mine and pick up spawners)
-4. Asclepius ➪ (This will Allows the wearer to gain extra hearts)
---------------------- LEGENDARY ENCHANTS ---------------------
+4. Asclepius ➪ (This will Allow the wearer to gain extra hearts)
+ --------------------- LEGENDARY ENCHANTS ---------------------
 1. Leech ➪ (The damage done to any mob will heal the user's health)
 2. Safe Miner ➪ (Any item you mine will go straight into your inventory)
 3. Extractor ➪ (Gives more EXP from each kill)
 4. Vein Seeker ➪ (Mines the entire ore vein instantly)
 5. Wings of aegis ➪ (Gain a damage reduction)
 6. Final Guard ➪ (Grants a chance to not break the item)
---------------------- EPIC ENCHANTS ---------------------
+ --------------------- EPIC ENCHANTS ---------------------
 1. Rush ➪ (Applies Speed for x amount of time) 
 2. Stunning ➪ (Applies the StunnedEffect to any hit entity)
 3. Energy Absorption ➪ (Gives player heart(s) when below X hearts)
 4. Poison Aspect ➪ (Applies the Poison Effect to any hit entity)
 5. Ice Aspect ➪ (Applies the Frozen Effect to any hit entity)
 6. Tree Hugger ➪ (Chops down any tree instantly)
---------------------- RARE ENCHANTS ---------------------
+ --------------------- RARE ENCHANTS ---------------------
 1. Hunter ➪ (Increase Base Damage to Passive Creatures)
 2. Propel ➪ (Launch the hit entity up into the sky)
 3. Freezing Shot ➪ (Freezes any Mob for X amount of time) 
