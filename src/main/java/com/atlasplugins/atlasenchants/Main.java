@@ -13,7 +13,6 @@ import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import fr.skytasul.glowingentities.GlowingBlocks;
 import fr.skytasul.glowingentities.GlowingEntities;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -44,7 +43,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     // Glowing Stuff
     public GlowingEntities glowingEntities;
-    public GlowingBlocks glowingBlocks;
 
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
@@ -106,7 +104,6 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Set up Glowing
         glowingEntities = new GlowingEntities(this);
-//        glowingBlocks = new GlowingBlocks(this);
 
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
@@ -145,11 +142,13 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new Asclepius(this), this); // Added By Ghillie (Old Name Growth)
         this.getServer().getPluginManager().registerEvents(new Decapitate(this), this); // Added By Ghillie
         this.getServer().getPluginManager().registerEvents(new FinalGuard(this), this); // Added By Ghillie
+        this.getServer().getPluginManager().registerEvents(new PoseidonsBait(this), this); // Added By Ghillie
         //All Events
         this.getServer().getPluginManager().registerEvents(new ApplyCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new ApplyShard(this), this);
         this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateRandomCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
@@ -178,7 +177,6 @@ public final class Main extends JavaPlugin implements Listener {
     public void onDisable() {
         // Plugin shutdown logic
         glowingEntities.disable();
-        glowingBlocks.disable();
 
         // Save data to file on plugin disable
         logsPlacedManager.saveDataToFile();

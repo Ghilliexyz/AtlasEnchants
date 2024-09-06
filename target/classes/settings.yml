@@ -126,10 +126,41 @@ Command-Messages:
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
     - "&c&m&l-----------------------------------------"
+  ##########################################################
+  #                                                        #
+  #             GIVE RANDOM ENCHANT MESSAGES               #
+  #                                                        #
+  ##########################################################
+  Command-Messages-GiveRandomEnchant-Usage-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Usage: &c/giverandom &e<player> <amount>"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-GiveRandomEnchant-PlayerNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-GiveRandomEnchant-InvalidAmount-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-GiveRandomEnchant-AmountRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
 
 EnchantItems:
   #Type of Item the Enchantments will be.
   EnchantItem: ENCHANTED_BOOK
+  #If true the EnchantItem will have an enchantment glint on it.
+  EnchantItem-Glint-Toggle: false
   #This chance determines if it should run the spawning enchant logic to spawn an enchantment
   #Default Spawn Chance = 0.10 (0.10 = 10% chance that it will allow the spawning system to loop through all the enchants)
   #if the spawning chance fails no enchantment attempt to be spawned.
@@ -137,13 +168,13 @@ EnchantItems:
   #A list of all rarity's in the plugin. (0.5 = 50%)
   EnchantItem-Rarity-List:
     #Chance to get a Godly enchantment.
-    GODLY: 0.05
+    GODLY: 0.15
     #Chance to get a Legendary enchantment.
-    LEGENDARY: 0.15
+    LEGENDARY: 0.20
     #Chance to get an Epic enchantment.
-    EPIC: 0.30
+    EPIC: 0.25
     #Chance to get a Rare enchantment.
-    RARE: 0.5
+    RARE: 0.40
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly#
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true
@@ -151,6 +182,8 @@ EnchantItems:
 OblivionShard:
   #Type of Item the Oblivion Shard will be.
   OblivionShard-Item: PRISMARINE_SHARD
+  #If true the OblivionShard-Item will have an enchantment glint on it.
+  OblivionShard-Glint-Toggle: true
   #The chance of an Oblivion Shard spawning (0.05 = 5%)
   OblivionShard-Spawn-Chance: 0.05
 
@@ -193,7 +226,19 @@ ShardItemMessages:
   ShardItem-Success-Message:
     -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     -  ""
-    -  "&c● &7You &a&lSuccessfully &7removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------APPLYING SHARD Message------------------#
+  #If True the success and refund message will be sent to the player.
+  ShardItem-SuccessAndRefund-Message-Toggle: true
+  #The message that will be sent when applying a custom Shard to an item.
+  ShardItem-SuccessAndRefund-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+    -  ""
+    -  "&c● &7You managed to grab the enchantment before it faded away!"
     -  ""
     -  "&c&m&l-----------------------------------------"
   #------------------NO ENCHANTS APPLIED Message------------------#

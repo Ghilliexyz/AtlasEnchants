@@ -20,11 +20,17 @@ permissions:
   atlasenchants.help:
     description: Permission needed to use the help command.
     default: false
+  atlasenchants.test:
+    description: Permission needed to use the help command.
+    default: false
   atlasenchants.reloadconfig:
     description: Permission needed to use the reload command.
     default: false
   atlasenchants.giveenchant:
     description: Permission needed to use the give enchant command.
+    default: false
+  atlasenchants.giverandomenchant:
+    description: Permission needed to use the give random enchant command.
     default: false
   atlasenchants.giveshard:
     description: Permission needed to use the give shard command.

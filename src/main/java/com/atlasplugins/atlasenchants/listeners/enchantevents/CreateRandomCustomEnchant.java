@@ -1,47 +1,24 @@
 package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class LootTableEvent implements Listener {
+public class CreateRandomCustomEnchant implements Listener {
 
     private Main main;
 
-    public LootTableEvent(Main main) {
+    private final Random random = new Random();
+
+    public CreateRandomCustomEnchant(Main main) {
         this.main = main;
     }
 
-    private final Random random = new Random();
-
-    @EventHandler
-    public void onLootGenerate(LootGenerateEvent event) {
-        // Oblivion Shard Spawner
-        boolean isShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
-
-        if(isShardEnabled) {
-            double shardSpawnChance = main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-Spawn-Chance");
-
-            // if the shard chance passes then well done!
-            if(random.nextDouble() < shardSpawnChance) {
-                // Create an instance of CreateShard and call the method
-                CreateShard createShard = new CreateShard(main);
-                ItemStack customShardItem = createShard.CreateShardItem(1, null);
-
-                event.getLoot().add(customShardItem);
-                return;
-            }
-        }
-
-        // Enchantment Spawner
-//        main.getLogger().info("--------------------------------------------------");
+    public ItemStack CreateRandomCustomEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant){
         boolean hasFoundEnchantment = false;
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
@@ -49,11 +26,6 @@ public class LootTableEvent implements Listener {
                 .collect(Collectors.toList());
 
         boolean flipEnchantmentList = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Flip-List");
-
-        double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
-
-        // return if chance to spawn has failed.
-        if (random.nextDouble() > chanceToSpawnEnchants) return;
 
         List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
                 .stream()
@@ -95,7 +67,7 @@ public class LootTableEvent implements Listener {
 
                         // Get the Enchantment Max Level
                         int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
-                        int enchantmentAmount = 1; // Example number of items to generate
+//                            int enchantmentAmount = 1; // Example number of items to generate
 
                         // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
                         int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
@@ -104,13 +76,29 @@ public class LootTableEvent implements Listener {
                         CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
                         ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
 
+                        if(givePlayerEnchant) {
+                            // Add items to player's inventory if player is not null
+                            if (p != null) {
+                                for (int i = 0; i < enchantmentAmount; i++) {
+                                    // Check if there's space in the player's inventory
+                                    HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(customItem);
+
+                                    // If the inventory is full and the item could not be added, drop it at the player's feet
+                                    if (!remainingItems.isEmpty()) {
+                                        for (ItemStack item : remainingItems.values()) {
+                                            p.getWorld().dropItemNaturally(p.getLocation(), item);
+                                        }
+                                    }
+                                }
+                            }
+                        }
 //                    main.getLogger().info("SPAWN ENCHANT: " + selectedEnchantment);
-                        event.getLoot().add(customItem);
                         hasFoundEnchantment = true;
-                        break; // Exit after adding one enchantment
+                        return customItem; // Exit after adding one enchantment
                     }
                 }
             }
         }
+        return null;
     }
 }

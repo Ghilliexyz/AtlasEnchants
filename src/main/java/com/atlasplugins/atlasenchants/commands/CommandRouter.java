@@ -1,9 +1,6 @@
 package com.atlasplugins.atlasenchants.commands;
 
-import com.atlasplugins.atlasenchants.commands.users.GiveEnchantCommand;
-import com.atlasplugins.atlasenchants.commands.users.GiveOblivionShardCommand;
-import com.atlasplugins.atlasenchants.commands.users.HelpCommand;
-import com.atlasplugins.atlasenchants.commands.users.ReloadCommand;
+import com.atlasplugins.atlasenchants.commands.users.*;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,8 +27,10 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
     private void registerCommands() {
         // Register your commands here
         registerCommand(new HelpCommand(main));
+        registerCommand(new TestCommand(main));
         registerCommand(new ReloadCommand(main));
         registerCommand(new GiveEnchantCommand(main));
+        registerCommand(new GiveRandomEnchantCommand(main));
         registerCommand(new GiveOblivionShardCommand(main));
     }
 

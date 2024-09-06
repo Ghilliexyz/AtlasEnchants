@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants.listeners.enchantevents;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -73,7 +74,7 @@ public class ApplyShard implements Listener {
                         // Split the Shard data into name and level
                         String[] shardParts = cursorData.split(":");
                         String shardName = shardParts[0];
-                        int shardAmount = Integer.parseInt(shardParts[1]);
+                        int shardID = Integer.parseInt(shardParts[1]);
 
                         // Get Shard Enabled Status
                         boolean isOblivionShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
@@ -103,7 +104,7 @@ public class ApplyShard implements Listener {
                                     String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
                                     String message = Main.color(withPAPISet1)
                                             .replace("{shardName}", formatshardName(shardName))
-                                            .replace("{shardAmount}", String.valueOf(shardAmount));
+                                            .replace("{shardID}", String.valueOf(shardID));
                                     player.sendMessage(message);
                                 }
                             }
@@ -111,10 +112,6 @@ public class ApplyShard implements Listener {
                         }
 
                         boolean shouldApplyEnchantment = false;
-                        // Get the lore of the clicked item, or create a new list if none exists
-                        List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
-                        List<String> newEnchantments = new ArrayList<>();
-
                         // Check if the clicked item already has enchantments
                         if (itemPDC.has(Main.customEnchantKeys, PersistentDataType.STRING)) {
                             String existingEnchantData = itemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
@@ -124,7 +121,6 @@ public class ApplyShard implements Listener {
                             for (String existingEnchant : existingEnchantments) {
                                 String[] existingEnchantParts = existingEnchant.split(":");
                                 if (existingEnchantParts.length < 2) continue; // Ensure correct format
-
 
                                 // Add the enchantment name and level to the Map
                                 String enchantmentName = existingEnchantParts[0];
@@ -159,7 +155,7 @@ public class ApplyShard implements Listener {
                                     String withPAPISet2 = main.setPlaceholders(player, AlreadyApplyMessage);
                                     String message = Main.color(withPAPISet2)
                                             .replace("{shardName}", formatshardName(shardName))
-                                            .replace("{shardAmount}", String.valueOf(shardAmount))
+                                            .replace("{shardID}", String.valueOf(shardID))
                                             .replace("{removedEnchantmentName}", formatshardName(removedEnchantmentName))
                                             .replace("{removedEnchantmentLevel}", String.valueOf(removedEnchantmentLevel));
                                     player.sendMessage(message);
@@ -184,10 +180,92 @@ public class ApplyShard implements Listener {
                                 // Remove an enchant from an item by calling RemoveCustomEnchant and call the method
                                 RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
                                 removeCustomEnchant.RemoveEnchantment(clickedItem, removedEnchantmentName);
+
+                                boolean returnEnchantEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-ReturnEnchant-Enabled");
+
+                                if(returnEnchantEnabled){
+                                    double returnEnchantChance = main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance");
+
+                                    // of the return enchant chance passes then create the removed enchant.
+                                    if(random.nextDouble() > returnEnchantChance) {
+                                        // Create an instance of CreateCustomEnchant and call the method
+                                        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                                        ItemStack returnedEnchant = createCustomEnchant.CreateCustomEnchantmentItem(removedEnchantmentName, removedEnchantmentLevel, 1, player);
+
+                                        // Add items to player's inventory if player is not null
+                                        for (int i = 0; i < 1; i++) {
+                                            // Check if there's space in the player's inventory
+                                            HashMap<Integer, ItemStack> remainingItems = player.getInventory().addItem(returnedEnchant);
+
+                                            // If the inventory is full and the item could not be added, drop it at the player's feet
+                                            if (!remainingItems.isEmpty()) {
+                                                for (ItemStack item : remainingItems.values()) {
+                                                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                                                }
+                                            }
+                                        }
+
+                                        // Get the bool to check if the user wants to show the Success And Refund enchant message
+                                        boolean shardApplySendMessage = main.getSettingsConfig().getBoolean("ShardItemMessages.ShardItem-SuccessAndRefund-Message-Toggle");
+
+                                        // check if the user wants to show the Success And Refund message
+                                        if (shardApplySendMessage) {
+                                            // Send Success And Refund Message in chat when applying a enchant.
+                                            for (String SuccessAndRefundMessage : main.getSettingsConfig().getStringList("ShardItemMessages.ShardItem-SuccessAndRefund-Message")) {
+                                                String withPAPISet2 = main.setPlaceholders(player, SuccessAndRefundMessage);
+                                                String message = Main.color(withPAPISet2)
+                                                        .replace("{shardName}", formatshardName(shardName))
+                                                        .replace("{shardID}", String.valueOf(shardID))
+                                                        .replace("{removedEnchantmentName}", formatshardName(removedEnchantmentName))
+                                                        .replace("{removedEnchantmentLevel}", String.valueOf(removedEnchantmentLevel));
+                                                player.sendMessage(message);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // Get the bool to check if the user wants to show the successful enchant message
+                                        boolean shardApplySendMessage = main.getSettingsConfig().getBoolean("ShardItemMessages.ShardItem-Success-Message-Toggle");
+
+                                        // check if the user wants to show the Already Applied message
+                                        if (shardApplySendMessage)
+                                        {
+                                            // Send Already Applied Message in chat when applying a enchant.
+                                            for (String AlreadyApplyMessage : main.getSettingsConfig().getStringList("ShardItemMessages.ShardItem-Success-Message")) {
+                                                String withPAPISet2 = main.setPlaceholders(player, AlreadyApplyMessage);
+                                                String message = Main.color(withPAPISet2)
+                                                        .replace("{shardName}", formatshardName(shardName))
+                                                        .replace("{shardID}", String.valueOf(shardID))
+                                                        .replace("{removedEnchantmentName}", formatshardName(removedEnchantmentName))
+                                                        .replace("{removedEnchantmentLevel}", String.valueOf(removedEnchantmentLevel));
+                                                player.sendMessage(message);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Get the bool to check if the user wants to show the successful enchant message
+                                    boolean shardApplySendMessage = main.getSettingsConfig().getBoolean("ShardItemMessages.ShardItem-Success-Message-Toggle");
+
+                                    // check if the user wants to show the Already Applied message
+                                    if (shardApplySendMessage)
+                                    {
+                                        // Send Already Applied Message in chat when applying a enchant.
+                                        for (String AlreadyApplyMessage : main.getSettingsConfig().getStringList("ShardItemMessages.ShardItem-Success-Message")) {
+                                            String withPAPISet2 = main.setPlaceholders(player, AlreadyApplyMessage);
+                                            String message = Main.color(withPAPISet2)
+                                                    .replace("{shardName}", formatshardName(shardName))
+                                                    .replace("{shardID}", String.valueOf(shardID))
+                                                    .replace("{removedEnchantmentName}", formatshardName(removedEnchantmentName))
+                                                    .replace("{removedEnchantmentLevel}", String.valueOf(removedEnchantmentLevel));
+                                            player.sendMessage(message);
+                                        }
+                                    }
+                                }
                             }
 
-
-                            // Remove the item from the cursor
+                            // Remove the shard that is left.
                             invEvent.setCursor(new ItemStack(Material.AIR));
 
                             // Update the inventory to reflect changes
@@ -204,27 +282,10 @@ public class ApplyShard implements Listener {
                             // Get the bool to check if the user wants to play the blacklisted enchant sound
                             boolean shardApplyPlaySound = main.getSettingsConfig().getBoolean("ShardItemSounds.ShardItem-Apply-Sound-Toggle");
 
-                            // Get the bool to check if the user wants to show the successful enchant message
-                            boolean shardApplySendMessage = main.getSettingsConfig().getBoolean("ShardItemMessages.ShardItem-Success-Message-Toggle");
-
                             // check if the user wants to play the Already Applied sound
                             if(shardApplyPlaySound){
                                 // Play sound for when enchant is Already Applied.
                                 player.playSound(player.getLocation(), shardApplySound, shardApplyVolume, shardApplyPitch);
-                            }
-                            // check if the user wants to show the Already Applied message
-                            if (shardApplySendMessage)
-                            {
-                                // Send Already Applied Message in chat when applying a enchant.
-                                for (String AlreadyApplyMessage : main.getSettingsConfig().getStringList("ShardItemMessages.ShardItem-Success-Message")) {
-                                    String withPAPISet2 = main.setPlaceholders(player, AlreadyApplyMessage);
-                                    String message = Main.color(withPAPISet2)
-                                            .replace("{shardName}", formatshardName(shardName))
-                                            .replace("{shardAmount}", String.valueOf(shardAmount))
-                                            .replace("{removedEnchantmentName}", formatshardName(removedEnchantmentName))
-                                            .replace("{removedEnchantmentLevel}", String.valueOf(removedEnchantmentLevel));
-                                    player.sendMessage(message);
-                                }
                             }
                         }
                     }

@@ -1,55 +1,71 @@
 package com.atlasplugins.atlasenchants.commands.users;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.commands.AbstractCommand;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Listener;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class TestCommand implements CommandExecutor, Listener {
+import java.util.Collections;
+import java.util.List;
+
+public class TestCommand extends AbstractCommand {
+
+    private final Main main;
+    public TestCommand(Main main) {this.main = main;}
+
+    @Override
+    public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
+
+        Player player = (Player) sender;
+
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
+
+        if(itemInHand.getType().equals(Material.AIR)) return;
+
+        ItemMeta itemMeta = itemInHand.getItemMeta();
+
+        PersistentDataContainer itemPDC = itemMeta.getPersistentDataContainer();
 
 
-    private Main main;
-    public TestCommand (Main main) {
-        this.main = main;
+        if (itemPDC.has(Main.customEnchantKeys, PersistentDataType.STRING)) {
+            String existingEnchantData = itemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+
+            main.getLogger().info("|-------------------====1====-------------------|");
+            main.getLogger().info("existingEnchantData: " + existingEnchantData);
+        }else {
+            main.getLogger().info("No Data for enchants");
+        }
+
+        if (itemPDC.has(Main.customShardKeys, PersistentDataType.STRING)) {
+            String existingShardData = itemPDC.get(Main.customShardKeys, PersistentDataType.STRING);
+
+            main.getLogger().info("|--------------------------------------|");
+            main.getLogger().info("existingShardData: " + existingShardData);
+        }else {
+            main.getLogger().info("No Data for Shards");
+        }
+
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//        if (!(sender instanceof Player)) {
-//            sender.sendMessage("This command can only be used by players.");
-//            return true;
-//        }
-//
-//        Player player = (Player) sender;
-//        World world = player.getWorld();
-//        Material mat = Material.SHIELD;
-//
-//        for (Chunk chunk : world.getLoadedChunks())
-//        {
-//            for (int x = 0; x < 16; x++) {
-//                for (int y = 0; y < world.getMaxHeight(); y++){
-//                    for (int z = 0; z < 16; z++)
-//                    {
-//                        Block block = chunk.getBlock(x, y, z);
-//                        if(block.getType() == mat)
-//                        {
-//                            try {
-//                            // Debugging information
-//                                Main.instance.glowingBlocks.setGlowing(block, player, ChatColor.GOLD);
-//                            // Ensure entity type is valid for glow effect
-//                            player.sendMessage("Glow effect applied to entity: " + block.getType());
-//                        } catch (Exception e) {
-//                            player.sendMessage("Failed to apply glow effect to entity: " + block.getType());
-//                        }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    public void complete(JavaPlugin plugin, CommandSender sender, String label, List<String> args, List<String> completions) {
 
-        return false;
     }
 
+    @Override
+    public List<String> getLabels() {
+        return Collections.singletonList("test");
+    }
+
+    @Override
+    public String getPermission() {
+        return "atlasenchants.test";  // permission required for help command
+    }
 }
+

@@ -1,3 +1,4 @@
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\SafeMiner.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\RemoveCustomEnchant.java
@@ -7,10 +8,12 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\WingsOfAegis.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Propel.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\LogsPlacedManager.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateRandomCustomEnchant.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Fearsight.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\ExperienceManager.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Hunter.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Extractor.java
+D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\TestCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\TreeHugger.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\ReloadCommand.java

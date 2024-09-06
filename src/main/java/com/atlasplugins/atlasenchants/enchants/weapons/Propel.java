@@ -10,6 +10,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -79,8 +81,8 @@ public class Propel implements Listener
 
 //                                double entityDamage = e.getDamage();
 
-                                main.getLogger().info("velocityY: " + velocityY);
-                                main.getLogger().info("blockHeight: " + blockHeight);
+//                                main.getLogger().info("velocityY: " + velocityY);
+//                                main.getLogger().info("blockHeight: " + blockHeight);
 
                                 entityToLaunch.teleport(entityToLaunch.getLocation().add(0,1,0));
 

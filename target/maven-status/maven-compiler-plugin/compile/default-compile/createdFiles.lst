@@ -18,6 +18,7 @@ com\atlasplugins\atlasenchants\enchants\weapons\Extractor.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.class
 com\atlasplugins\atlasenchants\Metrics$MultiLineChart.class
 com\atlasplugins\atlasenchants\Metrics$DrilldownPie.class
+com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect.class
 com\atlasplugins\atlasenchants\managers\LogsPlacedManager.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.class
@@ -42,6 +43,7 @@ com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\commands\users\GiveOblivionShardCommand.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedBarChart.class
+com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCustomEnchant.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipListener$1.class
 com\atlasplugins\atlasenchants\Metrics$JsonObjectBuilder$JsonObject.class
@@ -51,6 +53,7 @@ com\atlasplugins\atlasenchants\enchants\armor\Rush.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$EquipMethod.class
 com\atlasplugins\atlasenchants\enchants\weapons\Stunning.class
 com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.class
+com\atlasplugins\atlasenchants\listeners\enchantevents\CreateRandomCustomEnchant.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\RemoveCustomEnchant.class
 com\atlasplugins\atlasenchants\enchants\weapons\Propel.class
 com\atlasplugins\atlasenchants\enchants\weapons\Decapitate$1.class

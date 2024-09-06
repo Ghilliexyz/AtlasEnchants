@@ -2,14 +2,17 @@ package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateCustomEnchant implements Listener {
@@ -51,6 +54,7 @@ public class CreateCustomEnchant implements Listener {
                 .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
                 .replace("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100))
                 .replace("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100))
+                .replace("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100))
                 .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -82,7 +86,16 @@ public class CreateCustomEnchant implements Listener {
                     .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
                     .replace("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100))
                     .replace("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100))
+                    .replace("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100))
                     .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
+        }
+
+        boolean addGlint = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Glint-Toggle");
+        if(addGlint)
+        {
+            // Add Glint effect
+            enchantMeta.addEnchant(Enchantment.INFINITY, 1, true);
+            enchantMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
         PersistentDataContainer pdc = enchantMeta.getPersistentDataContainer();
@@ -94,7 +107,15 @@ public class CreateCustomEnchant implements Listener {
         // Add items to player's inventory if player is not null
         if (p != null) {
             for (int i = 0; i < enchantmentAmount; i++) {
-                p.getInventory().addItem(enchant);
+                // Check if there's space in the player's inventory
+                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(enchant);
+
+                // If the inventory is full and the item could not be added, drop it at the player's feet
+                if (!remainingItems.isEmpty()) {
+                    for (ItemStack item : remainingItems.values()) {
+                        p.getWorld().dropItemNaturally(p.getLocation(), item);
+                    }
+                }
             }
         }
 
