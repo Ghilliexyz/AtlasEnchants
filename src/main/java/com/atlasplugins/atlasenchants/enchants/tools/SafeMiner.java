@@ -93,21 +93,22 @@ public class SafeMiner implements Listener {
             String[] enchantParts = enchantment.split(":");
 
             // Ensure the format is correct
-            if (enchantParts.length != 2) return;
+            if (enchantParts.length == 3) {
+                String enchantName = enchantParts[0];
+                int enchantLevel = Integer.parseInt(enchantParts[1]);
+                int enchantID = Integer.parseInt(enchantParts[2]);
 
-            String enchantName = enchantParts[0];
-            int enchantLevel = Integer.parseInt(enchantParts[1]);
+                if (enchantName.contains("SAFE-MINER")) {
+                    // PUT ENCHANT LOGIC HERE
+                    // Handle block drops manually
+                    ItemStack tool = p.getInventory().getItemInMainHand();
 
-            if (enchantName.contains("SAFE-MINER")) {
-                // PUT ENCHANT LOGIC HERE
-                // Handle block drops manually
-                ItemStack tool = p.getInventory().getItemInMainHand();
+                    SafeMinerLogic(blockBroken, tool, p);
 
-                SafeMinerLogic(blockBroken, tool, p);
-
-                // Prevent default drops
-                e.setDropItems(false);
-                //END ENCHANT LOGIC
+                    // Prevent default drops
+                    e.setDropItems(false);
+                    //END ENCHANT LOGIC
+                }
             }
         }
     }

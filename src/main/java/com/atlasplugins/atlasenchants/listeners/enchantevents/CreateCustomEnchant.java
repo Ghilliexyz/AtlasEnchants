@@ -14,10 +14,12 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class CreateCustomEnchant implements Listener {
 
     private Main main;
+    private final Random random = new Random();
 
     public CreateCustomEnchant(Main main) {
         this.main = main;
@@ -98,8 +100,10 @@ public class CreateCustomEnchant implements Listener {
             enchantMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
+        int enchantID = random.nextInt();
+
         PersistentDataContainer pdc = enchantMeta.getPersistentDataContainer();
-        pdc.set(Main.customEnchantKeys, PersistentDataType.STRING, enchantmentName + ":" + enchantmentLevel);
+        pdc.set(Main.customEnchantKeys, PersistentDataType.STRING, enchantmentName + ":" + enchantmentLevel + ":" + enchantID);
 
         enchantMeta.setLore(enchantmentLore);
         enchant.setItemMeta(enchantMeta);

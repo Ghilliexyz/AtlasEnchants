@@ -29,8 +29,6 @@ public class CreateShard implements Listener {
         ItemStack shard = new ItemStack(Material.valueOf(main.getSettingsConfig().getString("OblivionShard.OblivionShard-Item")));
         ItemMeta shardMeta = shard.getItemMeta();
 
-        int shardID = random.nextInt();
-
         String displayName = main.getSettingsConfig().getString("OblivionShard.OblivionShard-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
         shardMeta.setDisplayName(Main.color(withPAPISet)
@@ -51,6 +49,8 @@ public class CreateShard implements Listener {
             shardMeta.addEnchant(Enchantment.INFINITY, 1, true);
             shardMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
+
+        int shardID = random.nextInt();
 
         PersistentDataContainer pdc = shardMeta.getPersistentDataContainer();
         pdc.set(Main.customShardKeys, PersistentDataType.STRING, "Oblivion-Shard" + ":" + shardID);

@@ -77,10 +77,10 @@ public class EnergyAbsorption implements Listener {
                     String[] enchantParts = enchantment.split(":");
 
                     // Ensure the format is correct
-                    if (enchantParts.length == 2)
-                    {
+                    if (enchantParts.length == 3) {
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
+                        int enchantID = Integer.parseInt(enchantParts[2]);
 
                         if (enchantName.contains("ENERGY-ABSORPTION")) {
                             //PUT ENCHANT LOGIC HERE

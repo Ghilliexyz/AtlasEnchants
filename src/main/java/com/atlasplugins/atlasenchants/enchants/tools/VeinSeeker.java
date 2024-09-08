@@ -104,35 +104,35 @@ public class VeinSeeker implements Listener {
             String[] enchantParts = enchantment.split(":");
 
             // Ensure the format is correct
-            if (enchantParts.length != 2) return;
+            if (enchantParts.length == 3) {
+                String enchantName = enchantParts[0];
+                int enchantLevel = Integer.parseInt(enchantParts[1]);
+                int enchantID = Integer.parseInt(enchantParts[2]);
 
-            String enchantName = enchantParts[0];
-            int enchantLevel = Integer.parseInt(enchantParts[1]);
+                if (enchantName.contains("VEIN-SEEKER")) {
+                    // PUT ENCHANT LOGIC HERE
+                    ItemStack tool = p.getInventory().getItemInMainHand();
+                    ItemMeta toolMeta = tool.getItemMeta();
 
-            if (enchantName.contains("VEIN-SEEKER")) {
-                // PUT ENCHANT LOGIC HERE
-                ItemStack tool = p.getInventory().getItemInMainHand();
-                ItemMeta toolMeta = tool.getItemMeta();
+                    if (ORES.contains(blockBroken.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(blockBroken)) {
 
-                if (ORES.contains(blockBroken.getType().toString()) && !main.getOresPlacedManager().isPlayerPlacedOre(blockBroken)) {
+                        double blockXP = e.getExpToDrop();
 
-                    double blockXP = e.getExpToDrop();
+                        mineOres(blockBroken, blockXP, tool, p);
 
-                    mineOres(blockBroken, blockXP, tool, p);
+                        if (toolMeta instanceof Damageable damageableToolMeta) {
+                            // Manually remove durability
+                            damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
 
-                    if(toolMeta instanceof Damageable damageableToolMeta)
-                    {
-                        // Manually remove durability
-                        damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
+                            // Apply the modified meta back to the item
+                            tool.setItemMeta(damageableToolMeta);
 
-                        // Apply the modified meta back to the item
-                        tool.setItemMeta(damageableToolMeta);
-
-                        // Reset durability removal
-                        removeDurability = 0;
+                            // Reset durability removal
+                            removeDurability = 0;
+                        }
                     }
+                    //END ENCHANT LOGIC
                 }
-                //END ENCHANT LOGIC
             }
         }
     }

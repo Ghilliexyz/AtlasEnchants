@@ -89,6 +89,7 @@ public class ApplyCustomEnchant implements Listener {
                         String[] enchantParts = cursorData.split(":");
                         String enchantName = enchantParts[0];
                         int enchantLevel = Integer.parseInt(enchantParts[1]);
+                        int enchantID = Integer.parseInt(enchantParts[2]);
 
                         // Get Enchantment Enabled Status
                         boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + enchantName + ".Enchantment-Enabled");
