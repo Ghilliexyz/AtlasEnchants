@@ -31,17 +31,17 @@ public class CreateShard implements Listener {
 
         int shardID = random.nextInt();
 
-        String displayName = main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-DisplayName");
+        String displayName = main.getSettingsConfig().getString("OblivionShard.OblivionShard-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
         shardMeta.setDisplayName(Main.color(withPAPISet)
-                .replace("{oblivionShardChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
+                .replace("{oblivionShardChance}", String.valueOf(main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
-        List<String> loreList = main.getEnchantmentsConfig().getStringList("OblivionShard.OblivionShard-Lore");
+        List<String> loreList = main.getSettingsConfig().getStringList("OblivionShard.OblivionShard-Lore");
         for (String lore : loreList) {
             String withPAPISet1 = main.setPlaceholders(p, lore);
             enchantmentLore.add(Main.color(withPAPISet1)
-                    .replace("{oblivionShardChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
+                    .replace("{oblivionShardChance}", String.valueOf(main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
         }
 
         boolean addGlint = main.getSettingsConfig().getBoolean("OblivionShard.OblivionShard-Glint-Toggle");
