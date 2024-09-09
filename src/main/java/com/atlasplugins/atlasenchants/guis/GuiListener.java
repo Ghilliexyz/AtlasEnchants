@@ -170,12 +170,11 @@ public class GuiListener implements Listener {
                                 }
                             }
                         }
-                    } else {
+                    } else if(matchingCount > 0) {
                         if(main.getSettingsConfig().getBoolean("UpgradeEnchantMessages.UpgradeEnchant-NotEnoughItems-Message-Toggle")) {
                             // Send UpgradeNotEnoughItems Message in chat when called.
                             for (String UpgradeNotEnoughItemsMessage : main.getSettingsConfig().getStringList("UpgradeEnchantMessages.UpgradeEnchant-NotEnoughItems-Message")) {
                                 String withPAPISet = main.setPlaceholders(player, UpgradeNotEnoughItemsMessage);
-                                assert requiredRarity != null;
                                 String message = Main.color(withPAPISet)
                                         .replace("{oldRarity}", requiredRarity);
                                 player.sendMessage(message);
