@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 public class CreateRandomCustomEnchant implements Listener {
 
     private Main main;
-
     private final Random random = new Random();
 
     public CreateRandomCustomEnchant(Main main) {
         this.main = main;
     }
 
-    public ItemStack CreateRandomCustomEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant){
+    // New parameter for specifying rarity
+    public ItemStack CreateRandomCustomEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant, String desiredRarity) {
         boolean hasFoundEnchantment = false;
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
@@ -37,65 +37,68 @@ public class CreateRandomCustomEnchant implements Listener {
             Collections.reverse(enchantmentRarity);
         }
 
+        // If a specific rarity is provided, use it, otherwise, continue with random selection
         while (!hasFoundEnchantment) {
             for (String rarity : enchantmentRarity) {
+                // If a specific rarity is chosen, skip this loop unless it's the desired rarity
+                if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) {
+                    continue;
+                }
+
                 double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-                if (random.nextDouble() <= rarityChance) {
-                    String enchantRarity = rarity.toUpperCase();
 
-//                    main.getLogger().info("Enchant Rarity: " + enchantRarity);
-//                    main.getLogger().info("Rarity Chance: " + rarityChance);
+                // Only check rarity chance if no specific rarity is given
+                if (desiredRarity == null && random.nextDouble() > rarityChance) {
+                    continue;
+                }
 
-                    // Filter enchantments by the current rarity
-                    List<String> filteredEnchantments = enchantments.stream()
-                            .filter(enchantment -> {
-                                String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
-                                return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
-                            })
-                            .collect(Collectors.toList());
+                String enchantRarity = rarity.toUpperCase();
 
-                    if (!filteredEnchantments.isEmpty()) {
-                        // Select a random enchantment from the filtered list
-                        String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+                // Filter enchantments by the current rarity
+                List<String> filteredEnchantments = enchantments.stream()
+                        .filter(enchantment -> {
+                            String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
+                            return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
+                        })
+                        .collect(Collectors.toList());
 
-//                        main.getLogger().info("Selected Enchantment: " + selectedEnchantment);
+                if (!filteredEnchantments.isEmpty()) {
+                    // Select a random enchantment from the filtered list
+                    String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
 
-                        // Get Enchantment Enabled Status
-                        boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
-                        // if Enchantment Enabled = false skip.
-                        if (!isEnchantmentEnabled) continue;
+                    // Get Enchantment Enabled Status
+                    boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
+                    if (!isEnchantmentEnabled) continue;
 
-                        // Get the Enchantment Max Level
-                        int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
-//                            int enchantmentAmount = 1; // Example number of items to generate
+                    // Get the Enchantment Max Level
+                    int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl");
 
-                        // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
-                        int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
+                    // Generate a random level between 1 (inclusive) and enchantmentMaxLevel (inclusive)
+                    int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
 
-                        // Create an instance of CreateCustomEnchant and call the method
-                        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
-                        ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
+                    // Create the custom enchantment item
+                    CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                    ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
 
-                        if(givePlayerEnchant) {
-                            // Add items to player's inventory if player is not null
-                            if (p != null) {
-                                for (int i = 0; i < enchantmentAmount; i++) {
-                                    // Check if there's space in the player's inventory
-                                    HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(customItem);
-
-                                    // If the inventory is full and the item could not be added, drop it at the player's feet
-                                    if (!remainingItems.isEmpty()) {
-                                        for (ItemStack item : remainingItems.values()) {
-                                            p.getWorld().dropItemNaturally(p.getLocation(), item);
-                                        }
-                                    }
+                    if (givePlayerEnchant && p != null) {
+                        for (int i = 0; i < enchantmentAmount; i++) {
+                            // Add the item to the player's inventory or drop it if the inventory is full
+                            HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(customItem);
+                            if (!remainingItems.isEmpty()) {
+                                for (ItemStack item : remainingItems.values()) {
+                                    p.getWorld().dropItemNaturally(p.getLocation(), item);
                                 }
                             }
                         }
-//                    main.getLogger().info("SPAWN ENCHANT: " + selectedEnchantment);
-                        hasFoundEnchantment = true;
-                        return customItem; // Exit after adding one enchantment
                     }
+
+                    hasFoundEnchantment = true;
+                    return customItem;
+                }
+
+                // Exit the loop if a specific rarity was used
+                if (desiredRarity != null) {
+                    break;
                 }
             }
         }

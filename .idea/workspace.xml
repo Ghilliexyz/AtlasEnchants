@@ -5,34 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/users/UpgradeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/guis/Gui.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/guis/GuiListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/guis/GuiManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/guis/UpgradeEnchantGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/guis/UpgradeRewardGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Asclepius.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Asclepius.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/BlessingofKnowledge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/BlessingofKnowledge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Fearsight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Fearsight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Rush.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/Rush.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/WingsOfAegis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/armor/WingsOfAegis.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/defense/EnergyAbsorption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/defense/EnergyAbsorption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/defense/FinalGuard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/defense/FinalGuard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/MinersTouch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/MinersTouch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/PoseidonsBait.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/PoseidonsBait.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/Regrowth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/Regrowth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/SafeMiner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/SafeMiner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/TreeHugger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/VeinSeeker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/tools/VeinSeeker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Decapitate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Decapitate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Extractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Extractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/FreezingShot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Hunter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Hunter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/IceAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Leech.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Leech.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/PoisonAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/PoisonAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Propel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Stunning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/enchants/weapons/Stunning.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/ApplyCustomEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/ApplyCustomEnchant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateCustomEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateCustomEnchant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateShard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateShard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/CommandRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/CommandRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/settings.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.2-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.2-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/enchants/weapons/Propel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/CommandRouter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/CommandRouter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/settings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.2.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
@@ -75,7 +66,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ItsBa/Downloads/creeper-boss-1967.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Development/Minecraft Plugins/AtlasEnchants/src/main/java/com/atlasplugins/atlasenchants&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;,
@@ -83,6 +74,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Enchants\Tools" />
     </key>
@@ -90,6 +84,7 @@
       <recent name="com.atlasplugins.atlasenchants.Enchants.Rare" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.atlasplugins.atlasenchants.guis" />
       <recent name="com.atlasplugins.atlasenchants.commands.users" />
       <recent name="com.atlasplugins.atlasenchants.listeners.enchantevents" />
       <recent name="com.atlasplugins.atlasenchants.managers" />

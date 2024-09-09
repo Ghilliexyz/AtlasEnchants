@@ -6,6 +6,9 @@ import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
 import com.atlasplugins.atlasenchants.enchants.defense.FinalGuard;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
+import com.atlasplugins.atlasenchants.guis.GuiListener;
+import com.atlasplugins.atlasenchants.guis.UpgradeEnchantGUI;
+import com.atlasplugins.atlasenchants.guis.UpgradeRewardGUI;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -152,6 +155,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
+        this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Register commands
@@ -272,6 +276,16 @@ public final class Main extends JavaPlugin implements Listener {
             saveResource("settings.yml", false);
         }
         settingsConfig = YamlConfiguration.loadConfiguration(settingsConfigFile);
+    }
+
+    public void openUpgradeEnchantGUI(Player player){
+        UpgradeEnchantGUI upgradeEnchantGUI = new UpgradeEnchantGUI(this, player);
+        upgradeEnchantGUI.open();
+    }
+
+    public void openUpgradeRewardGUI(Player player, String rarity){
+        UpgradeRewardGUI upgradeRewardGUI = new UpgradeRewardGUI(this, player, rarity);
+        upgradeRewardGUI.open();
     }
 
     private static List<String> getBlockedMaterialNames(Main main) {

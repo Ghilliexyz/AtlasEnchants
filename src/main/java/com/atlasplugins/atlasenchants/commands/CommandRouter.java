@@ -32,6 +32,7 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         registerCommand(new GiveEnchantCommand(main));
         registerCommand(new GiveRandomEnchantCommand(main));
         registerCommand(new GiveOblivionShardCommand(main));
+        registerCommand(new UpgradeCommand(main));
     }
 
     private void registerCommand(AbstractCommand command) {

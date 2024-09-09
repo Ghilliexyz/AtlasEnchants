@@ -160,7 +160,7 @@ EnchantItems:
   #Type of Item the Enchantments will be.
   EnchantItem: ENCHANTED_BOOK
   #If true the EnchantItem will have an enchantment glint on it.
-  EnchantItem-Glint-Toggle: true
+  EnchantItem-Glint-Toggle: false
   #This chance determines if it should run the spawning enchant logic to spawn an enchantment
   #Default Spawn Chance = 0.10 (0.10 = 10% chance that it will allow the spawning system to loop through all the enchants)
   #if the spawning chance fails no enchantment attempt to be spawned.
@@ -217,27 +217,27 @@ ShardItemSounds:
   ShardItem-Apply-Sound-Toggle: true
   #The sound that plays when applying a custom Shard.
   ShardItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound that plays at when applying a custom Shard.
+  #The volume the sound plays at when applying a custom Shard.
   ShardItem-Apply-Volume: 1
-  #The pitch the sound that plays at when applying a custom Shard.
+  #The pitch the sound plays at when applying a custom Shard.
   ShardItem-Apply-Pitch: 0.1
   #------------------NO ENCHANTS APPLIED SOUNDS------------------#
   #If True the custom Shard apply sound will play.
   ShardItem-NoEnchantsApplied-Sound-Toggle: true
   #The sound that plays when a custom Shard is already applied.
   ShardItem-NoEnchantsApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound that plays when a custom Shard is already applied.
+  #The volume the sound plays when a custom Shard is already applied.
   ShardItem-NoEnchantsApplied-Volume: 1
-  #The pitch the sound that plays when a custom Shard is already applied.
+  #The pitch the sound plays when a custom Shard is already applied.
   ShardItem-NoEnchantsApplied-Pitch: 0.1
   #------------------DISABLED SHARD SOUNDS------------------#
   #If True the custom Shard apply sound will play.
   ShardItem-DisabledShard-Sound-Toggle: true
   #The sound that plays when a blacklisted Shard is found.
   ShardItem-DisabledShard-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound that plays when a blacklisted Shard is found.
+  #The volume the sound plays when a blacklisted Shard is found.
   ShardItem-DisabledShard-Volume: 1
-  #The pitch the sound that plays when a blacklisted Shard is found.
+  #The pitch the sound plays when a blacklisted Shard is found.
   ShardItem-DisabledShard-Pitch: 0.1
 
 ShardItemMessages:
@@ -285,6 +285,96 @@ ShardItemMessages:
     -  "&c● &7You cannot apply: &e&l{shardName}"
     -  ""
     -  "&c● &7Because &cShard's &7are currently &cDisabled&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+
+#The sound that will play when the player applies a new Upgrade to an item.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+UpgradeEnchantSounds:
+  #------------------UPGRADING SUCCESSFUL SOUNDS------------------#
+  #If True the custom SUCCESSFUL sound will play.
+  UpgradeEnchant-SuccessUpgrade-Sound-Toggle: true
+  #The sound that plays when a successful Upgrade happens.
+  UpgradeEnchant-SuccessUpgrade-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+  #The volume the sound plays at when a successful Upgrade happens.
+  UpgradeEnchant-SuccessUpgrade-Volume: 1
+  #The pitch the sound plays at when a successful Upgrade happens.
+  UpgradeEnchant-SuccessUpgrade-Pitch: 0.1
+  #------------------UPGRADING NOT ENOUGH ITEMS SOUNDS------------------#
+  #If True the custom NOT ENOUGH ITEMS sound will play.
+  UpgradeEnchant-NotEnoughItems-Sound-Toggle: true
+  #The sound that plays when you don't have enough items.
+  UpgradeEnchant-NotEnoughItems-Sound: ENTITY_IRON_GOLEM_REPAIR
+  #The volume the sound plays at when you don't have enough items.
+  UpgradeEnchant-NotEnoughItems-Volume: 1
+  #The pitch the sound that plays at when you don't have enough items.
+  UpgradeEnchant-NotEnoughItems-Pitch: 0.1
+  #------------------UPGRADING MAX RARITY SOUNDS------------------#
+  #If True the custom MAX RARITY sound will play.
+  UpgradeEnchant-MaxRarity-Sound-Toggle: true
+  #The sound that plays when you try to upgrade a max Rarity Enchant.
+  UpgradeEnchant-MaxRarity-Sound: ENTITY_IRON_GOLEM_REPAIR
+  #The volume the sound plays at when you try to upgrade a max Rarity Enchant.
+  UpgradeEnchant-MaxRarity-Volume: 1
+  #The pitch the sound plays at when you try to upgrade a max Rarity Enchant.
+  UpgradeEnchant-MaxRarity-Pitch: 0.01
+  #------------------UPGRADING DISABLED SOUNDS------------------#
+  #If True the custom DISABLED sound will play.
+  UpgradeEnchant-DisabledMenu-Sound-Toggle: true
+  #The sound that plays when Upgrading is disabled.
+  UpgradeEnchant-DisabledMenu-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound plays at when Upgrading is disabled.
+  UpgradeEnchant-DisabledMenu-Volume: 1
+  #The pitch the sound plays at when Upgrading is disabled.
+  UpgradeEnchant-DisabledMenu-Pitch: 0.1
+
+UpgradeEnchantMessages:
+  #------------------UPGRADING SUCCESSFUL Message------------------#
+  #If True the SUCCESSFUL message will be sent to the player.
+  UpgradeEnchant-SuccessUpgrade-Message-Toggle: true
+  #The message that will be sent when successfully upgrading an item.
+  UpgradeEnchant-SuccessUpgrade-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully Upgraded: &7from 10 &e&l{oldRarity} &7to 1 &e&l{newRarity}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------UPGRADING NEED MORE ITEMS Message------------------#
+  #If True the NEED MORE ITEMS message will be sent to the player.
+  UpgradeEnchant-NotEnoughItems-Message-Toggle: true
+  #The message that will be sent when you don't have enough items.
+  UpgradeEnchant-NotEnoughItems-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot upgrade."
+    -  ""
+    -  "&c● &7Reason: &eNot enough matching rarity enchantments&7."
+    -  ""
+    -  "&c● &7You need 10: &e{oldRarity}&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------UPGRADING MAX RARITY Message------------------#
+  #If True the MAX RARITY message will be sent to the player.
+  UpgradeEnchant-MaxRarity-Message-Toggle: true
+  #The message that will be sent when you try to upgrade a maxed enchant.
+  UpgradeEnchant-MaxRarity-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot upgrade."
+    -  ""
+    -  "&c● &7Reason: &eYour enchantment is already at the highest rarity (GODLY) and cannot be upgraded&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------UPGRADING DISABLED Message------------------#
+  #If True the disabled message will be sent to the player.
+  UpgradeEnchant-DisabledMenu-Message-Toggle: true
+  #The message that will be sent when the menu is disabled.
+  UpgradeEnchant-DisabledMenu-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot upgrade."
+    -  ""
+    -  "&c● &7Reason: &eUpgrading is currently &cDisabled&7."
     -  ""
     -  "&c&m&l-----------------------------------------"
 
@@ -383,3 +473,38 @@ EnchantItemMessages:
     -  "&c● &7Because that &cEnchant &7is currently &cDisabled&7."
     -  ""
     -  "&c&m&l-----------------------------------------"
+
+UpgradeEnchant-Gui:
+  UpgradeEnchant-Menu:
+    #If this is true then the command /ae upgrade will open the upgrade menu
+    UpgradeEnchant-Menu-Toggle: true
+    UpgradeEnchant-Menu-Title: "&c&lUpgrade"
+    UpgradeEnchant-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    UpgradeEnchant-Menu-Filler-Title: "&0_"
+    UpgradeEnchant-Menu-Btn:
+      #The Item of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Item: GREEN_STAINED_GLASS_PANE
+      #The Title of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Title: "&a&lUPGRADE!"
+      #The Lore of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7This action cannot be undone."
+        - ""
+        - "&c&m&l-----------------------------------------"
+      #The Item of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Item: RED_STAINED_GLASS_PANE
+      #The Title of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Title: "&c&lMISMATCHED ENCHANTS!"
+      #The Lore of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7You must fill all 10 slots with enchants of the same rarity"
+        - ""
+        - "&c&m&l-----------------------------------------"
+  UpgradeReward-Menu:
+    UpgradeReward-Menu-Title: "&c&lREWARD!"
+    UpgradeReward-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    UpgradeReward-Menu-Filler-Title: "&0_"

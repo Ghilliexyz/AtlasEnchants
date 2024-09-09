@@ -35,3 +35,6 @@ permissions:
   atlasenchants.giveshard:
     description: Permission needed to use the give shard command.
     default: false
+  atlasenchants.upgrade:
+    description: Permission needed to use the upgrade command.
+    default: false

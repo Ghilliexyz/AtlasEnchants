@@ -93,7 +93,7 @@ public class PoseidonsBait implements Listener {
 
                             // create random custom enchant
                             CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
-                            ItemStack enchant = createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(p, 1, false);
+                            ItemStack enchant = createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(p, 1, false, null);
 
                             item.setItemStack(enchant);
 

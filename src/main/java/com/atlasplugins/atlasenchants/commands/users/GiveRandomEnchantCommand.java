@@ -66,7 +66,7 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
 
         // Create an instance of CreateRandomCustomEnchant and call the method
         CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
-        createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(player, enchantAmount, true);
+        createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(player, enchantAmount, true, null);
     }
 
     @Override

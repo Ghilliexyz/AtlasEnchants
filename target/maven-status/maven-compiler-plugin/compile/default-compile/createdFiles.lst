@@ -4,6 +4,7 @@ com\atlasplugins\atlasenchants\Metrics$SimpleBarChart.class
 com\atlasplugins\atlasenchants\commands\users\GiveEnchantCommand.class
 com\atlasplugins\atlasenchants\Metrics.class
 com\atlasplugins\atlasenchants\commands\users\ReloadCommand.class
+com\atlasplugins\atlasenchants\guis\GuiManager.class
 com\atlasplugins\atlasenchants\managers\OresPlacedManager.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect.class
 com\atlasplugins\atlasenchants\enchants\weapons\Decapitate.class
@@ -11,6 +12,7 @@ com\atlasplugins\atlasenchants\enchants\tools\MinersTouch.class
 com\atlasplugins\atlasenchants\Main.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateShard.class
 com\atlasplugins\atlasenchants\enchants\defense\FinalGuard.class
+com\atlasplugins\atlasenchants\commands\users\UpgradeCommand.class
 com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot.class
 com\atlasplugins\atlasenchants\enchants\armor\WingsOfAegis.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth$1.class
@@ -18,7 +20,9 @@ com\atlasplugins\atlasenchants\enchants\weapons\Extractor.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.class
 com\atlasplugins\atlasenchants\Metrics$MultiLineChart.class
 com\atlasplugins\atlasenchants\Metrics$DrilldownPie.class
+com\atlasplugins\atlasenchants\guis\GuiListener.class
 com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.class
+com\atlasplugins\atlasenchants\guis\UpgradeEnchantGUI.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect.class
 com\atlasplugins\atlasenchants\managers\LogsPlacedManager.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.class
@@ -31,8 +35,10 @@ com\atlasplugins\atlasenchants\managers\BlockRadiusFinder.class
 com\atlasplugins\atlasenchants\managers\ExperienceManager.class
 com\atlasplugins\atlasenchants\enchants\tools\SafeMiner.class
 com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.class
+com\atlasplugins\atlasenchants\guis\Gui.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyShard.class
 com\atlasplugins\atlasenchants\enchants\tools\TreeHugger.class
+com\atlasplugins\atlasenchants\guis\UpgradeRewardGUI.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedPie.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\commands\AbstractCommand.class
