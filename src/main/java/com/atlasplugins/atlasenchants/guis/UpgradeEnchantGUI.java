@@ -15,11 +15,9 @@ public class UpgradeEnchantGUI extends Gui {
 
     public UpgradeEnchantGUI(Main main, Player player) {
         // Directly pass the fetched values to super()
-        super(player,
-                Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")), 54);
+        super(player, Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")), 54);
 
         this.player = player;
-
         // Continue with the rest of your constructor logic
         this.main = main;
         setupItems();
