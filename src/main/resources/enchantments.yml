@@ -214,7 +214,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (Asclepius) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-    #the level of the health boost 1 = 2 extra hearts Tier.
+    #Radius of how far the glow goes per Tier.
     Asclepius-HealthBoost-1: 1
     Asclepius-HealthBoost-2: 2
   POSEIDONS-BAIT:
@@ -366,7 +366,6 @@ Enchantments:
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
     #Note 2: Make sure to add this enchant Name (SAFE-MINER) to the enchantment Blacklist of the other enchantments you have listed below.
-    #**NOTE**: THIS ENCHANT DOES NOT WORK WITH THE FOLLOWING (VEIN-SEEKER, TREE-HUNGER)
     Enchantment-Blacklist-Enchants:
       - MINERS-TOUCH
       - VEIN-SEEKER
@@ -463,7 +462,6 @@ Enchantments:
     #This enchantment cannot be applied if any of the following enchantments are applied to the item.
     #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
     #Note 2: Make sure to add this enchant Name (VEIN-SEEKER) to the enchantment Blacklist of the other enchantments you have listed below.
-    #**NOTE**: THIS ENCHANT DOES NOT WORK WITH THE FOLLOWING (SAFE-MINER)
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
     #The list of blocks/ores this enchant will seek out and mine.
@@ -545,9 +543,9 @@ Enchantments:
       - "  &eGrants a {finalGuardProtectionPercent}% chance to not break the item"
       - "  &eand will repair the item to {finalGuardRepairPercent}% of Max Durability"
       - ""
-      - "&c● &7Type: &eAny Tool/Armor Enchantment"
+      - "&c● &7Type: &eSword Enchantment"
       - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Any Tool/Armor to enchant."
+      - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
       - ""
       - "&c&m&l-----------------------------------------"
     #The lore that will be added to the enchanted Item.
@@ -1205,7 +1203,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (DECAPITATE) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-    #Particle Settings for Decapitate
+    #Particle Settings for Extractor
     Decapitate-Particle-Settings:
       #Particle Toggle (if true the particles will show)
       Decapitate-Particle-Toggle: true
