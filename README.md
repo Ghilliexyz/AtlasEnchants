@@ -17,8 +17,8 @@ What are all the features Atlas Custom Enchants Offers?
 --
  
 --------------------- GODLY ENCHANTS ---------------------
-1. Fearsight ➪ (Will make Aggressive Mobs glow Red Players/Villages White and non-aggressive Mobs show Green)
-2. Blessing of Knowledge ➪ (Will Shows a health bar above any mob head)
+1. Fearsight ➪ (Make Aggressive Mobs glow Red Players/Villages White and non-aggressive Mobs show Green)
+2. Blessing of Knowledge ➪ (Shows a health bar above any mobs head)
 3. Miners Touch ➪ (This will allow you to mine and pick up spawners)
 4. Asclepius ➪ (This will allow the wearer to gain extra hearts)
  
@@ -43,4 +43,4 @@ What are all the features Atlas Custom Enchants Offers?
 2. Propel ➪ (Launch the hit entity up into the sky)
 3. Freezing Shot ➪ (Freezes any Mob for X amount of time) 
 4. Regrowth ➪ (Re-Plant any crop)
-5. Decapitate ➪ (Has a chance to cut any player/mob had off)
+5. Decapitate ➪ (Has a chance to cut any player/mob head off)
