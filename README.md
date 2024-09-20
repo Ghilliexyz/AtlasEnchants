@@ -1,7 +1,9 @@
-#About
-Atlas Custom Enchants is a plugin I made for the SMP I was playing with Friends
-to make the server more fun for us to play and to have more stuff to work
-towards.
+#About the plugin
+--
+Atlas Custom Enchants is a plugin I developed specifically for the SMP (Survival Multiplayer) server
+ I was hosting with friends. Its primary goal was to enhance the gameplay experience by introducing 
+unique enchantments, providing players with more engaging content and additional objectives to strive 
+for, ultimately making the server more enjoyable
 
 What does it include?
 --
