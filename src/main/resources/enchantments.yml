@@ -251,7 +251,7 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (POSEIDONS-BAIT) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-      #Particle Settings for PoseidonsBait
+    #Particle Settings for PoseidonsBait
     PoseidonsBait-Particle-Settings:
       #Particle Toggle (if true the particles will show)
       PoseidonsBait-Particle-Toggle: true
