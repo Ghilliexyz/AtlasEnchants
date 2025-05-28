@@ -31,68 +31,17 @@ public class CreateCustomEnchant implements Listener {
 
         String displayName = main.getEnchantmentsConfig().getString("Enchantments." + enchantmentName + ".Enchantment-Title");
         String withPAPISet = main.setPlaceholders(p, displayName);
-        enchantMeta.setDisplayName(Main.color(withPAPISet)
-                .replace("{lvl}", String.valueOf(enchantmentLevel))
-                .replace("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")))
-                .replace("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)))
-                .replace("{time}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Time-underwater-" + enchantmentLevel)))
-                .replace("{damage}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
-                .replace("{speedLvl}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Amount-" + enchantmentLevel)))
-                .replace("{speedTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Timer-" + enchantmentLevel)))
-                .replace("{block}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Propel-Height-Amount-" + enchantmentLevel)))
-                .replace("{freezingTimer}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
-                .replace("{healthTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".HealthBar-Timer-" + enchantmentLevel)))
-                .replace("{extraHearts}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Growth-Heart-Increase-" + enchantmentLevel)))
-                .replace("{poisonTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)))
-                .replace("{poisonLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
-                .replace("{stunTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
-                .replace("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
-                .replace("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
-                .replace("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
-                .replace("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)))
-                .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
-                .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
-                .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
-                .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
-                .replace("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100))
-                .replace("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100))
-                .replace("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100))
-                .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
+        assert enchantMeta != null;
+        enchantMeta.setDisplayName(main.applyPlaceholders(Main.color(withPAPISet), main, enchantmentName, enchantmentLevel));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
         List<String> loreList = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Lore");
         for (String lore : loreList) {
             String withPAPISet1 = main.setPlaceholders(p, lore);
-            enchantmentLore.add(Main.color(withPAPISet1)
-                    .replace("{lvl}", String.valueOf(enchantmentLevel))
-                    .replace("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")))
-                    .replace("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)))
-                    .replace("{time}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Time-underwater-" + enchantmentLevel)))
-                    .replace("{damage}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Hunter-Damage-Amount-" + enchantmentLevel)))
-                    .replace("{speedLvl}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Amount-" + enchantmentLevel)))
-                    .replace("{speedTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Timer-" + enchantmentLevel)))
-                    .replace("{block}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Propel-Height-Amount-" + enchantmentLevel)))
-                    .replace("{freezingTimer}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)))
-                    .replace("{healthTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".HealthBar-Timer-" + enchantmentLevel)))
-                    .replace("{extraHearts}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Growth-Heart-Increase-" + enchantmentLevel)))
-                    .replace("{poisonTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)))
-                    .replace("{poisonLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)))
-                    .replace("{stunTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Timer-" + enchantmentLevel)))
-                    .replace("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)))
-                    .replace("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)))
-                    .replace("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)))
-                    .replace("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)))
-                    .replace("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)))
-                    .replace("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)))
-                    .replace("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2))
-                    .replace("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100))
-                    .replace("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100))
-                    .replace("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100))
-                    .replace("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100))
-                    .replace("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100)));
+            enchantmentLore.add(main.applyPlaceholders(Main.color(withPAPISet1), main, enchantmentName, enchantmentLevel));
         }
 
-        boolean addGlint = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Glint-Toggle");
+            boolean addGlint = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Glint-Toggle");
         if(addGlint)
         {
             // Add Glint effect

@@ -5,7 +5,6 @@ import com.atlasplugins.atlasenchants.commands.AbstractCommand;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
@@ -20,7 +19,7 @@ public class UpgradeCommand extends AbstractCommand {
     public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
         Player player = (Player) sender;
 
-        if(main.getSettingsConfig().getBoolean("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Toggle"))
+        if(main.getMenusConfig().getBoolean("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Toggle"))
         {
             main.openUpgradeEnchantGUI(player);
         }else {

@@ -20,9 +20,6 @@ permissions:
   atlasenchants.help:
     description: Permission needed to use the help command.
     default: false
-  atlasenchants.test:
-    description: Permission needed to use the help command.
-    default: false
   atlasenchants.reloadconfig:
     description: Permission needed to use the reload command.
     default: false
@@ -37,4 +34,10 @@ permissions:
     default: false
   atlasenchants.upgrade:
     description: Permission needed to use the upgrade command.
+    default: false
+  atlasenchants.enchantlist:
+    description: Permission needed to use the enchant list command.
+    default: true
+  atlasenchants.enchantlistgrabber:
+    description: Permission needed to be able to grab any enchant from the enchant list menu.
     default: false

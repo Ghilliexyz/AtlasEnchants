@@ -27,6 +27,12 @@ public class HelpCommand extends AbstractCommand {
         sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveshard &e<PlayerName> <Amount>"));
         sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Shard"));
         sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Show Enchant List menu command: &c/aenchants list"));
+        sender.sendMessage(Main.color("&c● &7Opens a Enchant List menu"));
+        sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Show Enchant Upgrade menu command: &c/aenchants upgrade"));
+        sender.sendMessage(Main.color("&c● &7Opens a Upgrade Enchant menu"));
+        sender.sendMessage(Main.color(""));
         sender.sendMessage(Main.color("&c&m&l-----------------------------------------"));
     }
 

@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.3.2
+#    Plugin Version 1.3.3
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -1010,7 +1010,8 @@ Enchantments:
       - "&c● &7Effect: &e&lMore Damage      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
-      - "  &eIncrease Base Damage to Passive Creatures."
+      - "  &eIncrease Base Damage to Passive Creatures"
+      - "  &eBy {hunterDamageAmount}x"
       - ""
       - "&c● &7Type: &eSword & Bow Enchantment"
       - ""
@@ -1055,7 +1056,7 @@ Enchantments:
       - "&c● &7Effect: &e&lLaunch Entities      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
-      - "  &eLaunch the hit entity up {block} blocks into the sky."
+      - "  &eLaunch the hit entity up {propelBlockDistance} blocks into the sky."
       - ""
       - "&c● &7Type: &eSword Enchantment"
       - ""

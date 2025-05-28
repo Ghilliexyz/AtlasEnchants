@@ -29,14 +29,16 @@ com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.c
 com\atlasplugins\atlasenchants\commands\CommandRouter.class
 com\atlasplugins\atlasenchants\enchants\armor\Asclepius.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect$1.class
-com\atlasplugins\atlasenchants\commands\users\TestCommand.class
+com\atlasplugins\atlasenchants\guis\EnchantListGUI.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\LootTableEvent.class
 com\atlasplugins\atlasenchants\managers\BlockRadiusFinder.class
 com\atlasplugins\atlasenchants\managers\ExperienceManager.class
 com\atlasplugins\atlasenchants\enchants\tools\SafeMiner.class
+com\atlasplugins\atlasenchants\guis\EnchantRarityListGUI.class
 com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.class
 com\atlasplugins\atlasenchants\guis\Gui.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyShard.class
+com\atlasplugins\atlasenchants\commands\users\EnchantListCommand.class
 com\atlasplugins\atlasenchants\enchants\tools\TreeHugger.class
 com\atlasplugins\atlasenchants\guis\UpgradeRewardGUI.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedPie.class

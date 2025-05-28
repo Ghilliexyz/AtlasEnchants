@@ -16,7 +16,7 @@ public class UpgradeEnchantGUI extends Gui {
     public UpgradeEnchantGUI(Main main, Player player) {
         // Directly pass the fetched values to super()
         super(player,
-                Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")), 54);
+                Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")), 54);
 
         this.player = player;
 
@@ -25,18 +25,16 @@ public class UpgradeEnchantGUI extends Gui {
         setupItems();
     }
 
-
-
     @Override
     public void setupItems() {
         // ---------- Upgrade Enchant Btn ---------- \\
-        boolean yeshello = true;
+//        boolean yeshello = true;
 
-        if(yeshello)
-        {
+//        if(yeshello)
+//        {
             // Create Item \\
-            String UpgradeAcceptableBtnTitle = main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Title");
-            Material UpgradeAcceptableBtnConfigItem = Material.valueOf(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Item"));
+            String UpgradeAcceptableBtnTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Title");
+            Material UpgradeAcceptableBtnConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Item"));
             ItemStack UpgradeAcceptableBtnItem = new ItemStack(UpgradeAcceptableBtnConfigItem);
             ItemMeta UpgradeAcceptableBtnItemMeta = UpgradeAcceptableBtnItem.getItemMeta();
             // Set Title \\
@@ -45,7 +43,7 @@ public class UpgradeEnchantGUI extends Gui {
             assert UpgradeAcceptableBtnItemMeta != null;
             // Set Lore \\
             ArrayList<String> UpgradeAcceptableBtnLore = new ArrayList<>();
-            for (String WorldInfo : main.getSettingsConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Lore")) {
+            for (String WorldInfo : main.getMenusConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Lore")) {
                 String withPAPISet = main.setPlaceholders(player, WorldInfo);
                 UpgradeAcceptableBtnLore.add(Main.color(withPAPISet));
             }
@@ -55,34 +53,35 @@ public class UpgradeEnchantGUI extends Gui {
             UpgradeAcceptableBtnItem.setItemMeta(UpgradeAcceptableBtnItemMeta);
             // Place Items in correct slots \\
             inventory.setItem(40, UpgradeAcceptableBtnItem);
-        }else {
-            // Create Item \\
-            String UpgradeNotAcceptableBtnTitle = main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Title");
-            Material UpgradeNotAcceptableBtnConfigItem = Material.valueOf(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Item"));
-            ItemStack UpgradeNotAcceptableBtnItem = new ItemStack(UpgradeNotAcceptableBtnConfigItem);
-            ItemMeta UpgradeNotAcceptableBtnItemMeta = UpgradeNotAcceptableBtnItem.getItemMeta();
-            // Set Title \\
-            String UpgradeNotAcceptableBtnItemDisplayName = Main.color(UpgradeNotAcceptableBtnTitle).replace("{Player}", player.getName());
-            String UpgradeNotAcceptableBtnItemDisplayNamePAPISet = main.setPlaceholders(player, UpgradeNotAcceptableBtnItemDisplayName);
-            assert UpgradeNotAcceptableBtnItemMeta != null;
-            // Set Lore \\
-            ArrayList<String> UpgradeNotAcceptableBtnLore = new ArrayList<>();
-            for (String WorldInfo : main.getSettingsConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Lore")) {
-                String withPAPISet = main.setPlaceholders(player, WorldInfo);
-                UpgradeNotAcceptableBtnLore.add(Main.color(withPAPISet));
-            }
-            // Set all values \\
-            UpgradeNotAcceptableBtnItemMeta.setLore(UpgradeNotAcceptableBtnLore);
-            UpgradeNotAcceptableBtnItemMeta.setDisplayName(Main.color(UpgradeNotAcceptableBtnItemDisplayNamePAPISet));
-            UpgradeNotAcceptableBtnItem.setItemMeta(UpgradeNotAcceptableBtnItemMeta);
-            // Place Items in correct slots \\
-            inventory.setItem(40, UpgradeNotAcceptableBtnItem);
-        }
+//        }
+//        else {
+//            // Create Item \\
+//            String UpgradeNotAcceptableBtnTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Title");
+//            Material UpgradeNotAcceptableBtnConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Item"));
+//            ItemStack UpgradeNotAcceptableBtnItem = new ItemStack(UpgradeNotAcceptableBtnConfigItem);
+//            ItemMeta UpgradeNotAcceptableBtnItemMeta = UpgradeNotAcceptableBtnItem.getItemMeta();
+//            // Set Title \\
+//            String UpgradeNotAcceptableBtnItemDisplayName = Main.color(UpgradeNotAcceptableBtnTitle).replace("{Player}", player.getName());
+//            String UpgradeNotAcceptableBtnItemDisplayNamePAPISet = main.setPlaceholders(player, UpgradeNotAcceptableBtnItemDisplayName);
+//            assert UpgradeNotAcceptableBtnItemMeta != null;
+//            // Set Lore \\
+//            ArrayList<String> UpgradeNotAcceptableBtnLore = new ArrayList<>();
+//            for (String WorldInfo : main.getMenusConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Btn.UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Lore")) {
+//                String withPAPISet = main.setPlaceholders(player, WorldInfo);
+//                UpgradeNotAcceptableBtnLore.add(Main.color(withPAPISet));
+//            }
+//            // Set all values \\
+//            UpgradeNotAcceptableBtnItemMeta.setLore(UpgradeNotAcceptableBtnLore);
+//            UpgradeNotAcceptableBtnItemMeta.setDisplayName(Main.color(UpgradeNotAcceptableBtnItemDisplayNamePAPISet));
+//            UpgradeNotAcceptableBtnItem.setItemMeta(UpgradeNotAcceptableBtnItemMeta);
+//            // Place Items in correct slots \\
+//            inventory.setItem(40, UpgradeNotAcceptableBtnItem);
+//        }
 
         // ---------- GLASS FILLER ---------- \\
         // Create Item \\
-        String GlassTitle = main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Filler-Title");
-        Material GlassConfigItem = Material.valueOf(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Filler-Item"));
+        String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Filler-Title");
+        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Filler-Item"));
         ItemStack GlassItem = new ItemStack(GlassConfigItem);
         ItemMeta GlassItemMeta = GlassItem.getItemMeta();
         // Set Title \\

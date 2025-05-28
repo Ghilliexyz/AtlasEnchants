@@ -1,0 +1,111 @@
+#
+#      /$$$$$$  /$$$$$$$$ /$$        /$$$$$$   /$$$$$$        /$$$$$$$$ /$$   /$$  /$$$$$$  /$$   /$$  /$$$$$$  /$$   /$$ /$$$$$$$$ /$$$$$$
+#     /$$__  $$|__  $$__/| $$       /$$__  $$ /$$__  $$      | $$_____/| $$$ | $$ /$$__  $$| $$  | $$ /$$__  $$| $$$ | $$|__  $$__//$$__  $$
+#    | $$  \ $$   | $$   | $$      | $$  \ $$| $$  \__/      | $$      | $$$$| $$| $$  \__/| $$  | $$| $$  \ $$| $$$$| $$   | $$  | $$  \__/
+#    | $$$$$$$$   | $$   | $$      | $$$$$$$$|  $$$$$$       | $$$$$   | $$ $$ $$| $$      | $$$$$$$$| $$$$$$$$| $$ $$ $$   | $$  |  $$$$$$
+#    | $$__  $$   | $$   | $$      | $$__  $$ \____  $$      | $$__/   | $$  $$$$| $$      | $$__  $$| $$__  $$| $$  $$$$   | $$   \____  $$
+#    | $$  | $$   | $$   | $$      | $$  | $$ /$$  \ $$      | $$      | $$\  $$$| $$    $$| $$  | $$| $$  | $$| $$\  $$$   | $$   /$$  \ $$
+#    | $$  | $$   | $$   | $$$$$$$$| $$  | $$|  $$$$$$/      | $$$$$$$$| $$ \  $$|  $$$$$$/| $$  | $$| $$  | $$| $$ \  $$   | $$  |  $$$$$$/
+#    |__/  |__/   |__/   |________/|__/  |__/ \______/       |________/|__/  \__/ \______/ |__/  |__/|__/  |__/|__/  \__/   |__/   \______/
+#
+#    This plugin was made by _Ghillie
+#
+#    Plugin Version 1.3.3
+#
+#    Discord: https://discord.gg/f9swPR7NnV
+#
+
+UpgradeEnchant-Gui:
+  UpgradeEnchant-Menu:
+    #If this is true then the command /ae upgrade will open the upgrade menu
+    UpgradeEnchant-Menu-Toggle: true
+    UpgradeEnchant-Menu-Title: "&c&lUpgrade"
+    UpgradeEnchant-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    UpgradeEnchant-Menu-Filler-Title: "&0_"
+    UpgradeEnchant-Menu-Btn:
+      #The Item of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Item: GREEN_STAINED_GLASS_PANE
+      #The Title of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Title: "&a&lUPGRADE!"
+      #The Lore of the upgrade btn if items are acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7This action cannot be undone."
+        - ""
+        - "&c&m&l-----------------------------------------"
+      #The Item of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Item: RED_STAINED_GLASS_PANE
+      #The Title of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Title: "&c&lMISMATCHED ENCHANTS!"
+      #The Lore of the upgrade btn if items are not acceptable
+      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Lore:
+        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+        - ""
+        - "&c● &7You must fill all 10 slots with enchants of the same rarity"
+        - ""
+        - "&c&m&l-----------------------------------------"
+  UpgradeReward-Menu:
+    UpgradeReward-Menu-Title: "&c&lREWARD!"
+    UpgradeReward-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    UpgradeReward-Menu-Filler-Title: "&0_"
+
+EnchantList-Gui:
+  RarityList-Menu:
+    # If this is true then the command /ae list will open the enchant list menu instead of upgrade menu
+    RarityList-Menu-Toggle: true
+    # If this is true then the player will be sent a message when they do not have permission to grab enchants from the GUI
+    # This message is the default Command-Messages-NoPermissions Message located in Settings.yml Line: 30
+    RarityList-Menu-Grabber-Message: true
+    RarityList-Menu-Title: "&c&lSelect Rarity"
+    RarityList-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    RarityList-Menu-Filler-Title: "&0_"
+    RarityList-Menu-Rarities:
+      GODLY:
+        Display-Name: "&4&lGodly Enchants"
+        Lore:
+          - ""
+          - "&7Click to view {rarityColor}{rarityName} &7enchants"
+          - ""
+        Item: ENCHANTED_BOOK
+        Slot: 16
+        Color: "&c&l"
+      LEGENDARY:
+        Display-Name: "&6&lLegendary Enchants"
+        Lore:
+          - ""
+          - "&7Click to view {rarityColor}{rarityName} &7enchants"
+          - ""
+        Item: ENCHANTED_BOOK
+        Slot: 14
+        Color: "&6&l"
+      EPIC:
+        Display-Name: "&5&lEpic Enchants"
+        Lore:
+          - ""
+          - "&7Click to view {rarityColor}{rarityName} &7enchants"
+          - ""
+        Item: ENCHANTED_BOOK
+        Slot: 12
+        Color: "&d&l"
+      RARE:
+        Display-Name: "&9&lRare Enchants"
+        Lore:
+          - ""
+          - "&7Click to view {rarityColor}{rarityName} &7enchants"
+          - ""
+        Item: ENCHANTED_BOOK
+        Slot: 10
+        Color: "&b&l"
+  EnchantList-Menu:
+    EnchantList-Menu-Title: "{rarityColor}{rarityName} &7&lEnchants"
+    EnchantList-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
+    EnchantList-Menu-Filler-Title: "&0_"
+    # Back button to return to rarity menu
+    EnchantList-Menu-Back-Button:
+      Material: RED_STAINED_GLASS_PANE
+      Title: "&cBack"
+      Lore:
+        - ""
+        - "&7Click to return to the rarity selection."
+        - ""

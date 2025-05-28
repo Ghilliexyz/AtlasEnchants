@@ -1,6 +1,10 @@
 package com.atlasplugins.atlasenchants.guis;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -19,6 +24,8 @@ public class GuiListener implements Listener {
 
     private Main main;
     private boolean hasUpgraded = false;
+
+    private String raritySelected = "";
 
     public GuiListener(Main main) {
         this.main = main;
@@ -31,54 +38,34 @@ public class GuiListener implements Listener {
         String title = event.getView().getTitle();
         // Get the player who clicked
         Player player = (Player) event.getWhoClicked();
+        // Get the item clicked event
+        ItemStack clicked = event.getCurrentItem();
+        // Get the item meta
+        assert clicked != null;
+        ItemMeta meta = clicked.getItemMeta();
+        // Get the PersistentData
+        PersistentDataContainer container = null;
+        if(meta != null)
+        {
+            container = meta.getPersistentDataContainer();
+        }
 
         // ===== Upgrade Enchant Menu ===== \\
         // Get the UpgradeEnchant Menu title from the config
-        String upgradeEnchantMenuTitle = Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title"));
+        String upgradeEnchantMenuTitle = Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title"));
         // Check if the clicked inventory matches your custom GUI title
         if (title.equals(Main.color(upgradeEnchantMenuTitle))) {
             if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
                 int slot = event.getSlot();
 
                 // Cancel clicks on specific slots in the GUI
-                if (slot == 0 || slot == 1 || slot == 2 || slot == 3 || slot == 4 || slot == 5 || slot == 6 || slot == 7 || slot == 8 || slot == 9 || slot == 10
-                        || slot == 16 || slot == 17 || slot == 18 || slot == 19 || slot == 25 || slot == 26 || slot == 27 || slot == 28 || slot == 29 || slot == 30
-                        || slot == 31 || slot == 32 || slot == 33 || slot == 34 || slot == 35 || slot == 36 || slot == 37 || slot == 38 || slot == 39 || slot == 40
-                        || slot == 41 || slot == 42 || slot == 43 || slot == 44 || slot == 45 || slot == 46 || slot == 47 || slot == 48 || slot == 49 || slot == 50
-                        || slot == 51 || slot == 52 || slot == 53) {
-                    event.setCancelled(true); // Cancel the event to prevent item taking/moving in the GUI
+                if ((slot >= 0 && slot <= 10) || (slot >= 16 && slot <= 19) || (slot >= 25 && slot <= 53)) {
+                    event.setCancelled(true);
                 }
 
                 // Handle clicks within your custom GUI
 //                if (slot == 11) {
 //                    player.sendMessage(Main.color("enchant slot 1"));
-//                }
-//                if (slot == 12) {
-//                    player.sendMessage(Main.color("enchant slot 2"));
-//                }
-//                if (slot == 13) {
-//                    player.sendMessage(Main.color("enchant slot 3"));
-//                }
-//                if (slot == 14) {
-//                    player.sendMessage(Main.color("enchant slot 4"));
-//                }
-//                if (slot == 15) {
-//                    player.sendMessage(Main.color("enchant slot 5"));
-//                }
-//                if (slot == 20) {
-//                    player.sendMessage(Main.color("enchant slot 6"));
-//                }
-//                if (slot == 21) {
-//                    player.sendMessage(Main.color("enchant slot 7"));
-//                }
-//                if (slot == 22) {
-//                    player.sendMessage(Main.color("enchant slot 8"));
-//                }
-//                if (slot == 23) {
-//                    player.sendMessage(Main.color("enchant slot 9"));
-//                }
-//                if (slot == 24) {
-//                    player.sendMessage(Main.color("enchant slot 10"));
 //                }
 
                 // Check if the upgrade button is clicked (assume slot 40 is the upgrade button)
@@ -199,7 +186,7 @@ public class GuiListener implements Listener {
 
         // ===== Upgrade Reward Menu ===== \\
         // Get the UpgradeReward Menu title from the config
-        String upgradeRewardMenuTitle = Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title"));
+        String upgradeRewardMenuTitle = Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title"));
         // Check if the clicked inventory matches your custom GUI title
         if (title.equals(Main.color(upgradeRewardMenuTitle))) {
             // Check if the clicked inventory is the custom GUI, not the player's inventory
@@ -207,16 +194,99 @@ public class GuiListener implements Listener {
                 int slot = event.getSlot();
 
                 // Cancel clicks on specific slots in the GUI
-                if (slot == 0 || slot == 1 || slot == 2 || slot == 3 || slot == 4 || slot == 5 || slot == 6 || slot == 7 || slot == 8 || slot == 9 || slot == 10
-                        || slot == 11 || slot == 12 || slot == 14 || slot == 15 || slot == 16 || slot == 17 || slot == 18 || slot == 19 || slot == 20 || slot == 21
-                        || slot == 22 || slot == 23 || slot == 24 || slot == 25 || slot == 26) {
-                    event.setCancelled(true); // Cancel the event to prevent item taking/moving in the GUI
+                if (slot >= 0 && slot <= 26 && slot != 13) {
+                    event.setCancelled(true);
                 }
 
                 // Handle clicks within your custom GUI
 //                if (slot == 13) {
 //                    player.sendMessage(Main.color("&a&lReward Slot"));
 //                }
+            }
+        }
+
+        // ===== EnchantListGUI Menu ===== \\
+        // Get the EnchantListGUI Menu title from the config
+        String EnchantListGUIMenuTitle = Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Title"));
+        // Check if the clicked inventory matches your custom GUI title
+        if (title.equals(Main.color(EnchantListGUIMenuTitle))) {
+            // Check if the clicked inventory is the custom GUI, not the player's inventory
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
+                int slot = event.getSlot();
+
+                // Cancel clicks on specific slots in the GUI
+                if (slot >= 0 && slot <= 26) {
+                    event.setCancelled(true);
+                }
+
+                // Handle clicks within your custom GUI
+                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.GODLY.Slot")) {
+                    main.openEnchantRarityListGUI(player, "GODLY");
+                    raritySelected = "GODLY";
+                }
+                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.LEGENDARY.Slot")) {
+                    main.openEnchantRarityListGUI(player, "LEGENDARY");
+                    raritySelected = "LEGENDARY";
+                }
+                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.EPIC.Slot")) {
+                    main.openEnchantRarityListGUI(player, "EPIC");
+                    raritySelected = "EPIC";
+                }
+                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.RARE.Slot")) {
+                    main.openEnchantRarityListGUI(player, "RARE");
+                    raritySelected = "RARE";
+                }
+            }
+        }
+
+        // ===== EnchantRarityListGUI Menu ===== \\
+        // Get the EnchantRarityListGUI Menu title from the config
+//        String EnchantRarityListGUI = Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Title"));
+        String EnchantRarityListGUI = Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Title"))
+                .replace("{rarityColor}", Main.getRarityColorCode(main, raritySelected))
+                .replace("{rarityName}", raritySelected);
+        // Check if the clicked inventory matches your custom GUI title
+        if (title.equals(Main.color(EnchantRarityListGUI))) {
+            // Check if the clicked inventory is the custom GUI, not the player's inventory
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
+                int slot = event.getSlot();
+
+                // Cancel clicks on specific slots in the GUI
+                if (slot >= 0 && slot <= 54) {
+                    event.setCancelled(true);
+                }
+
+                // Handle clicks within your custom GUI
+                if (slot == 0) {
+                    main.openEnchantListGUI(player);
+                }
+
+                // Handle clicks on the enchantment items
+                if (!clicked.hasItemMeta()) return;
+
+                // Check if the sender does not have the permission and is not an operator
+                if (!player.hasPermission("atlasenchants.enchantlistgrabber") && !player.isOp()) {
+                    // Send noPermission Message in chat when called.
+                    if(main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Grabber-Message"))
+                    {
+                        for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
+                            String withPAPISet = main.setPlaceholders((Player) player, noPermission);
+                            player.sendMessage(Main.color(withPAPISet));
+                        }
+                    }
+                    return;
+                }
+
+                NamespacedKey nameKey = new NamespacedKey(main, "enchant_name");
+                NamespacedKey levelKey = new NamespacedKey(main, "enchant_level");
+
+                if (container.has(nameKey, PersistentDataType.STRING) && container.has(levelKey, PersistentDataType.INTEGER)) {
+                    String enchantName = container.get(nameKey, PersistentDataType.STRING);
+                    int enchantLevel = container.get(levelKey, PersistentDataType.INTEGER);
+
+                    CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                    createCustomEnchant.CreateCustomEnchantmentItem(enchantName, enchantLevel, 1, player);
+                }
             }
         }
     }
@@ -230,7 +300,7 @@ public class GuiListener implements Listener {
         // ===== Upgrade Enchant Menu ===== \\
         // Check if the title matches your custom GUI title
         if(!hasUpgraded) {
-            if (inventoryTitle.equals(Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")))) {  // Replace with your actual GUI title
+            if (inventoryTitle.equals(Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Title")))) {  // Replace with your actual GUI title
                 Player player = (Player) event.getPlayer();
 
                 // Define the slots where players can place their items (e.g., 11 to 24)
@@ -240,7 +310,7 @@ public class GuiListener implements Listener {
                 for (int slot : validSlots) {
                     ItemStack item = inventory.getItem(slot);
 
-                    if (item != null && item.getType() != org.bukkit.Material.AIR) {
+                    if (item != null && item.getType() != Material.AIR) {
                         // Try adding the item back to the player's inventory
                         HashMap<Integer, ItemStack> remainingItems = player.getInventory().addItem(item);
 
@@ -260,7 +330,7 @@ public class GuiListener implements Listener {
 
         // ===== Upgrade Reward Menu ===== \\
         // Check if the title matches your custom GUI title
-        if (inventoryTitle.equals(Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")))) {  // Replace with your actual GUI title
+        if (inventoryTitle.equals(Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")))) {  // Replace with your actual GUI title
             Player player = (Player) event.getPlayer();
 
             // Define the slots where players can place their items (e.g., 13)
@@ -270,7 +340,7 @@ public class GuiListener implements Listener {
             for (int slot : validSlots) {
                 ItemStack item = inventory.getItem(slot);
 
-                if (item != null && item.getType() != org.bukkit.Material.AIR) {
+                if (item != null && item.getType() != Material.AIR) {
                     // Try adding the item back to the player's inventory
                     HashMap<Integer, ItemStack> remainingItems = player.getInventory().addItem(item);
 

@@ -6,9 +6,7 @@ import com.atlasplugins.atlasenchants.enchants.defense.EnergyAbsorption;
 import com.atlasplugins.atlasenchants.enchants.defense.FinalGuard;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
-import com.atlasplugins.atlasenchants.guis.GuiListener;
-import com.atlasplugins.atlasenchants.guis.UpgradeEnchantGUI;
-import com.atlasplugins.atlasenchants.guis.UpgradeRewardGUI;
+import com.atlasplugins.atlasenchants.guis.*;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -30,7 +28,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Main extends JavaPlugin implements Listener {
@@ -70,6 +70,8 @@ public final class Main extends JavaPlugin implements Listener {
     private File enchantmentsConfigFile;
     private FileConfiguration settingsConfig;
     private File settingsConfigFile;
+    private FileConfiguration menusConfig;
+    private File menusConfigFile;
 
     // Command Router Stuff
     private CommandRouter commandRouter;
@@ -101,6 +103,7 @@ public final class Main extends JavaPlugin implements Listener {
         // Load custom configs
         loadEnchantmentsConfig();
         loadSettingsConfig();
+        loadMenusConfig();
 
         // WorldGuard
         worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("worldguard");
@@ -169,7 +172,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.2"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.3"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -188,7 +191,7 @@ public final class Main extends JavaPlugin implements Listener {
         oresPlacedManager.saveDataToFile();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.2"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.3"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -278,6 +281,36 @@ public final class Main extends JavaPlugin implements Listener {
         settingsConfig = YamlConfiguration.loadConfiguration(settingsConfigFile);
     }
 
+    public FileConfiguration getMenusConfig() {
+        return menusConfig;
+    }
+
+    public void saveMenusConfig() {
+        try {
+            menusConfig.save(menusConfigFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadMenusConfig() {
+        menusConfigFile = new File(getDataFolder(), "menus.yml");
+        if (!menusConfigFile.exists()) {
+            saveResource("menus.yml", false);
+        }
+        menusConfig = YamlConfiguration.loadConfiguration(menusConfigFile);
+    }
+
+    public void openEnchantListGUI(Player player){
+        EnchantListGUI enchantListGUI = new EnchantListGUI(this, player);
+        enchantListGUI.open();
+    }
+
+    public void openEnchantRarityListGUI(Player player, String rarity){
+        EnchantRarityListGUI enchantRarityListGUI = new EnchantRarityListGUI(this, player, rarity);
+        enchantRarityListGUI.open();
+    }
+
     public void openUpgradeEnchantGUI(Player player){
         UpgradeEnchantGUI upgradeEnchantGUI = new UpgradeEnchantGUI(this, player);
         upgradeEnchantGUI.open();
@@ -301,4 +334,48 @@ public final class Main extends JavaPlugin implements Listener {
         }
         return new ArrayList<>();
     }
+
+    public static String getRarityColorCode(Main main, String rarity) {
+        String path = "EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities." + rarity.toUpperCase() + ".Color";
+        String color = main.getMenusConfig().getString(path);
+        return color != null ? color : "f"; // fallback to white
+    }
+
+    public String applyPlaceholders(String input, Main main, String enchantmentName, int enchantmentLevel) {
+        Map<String, String> placeholders = new HashMap<>();
+
+        placeholders.put("{lvl}", String.valueOf(enchantmentLevel));
+        placeholders.put("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")));
+        placeholders.put("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)));
+        placeholders.put("{time}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Time-underwater-" + enchantmentLevel)));
+        placeholders.put("{hunterDamageAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Hunter-Damage-Amount-" + enchantmentLevel)));
+        placeholders.put("{speedLvl}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Amount-" + enchantmentLevel)));
+        placeholders.put("{speedTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Timer-" + enchantmentLevel)));
+        placeholders.put("{propelBlockDistance}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Propel-Height-Amount-" + enchantmentLevel)));
+        placeholders.put("{freezingTimer}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)));
+        placeholders.put("{healthTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".HealthBar-Timer-" + enchantmentLevel)));
+        placeholders.put("{extraHearts}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Growth-Heart-Increase-" + enchantmentLevel)));
+        placeholders.put("{poisonTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)));
+        placeholders.put("{poisonLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)));
+        placeholders.put("{stunTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Timer-" + enchantmentLevel)));
+        placeholders.put("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)));
+        placeholders.put("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)));
+        placeholders.put("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)));
+        placeholders.put("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)));
+        placeholders.put("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)));
+        placeholders.put("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)));
+        placeholders.put("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2));
+        placeholders.put("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100));
+        placeholders.put("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100));
+        placeholders.put("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100));
+        placeholders.put("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100));
+        placeholders.put("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100));
+
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            input = input.replace(entry.getKey(), entry.getValue());
+        }
+
+        return input;
+    }
+
 }

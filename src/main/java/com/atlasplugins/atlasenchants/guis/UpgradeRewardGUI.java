@@ -16,7 +16,7 @@ public class UpgradeRewardGUI extends Gui {
     public UpgradeRewardGUI(Main main, Player player, String rarity) {
         // Directly pass the fetched values to super()
         super(player,
-                Main.color(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")), 27);
+                Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")), 27);
 
         this.player = player;
         this.rarity = rarity;
@@ -40,8 +40,8 @@ public class UpgradeRewardGUI extends Gui {
 
         // ---------- GLASS FILLER ---------- \\
         // Create Item \\
-        String GlassTitle = main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Title");
-        Material GlassConfigItem = Material.valueOf(main.getSettingsConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Item"));
+        String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Title");
+        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Item"));
         ItemStack GlassItem = new ItemStack(GlassConfigItem);
         ItemMeta GlassItemMeta = GlassItem.getItemMeta();
         // Set Title \\
