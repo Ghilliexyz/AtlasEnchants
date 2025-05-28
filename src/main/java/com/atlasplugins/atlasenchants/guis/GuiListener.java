@@ -42,7 +42,11 @@ public class GuiListener implements Listener {
         ItemStack clicked = event.getCurrentItem();
         // Get the item meta
         assert clicked != null;
-        ItemMeta meta = clicked.getItemMeta();
+        ItemMeta meta = null;
+        if(clicked.getItemMeta() != null)
+        {
+            meta = clicked.getItemMeta();
+        }
         // Get the PersistentData
         PersistentDataContainer container = null;
         if(meta != null)
@@ -107,7 +111,7 @@ public class GuiListener implements Listener {
                         // Upgrade logic
                         if (requiredRarity != null) {
                             String newRarity = getNextRarity(requiredRarity);
-                            main.getLogger().info("next rarity: " + newRarity);
+//                            main.getLogger().info("next rarity: " + newRarity);
                             if (newRarity != null) {
                                 hasUpgraded = true;
                                 if(main.getSettingsConfig().getBoolean("UpgradeEnchantMessages.UpgradeEnchant-SuccessUpgrade-Message-Toggle")) {
