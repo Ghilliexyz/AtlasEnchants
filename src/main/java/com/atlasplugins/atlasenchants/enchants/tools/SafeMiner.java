@@ -131,6 +131,9 @@ public class SafeMiner implements Listener {
         } else if (blockMined.getState() instanceof Container) {
             // Check for loot inside Containers like Chests, half working still need to open it to generate the loot.
             handleContainers(blockMined, tool, drops, player);
+        }else if(blockMined.getType() == Material.JUKEBOX)
+        {
+            handleJukeBox(blockMined, tool, drops, player);
         }else {
             // Check for attached items like Torches
 //            handleAttachedItems(blockMined, tool, drops);
@@ -238,6 +241,22 @@ public class SafeMiner implements Listener {
         // return if the container is a shulker box (prevents duping)
         if(isShulkerBox(block)) return;
         if(!containerInventory.isEmpty()){
+            for (ItemStack item : containerInventory.getContents()) {
+                if (item != null) {
+                    drops.add(item);
+                }
+            }
+        }
+    }
+
+    private void handleJukeBox(Block block, ItemStack tool, Collection<ItemStack> drops, Player player)
+    {
+        BlockState blockState = block.getState();
+
+        Inventory containerInventory = ((Container) blockState).getInventory();
+
+        if(!containerInventory.isEmpty())
+        {
             for (ItemStack item : containerInventory.getContents()) {
                 if (item != null) {
                     drops.add(item);
