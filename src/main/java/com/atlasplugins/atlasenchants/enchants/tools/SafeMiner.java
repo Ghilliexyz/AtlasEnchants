@@ -8,18 +8,19 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Container;
+import org.bukkit.block.*;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Door;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ChiseledBookshelfInventory;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -131,23 +132,27 @@ public class SafeMiner implements Listener {
         } else if (blockMined.getState() instanceof Container) {
             // Check for loot inside Containers like Chests, half working still need to open it to generate the loot.
             handleContainers(blockMined, tool, drops, player);
-        }else if(blockMined.getType() == Material.JUKEBOX)
+        }else if(blockMined.getType() == Material.JUKEBOX
+                || blockMined.getType() == Material.LECTERN
+                || blockMined.getType() == Material.CHISELED_BOOKSHELF
+                || blockMined.getType() == Material.DECORATED_POT)
         {
-            handleJukeBox(blockMined, tool, drops, player);
+            handleEdgeCases(blockMined, tool, drops, player);
         }else {
             // Check for attached items like Torches
 //            handleAttachedItems(blockMined, tool, drops);
         }
 
         // Add drops to the player's inventory or drop them if the inventory is full
-        for (ItemStack drop : drops) {
-            HashMap<Integer, ItemStack> leftItems = player.getInventory().addItem(drop);
-            if (!leftItems.isEmpty()) {
-                for (ItemStack item : leftItems.values()) {
-                    blockMined.getWorld().dropItemNaturally(blockMined.getLocation(), item);
-                }
-            }
-        }
+        giveOrDropItems(player, drops, blockMined.getLocation());
+//        for (ItemStack drop : drops) {
+//            HashMap<Integer, ItemStack> leftItems = player.getInventory().addItem(drop);
+//            if (!leftItems.isEmpty()) {
+//                for (ItemStack item : leftItems.values()) {
+//                    blockMined.getWorld().dropItemNaturally(blockMined.getLocation(), item);
+//                }
+//            }
+//        }
     }
 
     private boolean isTallFlower(Block block) {
@@ -249,17 +254,20 @@ public class SafeMiner implements Listener {
         }
     }
 
-    private void handleJukeBox(Block block, ItemStack tool, Collection<ItemStack> drops, Player player)
+    private void handleEdgeCases(Block block, ItemStack tool, Collection<ItemStack> drops, Player player)
     {
-        BlockState blockState = block.getState();
+        BlockState state = block.getState();
 
-        Inventory containerInventory = ((Container) blockState).getInventory();
-
-        if(!containerInventory.isEmpty())
+        // Check if state implements InventoryHolder (which it does for JUKEBOX)
+        if(state instanceof InventoryHolder inventoryHolder)
         {
-            for (ItemStack item : containerInventory.getContents()) {
-                if (item != null) {
-                    drops.add(item);
+            Inventory inv = inventoryHolder.getInventory();
+
+            for (ItemStack item : inv.getContents())
+            {
+                if(item != null && item.getType() != Material.AIR)
+                {
+                    drops.add(item.clone());
                 }
             }
         }
@@ -279,4 +287,16 @@ public class SafeMiner implements Listener {
 //            // Add more checks for other attached items as needed
 //        }
     }
+
+    private void giveOrDropItems(Player player, Collection<ItemStack> items, Location dropLocation) {
+        for (ItemStack item : items) {
+            if (item == null || item.getType().isAir()) continue;
+
+            HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
+            for (ItemStack leftover : leftovers.values()) {
+                player.getWorld().dropItemNaturally(dropLocation, leftover);
+            }
+        }
+    }
+
 }
