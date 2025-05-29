@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class BlessingofKnowledge implements Listener {
@@ -22,6 +23,8 @@ public class BlessingofKnowledge implements Listener {
     public BlessingofKnowledge(Main main) {this.main = main;}
 
     final HashMap<UUID, String> mobs = new HashMap<>();
+
+    private final Map<UUID, Long> healthBarTimers = new HashMap<>();
 
     public double roundToOneDecimalPlace(double value) {
         return Math.round(value * 10.0) / 10.0;
@@ -158,4 +161,41 @@ public class BlessingofKnowledge implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onAnyDamage(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof LivingEntity hitEntity)) return;
+
+        UUID uuid = hitEntity.getUniqueId();
+
+        // Only update if the entity's health bar is currently active
+        if (!mobs.containsKey(uuid)) return;
+
+        // Calculate remaining health after damage
+        double finalHealth = roundToOneDecimalPlace(hitEntity.getHealth() - e.getFinalDamage());
+        double maxHealth = hitEntity.getMaxHealth();
+        double healthPercent = (finalHealth / maxHealth) * 100;
+
+        // Re-use the same logic to update the health bar display
+        int enchantLevel = 1; // Default or retrieve from somewhere if needed
+        String style;
+        if (healthPercent <= 10) {
+            style = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-10");
+        } else if (healthPercent <= 25) {
+            style = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-25");
+        } else if (healthPercent <= 50) {
+            style = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-50");
+        } else if (healthPercent <= 75) {
+            style = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-75");
+        } else {
+            style = main.getEnchantmentsConfig().getString("Enchantments.BLESSING-OF-KNOWLEDGE.HealthBar-Style-" + enchantLevel + ".HealthBar-Style-Below-100");
+        }
+
+        hitEntity.setCustomNameVisible(true);
+        hitEntity.setCustomName(Main.color(
+                style.replace("{entityHealth}", String.valueOf(Math.max(0, finalHealth)))
+                        .replace("{entityMaxHealth}", String.valueOf((int) maxHealth))
+        ));
+    }
+
 }
