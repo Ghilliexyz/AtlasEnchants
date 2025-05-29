@@ -41,9 +41,8 @@ public class GuiListener implements Listener {
         // Get the item clicked event
         ItemStack clicked = event.getCurrentItem();
         // Get the item meta
-        assert clicked != null;
         ItemMeta meta = null;
-        if(clicked.getItemMeta() != null)
+        if(clicked != null)
         {
             meta = clicked.getItemMeta();
         }
