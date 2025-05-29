@@ -1057,7 +1057,7 @@ Enchantments:
       - ""
       - "&c● &7Description:"
       - "  &eLaunches the hit entity into the air."
-      - "  &eIf struck again while airborne,it will be"
+      - "  &eIf struck again while airborne, it will be"
       - "  &epropelled an additional {propelBlockDistance} blocks higher."
       - ""
       - "&c● &7Type: &eSword Enchantment"

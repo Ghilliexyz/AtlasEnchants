@@ -200,7 +200,7 @@ public class EnchantRarityListGUI extends Gui {
         meta.getPersistentDataContainer().set(nameKey, PersistentDataType.STRING, enchantName);
         meta.getPersistentDataContainer().set(levelKey, PersistentDataType.INTEGER, level);
 
-        meta.setDisplayName(Main.color(title + " " + level));
+        meta.setDisplayName(Main.color(title));
         meta.setLore(loreColored);
         item.setItemMeta(meta);
 
