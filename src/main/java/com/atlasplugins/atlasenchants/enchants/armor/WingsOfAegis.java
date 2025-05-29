@@ -60,19 +60,12 @@ public class WingsOfAegis implements Listener {
                         int enchantID = Integer.parseInt(enchantParts[2]);
 
                         if (enchantName.contains("WINGS-OF-AEGIS")) {
-                            // PUT ENCHANT LOGIC HERE
-                            Entity damagingEntity = e.getDamageSource().getDirectEntity();
-                            if(damagingEntity instanceof LivingEntity) {
+                            double reduction = main.getEnchantmentsConfig().getDouble("Enchantments.WINGS-OF-AEGIS.WingsOfAegis-Protection-Percentage-" + enchantLevel);
 
-                                double damageReductionPercent = main.getEnchantmentsConfig().getDouble("Enchantments.WINGS-OF-AEGIS.WingsOfAegis-Protection-Percentage-" + enchantLevel);
-                                double damageDealt = e.getDamage();
-                                double damageReduction = calculateReducedDamage(damageReductionPercent, damageDealt);
+                            double originalDamage = e.getDamage();
+                            double finalDamage = originalDamage * (1 - reduction);
 
-                                double damageFinal = damageDealt - damageReduction;
-
-                                player.damage(damageFinal);
-                            }
-                            //END ENCHANT LOGIC
+                            e.setDamage(finalDamage); // 🎯 Just set the new damage directly
                         }
                     }
                 }
