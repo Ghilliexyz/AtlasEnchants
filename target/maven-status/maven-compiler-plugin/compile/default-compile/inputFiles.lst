@@ -39,7 +39,6 @@ D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\at
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Fearsight.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\ExperienceManager.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.java
-D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\TestCommand.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\LootTableEvent.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyShard.java
 D:\Development\Minecraft Plugins\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipListener.java
