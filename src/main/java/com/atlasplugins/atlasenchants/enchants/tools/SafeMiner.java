@@ -275,8 +275,8 @@ public class SafeMiner implements Listener {
 
     private void handleAttachedItems(Block block, ItemStack tool, Collection<ItemStack> drops) {
 //        block.breakNaturally(tool);
-
-        // Check for attached items like torches
+//
+//         Check for attached items like torches
 //        for (BlockFace face : BlockFace.values()) {
 //            Block attachedBlock = block.getRelative(face);
 //            if (attachedBlock.getType() == Material.TORCH) {

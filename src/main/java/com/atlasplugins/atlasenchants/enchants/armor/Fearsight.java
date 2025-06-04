@@ -13,7 +13,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-
+// ADD crouch ability activator for different levels and different times it lasts for
+// example level 1 = 5 block distance with 5 seconds of fear sight vision
+// then it has 5 minute cooldown or something.
+// or you have like 0.5 seconds of vision and then you get like 20-30 second cooldown so you are forced to take advantage of it.
 public class Fearsight implements Listener
 {
 
