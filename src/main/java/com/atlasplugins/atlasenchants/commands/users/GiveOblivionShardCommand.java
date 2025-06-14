@@ -4,6 +4,7 @@ import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.commands.AbstractCommand;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateShard;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

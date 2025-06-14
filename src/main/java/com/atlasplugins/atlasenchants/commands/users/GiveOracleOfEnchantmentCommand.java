@@ -2,8 +2,7 @@ package com.atlasplugins.atlasenchants.commands.users;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.commands.AbstractCommand;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateOracle;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,18 +10,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class GiveRandomEnchantCommand extends AbstractCommand {
+public class GiveOracleOfEnchantmentCommand extends AbstractCommand {
 
     private final Main main;
-    public GiveRandomEnchantCommand(Main main) {this.main = main;}
+    public GiveOracleOfEnchantmentCommand(Main main) {this.main = main;}
 
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
         if (args.size() < 2) {
             // Send Usage Message in chat when called.
-            for (String UsageMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveRandomEnchant-Usage-Message")) {
+            for (String UsageMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-OracleOfEnchantment-Usage-Message")) {
                 String withPAPISet = main.setPlaceholders((Player) sender, UsageMessage);
                 String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
@@ -33,7 +31,7 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
         Player player = Bukkit.getPlayer(args.get(0));
         if (player == null) {
             // Send PlayerNotFound Message in chat when called.
-            for (String PlayerNotFoundMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveRandomEnchant-PlayerNotFound-Message")) {
+            for (String PlayerNotFoundMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-OracleOfEnchantment-PlayerNotFound-Message")) {
                 String withPAPISet = main.setPlaceholders((Player) sender, PlayerNotFoundMessage);
                 String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
@@ -41,12 +39,12 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
             return;
         }
 
-        int enchantAmount;
+        int oracleAmount;
         try {
-            enchantAmount = Integer.parseInt(args.get(1));
+            oracleAmount = Integer.parseInt(args.get(1));
         } catch (NumberFormatException e) {
             // Send InvalidAmount Message in chat when called.
-            for (String InvalidAmountMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveRandomEnchant-InvalidAmount-Message")) {
+            for (String InvalidAmountMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-OracleOfEnchantment-InvalidAmount-Message")) {
                 String withPAPISet = main.setPlaceholders((Player) sender, InvalidAmountMessage);
                 String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
@@ -54,9 +52,9 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
             return;
         }
 
-        if (enchantAmount < 1 || enchantAmount > 64) {
+        if (oracleAmount < 1 || oracleAmount > 64) {
             // Send AmountRange Message in chat when called.
-            for (String AmountRangeMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-GiveRandomEnchant-AmountRange-Message")) {
+            for (String AmountRangeMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-OracleOfEnchantment-AmountRange-Message")) {
                 String withPAPISet = main.setPlaceholders((Player) sender, AmountRangeMessage);
                 String message = Main.color(withPAPISet);
                 sender.sendMessage(message);
@@ -64,9 +62,9 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
             return;
         }
 
-        // Create an instance of CreateRandomCustomEnchant and call the method
-        CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
-        createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(player, enchantAmount, true, null);
+        // Create an instance of CreateOracle and call the method
+        CreateOracle createOracle = new CreateOracle(main);
+        createOracle.CreateOracleItem(oracleAmount, player);
     }
 
     @Override
@@ -84,11 +82,11 @@ public class GiveRandomEnchantCommand extends AbstractCommand {
 
     @Override
     public List<String> getLabels() {
-        return Collections.singletonList("giverandomenchant");
+        return Collections.singletonList("giveoracle");
     }
 
     @Override
     public String getPermission() {
-        return "atlasenchants.giverandomenchant";
+        return "atlasenchants.giveoracle";
     }
 }

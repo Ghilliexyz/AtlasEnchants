@@ -32,12 +32,15 @@ permissions:
   atlasenchants.giveshard:
     description: Permission needed to use the give shard command.
     default: false
+  atlasenchants.giveoracle:
+    description: Permission needed to use the give oracle command.
+    default: false
   atlasenchants.upgrade:
     description: Permission needed to use the upgrade command.
     default: false
   atlasenchants.enchantlist:
     description: Permission needed to use the enchant list command.
-    default: true
+    default: false
   atlasenchants.enchantlistgrabber:
     description: Permission needed to be able to grab any enchant from the enchant list menu.
     default: false

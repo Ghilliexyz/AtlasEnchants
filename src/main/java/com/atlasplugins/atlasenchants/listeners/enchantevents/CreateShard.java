@@ -26,23 +26,23 @@ public class CreateShard implements Listener {
     }
 
     public ItemStack CreateShardItem(int shardAmount, Player p) {
-        ItemStack shard = new ItemStack(Material.valueOf(main.getSettingsConfig().getString("OblivionShard.OblivionShard-Item")));
+        ItemStack shard = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item")));
         ItemMeta shardMeta = shard.getItemMeta();
 
-        String displayName = main.getSettingsConfig().getString("OblivionShard.OblivionShard-DisplayName");
+        String displayName = main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
         shardMeta.setDisplayName(Main.color(withPAPISet)
-                .replace("{oblivionShardChance}", String.valueOf(main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
+                .replace("{oblivionShardChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
-        List<String> loreList = main.getSettingsConfig().getStringList("OblivionShard.OblivionShard-Lore");
+        List<String> loreList = main.getEnchantmentsConfig().getStringList("OblivionShard.OblivionShard-Lore");
         for (String lore : loreList) {
             String withPAPISet1 = main.setPlaceholders(p, lore);
             enchantmentLore.add(Main.color(withPAPISet1)
-                    .replace("{oblivionShardChance}", String.valueOf(main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
+                    .replace("{oblivionShardChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance") * 100)));
         }
 
-        boolean addGlint = main.getSettingsConfig().getBoolean("OblivionShard.OblivionShard-Glint-Toggle");
+        boolean addGlint = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Glint-Toggle");
         if(addGlint)
         {
             // Add Glint effect

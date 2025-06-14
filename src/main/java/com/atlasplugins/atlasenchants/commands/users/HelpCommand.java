@@ -21,11 +21,17 @@ public class HelpCommand extends AbstractCommand {
         sender.sendMessage(Main.color("&c● &7Reload command: &c/aenchants reload"));
         sender.sendMessage(Main.color("&c● &7reloads the Atlas Enchants configs"));
         sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants give &e<PlayerName> <EnchantName> <EnchantLevel> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveenchant &e<PlayerName> <EnchantName> <EnchantLevel> <Amount>"));
         sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Enchant"));
+        sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giverandomenchant &e<PlayerName> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Gives the named user a Random Custom Enchant"));
         sender.sendMessage(Main.color(""));
         sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveshard &e<PlayerName> <Amount>"));
         sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Shard"));
+        sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoracle &e<PlayerName> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle"));
         sender.sendMessage(Main.color(""));
         sender.sendMessage(Main.color("&c● &7Show Enchant List menu command: &c/aenchants list"));
         sender.sendMessage(Main.color("&c● &7Opens a Enchant List menu"));

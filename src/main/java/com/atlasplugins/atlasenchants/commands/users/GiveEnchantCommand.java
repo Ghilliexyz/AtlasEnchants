@@ -135,7 +135,7 @@ public class GiveEnchantCommand extends AbstractCommand {
 
     @Override
     public List<String> getLabels() {
-        return Collections.singletonList("give");
+        return Collections.singletonList("giveenchant");
     }
 
     @Override

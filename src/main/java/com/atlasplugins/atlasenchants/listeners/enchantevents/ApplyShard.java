@@ -44,7 +44,7 @@ public class ApplyShard implements Listener {
             if (clickedItem == null || cursorItem == null) return;
 
             // Get the custom item material type from the config
-            Material shardItem = Material.valueOf(main.getSettingsConfig().getString("OblivionShard.OblivionShard-Item"));
+            Material shardItem = Material.valueOf(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item"));
             Material enchantmentItem = Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem"));
 
             // If the item on the cursor is not the custom item, return
@@ -77,7 +77,7 @@ public class ApplyShard implements Listener {
                         int shardID = Integer.parseInt(shardParts[1]);
 
                         // Get Shard Enabled Status
-                        boolean isOblivionShardEnabled = main.getSettingsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
+                        boolean isOblivionShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
 
                         if(!isOblivionShardEnabled)
                         {
@@ -181,10 +181,10 @@ public class ApplyShard implements Listener {
                                 RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
                                 removeCustomEnchant.RemoveEnchantment(clickedItem, removedEnchantmentName);
 
-                                boolean returnEnchantEnabled = main.getSettingsConfig().getBoolean("OblivionShard.OblivionShard-ReturnEnchant-Enabled");
+                                boolean returnEnchantEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-ReturnEnchant-Enabled");
 
                                 if(returnEnchantEnabled){
-                                    double returnEnchantChance = main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance");
+                                    double returnEnchantChance = main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-ReturnEnchant-Chance");
 
                                     // of the return enchant chance passes then create the removed enchant.
                                     if(random.nextDouble() > returnEnchantChance) {

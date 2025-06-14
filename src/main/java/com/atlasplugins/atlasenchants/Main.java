@@ -7,6 +7,7 @@ import com.atlasplugins.atlasenchants.enchants.defense.FinalGuard;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.guis.*;
+import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -50,6 +51,7 @@ public final class Main extends JavaPlugin implements Listener {
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
     public static NamespacedKey customShardKeys;
+    public static NamespacedKey customOracleKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
@@ -114,6 +116,7 @@ public final class Main extends JavaPlugin implements Listener {
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
         customShardKeys = new NamespacedKey(this, "Custom_Shards");
+        customOracleKeys = new NamespacedKey(this, "Custom_Oracle");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
@@ -154,11 +157,13 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new ApplyShard(this), this);
         this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateOracle(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateRandomCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new OraclesOfEnchantmentEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Register commands

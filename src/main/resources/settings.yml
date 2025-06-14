@@ -128,6 +128,35 @@ Command-Messages:
     - "&c&m&l-----------------------------------------"
   ##########################################################
   #                                                        #
+  #           GIVE Oracle Of Enchantment MESSAGES          #
+  #                                                        #
+  ##########################################################
+  Command-Messages-OracleOfEnchantment-Usage-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Usage: &c/ae oracle &e<player> <amount>"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleOfEnchantment-PlayerNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleOfEnchantment-InvalidAmount-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleOfEnchantment-AmountRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  ##########################################################
+  #                                                        #
   #             GIVE RANDOM ENCHANT MESSAGES               #
   #                                                        #
   ##########################################################
@@ -189,115 +218,6 @@ EnchantItems:
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly#
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true
-
-OblivionShard:
-  #Type of Item the Oblivion Shard will be.
-  OblivionShard-Item: PRISMARINE_SHARD
-  #If true the OblivionShard-Item will have an enchantment glint on it.
-  OblivionShard-Glint-Toggle: true
-  #The chance of an Oblivion Shard spawning (0.05 = 5%)
-  OblivionShard-Spawn-Chance: 0.05
-  #If true the Oblivion Shard can be Found, and Used. if false the opposite for all happens.
-  OblivionShard-Enabled: true
-  #If true the Oblivion Shard can return the Enchant it removed.
-  OblivionShard-ReturnEnchant-Enabled: false
-  #The chance that when removing an enchant from an item it will give the player the enchant back in its normal form.
-  #Default = 0.5 (0.5 = 50%) if you set it to 0 that will act as a disabled method, meaning it will never give the enchant back.
-  OblivionShard-ReturnEnchant-Chance: 0.5
-  #The name of the Oblivion Shard.
-  OblivionShard-DisplayName: "&c&l&k@ &6&lOblivion Shard &c&l&k@"
-  #Lore for the Oblivion Shard.
-  OblivionShard-Lore:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    - ""
-    - "&c● &7Description:"
-    - "  &eRemoves a random custom enchant from any item."
-    - "  &eHas a {oblivionShardChance}% to give back the enchantment."
-    - ""
-    - "&c● &7Type: &eShard"
-    - ""
-    - "&c● &7Usage: &eDrag n' Drop onto Any Item."
-    - ""
-    - "&c&m&l-----------------------------------------"
-
-#The sound that will play when the player applies a new Shard to an item.
-#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
-ShardItemSounds:
-  #------------------APPLYING SHARD SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-Apply-Sound-Toggle: true
-  #The sound that plays when applying a custom Shard.
-  ShardItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound plays at when applying a custom Shard.
-  ShardItem-Apply-Volume: 1
-  #The pitch the sound plays at when applying a custom Shard.
-  ShardItem-Apply-Pitch: 0.1
-  #------------------NO ENCHANTS APPLIED SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-NoEnchantsApplied-Sound-Toggle: true
-  #The sound that plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Volume: 1
-  #The pitch the sound plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Pitch: 0.1
-  #------------------DISABLED SHARD SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-DisabledShard-Sound-Toggle: true
-  #The sound that plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Volume: 1
-  #The pitch the sound plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Pitch: 0.1
-
-ShardItemMessages:
-  #------------------APPLYING SHARD Message------------------#
-  #If True the success message will be sent to the player.
-  ShardItem-Success-Message-Toggle: true
-  #The message that will be sent when applying a custom Shard to an item.
-  ShardItem-Success-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
-  #------------------APPLYING SHARD Message------------------#
-  #If True the success and refund message will be sent to the player.
-  ShardItem-SuccessAndRefund-Message-Toggle: true
-  #The message that will be sent when applying a custom Shard to an item.
-  ShardItem-SuccessAndRefund-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
-    -  ""
-    -  "&c● &7You managed to grab the enchantment before it faded away!"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
-  #------------------NO ENCHANTS APPLIED Message------------------#
-  #If True the Already Applied message will be sent to the player.
-  ShardItem-NoEnchantsApplied-Message-Toggle: true
-  #The message that will be sent when trying to apply a Shard to an item that has the same Shard already applied.
-  ShardItem-NoEnchantsApplied-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{shardName}"
-    -  ""
-    -  "&c● &7Because the item does not have any custom enchants applied."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
-  #------------------SHARD DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  ShardItem-DisabledShard-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom Shard has been found on the item already.
-  ShardItem-DisabledShard-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{shardName}"
-    -  ""
-    -  "&c● &7Because &cShard's &7are currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
 
 #The sound that will play when the player applies a new Upgrade to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
@@ -498,5 +418,132 @@ EnchantItemMessages:
     -  "&c● &7You cannot apply: &e&l{disabledEnchantName} &7lvl: &e&l{disabledEnchantLevel}"
     -  ""
     -  "&c● &7Because that &cEnchant &7is currently &cDisabled&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+
+#The sound that will play when the player applies a new Shard to an item.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+ShardItemSounds:
+  #------------------APPLYING SHARD SOUNDS------------------#
+  #If True the custom Shard apply sound will play.
+  ShardItem-Apply-Sound-Toggle: true
+  #The sound that plays when applying a custom Shard.
+  ShardItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+  #The volume the sound plays at when applying a custom Shard.
+  ShardItem-Apply-Volume: 1
+  #The pitch the sound plays at when applying a custom Shard.
+  ShardItem-Apply-Pitch: 0.1
+  #------------------NO ENCHANTS APPLIED SOUNDS------------------#
+  #If True the custom Shard apply sound will play.
+  ShardItem-NoEnchantsApplied-Sound-Toggle: true
+  #The sound that plays when a custom Shard is already applied.
+  ShardItem-NoEnchantsApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
+  #The volume the sound plays when a custom Shard is already applied.
+  ShardItem-NoEnchantsApplied-Volume: 1
+  #The pitch the sound plays when a custom Shard is already applied.
+  ShardItem-NoEnchantsApplied-Pitch: 0.1
+  #------------------DISABLED SHARD SOUNDS------------------#
+  #If True the custom Shard apply sound will play.
+  ShardItem-DisabledShard-Sound-Toggle: true
+  #The sound that plays when a blacklisted Shard is found.
+  ShardItem-DisabledShard-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound plays when a blacklisted Shard is found.
+  ShardItem-DisabledShard-Volume: 1
+  #The pitch the sound plays when a blacklisted Shard is found.
+  ShardItem-DisabledShard-Pitch: 0.1
+
+ShardItemMessages:
+  #------------------APPLYING SHARD Message------------------#
+  #If True the success message will be sent to the player.
+  ShardItem-Success-Message-Toggle: true
+  #The message that will be sent when applying a custom Shard to an item.
+  ShardItem-Success-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------APPLYING SHARD Message------------------#
+  #If True the success and refund message will be sent to the player.
+  ShardItem-SuccessAndRefund-Message-Toggle: true
+  #The message that will be sent when applying a custom Shard to an item.
+  ShardItem-SuccessAndRefund-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+    -  ""
+    -  "&c● &7You managed to grab the enchantment before it faded away!"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------NO ENCHANTS APPLIED Message------------------#
+  #If True the Already Applied message will be sent to the player.
+  ShardItem-NoEnchantsApplied-Message-Toggle: true
+  #The message that will be sent when trying to apply a Shard to an item that has the same Shard already applied.
+  ShardItem-NoEnchantsApplied-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot apply: &e&l{shardName}"
+    -  ""
+    -  "&c● &7Because the item does not have any custom enchants applied."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------SHARD DISABLED Message------------------#
+  #If True the disabled message will be sent to the player.
+  ShardItem-DisabledShard-Message-Toggle: true
+  #The message that will be sent when a blacklisted a custom Shard has been found on the item already.
+  ShardItem-DisabledShard-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot apply: &e&l{shardName}"
+    -  ""
+    -  "&c● &7Because &cShard's &7are currently &cDisabled&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+
+#The sound that will play when the player opens the Oracle.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+OracleItemSounds:
+  #------------------OPENING ORACLE SOUNDS------------------#
+  #If True the custom Oracle open sound will play.
+  OracleItem-Opening-Sound-Toggle: true
+  #The sound that plays when opening a custom Oracle.
+  OracleItem-Opening-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+  #The volume the sound plays at when opening a custom Oracle.
+  OracleItem-Opening-Volume: 1
+  #The pitch the sound plays at when opening a custom Oracle.
+  OracleItem-Opening-Pitch: 0.1
+  #------------------DISABLED Oracle SOUNDS------------------#
+  #If True the custom Oracle Disabled sound will play.
+  OracleItem-DisabledOracle-Sound-Toggle: true
+  #The sound that plays when the Oracle is Disabled.
+  OracleItem-DisabledOracle-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound plays when the Oracle is Disabled.
+  OracleItem-DisabledOracle-Volume: 1
+  #The pitch the sound plays when the Oracle is Disabled.
+  OracleItem-DisabledOracle-Pitch: 0.1
+
+OracleItemMessages:
+  #------------------OPENING ORACLE Message------------------#
+  #If True the success and refund message will be sent to the player.
+  OracleItem-Opening-Message-Toggle: true
+  #The message that will be sent when applying a custom Oracle to an item.
+  OracleItem-Opening-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Opening: {oracleName}"
+    -  ""
+    -  "&c● &7Learn new knowledge now!"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------ORACLE DISABLED Message------------------#
+  #If True the disabled message will be sent to the player.
+  OracleItem-DisabledOracle-Message-Toggle: true
+  #The message that will be sent when a blacklisted a custom Oracle has been found on the item already.
+  OracleItem-DisabledOracle-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot open: &e&l{oracleName}"
+    -  ""
+    -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
     -  ""
     -  "&c&m&l-----------------------------------------"
