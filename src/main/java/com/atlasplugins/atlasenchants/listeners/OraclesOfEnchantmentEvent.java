@@ -48,14 +48,14 @@ public class OraclesOfEnchantmentEvent implements Listener {
                     ItemMeta bookMeta = itemInHand.getItemMeta();
                     PersistentDataContainer bookPDC = bookMeta.getPersistentDataContainer();
 
-                    if(bookPDC.has(Main.customOracleKeys, PersistentDataType.STRING)) {
-                        String bookData = bookPDC.get(Main.customOracleKeys, PersistentDataType.STRING);
+                    if(bookPDC.has(Main.customOracleBookKeys, PersistentDataType.STRING)) {
+                        String bookData = bookPDC.get(Main.customOracleBookKeys, PersistentDataType.STRING);
 
                         if (bookData == null) return;
 
                         String oracleName = bookData;
 
-                        if(oracleName.equals("Oracle")){
+                        if(oracleName.equals("oracle_book")){
                             if(block == null || block.getType() != correctBlock)
                             {
                                 e.setCancelled(true);
@@ -77,9 +77,9 @@ public class OraclesOfEnchantmentEvent implements Listener {
 
             PersistentDataContainer blockPDC = blockMeta.getPersistentDataContainer();
 
-            if(blockPDC.has(Main.customOracleKeys, PersistentDataType.STRING))
+            if(blockPDC.has(Main.customOracleBookKeys, PersistentDataType.STRING))
             {
-                String blockData = blockPDC.get(Main.customOracleKeys, PersistentDataType.STRING);
+                String blockData = blockPDC.get(Main.customOracleBookKeys, PersistentDataType.STRING);
 
                 if(blockData == null) return;
 
@@ -149,7 +149,7 @@ public class OraclesOfEnchantmentEvent implements Listener {
                         }
                     }
 
-                    if(oracleName.equals("Oracle")){
+                    if(oracleName.equals("oracle_book")){
                         e.setCancelled(true);
                         main.openEnchantListGUI(player);
                     }

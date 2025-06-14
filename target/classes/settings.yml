@@ -547,3 +547,51 @@ OracleItemMessages:
     -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
     -  ""
     -  "&c&m&l-----------------------------------------"
+
+#The sound that will play when the player opens the Oracle.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+OracleTableItemSounds:
+  #------------------OPENING ORACLE SOUNDS------------------#
+  #If True the custom Oracle open sound will play.
+  OracleTableItem-Opening-Sound-Toggle: true
+  #The sound that plays when opening a custom Oracle.
+  OracleTableItem-Opening-Sound: BLOCK_AMETHYST_BLOCK_BREAK
+  #The volume the sound plays at when opening a custom Oracle.
+  OracleTableItem-Opening-Volume: 1
+  #The pitch the sound plays at when opening a custom Oracle.
+  OracleTableItem-Opening-Pitch: 0.1
+  #------------------DISABLED Oracle SOUNDS------------------#
+  #If True the custom Oracle Disabled sound will play.
+  OracleTableItem-DisabledOracle-Sound-Toggle: true
+  #The sound that plays when the Oracle is Disabled.
+  OracleTableItem-DisabledOracle-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound plays when the Oracle is Disabled.
+  OracleTableItem-DisabledOracle-Volume: 1
+  #The pitch the sound plays when the Oracle is Disabled.
+  OracleTableItem-DisabledOracle-Pitch: 0.1
+
+OracleTableItemMessages:
+  #------------------OPENING ORACLE Message------------------#
+  #If True the success and refund message will be sent to the player.
+  OracleTableItem-Opening-Message-Toggle: true
+  #The message that will be sent when applying a custom Oracle to an item.
+  OracleTableItem-Opening-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You &a&lSuccessfully &7Opening: {oracleName}"
+    -  ""
+    -  "&c● &7Learn new knowledge now!"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------ORACLE DISABLED Message------------------#
+  #If True the disabled message will be sent to the player.
+  OracleTableItem-DisabledOracle-Message-Toggle: true
+  #The message that will be sent when a blacklisted a custom Oracle has been found on the item already.
+  OracleTableItem-DisabledOracle-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot open: &e&l{oracleName}"
+    -  ""
+    -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"

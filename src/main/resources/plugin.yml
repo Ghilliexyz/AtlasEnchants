@@ -32,8 +32,11 @@ permissions:
   atlasenchants.giveshard:
     description: Permission needed to use the give shard command.
     default: false
-  atlasenchants.giveoracle:
-    description: Permission needed to use the give oracle command.
+  atlasenchants.giveoraclebook:
+    description: Permission needed to use the give oracle book command.
+    default: false
+  atlasenchants.giveoracletable:
+    description: Permission needed to use the give oracle table command.
     default: false
   atlasenchants.upgrade:
     description: Permission needed to use the upgrade command.

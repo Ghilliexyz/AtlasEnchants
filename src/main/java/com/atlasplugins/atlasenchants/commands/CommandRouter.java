@@ -2,7 +2,6 @@ package com.atlasplugins.atlasenchants.commands;
 
 import com.atlasplugins.atlasenchants.commands.users.*;
 import com.atlasplugins.atlasenchants.Main;
-import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
@@ -32,6 +31,7 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         registerCommand(new GiveEnchantCommand(main));
         registerCommand(new GiveOblivionShardCommand(main));
         registerCommand(new GiveOracleOfEnchantmentCommand(main));
+        registerCommand(new GiveOraclesTableCommand(main));
         registerCommand(new GiveRandomEnchantCommand(main));
         registerCommand(new UpgradeCommand(main));
         registerCommand(new EnchantListCommand(main));

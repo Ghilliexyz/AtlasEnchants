@@ -1292,3 +1292,43 @@ OraclesOfEnchantment:
     - "&c● &7Usage: &ePlace in Lectern to learn its Knowledge"
     - ""
     - "&c&m&l-----------------------------------------"
+
+
+OraclesTable:
+  #Type of Item the Oracles of Enchantment will be.
+  OraclesTable-Item: ENCHANTING_TABLE
+  #If true the OraclesOfEnchantment-Item will have an enchantment glint on it.
+  OraclesTable-Glint-Toggle: false
+  #If true the trader will have a chance of spawning the Oracle.
+  OraclesTable-Trader-Enabled: true
+  #The chance of an Oracles of Enchantment spawning (0.05 = 5% | 1 = 100%)
+  OraclesTable-Trader-Spawn-Chance: 0.3
+  #The Item it cost to purchase the Oracle.
+  OraclesTable-Trader-Cost-Item: EMERALD
+  #The amount of that Item it will cost to purchase the Oracle.
+  OraclesTable-Trader-Cost-Amount: 32
+  #If true the Oracle will spawn in a random slot.
+  #(Set to false if you want to set it to a specific slot)
+  OraclesTable-Trader-Slot-Random: true
+  #The slot the oracle will spawn in (make sure Slot Random is set to false or the slot will be random)
+  #0 = the top of the menu the max is 5
+  OraclesTable-Trader-Slot: 5
+  #If true the Oracles of Enchantment can be Found, and Used. if false the opposite for all happens.
+  OraclesTable-Enabled: true
+  #The name of the Oracles of Enchantment.
+  OraclesTable-DisplayName: "&f&kv&l &d&lOracle's Table &f&kv"
+  #Lore for the Oracles of Enchantment.
+  OraclesTable-Lore:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Description:"
+    - "  &eA cryptic tome once whispered by the Oracles of Delphi,"
+    - "  &esaid to contain knowledge granted by gods long silenced."
+    - "  &eIts pages shift with every reading,"
+    - "  &erevealing secrets only to those deemed worthy."
+    - ""
+    - "&c● &7Type: &eAncient Enchant Table"
+    - ""
+    - "&c● &7Usage: &ePlace down and open"
+    - ""
+    - "&c&m&l-----------------------------------------"

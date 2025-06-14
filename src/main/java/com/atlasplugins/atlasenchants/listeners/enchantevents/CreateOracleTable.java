@@ -16,33 +16,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class CreateOracle implements Listener {
+public class CreateOracleTable implements Listener {
 
     private Main main;
     private final Random random = new Random();
 
-    public CreateOracle(Main main) {
+    public CreateOracleTable(Main main) {
         this.main = main;
     }
 
-    public ItemStack CreateOracleItem(int oracleAmount, Player p) {
-        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Item")));
+    public ItemStack CreateOracleTableItem(int oracleAmount, Player p) {
+        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-Item")));
         ItemMeta oracleMeta = oracle.getItemMeta();
 
-        String displayName = main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-DisplayName");
+        String displayName = main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
         oracleMeta.setDisplayName(Main.color(withPAPISet)
-                .replace("{OraclesOfEnchantmentChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesOfEnchantment.OraclesOfEnchantment-ReturnEnchant-Chance") * 100)));
+                .replace("{OraclesTableChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
-        List<String> loreList = main.getEnchantmentsConfig().getStringList("OraclesOfEnchantment.OraclesOfEnchantment-Lore");
+        List<String> loreList = main.getEnchantmentsConfig().getStringList("OraclesTable.OraclesTable-Lore");
         for (String lore : loreList) {
             String withPAPISet1 = main.setPlaceholders(p, lore);
             enchantmentLore.add(Main.color(withPAPISet1)
-                    .replace("{OraclesOfEnchantmentChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesOfEnchantment.OraclesOfEnchantment-ReturnEnchant-Chance") * 100)));
+                    .replace("{OraclesTableChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-ReturnEnchant-Chance") * 100)));
         }
 
-        boolean addGlint = main.getEnchantmentsConfig().getBoolean("OraclesOfEnchantment.OraclesOfEnchantment-Glint-Toggle");
+        boolean addGlint = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Glint-Toggle");
         if(addGlint)
         {
             // Add Glint effect
@@ -54,7 +54,7 @@ public class CreateOracle implements Listener {
 
         PersistentDataContainer pdc = oracleMeta.getPersistentDataContainer();
 //        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle" + ":" + oracleID);
-        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle");
+        pdc.set(Main.customOracleTableKeys, PersistentDataType.STRING, "oracle_table");
 
         oracleMeta.setLore(enchantmentLore);
         oracle.setItemMeta(oracleMeta);

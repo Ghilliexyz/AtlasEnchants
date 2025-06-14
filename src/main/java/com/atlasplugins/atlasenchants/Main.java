@@ -8,6 +8,8 @@ import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.guis.*;
 import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
+import com.atlasplugins.atlasenchants.listeners.OraclesTableCraftingRecipe;
+import com.atlasplugins.atlasenchants.listeners.OraclesTableEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -51,7 +53,8 @@ public final class Main extends JavaPlugin implements Listener {
     // Enchantment Stuff
     public static NamespacedKey customEnchantKeys;
     public static NamespacedKey customShardKeys;
-    public static NamespacedKey customOracleKeys;
+    public static NamespacedKey customOracleBookKeys;
+    public static NamespacedKey customOracleTableKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
@@ -116,7 +119,8 @@ public final class Main extends JavaPlugin implements Listener {
         //Custom Enchant Data
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
         customShardKeys = new NamespacedKey(this, "Custom_Shards");
-        customOracleKeys = new NamespacedKey(this, "Custom_Oracle");
+        customOracleBookKeys = new NamespacedKey(this, "Custom_Oracle_Books");
+        customOracleTableKeys = new NamespacedKey(this, "Custom_Oracle_Table");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
@@ -157,15 +161,20 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new ApplyShard(this), this);
         this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
-        this.getServer().getPluginManager().registerEvents(new CreateOracle(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateOracleBook(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateOracleTable(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateRandomCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         this.getServer().getPluginManager().registerEvents(new OraclesOfEnchantmentEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new OraclesTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new WanderingTraderEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
+
+        // Crafting Recipe
+        new OraclesTableCraftingRecipe(this).registerOracleTableRecipe();
 
         // Register commands
         this.commandRouter = new CommandRouter(this);

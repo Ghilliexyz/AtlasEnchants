@@ -43,7 +43,7 @@ public class WanderingTraderEvent implements Listener {
             if(Math.random() < chanceOfSpawning)
             {
                 // Create an instance of CreateCustomEnchant and call the method
-                CreateOracle createOracle = new CreateOracle(main);
+                CreateOracleBook createOracle = new CreateOracleBook(main);
                 ItemStack oracleItem = createOracle.CreateOracleItem(1, null);
 
                 // Trade Recipe
