@@ -79,11 +79,17 @@ public class OraclesTableEvent implements Listener {
     @EventHandler
     public void onEnchantItem(EnchantItemEvent e)
     {
-
         ItemStack item = e.getItem();
         Player player = e.getEnchanter();
 
+        Block block = e.getEnchantBlock();
+        BlockState state = block.getState();
 
+        if (!(state instanceof TileState tileState)) return;
+
+        PersistentDataContainer pdc = tileState.getPersistentDataContainer();
+        String tag = pdc.get(Main.customOracleTableKeys, PersistentDataType.STRING);
+        if (tag == null || !tag.equals("oracle_table")) return;
 
         player.sendMessage("You just enchanted: " + item + " with " + item.getEnchantments());
     }
