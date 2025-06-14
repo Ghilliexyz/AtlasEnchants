@@ -1298,22 +1298,29 @@ OraclesTable:
   #Type of Item the Oracles of Enchantment will be.
   OraclesTable-Item: ENCHANTING_TABLE
   #If true the OraclesOfEnchantment-Item will have an enchantment glint on it.
-  OraclesTable-Glint-Toggle: false
-  #If true the trader will have a chance of spawning the Oracle.
-  OraclesTable-Trader-Enabled: true
-  #The chance of an Oracles of Enchantment spawning (0.05 = 5% | 1 = 100%)
-  OraclesTable-Trader-Spawn-Chance: 0.3
-  #The Item it cost to purchase the Oracle.
-  OraclesTable-Trader-Cost-Item: EMERALD
-  #The amount of that Item it will cost to purchase the Oracle.
-  OraclesTable-Trader-Cost-Amount: 32
-  #If true the Oracle will spawn in a random slot.
-  #(Set to false if you want to set it to a specific slot)
-  OraclesTable-Trader-Slot-Random: true
-  #The slot the oracle will spawn in (make sure Slot Random is set to false or the slot will be random)
-  #0 = the top of the menu the max is 5
-  OraclesTable-Trader-Slot: 5
-  #If true the Oracles of Enchantment can be Found, and Used. if false the opposite for all happens.
+  OraclesTable-Glint-Toggle: true
+  #If true Oracle's Table can be crafted.
+  OraclesTable-Crafting-Enabled: true
+  #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
+  # **NOTE** USE the letter 'Z' if you want them to use the Oracles Of Enchantment Book in the recipe
+  OraclesTable-Crafting-Row-1: "ABC"
+  OraclesTable-Crafting-Row-2: "DZF"
+  OraclesTable-Crafting-Row-3: "GHI"
+  #These are the Crafting Materials inside the recipe
+  # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
+  # Also you can reuse the same Material and change the order on crafting Row-1 for example:
+  # you can do "ACA" or "HHH" or even "HAA" if thats what you want.
+  # Just make sure all Materials have some sort of material despite you using them or not.
+  OraclesTable-Crafting-Materials-A: END_CRYSTAL
+  OraclesTable-Crafting-Materials-B: NETHERITE_INGOT
+  OraclesTable-Crafting-Materials-C: END_CRYSTAL
+  OraclesTable-Crafting-Materials-D: PHANTOM_MEMBRANE
+  OraclesTable-Crafting-Materials-E: BOOK
+  OraclesTable-Crafting-Materials-F: PHANTOM_MEMBRANE
+  OraclesTable-Crafting-Materials-G: ECHO_SHARD
+  OraclesTable-Crafting-Materials-H: ECHO_SHARD
+  OraclesTable-Crafting-Materials-I: ECHO_SHARD
+  #If true Oracle's Table can be used.
   OraclesTable-Enabled: true
   #The name of the Oracles of Enchantment.
   OraclesTable-DisplayName: "&f&kv&l &d&lOracle's Table &f&kv"

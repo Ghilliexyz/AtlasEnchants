@@ -1,16 +1,22 @@
 package com.atlasplugins.atlasenchants.listeners;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.TileState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class OraclesTableEvent implements Listener {
@@ -25,6 +31,10 @@ public class OraclesTableEvent implements Listener {
     public void onCraft(PrepareItemCraftEvent e)
     {
         if(e.getRecipe() == null) return;
+
+        boolean isOracleTableCraftingEnabled = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Crafting-Enabled");
+
+        if(!isOracleTableCraftingEnabled) return;
 
         ItemStack result = e.getRecipe().getResult();
         if(result == null || !result.hasItemMeta()) return;
@@ -52,13 +62,35 @@ public class OraclesTableEvent implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e)
     {
-        Action action = e.getAction();
+        if (e.getClickedBlock() == null || e.getClickedBlock().getType() != Material.ENCHANTING_TABLE) return;
+        if (!e.getAction().toString().contains("RIGHT_CLICK")) return;
 
-        if(e.getClickedBlock() == null || e.getClickedBlock().getType() != Material.ENCHANTING_TABLE) return;
-        if(!action.toString().contains("RIGHT_CLICK")) return;
+        Block block = e.getClickedBlock();
+        BlockState state = block.getState();
 
-        Block clickedBlock = e.getClickedBlock();
-        BlockStateMeta metaBlock = (BlockStateMeta) new ItemStack(Material.ENCHANTING_TABLE).getItemMeta();
+        if (!(state instanceof TileState tileState)) return;
 
+        PersistentDataContainer pdc = tileState.getPersistentDataContainer();
+        String tag = pdc.get(Main.customOracleTableKeys, PersistentDataType.STRING);
+        if (tag == null || !tag.equals("oracle_table")) return;
     }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        ItemStack item = e.getItemInHand();
+        if (!item.hasItemMeta()) return;
+
+        ItemMeta meta = item.getItemMeta();
+        if (!meta.getPersistentDataContainer().has(Main.customOracleTableKeys, PersistentDataType.STRING)) return;
+
+        // It's an oracle table being placed!
+        Block block = e.getBlockPlaced();
+        BlockState state = block.getState();
+
+        if (state instanceof TileState tileState) {
+            tileState.getPersistentDataContainer().set(Main.customOracleTableKeys, PersistentDataType.STRING, "oracle_table");
+            tileState.update();
+        }
+    }
+
 }

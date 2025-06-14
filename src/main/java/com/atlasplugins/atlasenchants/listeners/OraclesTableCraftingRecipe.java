@@ -10,6 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 public class OraclesTableCraftingRecipe {
 
     private Main main;
@@ -28,14 +32,42 @@ public class OraclesTableCraftingRecipe {
 
         ShapedRecipe recipe = new ShapedRecipe(Main.customOracleTableKeys, oracleItem);
 
-        recipe.shape("ENE", "PBP", "SSS");
+        String row1 = main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-Crafting-Row-1");
+        String row2 = main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-Crafting-Row-2");
+        String row3 = main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-Crafting-Row-3");
 
-        recipe.setIngredient('E', Material.END_CRYSTAL);
-        recipe.setIngredient('N', Material.NETHERITE_INGOT);
-        recipe.setIngredient('S', Material.ECHO_SHARD);
-        recipe.setIngredient('P', Material.PHANTOM_MEMBRANE);
-        recipe.setIngredient('B', new RecipeChoice.ExactChoice(createOracle.CreateOracleItem(1, null)) {
-        });
+        // Collect all used characters from the shape
+        Set<Character> usedChars = new HashSet<>();
+        for (char c : (row1 + row2 + row3).toCharArray()) {
+            if (c != ' ') usedChars.add(c); // ignore blank spaces
+        }
+
+        // Set shape
+        recipe.shape(row1, row2, row3);
+
+        // Loop through used characters and assign ingredients
+        for (char c : usedChars) {
+            if (c == 'Z') {
+                // Special case for Oracle Book
+                recipe.setIngredient('Z', new RecipeChoice.ExactChoice(createOracle.CreateOracleItem(1, null)));
+                continue;
+            }
+
+            String configPath = "OraclesTable.OraclesTable-Crafting-Materials-" + c;
+            if (!main.getEnchantmentsConfig().contains(configPath)) {
+                Bukkit.getLogger().warning("[AtlasEnchants] Missing material config for '" + c + "'");
+                continue;
+            }
+
+            String matName = main.getEnchantmentsConfig().getString(configPath);
+            Material material = Material.matchMaterial(matName);
+            if (material == null) {
+                Bukkit.getLogger().warning("[AtlasEnchants] Invalid material '" + matName + "' for '" + c + "'");
+                continue;
+            }
+
+            recipe.setIngredient(c, material);
+        }
 
         Bukkit.addRecipe(recipe);
     }

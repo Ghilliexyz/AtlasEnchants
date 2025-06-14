@@ -51,7 +51,6 @@ com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\commands\AbstractCommand.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateOracleTable.class
 com\atlasplugins\atlasenchants\Metrics$SingleLineChart.class
-com\atlasplugins\atlasenchants\listeners\OraclesTableCraftingRecipe$1.class
 com\atlasplugins\atlasenchants\commands\users\HelpCommand.class
 com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
