@@ -1262,7 +1262,7 @@ OraclesOfEnchantment:
   #If true the trader will have a chance of spawning the Oracle.
   OraclesOfEnchantment-Trader-Enabled: true
   #The chance of an Oracles of Enchantment spawning (0.05 = 5% | 1 = 100%)
-  OraclesOfEnchantment-Trader-Spawn-Chance: 1
+  OraclesOfEnchantment-Trader-Spawn-Chance: 0.3
   #The Item it cost to purchase the Oracle.
   OraclesOfEnchantment-Trader-Cost-Item: EMERALD
   #The amount of that Item it will cost to purchase the Oracle.
@@ -1283,8 +1283,8 @@ OraclesOfEnchantment:
     - ""
     - "&c● &7Description:"
     - "  &eA cryptic tome once whispered by the Oracles of Delphi,"
-    - "  &esaid to contain knowledge granted by gods long"
-    - "  &esilenced. Its pages shift with every reading,"
+    - "  &esaid to contain knowledge granted by gods long silenced."
+    - "  &eIts pages shift with every reading,"
     - "  &erevealing secrets only to those deemed worthy."
     - ""
     - "&c● &7Type: &eKnowledge Book"
