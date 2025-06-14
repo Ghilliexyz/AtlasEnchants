@@ -6,15 +6,14 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -73,6 +72,20 @@ public class OraclesTableEvent implements Listener {
         PersistentDataContainer pdc = tileState.getPersistentDataContainer();
         String tag = pdc.get(Main.customOracleTableKeys, PersistentDataType.STRING);
         if (tag == null || !tag.equals("oracle_table")) return;
+
+        Bukkit.getLogger().info("Using Oracles Table");
+    }
+
+    @EventHandler
+    public void onEnchantItem(EnchantItemEvent e)
+    {
+
+        ItemStack item = e.getItem();
+        Player player = e.getEnchanter();
+
+
+
+        player.sendMessage("You just enchanted: " + item + " with " + item.getEnchantments());
     }
 
     @EventHandler

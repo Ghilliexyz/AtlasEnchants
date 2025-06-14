@@ -1,11 +1,15 @@
 package com.atlasplugins.atlasenchants.guis;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -15,6 +19,8 @@ public class EnchantRarityListGUI extends Gui {
     private final Main main;
     private final Player player;
     private final String rarity;
+
+    private String raritySelected = "RARE";
 
     private final Map<Integer, List<String>> enchantmentsByLevel = new TreeMap<>();
     private int currentPage = 0;
@@ -61,6 +67,7 @@ public class EnchantRarityListGUI extends Gui {
 
         setupFiller(); // Fill entire inventory with glass first
 
+        raritySelected = GuiManager.getRarity(player.getUniqueId());
 
         // Back button
         ItemStack backBtn = new ItemStack(Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Back-Button.Material")));
@@ -133,6 +140,77 @@ public class EnchantRarityListGUI extends Gui {
                 inventory.setItem(slot, enchantItem);
             }
         }
+    }
+
+    @Override
+    public void handleClick(InventoryClickEvent event) {
+        // Get the inventory title
+        String title = event.getView().getTitle();
+        // Get the item clicked event
+        ItemStack clicked = event.getCurrentItem();
+        // Get the PersistentData
+        PersistentDataContainer container = null;
+        // Get the item meta
+        ItemMeta meta = null;
+        if (clicked != null) {
+            meta = clicked.getItemMeta();
+        }
+        if (meta != null) {
+            container = meta.getPersistentDataContainer();
+        }
+        String EnchantRarityListGUI = Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Title"))
+                .replace("{rarityColor}", Main.getRarityColorCode(main, raritySelected))
+                .replace("{rarityName}", raritySelected);
+        // Check if the clicked inventory matches your custom GUI title
+        if (title.equals(Main.color(EnchantRarityListGUI))) {
+            // Check if the clicked inventory is the custom GUI, not the player's inventory
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
+                int slot = event.getSlot();
+
+                // Cancel clicks on specific slots in the GUI
+                if (slot >= 0 && slot <= 54) {
+                    event.setCancelled(true);
+                }
+
+                // Handle clicks within your custom GUI
+                if (slot == 0) {
+                    main.openEnchantListGUI(player);
+                }
+
+                if (clicked == null) return;
+
+                // Handle clicks on the enchantment items
+                if (!clicked.hasItemMeta()) return;
+
+                // Check if the sender does not have the permission and is not an operator
+                if (!player.hasPermission("atlasenchants.enchantlistgrabber") && !player.isOp()) {
+                    // Send noPermission Message in chat when called.
+                    if (main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Grabber-Message")) {
+                        for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
+                            String withPAPISet = main.setPlaceholders((Player) player, noPermission);
+                            player.sendMessage(Main.color(withPAPISet));
+                        }
+                    }
+                    return;
+                }
+
+                NamespacedKey nameKey = new NamespacedKey(main, "enchant_name");
+                NamespacedKey levelKey = new NamespacedKey(main, "enchant_level");
+
+                if (container.has(nameKey, PersistentDataType.STRING) && container.has(levelKey, PersistentDataType.INTEGER)) {
+                    String enchantName = container.get(nameKey, PersistentDataType.STRING);
+                    int enchantLevel = container.get(levelKey, PersistentDataType.INTEGER);
+
+                    CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                    createCustomEnchant.CreateCustomEnchantmentItem(enchantName, enchantLevel, 1, player);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onInventoryClose(InventoryCloseEvent event) {
+        GuiManager.clear(event.getPlayer().getUniqueId());
     }
 
     private List<Integer> generateGridSlots(int startRow, int startCol, int rows, int cols, int totalColumns) {

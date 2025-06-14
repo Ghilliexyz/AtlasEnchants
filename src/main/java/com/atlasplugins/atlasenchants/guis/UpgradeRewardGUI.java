@@ -4,8 +4,12 @@ import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 public class UpgradeRewardGUI extends Gui {
 
@@ -77,5 +81,54 @@ public class UpgradeRewardGUI extends Gui {
         inventory.setItem(24, GlassItem);
         inventory.setItem(25, GlassItem);
         inventory.setItem(26, GlassItem);
+    }
+
+    @Override
+    public void handleClick(InventoryClickEvent event) {
+        // Get the inventory title
+        String title = event.getView().getTitle();
+        // Get the UpgradeReward Menu title from the config
+        String upgradeRewardMenuTitle = Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title"));
+        // Check if the clicked inventory matches your custom GUI title
+        if (title.equals(Main.color(upgradeRewardMenuTitle))) {
+            // Check if the clicked inventory is the custom GUI, not the player's inventory
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
+                int slot = event.getSlot();
+
+                // Cancel clicks on specific slots in the GUI
+                if (slot >= 0 && slot <= 26 && slot != 13) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onInventoryClose(InventoryCloseEvent event) {
+        // Get the inventory title
+        String title = event.getView().getTitle();
+        // Check if the title matches your custom GUI title
+        if (title.equals(Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")))) {  // Replace with your actual GUI title
+
+            // Define the slots where players can place their items (e.g., 13)
+            int[] validSlots = {13};
+
+            // Loop through the defined valid slots and return the items to the player
+            for (int slot : validSlots) {
+                ItemStack item = inventory.getItem(slot);
+
+                if (item != null && item.getType() != Material.AIR) {
+                    // Try adding the item back to the player's inventory
+                    HashMap<Integer, ItemStack> remainingItems = player.getInventory().addItem(item);
+
+                    // If the player's inventory is full, drop the items at their feet
+                    if (!remainingItems.isEmpty()) {
+                        for (ItemStack remainingItem : remainingItems.values()) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), remainingItem);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
