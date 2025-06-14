@@ -264,8 +264,8 @@ Enchantments:
         PoseidonsBait-Particle-Size-1: 0.1
     #The % chance of catching an enchant. ( 0.05 = 5% | 0.5 = 50% )
     PoseidonsBait-Proc-Chance-1: 0.01
-    PoseidonsBait-Proc-Chance-2: 0.03
-    PoseidonsBait-Proc-Chance-3: 0.05
+    PoseidonsBait-Proc-Chance-2: 0.02
+    PoseidonsBait-Proc-Chance-3: 0.03
   # --------------------- LEGENDARY ENCHANTS --------------------- #
   LEECH:
     #Max Level of this Enchantment.
