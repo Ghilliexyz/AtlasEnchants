@@ -43,6 +43,7 @@ com\atlasplugins\atlasenchants\commands\users\EnchantListCommand.class
 com\atlasplugins\atlasenchants\enchants\tools\TreeHugger.class
 com\atlasplugins\atlasenchants\guis\UpgradeRewardGUI.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedPie.class
+com\atlasplugins\atlasenchants\listeners\enchantevents\WanderingTraderEvent.class
 com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect$1.class
 com\atlasplugins\atlasenchants\commands\AbstractCommand.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateOracle.class

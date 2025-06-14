@@ -164,6 +164,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         this.getServer().getPluginManager().registerEvents(new OraclesOfEnchantmentEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new WanderingTraderEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Register commands

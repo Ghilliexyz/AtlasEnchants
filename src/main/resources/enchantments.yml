@@ -1259,8 +1259,20 @@ OraclesOfEnchantment:
   OraclesOfEnchantment-Item: WRITTEN_BOOK
   #If true the OraclesOfEnchantment-Item will have an enchantment glint on it.
   OraclesOfEnchantment-Glint-Toggle: true
+  #If true the trader will have a chance of spawning the Oracle.
+  OraclesOfEnchantment-Trader-Enabled: true
   #The chance of an Oracles of Enchantment spawning (0.05 = 5% | 1 = 100%)
-  OraclesOfEnchantment-Spawn-Chance: 1
+  OraclesOfEnchantment-Trader-Spawn-Chance: 1
+  #The Item it cost to purchase the Oracle.
+  OraclesOfEnchantment-Trader-Cost-Item: EMERALD
+  #The amount of that Item it will cost to purchase the Oracle.
+  OraclesOfEnchantment-Trader-Cost-Amount: 32
+  #If true the Oracle will spawn in a random slot.
+  #(Set to false if you want to set it to a specific slot)
+  OraclesOfEnchantment-Trader-Slot-Random: true
+  #The slot the oracle will spawn in (make sure Slot Random is set to false or the slot will be random)
+  #0 = the top of the menu the max is 5
+  OraclesOfEnchantment-Trader-Slot: 5
   #If true the Oracles of Enchantment can be Found, and Used. if false the opposite for all happens.
   OraclesOfEnchantment-Enabled: true
   #The name of the Oracles of Enchantment.
