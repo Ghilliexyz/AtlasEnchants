@@ -1223,6 +1223,29 @@ Enchantments:
     Decapitate-Proc-Chance-3: 0.05
     #The style of the Head Title.
     Decapitate-Head-Title-Style: "&c&lHead of &7{headType}"
+  TAINTEDBOOK:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 1
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "TRASH"
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&8&lTRASH &7Tainted Book"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lNothing      &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eHolds a whole lot of scribbles."
+      - ""
+      - "&c● &7Type: &eUnusable Enchantment"
+      - ""
+      - "&c● &7Usage: &eThrow into Lava"
+      - ""
+      - "&c&m&l-----------------------------------------"
 
 OblivionShard:
   #Type of Item the Oblivion Shard will be.
@@ -1339,7 +1362,9 @@ OraclesTable:
     #Chance to get an Epic enchantment.
     EPIC: 0.20
     #Chance to get a Rare enchantment.
-    RARE: 0.75
+    RARE: 0.60
+    #Chance to get a Trash book.
+    TRASH: 0.15
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
   OraclesTable-Flip-List: true

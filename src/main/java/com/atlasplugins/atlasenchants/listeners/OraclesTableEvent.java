@@ -89,8 +89,10 @@ public class OraclesTableEvent implements Listener {
 
         switch (enchantmentTableBtn) {
             case 0:
+                    e.setCancelled(true);
                 break;
             case 1:
+                    e.setCancelled(true);
                 break;
             case 2:
                     applyRandomCustomEnchantments(main, player, item, 1, e);
