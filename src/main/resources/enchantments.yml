@@ -1322,6 +1322,27 @@ OraclesTable:
   OraclesTable-Crafting-Materials-I: ECHO_SHARD
   #If true Oracle's Table can be used.
   OraclesTable-Enabled: true
+  #If true Oracle's Table will allow players to enchant Armour and Tools
+  #Note this is false by default due to how OP it is.
+  OraclesTable-ArmourTools-Enchanter-Enabled: true
+  #If true Oracle's Table will allow players to enchant with vanilla enchants and custom enchants at the same time
+  #Note only works when ArmourTools-Enchanter is set to true as well.
+  OraclesTable-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
+  #If true Oracle's Table will allow players to enchant Books
+  OraclesTable-Book-Enchanter-Enabled: true
+  #A list of all rarity's in the plugin. (0.5 = 50%)
+  OraclesTable-Book-Enchanter-Odds:
+    #Chance to get a Godly enchantment.
+    GODLY: 0.1
+    #Chance to get a Legendary enchantment.
+    LEGENDARY: 0.4
+    #Chance to get an Epic enchantment.
+    EPIC: 0.20
+    #Chance to get a Rare enchantment.
+    RARE: 0.75
+  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
+  #if false then it will check Godly first and make its way down to Rares.
+  OraclesTable-Flip-List: true
   #The name of the Oracles of Enchantment.
   OraclesTable-DisplayName: "&f&kv&l &d&lOracle's Table &f&kv"
   #Lore for the Oracles of Enchantment.

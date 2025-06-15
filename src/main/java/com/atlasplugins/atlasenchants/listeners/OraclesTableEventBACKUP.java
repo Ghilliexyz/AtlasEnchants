@@ -2,8 +2,6 @@ package com.atlasplugins.atlasenchants.listeners;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -14,9 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -26,11 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class OraclesTableEvent implements Listener {
+public class OraclesTableEventBACKUP implements Listener {
+
+    // This is a backup of allowing players to enchant armour/tools via the oracles table with custom enchants
+    // currently disabled.
 
     private Main main;
 
-    public OraclesTableEvent(Main main) {
+    public OraclesTableEventBACKUP(Main main) {
         this.main = main;
     }
 
@@ -73,6 +72,10 @@ public class OraclesTableEvent implements Listener {
 
         if(!isOracleTableCraftingEnabled) return;
 
+        int enchantmentAmount1 = main.getEnchantmentsConfig().getInt("OraclesTable.OraclesTable-Level-1.OraclesTable-EnchantAmount");
+        int enchantmentAmount2 = main.getEnchantmentsConfig().getInt("OraclesTable.OraclesTable-Level-2.OraclesTable-EnchantAmount");
+        int enchantmentAmount3 = main.getEnchantmentsConfig().getInt("OraclesTable.OraclesTable-Level-3.OraclesTable-EnchantAmount");
+
         ItemStack item = e.getItem();
         Player player = e.getEnchanter();
 
@@ -89,11 +92,19 @@ public class OraclesTableEvent implements Listener {
 
         switch (enchantmentTableBtn) {
             case 0:
+                if (enchantmentAmount1 > 0) {
+                    applyRandomCustomEnchantments(main, player, item, enchantmentAmount1);
+                }
                 break;
             case 1:
+                if (enchantmentAmount2 > 0) {
+                    applyRandomCustomEnchantments(main, player, item, enchantmentAmount2);
+                }
                 break;
             case 2:
-                    applyRandomCustomEnchantments(main, player, item, 1, e);
+                if (enchantmentAmount3 > 0) {
+                    applyRandomCustomEnchantments(main, player, item, enchantmentAmount3);
+                }
                 break;
         }
     }
@@ -108,56 +119,11 @@ public class OraclesTableEvent implements Listener {
      * @param targetItem The ItemStack to which the random enchantments will be applied.
      * @param numberOfEnchantmentsToApply The desired number of distinct random enchantments to attempt to apply.
      */
-    public static void applyRandomCustomEnchantments(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply, EnchantItemEvent e) {
-
-        boolean canEnchantToolsAndArmour = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-ArmourTools-Enchanter-Enabled");
-
-        if(canEnchantToolsAndArmour){
-            if(targetItem.getType() != Material.BOOK)
-            {
-                ApplyToArmourAndTools(main, player, targetItem, numberOfEnchantmentsToApply);
-                e.setCancelled(true);
-            }
-        }
-
-        boolean canEnchantBook = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Book-Enchanter-Enabled");
-
-        if(canEnchantBook){
-            ApplyToBook(main, player, targetItem);
-        }
-    }
-
-    public static  void ApplyToBook(Main main, Player player, ItemStack targetItem)
-    {
+    public static void applyRandomCustomEnchantments(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply) {
         // Basic validation: ensure we have a valid item and a positive number of enchantments to apply.
-        if (targetItem == null || targetItem.getType() == Material.AIR) {
+        if (targetItem == null || targetItem.getType() == Material.AIR || numberOfEnchantmentsToApply <= 0) {
 //            main.getLogger().warning("Attempted to apply random enchantments with invalid item or count. Item: " + targetItem + ", Count: " + numberOfEnchantmentsToApply);
             return;
-        }
-
-        targetItem.setType(Material.AIR);
-
-        // Create an instance of CreateRandomCustomEnchant and call the method
-        CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
-        createRandomCustomEnchant.CreateRandomOracleEnchantmentItem(player, 1, true, null);
-    }
-
-    public static void ApplyToArmourAndTools(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply)
-    {
-        // Basic validation: ensure we have a valid item and a positive number of enchantments to apply.
-        if (targetItem == null || targetItem.getType() == Material.AIR || numberOfEnchantmentsToApply <= 0 || targetItem.getType() == Material.BOOK) {
-//            main.getLogger().warning("Attempted to apply random enchantments with invalid item or count. Item: " + targetItem + ", Count: " + numberOfEnchantmentsToApply);
-            return;
-        }
-
-        ItemMeta targetItemMeta = targetItem.getItemMeta();
-        if (targetItemMeta != null) {
-            PersistentDataContainer itemPDC = targetItemMeta.getPersistentDataContainer();
-            // If the item already has our custom enchantment key, do nothing and return.
-            if (itemPDC.has(Main.customEnchantKeys, PersistentDataType.STRING)) {
-                // You might want to send a message to the player here
-                return;
-            }
         }
 
         // Get the 'Enchantments' section from your config.

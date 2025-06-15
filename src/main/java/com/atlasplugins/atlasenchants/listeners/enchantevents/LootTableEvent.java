@@ -54,9 +54,6 @@ public class LootTableEvent implements Listener {
                 if (random.nextDouble() <= rarityChance) {
                     String enchantRarity = rarity.toUpperCase();
 
-//                    main.getLogger().info("Enchant Rarity: " + enchantRarity);
-//                    main.getLogger().info("Rarity Chance: " + rarityChance);
-
                     // Filter enchantments by the current rarity
                     List<String> filteredEnchantments = enchantments.stream()
                             .filter(enchantment -> {
@@ -78,7 +75,7 @@ public class LootTableEvent implements Listener {
 
                         // Get the Enchantment Max Level
                         int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
-                        int enchantmentAmount = 1; // Example number of items to generate
+                        int enchantmentAmount = 1;
 
                         // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
                         int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;

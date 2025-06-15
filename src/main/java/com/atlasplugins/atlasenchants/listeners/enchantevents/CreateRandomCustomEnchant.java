@@ -104,4 +104,82 @@ public class CreateRandomCustomEnchant implements Listener {
         }
         return null;
     }
+
+    // New parameter for specifying rarity
+    public ItemStack CreateRandomOracleEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant, String desiredRarity) {
+        boolean hasFoundEnchantment = false;
+
+        List<String> allEnchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
+                .stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+
+        boolean flipEnchantmentList = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Flip-List");
+
+        List<String> allRarities = main.getEnchantmentsConfig().getConfigurationSection("OraclesTable.OraclesTable-Book-Enchanter-Odds").getKeys(false)
+                .stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+
+        if (flipEnchantmentList) {
+            Collections.reverse(allEnchantments);
+            Collections.reverse(allRarities);
+        }
+
+        while (!hasFoundEnchantment) {
+            for (String rarity : allRarities) {
+                if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) continue;
+
+                double rarityChance = main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-Book-Enchanter-Odds." + rarity);
+
+                if (desiredRarity == null && random.nextDouble() > rarityChance) continue;
+
+                String upperRarity = rarity.toUpperCase();
+                List<String> filteredEnchantments = getEnabledEnchantmentsByRarity(upperRarity, allEnchantments);
+
+                if (filteredEnchantments.isEmpty()) {
+                    if (desiredRarity != null) return null; // None available for that rarity
+                    continue;
+                }
+
+                // Pick a random enchantment
+                String selected = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+                int maxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selected + ".Enchantment-MaxLvl");
+
+                // Prevent invalid max level
+                if (maxLevel <= 0) continue;
+
+                int level = random.nextInt(maxLevel) + 1;
+
+                CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+                ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selected, level, enchantmentAmount, null);
+
+                if (givePlayerEnchant && p != null) {
+                    for (int i = 0; i < enchantmentAmount; i++) {
+                        HashMap<Integer, ItemStack> remaining = p.getInventory().addItem(customItem);
+                        if (!remaining.isEmpty()) {
+                            for (ItemStack leftover : remaining.values()) {
+                                p.getWorld().dropItemNaturally(p.getLocation(), leftover);
+                            }
+                        }
+                    }
+                }
+
+                hasFoundEnchantment = true;
+                return customItem;
+            }
+        }
+
+        return null; // Shouldn't reach here unless something went wrong
+    }
+
+    private List<String> getEnabledEnchantmentsByRarity(String rarity, List<String> allEnchantments) {
+        return allEnchantments.stream()
+                .filter(enchant -> {
+                    String enchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchant + ".Enchantment-Rarity");
+                    boolean isEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + enchant + ".Enchantment-Enabled");
+                    return isEnabled && rarity.equalsIgnoreCase(enchantRarity);
+                })
+                .collect(Collectors.toList());
+    }
 }

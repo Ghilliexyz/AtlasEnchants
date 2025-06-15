@@ -215,7 +215,7 @@ EnchantItems:
     EPIC: 0.25
     #Chance to get a Rare enchantment.
     RARE: 0.40
-  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly#
+  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true
 

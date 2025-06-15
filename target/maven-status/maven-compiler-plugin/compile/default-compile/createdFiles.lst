@@ -56,6 +56,7 @@ com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\commands\users\GiveOblivionShardCommand.class
+com\atlasplugins\atlasenchants\listeners\OraclesTableEventBACKUP.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedBarChart.class
 com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCustomEnchant.class

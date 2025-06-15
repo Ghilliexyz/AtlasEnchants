@@ -23,6 +23,9 @@ public class ReloadCommand extends AbstractCommand {
         // Reload Enchantments config
         main.loadEnchantmentsConfig();
 
+        // Reload Menus config
+        main.loadMenusConfig();
+
         // Send ConfigReloaded Message in chat when called.
         for (String ConfigReloadedMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-ReloadConfig-ConfigReloaded")) {
             String withPAPISet = main.setPlaceholders((Player) sender, ConfigReloadedMessage);
