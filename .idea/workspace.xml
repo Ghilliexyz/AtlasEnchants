@@ -5,31 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5489b0f3-e62e-4d18-af93-a4d29381cd78" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/CommandRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/CommandRouter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/users/GiveOraclesTableCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/commands/users/GiveAltarOfCirceCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/OraclesTableCraftingRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/AltarOfCirceCraftingRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/OraclesTableEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/AltarOfCirceEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateOracleTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateAltarOfCirce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateRandomCustomEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateRandomCustomEnchant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/AltarOfCirceCraftingRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/AltarOfCirceCraftingRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateScrapOfCirce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateScrapOfCirce.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/enchantments.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/enchantments.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.3-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.3-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/AtlasEnchants-1.3.3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/AtlasEnchants-1.3.3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/CommandRouter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/CommandRouter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/commands/users/GiveOraclesTableCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/OraclesTableCraftingRecipe.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/OraclesTableEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateOracleTable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateRandomCustomEnchant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atlasplugins/atlasenchants/listeners/enchantevents/CreateRandomCustomEnchant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/enchantments.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/enchantments.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/settings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-AtlasEnchants-1.3.3.jar" afterDir="false" />
     </list>
     <list id="7576ba64-8148-4ab9-9e6a-9e043b163574" name="Changes by Jordan" comment="" />
     <option name="SHOW_DIALOG" value="false" />

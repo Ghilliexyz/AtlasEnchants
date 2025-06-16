@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants.listeners;
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateOracleBook;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateScrapOfCirce;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +28,8 @@ public class AltarOfCirceCraftingRecipe {
         ItemStack oracleItem = createAltarOfCirce.CreateAltarOfCirceItem(1, null);
         // Create Oracle Book
         CreateOracleBook createOracle = new CreateOracleBook(main);
+        // Create Scrap of Circes Weave
+        CreateScrapOfCirce createScrapOfCirce = new CreateScrapOfCirce(main);
 
         ShapedRecipe recipe = new ShapedRecipe(Main.customAltarOfCirceKeys, oracleItem);
 
@@ -45,9 +48,15 @@ public class AltarOfCirceCraftingRecipe {
 
         // Loop through used characters and assign ingredients
         for (char c : usedChars) {
-            if (c == 'Z') {
+            if (c == 'X') {
                 // Special case for Oracle Book
-                recipe.setIngredient('Z', new RecipeChoice.ExactChoice(createOracle.CreateOracleItem(1, null)));
+                recipe.setIngredient('X', new RecipeChoice.ExactChoice(createOracle.CreateOracleItem(1, null)));
+                continue;
+            }
+
+            if (c == 'Y') {
+                // Special case for Oracle Book
+                recipe.setIngredient('Y', new RecipeChoice.ExactChoice(createScrapOfCirce.CreateScrapOfCirceItem(1, null)));
                 continue;
             }
 

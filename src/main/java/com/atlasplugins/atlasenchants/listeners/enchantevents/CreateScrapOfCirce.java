@@ -25,13 +25,13 @@ public class CreateScrapOfCirce implements Listener {
         this.main = main;
     }
 
-    public ItemStack CreateScrapOfCirceItem(int oracleAmount, Player p) {
-        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-Item")));
-        ItemMeta oracleMeta = oracle.getItemMeta();
+    public ItemStack CreateScrapOfCirceItem(int scrapAmount, Player p) {
+        ItemStack scrap = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-Item")));
+        ItemMeta scrapMeta = scrap.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
-        oracleMeta.setDisplayName(Main.color(withPAPISet)
+        scrapMeta.setDisplayName(Main.color(withPAPISet)
                 .replace("{ScrapOfCirceWeaveChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("ScrapOfCirceWeave.ScrapOfCirceWeave-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -46,24 +46,24 @@ public class CreateScrapOfCirce implements Listener {
         if(addGlint)
         {
             // Add Glint effect
-            oracleMeta.addEnchant(Enchantment.INFINITY, 1, true);
-            oracleMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            scrapMeta.addEnchant(Enchantment.INFINITY, 1, true);
+            scrapMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
         int scrapofcirceID = random.nextInt();
 
-        PersistentDataContainer pdc = oracleMeta.getPersistentDataContainer();
-//        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle" + ":" + scrapofcirceID);
+        PersistentDataContainer pdc = scrapMeta.getPersistentDataContainer();
+//        pdc.set(Main.customscrapKeys, PersistentDataType.STRING, "scrap" + ":" + scrapofcirceID);
         pdc.set(Main.customScrapOfCirceKeys, PersistentDataType.STRING, "scrapeofcirce_book");
 
-        oracleMeta.setLore(enchantmentLore);
-        oracle.setItemMeta(oracleMeta);
+        scrapMeta.setLore(enchantmentLore);
+        scrap.setItemMeta(scrapMeta);
 
         // Add items to player's inventory if player is not null
         if (p != null) {
-            for (int i = 0; i < oracleAmount; i++) {
+            for (int i = 0; i < scrapAmount; i++) {
                 // Check if there's space in the player's inventory
-                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(oracle);
+                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(scrap);
 
                 // If the inventory is full and the item could not be added, drop it at the player's feet
                 if (!remainingItems.isEmpty()) {
@@ -74,6 +74,6 @@ public class CreateScrapOfCirce implements Listener {
             }
         }
 
-        return oracle;
+        return scrap;
     }
 }

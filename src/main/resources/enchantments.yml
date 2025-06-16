@@ -1324,9 +1324,10 @@ AltarOfCirce:
   #If true Oracle's Table can be crafted.
   AltarOfCirce-Crafting-Enabled: true
   #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
-  # **NOTE** USE the letter 'Z' if you want them to use the Oracles Of Enchantment Book in the recipe
+  # **NOTE** USE the letter 'X' if you want them to use the Oracles Of Enchantment Book in the recipe
+  # **NOTE** USE the letter 'Y' if you want them to use the Scrap Of Circe's Weave in the recipe
   AltarOfCirce-Crafting-Row-1: "ABC"
-  AltarOfCirce-Crafting-Row-2: "DZF"
+  AltarOfCirce-Crafting-Row-2: "YXY"end
   AltarOfCirce-Crafting-Row-3: "GHI"
   #These are the Crafting Materials inside the recipe
   # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
