@@ -25,13 +25,13 @@ public class CreateAltarOfCirce implements Listener {
         this.main = main;
     }
 
-    public ItemStack CreateAltarOfCirceItem(int oracleAmount, Player p) {
-        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Item")));
-        ItemMeta oracleMeta = oracle.getItemMeta();
+    public ItemStack CreateAltarOfCirceItem(int altarAmount, Player p) {
+        ItemStack altar = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Item")));
+        ItemMeta altarMeta = altar.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
-        oracleMeta.setDisplayName(Main.color(withPAPISet)
+        altarMeta.setDisplayName(Main.color(withPAPISet)
                 .replace("{AltarOfCirceChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("AltarOfCirce.AltarOfCirce-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
@@ -46,24 +46,24 @@ public class CreateAltarOfCirce implements Listener {
         if(addGlint)
         {
             // Add Glint effect
-            oracleMeta.addEnchant(Enchantment.INFINITY, 1, true);
-            oracleMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            altarMeta.addEnchant(Enchantment.INFINITY, 1, true);
+            altarMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int oracleID = random.nextInt();
+        int altarID = random.nextInt();
 
-        PersistentDataContainer pdc = oracleMeta.getPersistentDataContainer();
-//        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle" + ":" + oracleID);
+        PersistentDataContainer pdc = altarMeta.getPersistentDataContainer();
+//        pdc.set(Main.customaltarKeys, PersistentDataType.STRING, "altar" + ":" + altarID);
         pdc.set(Main.customAltarOfCirceKeys, PersistentDataType.STRING, "altar_of_circe");
 
-        oracleMeta.setLore(enchantmentLore);
-        oracle.setItemMeta(oracleMeta);
+        altarMeta.setLore(enchantmentLore);
+        altar.setItemMeta(altarMeta);
 
         // Add items to player's inventory if player is not null
         if (p != null) {
-            for (int i = 0; i < oracleAmount; i++) {
+            for (int i = 0; i < altarAmount; i++) {
                 // Check if there's space in the player's inventory
-                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(oracle);
+                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(altar);
 
                 // If the inventory is full and the item could not be added, drop it at the player's feet
                 if (!remainingItems.isEmpty()) {
@@ -74,6 +74,6 @@ public class CreateAltarOfCirce implements Listener {
             }
         }
 
-        return oracle;
+        return altar;
     }
 }

@@ -666,6 +666,15 @@ ScrapOfCirceWeaveSounds:
   ScrapOfCirceWeave-ScrappedAEnchantment-Volume: 1
   #The pitch the sound plays when the player has Scrapped an Enchantment.
   ScrapOfCirceWeave-ScrappedAEnchantment-Pitch: 0.1
+  #------------------Failed CIRCE SOUNDS------------------#
+  #If True the custom Circe Failed sound will play.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Sound-Toggle: true
+  #The sound that plays when the CIRCE is Failed.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Sound: ITEM_AXE_STRIP
+  #The volume the sound plays when the CIRCE is Failed.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Volume: 1
+  #The pitch the sound plays when the CIRCE is Failed.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Pitch: 2
   #------------------DISABLED CIRCE SOUNDS------------------#
   #If True the custom Circe Disabled sound will play.
   ScrapOfCirceWeave-DisabledScrapEnchantment-Sound-Toggle: true
@@ -685,6 +694,18 @@ ScrapOfCirceWeaveMessages:
     -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     -  ""
     -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------CIRCE FAILED Message------------------#
+  #If True the disabled message will be sent to the player.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Message-Toggle: true
+  #The message that will be sent when Circe has been Failed.
+  ScrapOfCirceWeave-FailedScrapEnchantment-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
+    -  ""
+    -  "&c● &7You received nothing."
     -  ""
     -  "&c&m&l-----------------------------------------"
   #------------------CIRCE DISABLED Message------------------#

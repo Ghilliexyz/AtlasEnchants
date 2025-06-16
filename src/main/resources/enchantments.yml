@@ -1327,7 +1327,7 @@ AltarOfCirce:
   # **NOTE** USE the letter 'X' if you want them to use the Oracles Of Enchantment Book in the recipe
   # **NOTE** USE the letter 'Y' if you want them to use the Scrap Of Circe's Weave in the recipe
   AltarOfCirce-Crafting-Row-1: "ABC"
-  AltarOfCirce-Crafting-Row-2: "YXY"end
+  AltarOfCirce-Crafting-Row-2: "YXY"
   AltarOfCirce-Crafting-Row-3: "GHI"
   #These are the Crafting Materials inside the recipe
   # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
@@ -1393,6 +1393,9 @@ ScrapOfCirceWeave:
   ScrapOfCirceWeave-Glint-Toggle: true
   #If true the Scrap of Circes Weave can be Found, and Used. if false the opposite for all happens.
   ScrapOfCirceWeave-Enabled: true
+  #The chance that when using a cauldron the player will receive a Scarp Of Circes Weave.
+  #(0.75 = 75% of success)
+  ScrapOfCirceWeave-Success-Chance: 0.75
   #The name of the Scrap of Circes Weave.
   ScrapOfCirceWeave-DisplayName: "&f&kv&l &3&lScrap Of Circe's Weave &f&kv"
   #Lore for the Scrap of Circes Weave.

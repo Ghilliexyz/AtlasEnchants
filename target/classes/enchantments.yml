@@ -1393,6 +1393,9 @@ ScrapOfCirceWeave:
   ScrapOfCirceWeave-Glint-Toggle: true
   #If true the Scrap of Circes Weave can be Found, and Used. if false the opposite for all happens.
   ScrapOfCirceWeave-Enabled: true
+  #The chance that when using a cauldron the player will receive a Scarp Of Circes Weave.
+  #(0.75 = 75% of success)
+  ScrapOfCirceWeave-Success-Chance: 0.75
   #The name of the Scrap of Circes Weave.
   ScrapOfCirceWeave-DisplayName: "&f&kv&l &3&lScrap Of Circe's Weave &f&kv"
   #Lore for the Scrap of Circes Weave.
