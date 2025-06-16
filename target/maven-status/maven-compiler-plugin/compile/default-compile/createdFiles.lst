@@ -1,5 +1,6 @@
 com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot$1.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateOracleBook.class
+com\atlasplugins\atlasenchants\listeners\enchantevents\CreateScrapOfCirce.class
 com\atlasplugins\atlasenchants\enchants\armor\Fearsight.class
 com\atlasplugins\atlasenchants\listeners\OraclesOfEnchantmentEvent.class
 com\atlasplugins\atlasenchants\Metrics$SimpleBarChart.class
@@ -13,6 +14,7 @@ com\atlasplugins\atlasenchants\enchants\weapons\Decapitate.class
 com\atlasplugins\atlasenchants\enchants\tools\MinersTouch.class
 com\atlasplugins\atlasenchants\Main.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateShard.class
+com\atlasplugins\atlasenchants\listeners\CauldronEvent.class
 com\atlasplugins\atlasenchants\commands\users\GiveOraclesTableCommand.class
 com\atlasplugins\atlasenchants\enchants\defense\FinalGuard.class
 com\atlasplugins\atlasenchants\commands\users\UpgradeCommand.class
@@ -56,10 +58,10 @@ com\atlasplugins\atlasenchants\Metrics$SimplePie.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\commands\users\GiveOblivionShardCommand.class
-com\atlasplugins\atlasenchants\listeners\OraclesTableEventBACKUP.class
 com\atlasplugins\atlasenchants\Metrics$AdvancedBarChart.class
 com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCustomEnchant.class
+com\atlasplugins\atlasenchants\commands\users\GiveScrapOfCirceCommand.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipListener$1.class
 com\atlasplugins\atlasenchants\Metrics$JsonObjectBuilder$JsonObject.class
 com\atlasplugins\atlasenchants\commands\users\GiveOracleOfEnchantmentCommand.class

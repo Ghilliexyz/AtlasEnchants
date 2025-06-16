@@ -1316,7 +1316,6 @@ OraclesOfEnchantment:
     - ""
     - "&c&m&l-----------------------------------------"
 
-
 OraclesTable:
   #Type of Item the Oracles of Enchantment will be.
   OraclesTable-Item: ENCHANTING_TABLE
@@ -1383,5 +1382,30 @@ OraclesTable:
     - "&c● &7Type: &eAncient Enchant Table"
     - ""
     - "&c● &7Usage: &ePlace down and open"
+    - ""
+    - "&c&m&l-----------------------------------------"
+
+ScrapOfCirceWeave:
+  #Type of Item the Scrap of Circes Weave will be.
+  ScrapOfCirceWeave-Item: PAPER
+  #If true the ScrapOfCirceWeave-Item will have an enchantment glint on it.
+  ScrapOfCirceWeave-Glint-Toggle: true
+  #If true the Scrap of Circes Weave can be Found, and Used. if false the opposite for all happens.
+  ScrapOfCirceWeave-Enabled: false
+  #The name of the Scrap of Circes Weave.
+  ScrapOfCirceWeave-DisplayName: "&f&kv&l &3&lScrap Of Circe's Weave &f&kv"
+  #Lore for the Scrap of Circes Weave.
+  ScrapOfCirceWeave-Lore:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Description:"
+    - "  &eA damp and fragile remnant from the enchantress Circe's spellwork,"
+    - "  &eonce part of a greater weave of divine transformation."
+    - "  &eThough faded, it hums faintly with latent power,"
+    - "  &esecrets soaked into the fibers, waiting to be drawn out."
+    - ""
+    - "&c● &7Type: &eMagical Scrap"
+    - ""
+    - "&c● &7Usage: &eCreating The Alter Of Circe & Enchantments"
     - ""
     - "&c&m&l-----------------------------------------"

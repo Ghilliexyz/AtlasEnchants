@@ -274,16 +274,16 @@ public class ApplyShard implements Listener {
                             // Cancel the event to prevent default behavior
                             invEvent.setCancelled(true);
 
-                            // Get apply sound via config.
-                            Sound shardApplySound = Sound.valueOf(main.getSettingsConfig().getString("ShardItemSounds.ShardItem-Apply-Sound"));
-                            float shardApplyVolume = main.getSettingsConfig().getInt("ShardItemSounds.ShardItem-Apply-Volume");
-                            float shardApplyPitch = main.getSettingsConfig().getInt("ShardItemSounds.ShardItem-Apply-Pitch");
 
                             // Get the bool to check if the user wants to play the blacklisted enchant sound
                             boolean shardApplyPlaySound = main.getSettingsConfig().getBoolean("ShardItemSounds.ShardItem-Apply-Sound-Toggle");
 
                             // check if the user wants to play the Already Applied sound
                             if(shardApplyPlaySound){
+                                // Get apply sound via config.
+                                Sound shardApplySound = Sound.valueOf(main.getSettingsConfig().getString("ShardItemSounds.ShardItem-Apply-Sound"));
+                                float shardApplyVolume = main.getSettingsConfig().getInt("ShardItemSounds.ShardItem-Apply-Volume");
+                                float shardApplyPitch = main.getSettingsConfig().getInt("ShardItemSounds.ShardItem-Apply-Pitch");
                                 // Play sound for when enchant is Already Applied.
                                 player.playSound(player.getLocation(), shardApplySound, shardApplyVolume, shardApplyPitch);
                             }

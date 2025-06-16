@@ -7,6 +7,7 @@ import com.atlasplugins.atlasenchants.enchants.defense.FinalGuard;
 import com.atlasplugins.atlasenchants.enchants.tools.*;
 import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.guis.*;
+import com.atlasplugins.atlasenchants.listeners.CauldronEvent;
 import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
 import com.atlasplugins.atlasenchants.listeners.OraclesTableCraftingRecipe;
 import com.atlasplugins.atlasenchants.listeners.OraclesTableEvent;
@@ -53,6 +54,7 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey customShardKeys;
     public static NamespacedKey customOracleBookKeys;
     public static NamespacedKey customOracleTableKeys;
+    public static NamespacedKey customScrapOfCirceKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
@@ -119,6 +121,7 @@ public final class Main extends JavaPlugin implements Listener {
         customShardKeys = new NamespacedKey(this, "Custom_Shards");
         customOracleBookKeys = new NamespacedKey(this, "Custom_Oracle_Books");
         customOracleTableKeys = new NamespacedKey(this, "Custom_Oracle_Table");
+        customScrapOfCirceKeys = new NamespacedKey(this, "Custom_ScrapOfCirce");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
@@ -162,6 +165,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new CreateOracleBook(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateOracleTable(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateRandomCustomEnchant(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateScrapOfCirce(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
         this.getServer().getPluginManager().registerEvents(new LootTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
@@ -169,6 +173,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new OraclesOfEnchantmentEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new OraclesTableEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new WanderingTraderEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new CauldronEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Crafting Recipe

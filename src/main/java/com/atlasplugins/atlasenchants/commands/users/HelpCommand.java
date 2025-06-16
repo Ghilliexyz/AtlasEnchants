@@ -30,8 +30,14 @@ public class HelpCommand extends AbstractCommand {
         sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveshard &e<PlayerName> <Amount>"));
         sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Shard"));
         sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoracle &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle"));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoraclebook &e<PlayerName> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle book"));
+        sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoracletable &e<PlayerName> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle Table"));
+        sender.sendMessage(Main.color(""));
+        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants givescrapofcirce &e<PlayerName> <Amount>"));
+        sender.sendMessage(Main.color("&c● &7Gives the named user a scrap of circe's weave"));
         sender.sendMessage(Main.color(""));
         sender.sendMessage(Main.color("&c● &7Show Enchant List menu command: &c/aenchants list"));
         sender.sendMessage(Main.color("&c● &7Opens a Enchant List menu"));

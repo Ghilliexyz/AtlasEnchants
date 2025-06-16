@@ -38,6 +38,9 @@ permissions:
   atlasenchants.giveoracletable:
     description: Permission needed to use the give oracle table command.
     default: false
+  atlasenchants.givescrapofcirce:
+    description: Permission needed to use the give scrap of circe's weave command.
+    default: false
   atlasenchants.upgrade:
     description: Permission needed to use the upgrade command.
     default: false

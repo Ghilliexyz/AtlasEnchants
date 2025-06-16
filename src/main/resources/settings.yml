@@ -134,7 +134,7 @@ Command-Messages:
   Command-Messages-OracleOfEnchantment-Usage-Message:
     - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     - ""
-    - "&c● &7Usage: &c/ae oracle &e<player> <amount>"
+    - "&c● &7Usage: &c/ae giveoraclebook &e<player> <amount>"
     - ""
     - "&c&m&l-----------------------------------------"
   Command-Messages-OracleOfEnchantment-PlayerNotFound-Message:
@@ -150,6 +150,64 @@ Command-Messages:
     - ""
     - "&c&m&l-----------------------------------------"
   Command-Messages-OracleOfEnchantment-AmountRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  ##########################################################
+  #                                                        #
+  #               GIVE Oracle's Table MESSAGES             #
+  #                                                        #
+  ##########################################################
+  Command-Messages-OracleTable-Usage-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Usage: &c/ae giveoracletable &e<player> <amount>"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleTable-PlayerNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleTable-InvalidAmount-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-OracleTable-AmountRange-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  ##########################################################
+  #                                                        #
+  #           GIVE Scrap of Circe's Weave MESSAGES         #
+  #                                                        #
+  ##########################################################
+  Command-Messages-ScrapOfCirceWeave-Usage-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Usage: &c/ae givescrapofcirce &e<player> <amount>"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-ScrapOfCirceWeave-PlayerNotFound-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-ScrapOfCirceWeave-InvalidAmount-Message:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "&c&m&l-----------------------------------------"
+  Command-Messages-ScrapOfCirceWeave-AmountRange-Message:
     - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
@@ -593,5 +651,51 @@ OracleTableItemMessages:
     -  "&c● &7You cannot open: &e&l{oracleName}"
     -  ""
     -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+
+#The sound that will play when the player opens the Oracle.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+ScrapOfCirceWeaveSounds:
+  #------------------SCRAPPED A ENCHANTMENT SOUNDS------------------#
+  #If True the custom Scrapped Enchantment sound will play.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Sound-Toggle: true
+  #The sound that plays when the player has Scrapped an Enchantment.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Sound: ENTITY_DROWNED_AMBIENT_WATER
+  #The volume the sound plays when the player has Scrapped an Enchantment.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Volume: 1
+  #The pitch the sound plays when the player has Scrapped an Enchantment.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Pitch: 0.1
+  #------------------DISABLED CIRCE SOUNDS------------------#
+  #If True the custom Circe Disabled sound will play.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound-Toggle: true
+  #The sound that plays when the CIRCE is Disabled.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound: BLOCK_ANVIL_LAND
+  #The volume the sound plays when the CIRCE is Disabled.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Volume: 1
+  #The pitch the sound plays when the CIRCE is Disabled.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Pitch: 0.1
+
+ScrapOfCirceWeaveMessages:
+  #------------------SCRAPPED A ENCHANTMENT Message------------------#
+  #If True the Scrapped Enchantment message will be sent to the player.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Message-Toggle: true
+  #The message that will be sent when the player has Scrapped an Enchantment.
+  ScrapOfCirceWeave-ScrappedAEnchantment-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
+    -  ""
+    -  "&c&m&l-----------------------------------------"
+  #------------------CIRCE DISABLED Message------------------#
+  #If True the disabled message will be sent to the player.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Message-Toggle: true
+  #The message that will be sent when Circe has been disabled.
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Message:
+    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    -  ""
+    -  "&c● &7You cannot scrap: &e&l{enchantmentName} {enchantmentLevel}"
+    -  ""
+    -  "&c● &7Because &cScrapping &7is currently &cDisabled&7."
     -  ""
     -  "&c&m&l-----------------------------------------"
