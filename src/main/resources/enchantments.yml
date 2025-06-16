@@ -1223,7 +1223,7 @@ Enchantments:
     Decapitate-Proc-Chance-3: 0.05
     #The style of the Head Title.
     Decapitate-Head-Title-Style: "&c&lHead of &7{headType}"
-  TAINTEDBOOK:
+  TAINTED-BOOK:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
     #The Rarity of the enchantment.
@@ -1316,44 +1316,44 @@ OraclesOfEnchantment:
     - ""
     - "&c&m&l-----------------------------------------"
 
-OraclesTable:
+AltarOfCirce:
   #Type of Item the Oracles of Enchantment will be.
-  OraclesTable-Item: ENCHANTING_TABLE
+  AltarOfCirce-Item: ENCHANTING_TABLE
   #If true the OraclesOfEnchantment-Item will have an enchantment glint on it.
-  OraclesTable-Glint-Toggle: true
+  AltarOfCirce-Glint-Toggle: true
   #If true Oracle's Table can be crafted.
-  OraclesTable-Crafting-Enabled: true
+  AltarOfCirce-Crafting-Enabled: true
   #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
   # **NOTE** USE the letter 'Z' if you want them to use the Oracles Of Enchantment Book in the recipe
-  OraclesTable-Crafting-Row-1: "ABC"
-  OraclesTable-Crafting-Row-2: "DZF"
-  OraclesTable-Crafting-Row-3: "GHI"
+  AltarOfCirce-Crafting-Row-1: "ABC"
+  AltarOfCirce-Crafting-Row-2: "DZF"
+  AltarOfCirce-Crafting-Row-3: "GHI"
   #These are the Crafting Materials inside the recipe
   # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
   # Also you can reuse the same Material and change the order on crafting Row-1 for example:
   # you can do "ACA" or "HHH" or even "HAA" if thats what you want.
   # Just make sure all Materials have some sort of material despite you using them or not.
-  OraclesTable-Crafting-Materials-A: END_CRYSTAL
-  OraclesTable-Crafting-Materials-B: NETHERITE_INGOT
-  OraclesTable-Crafting-Materials-C: END_CRYSTAL
-  OraclesTable-Crafting-Materials-D: PHANTOM_MEMBRANE
-  OraclesTable-Crafting-Materials-E: BOOK
-  OraclesTable-Crafting-Materials-F: PHANTOM_MEMBRANE
-  OraclesTable-Crafting-Materials-G: ECHO_SHARD
-  OraclesTable-Crafting-Materials-H: ECHO_SHARD
-  OraclesTable-Crafting-Materials-I: ECHO_SHARD
+  AltarOfCirce-Crafting-Materials-A: END_CRYSTAL
+  AltarOfCirce-Crafting-Materials-B: NETHERITE_INGOT
+  AltarOfCirce-Crafting-Materials-C: END_CRYSTAL
+  AltarOfCirce-Crafting-Materials-D: PHANTOM_MEMBRANE
+  AltarOfCirce-Crafting-Materials-E: BOOK
+  AltarOfCirce-Crafting-Materials-F: PHANTOM_MEMBRANE
+  AltarOfCirce-Crafting-Materials-G: ECHO_SHARD
+  AltarOfCirce-Crafting-Materials-H: ECHO_SHARD
+  AltarOfCirce-Crafting-Materials-I: ECHO_SHARD
   #If true Oracle's Table can be used.
-  OraclesTable-Enabled: true
+  AltarOfCirce-Enabled: true
   #If true Oracle's Table will allow players to enchant Armour and Tools
   #Note this is false by default due to how OP it is.
-  OraclesTable-ArmourTools-Enchanter-Enabled: true
+  AltarOfCirce-ArmourTools-Enchanter-Enabled: true
   #If true Oracle's Table will allow players to enchant with vanilla enchants and custom enchants at the same time
   #Note only works when ArmourTools-Enchanter is set to true as well.
-  OraclesTable-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
+  AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
   #If true Oracle's Table will allow players to enchant Books
-  OraclesTable-Book-Enchanter-Enabled: true
+  AltarOfCirce-Book-Enchanter-Enabled: true
   #A list of all rarity's in the plugin. (0.5 = 50%)
-  OraclesTable-Book-Enchanter-Odds:
+  AltarOfCirce-Book-Enchanter-Odds:
     #Chance to get a Godly enchantment. default is 1 in 1000
     GODLY: 0.001
     #Chance to get a Legendary enchantment.
@@ -1366,22 +1366,22 @@ OraclesTable:
     TRASH: 0.50
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
-  OraclesTable-Flip-List: true
+  AltarOfCirce-Flip-List: true
   #The name of the Oracles of Enchantment.
-  OraclesTable-DisplayName: "&f&kv&l &d&lOracle's Table &f&kv"
+  AltarOfCirce-DisplayName: "&f&k*&l &d&lAltar Of Circe &f&k*"
   #Lore for the Oracles of Enchantment.
-  OraclesTable-Lore:
+  AltarOfCirce-Lore:
     - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     - ""
     - "&c● &7Description:"
-    - "  &eA cryptic tome once whispered by the Oracles of Delphi,"
-    - "  &esaid to contain knowledge granted by gods long silenced."
-    - "  &eIts pages shift with every reading,"
-    - "  &erevealing secrets only to those deemed worthy."
+    - "  &eForged by the enchantress Circe, mistress of lost magic,"
+    - "  &ethis altar thrums with woven spells and buried truths."
+    - "  &eIts surface glows faintly with echoes of divine power,"
+    - "  &ewaiting for a worthy soul to awaken its purpose."
     - ""
-    - "&c● &7Type: &eAncient Enchant Table"
+    - "&c● &7Type: &eMythic Enchanting Altar"
     - ""
-    - "&c● &7Usage: &ePlace down and open"
+    - "&c● &7Usage: &ePlace and interact to invoke forgotten enchantments."
     - ""
     - "&c&m&l-----------------------------------------"
 
@@ -1391,7 +1391,7 @@ ScrapOfCirceWeave:
   #If true the ScrapOfCirceWeave-Item will have an enchantment glint on it.
   ScrapOfCirceWeave-Glint-Toggle: true
   #If true the Scrap of Circes Weave can be Found, and Used. if false the opposite for all happens.
-  ScrapOfCirceWeave-Enabled: false
+  ScrapOfCirceWeave-Enabled: true
   #The name of the Scrap of Circes Weave.
   ScrapOfCirceWeave-DisplayName: "&f&kv&l &3&lScrap Of Circe's Weave &f&kv"
   #Lore for the Scrap of Circes Weave.

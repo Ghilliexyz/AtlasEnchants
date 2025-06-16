@@ -3,7 +3,6 @@ package com.atlasplugins.atlasenchants.listeners;
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -14,9 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -26,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class OraclesTableEvent implements Listener {
+public class AltarOfCirceEvent implements Listener {
 
     private Main main;
 
-    public OraclesTableEvent(Main main) {
+    public AltarOfCirceEvent(Main main) {
         this.main = main;
     }
 
@@ -39,7 +36,7 @@ public class OraclesTableEvent implements Listener {
     {
         if(e.getRecipe() == null) return;
 
-        boolean isOracleTableCraftingEnabled = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Crafting-Enabled");
+        boolean isOracleTableCraftingEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Crafting-Enabled");
 
         if(!isOracleTableCraftingEnabled) return;
 
@@ -47,7 +44,7 @@ public class OraclesTableEvent implements Listener {
         if(result == null || !result.hasItemMeta()) return;
 
         ItemMeta meta = result.getItemMeta();
-        if(!meta.getPersistentDataContainer().has(Main.customOracleTableKeys, PersistentDataType.STRING)) return;
+        if(!meta.getPersistentDataContainer().has(Main.customAltarOfCirceKeys, PersistentDataType.STRING)) return;
 
         boolean foundValidBook = false;
 
@@ -69,9 +66,9 @@ public class OraclesTableEvent implements Listener {
     @EventHandler
     public void onEnchantItem(EnchantItemEvent e)
     {
-        boolean isOracleTableCraftingEnabled = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Enabled");
+        boolean isAltarOfCirceCraftingEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Enabled");
 
-        if(!isOracleTableCraftingEnabled) return;
+        if(!isAltarOfCirceCraftingEnabled) return;
 
         ItemStack item = e.getItem();
         Player player = e.getEnchanter();
@@ -82,8 +79,8 @@ public class OraclesTableEvent implements Listener {
         if (!(state instanceof TileState tileState)) return;
 
         PersistentDataContainer pdc = tileState.getPersistentDataContainer();
-        String tag = pdc.get(Main.customOracleTableKeys, PersistentDataType.STRING);
-        if (tag == null || !tag.equals("oracle_table")) return;
+        String tag = pdc.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
+        if (tag == null || !tag.equals("altar_of_circe")) return;
 
         int enchantmentTableBtn = e.whichButton();
 
@@ -112,7 +109,7 @@ public class OraclesTableEvent implements Listener {
      */
     public static void applyRandomCustomEnchantments(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply, EnchantItemEvent e) {
 
-        boolean canEnchantToolsAndArmour = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-ArmourTools-Enchanter-Enabled");
+        boolean canEnchantToolsAndArmour = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-ArmourTools-Enchanter-Enabled");
 
         if(canEnchantToolsAndArmour){
             if(targetItem.getType() != Material.BOOK)
@@ -122,10 +119,13 @@ public class OraclesTableEvent implements Listener {
             }
         }
 
-        boolean canEnchantBook = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Book-Enchanter-Enabled");
+        boolean canEnchantBook = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Book-Enchanter-Enabled");
 
         if(canEnchantBook){
-            ApplyToBook(main, player, targetItem);
+            if(targetItem.getType() == Material.BOOK)
+            {
+                ApplyToBook(main, player, targetItem);
+            }
         }
     }
 
@@ -242,14 +242,14 @@ public class OraclesTableEvent implements Listener {
         if (!item.hasItemMeta()) return;
 
         ItemMeta meta = item.getItemMeta();
-        if (!meta.getPersistentDataContainer().has(Main.customOracleTableKeys, PersistentDataType.STRING)) return;
+        if (!meta.getPersistentDataContainer().has(Main.customAltarOfCirceKeys, PersistentDataType.STRING)) return;
 
         // It's an oracle table being placed!
         Block block = e.getBlockPlaced();
         BlockState state = block.getState();
 
         if (state instanceof TileState tileState) {
-            tileState.getPersistentDataContainer().set(Main.customOracleTableKeys, PersistentDataType.STRING, "oracle_table");
+            tileState.getPersistentDataContainer().set(Main.customAltarOfCirceKeys, PersistentDataType.STRING, "altar_of_circe");
             tileState.update();
         }
     }

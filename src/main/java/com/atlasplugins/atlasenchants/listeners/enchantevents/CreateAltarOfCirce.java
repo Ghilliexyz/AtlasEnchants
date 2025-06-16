@@ -16,33 +16,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class CreateOracleTable implements Listener {
+public class CreateAltarOfCirce implements Listener {
 
     private Main main;
     private final Random random = new Random();
 
-    public CreateOracleTable(Main main) {
+    public CreateAltarOfCirce(Main main) {
         this.main = main;
     }
 
-    public ItemStack CreateOracleTableItem(int oracleAmount, Player p) {
-        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-Item")));
+    public ItemStack CreateAltarOfCirceItem(int oracleAmount, Player p) {
+        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Item")));
         ItemMeta oracleMeta = oracle.getItemMeta();
 
-        String displayName = main.getEnchantmentsConfig().getString("OraclesTable.OraclesTable-DisplayName");
+        String displayName = main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-DisplayName");
         String withPAPISet = main.setPlaceholders(p, displayName);
         oracleMeta.setDisplayName(Main.color(withPAPISet)
-                .replace("{OraclesTableChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-ReturnEnchant-Chance") * 100)));
+                .replace("{AltarOfCirceChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("AltarOfCirce.AltarOfCirce-ReturnEnchant-Chance") * 100)));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();
-        List<String> loreList = main.getEnchantmentsConfig().getStringList("OraclesTable.OraclesTable-Lore");
+        List<String> loreList = main.getEnchantmentsConfig().getStringList("AltarOfCirce.AltarOfCirce-Lore");
         for (String lore : loreList) {
             String withPAPISet1 = main.setPlaceholders(p, lore);
             enchantmentLore.add(Main.color(withPAPISet1)
-                    .replace("{OraclesTableChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-ReturnEnchant-Chance") * 100)));
+                    .replace("{AltarOfCirceChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("AltarOfCirce.AltarOfCirce-ReturnEnchant-Chance") * 100)));
         }
 
-        boolean addGlint = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Glint-Toggle");
+        boolean addGlint = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Glint-Toggle");
         if(addGlint)
         {
             // Add Glint effect
@@ -54,7 +54,7 @@ public class CreateOracleTable implements Listener {
 
         PersistentDataContainer pdc = oracleMeta.getPersistentDataContainer();
 //        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle" + ":" + oracleID);
-        pdc.set(Main.customOracleTableKeys, PersistentDataType.STRING, "oracle_table");
+        pdc.set(Main.customAltarOfCirceKeys, PersistentDataType.STRING, "altar_of_circe");
 
         oracleMeta.setLore(enchantmentLore);
         oracle.setItemMeta(oracleMeta);

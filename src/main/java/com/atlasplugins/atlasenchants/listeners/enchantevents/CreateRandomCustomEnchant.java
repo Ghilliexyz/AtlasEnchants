@@ -114,9 +114,9 @@ public class CreateRandomCustomEnchant implements Listener {
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
 
-        boolean flipEnchantmentList = main.getEnchantmentsConfig().getBoolean("OraclesTable.OraclesTable-Flip-List");
+        boolean flipEnchantmentList = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Flip-List");
 
-        List<String> allRarities = main.getEnchantmentsConfig().getConfigurationSection("OraclesTable.OraclesTable-Book-Enchanter-Odds").getKeys(false)
+        List<String> allRarities = main.getEnchantmentsConfig().getConfigurationSection("AltarOfCirce.AltarOfCirce-Book-Enchanter-Odds").getKeys(false)
                 .stream()
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
@@ -130,7 +130,7 @@ public class CreateRandomCustomEnchant implements Listener {
             for (String rarity : allRarities) {
                 if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) continue;
 
-                double rarityChance = main.getEnchantmentsConfig().getDouble("OraclesTable.OraclesTable-Book-Enchanter-Odds." + rarity);
+                double rarityChance = main.getEnchantmentsConfig().getDouble("AltarOfCirce.AltarOfCirce-Book-Enchanter-Odds." + rarity);
 
                 if (desiredRarity == null && random.nextDouble() > rarityChance) continue;
 

@@ -670,7 +670,7 @@ ScrapOfCirceWeaveSounds:
   #If True the custom Circe Disabled sound will play.
   ScrapOfCirceWeave-DisabledScrapEnchantment-Sound-Toggle: true
   #The sound that plays when the CIRCE is Disabled.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound: ENTITY_FOX_SCREECH
+  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound: BLOCK_ANVIL_LAND
   #The volume the sound plays when the CIRCE is Disabled.
   ScrapOfCirceWeave-DisabledScrapEnchantment-Volume: 1
   #The pitch the sound plays when the CIRCE is Disabled.

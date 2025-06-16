@@ -9,8 +9,8 @@ import com.atlasplugins.atlasenchants.enchants.weapons.*;
 import com.atlasplugins.atlasenchants.guis.*;
 import com.atlasplugins.atlasenchants.listeners.CauldronEvent;
 import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
-import com.atlasplugins.atlasenchants.listeners.OraclesTableCraftingRecipe;
-import com.atlasplugins.atlasenchants.listeners.OraclesTableEvent;
+import com.atlasplugins.atlasenchants.listeners.AltarOfCirceCraftingRecipe;
+import com.atlasplugins.atlasenchants.listeners.AltarOfCirceEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -27,7 +27,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -53,7 +52,7 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey customEnchantKeys;
     public static NamespacedKey customShardKeys;
     public static NamespacedKey customOracleBookKeys;
-    public static NamespacedKey customOracleTableKeys;
+    public static NamespacedKey customAltarOfCirceKeys;
     public static NamespacedKey customScrapOfCirceKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
@@ -120,7 +119,7 @@ public final class Main extends JavaPlugin implements Listener {
         customEnchantKeys = new NamespacedKey(this, "Custom_Enchants");
         customShardKeys = new NamespacedKey(this, "Custom_Shards");
         customOracleBookKeys = new NamespacedKey(this, "Custom_Oracle_Books");
-        customOracleTableKeys = new NamespacedKey(this, "Custom_Oracle_Table");
+        customAltarOfCirceKeys = new NamespacedKey(this, "Custom_Oracle_Table");
         customScrapOfCirceKeys = new NamespacedKey(this, "Custom_ScrapOfCirce");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
@@ -163,7 +162,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RemoveCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateOracleBook(this), this);
-        this.getServer().getPluginManager().registerEvents(new CreateOracleTable(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateAltarOfCirce(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateRandomCustomEnchant(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateScrapOfCirce(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateShard(this), this);
@@ -171,13 +170,13 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new ArmorEquipListener(this, getBlockedMaterialNames(this)), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         this.getServer().getPluginManager().registerEvents(new OraclesOfEnchantmentEvent(this), this);
-        this.getServer().getPluginManager().registerEvents(new OraclesTableEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new AltarOfCirceEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new WanderingTraderEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new CauldronEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Crafting Recipe
-        new OraclesTableCraftingRecipe(this).registerOracleTableRecipe();
+        new AltarOfCirceCraftingRecipe(this).registerOracleTableRecipe();
 
         // Register commands
         this.commandRouter = new CommandRouter(this);

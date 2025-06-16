@@ -31,7 +31,7 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         registerCommand(new GiveEnchantCommand(main));
         registerCommand(new GiveOblivionShardCommand(main));
         registerCommand(new GiveOracleOfEnchantmentCommand(main));
-        registerCommand(new GiveOraclesTableCommand(main));
+        registerCommand(new GiveAltarOfCirceCommand(main));
         registerCommand(new GiveRandomEnchantCommand(main));
         registerCommand(new GiveScrapOfCirceCommand(main));
         registerCommand(new UpgradeCommand(main));

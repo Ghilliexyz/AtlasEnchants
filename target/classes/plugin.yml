@@ -35,8 +35,8 @@ permissions:
   atlasenchants.giveoraclebook:
     description: Permission needed to use the give oracle book command.
     default: false
-  atlasenchants.giveoracletable:
-    description: Permission needed to use the give oracle table command.
+  atlasenchants.givealtarofcirce:
+    description: Permission needed to use the give Alter Of Circe command.
     default: false
   atlasenchants.givescrapofcirce:
     description: Permission needed to use the give scrap of circe's weave command.
