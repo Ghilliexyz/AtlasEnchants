@@ -231,7 +231,7 @@ public class ApplyCustomEnchant implements Listener {
             // Item is not applicable for this enchantment.
             // Note: PDC was already updated. If you want to revert PDC on non-applicable items,
             // you'd need to manage a rollback or apply PDC only after this check.
-            main.getLogger().info(player.getName() + " tried to apply " + enchantName + " to an inapplicable item: " + targetItemType.toString());
+//            main.getLogger().info(player.getName() + " tried to apply " + enchantName + " to an inapplicable item: " + targetItemType.toString());
             // You might want a specific feedback message/sound here for non-applicable items.
             return null; // Item type is not valid for this enchantment
         }

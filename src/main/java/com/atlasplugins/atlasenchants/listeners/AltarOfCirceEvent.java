@@ -307,7 +307,8 @@ public class AltarOfCirceEvent implements Listener {
                     // Cancel normal drops
                     event.setDropItems(false);
 
-                    Bukkit.getConsoleSender().sendMessage("Drop2");
+                    // this is also where the player will be allowed to mine it with any tool including their fist
+
                     // Drop the custom altar instead
                     ItemStack customAltar = createAltarOfCirce.CreateAltarOfCirceItem(1, null);
                     block.getWorld().dropItemNaturally(block.getLocation(), customAltar);
