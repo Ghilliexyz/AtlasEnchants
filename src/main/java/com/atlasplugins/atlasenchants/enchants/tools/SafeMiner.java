@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -8,6 +9,9 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.*;
@@ -29,6 +33,7 @@ import java.util.*;
 
 public class SafeMiner implements Listener {
 
+    private static final Logger log = LogManager.getLogger(SafeMiner.class);
     private Main main;
     private WorldGuardPlugin worldGuardPlugin;
 
@@ -51,22 +56,22 @@ public class SafeMiner implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         // Grabbing the player
-        Player p = e.getPlayer();
+        Player player = e.getPlayer();
         // Grabbing the broken block
-        Block blockBroken = e.getBlock();
+        Block blockMined = e.getBlock();
 
         //WorldGuard Checks
-        if(worldGuardPlugin != null && worldGuardPlugin.isEnabled() && !p.isOp())
+        if(worldGuardPlugin != null && worldGuardPlugin.isEnabled() && !player.isOp())
         {
             RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            RegionManager regions = container.get(BukkitAdapter.adapt(blockBroken.getWorld()));
+            RegionManager regions = container.get(BukkitAdapter.adapt(blockMined.getWorld()));
 
             if (regions != null) {
-                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(blockBroken.getLocation()));
+                ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.asBlockVector(blockMined.getLocation()));
 
                 for (ProtectedRegion region : set) {
-                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(p)) &&
-                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(p))) {
+                    if (!region.getMembers().contains(worldGuardPlugin.wrapPlayer(player)) &&
+                            !region.getOwners().contains(worldGuardPlugin.wrapPlayer(player))) {
                         // Cancel the event if the player is not a member or owner of the region
                         e.setCancelled(true);
                         return;
@@ -76,14 +81,14 @@ public class SafeMiner implements Listener {
         }
 
         // Check if the player has an enchanted tool
-        if (!hasTool(p)) return;
+        if (!hasTool(player)) return;
 
         // Get Enchantment Enabled Status
         boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.SAFE-MINER.Enchantment-Enabled");
         // if Enchantment Enabled = false return.
         if (!isEnchantmentEnabled) return;
 
-        PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer enchantedItemPDC = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
         String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
         // Ensure the enchantment data is not null or empty
@@ -102,13 +107,33 @@ public class SafeMiner implements Listener {
                 if (enchantName.contains("SAFE-MINER")) {
                     // PUT ENCHANT LOGIC HERE
                     // Handle block drops manually
-                    ItemStack tool = p.getInventory().getItemInMainHand();
+                    ItemStack tool = player.getInventory().getItemInMainHand();
 
-                    SafeMinerLogic(blockBroken, tool, p);
+                    if(blockMined.getType() == Material.ENCHANTING_TABLE)
+                    {
+                        BlockState blockState = blockMined.getState();
+                        if(!(blockState instanceof TileState tileState)) return;
+                        PersistentDataContainer blockPDC = tileState.getPersistentDataContainer();
+                        if(blockPDC.has(Main.customAltarOfCirceKeys, PersistentDataType.STRING))
+                        {
+                            String value = blockPDC.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
+                            if("altar_of_circe".equals(value))
+                            {
+                                // Create an instance of CreateAltarOfCirce and call the method
+                                CreateAltarOfCirce createAltarOfCirce = new CreateAltarOfCirce(main);
+                                // Drop the custom altar instead
+                                createAltarOfCirce.CreateAltarOfCirceItem(1, player);
+                                // Prevent default drops
+                                e.setDropItems(false);
+                            }
+                        }
+                    }else{
+                        SafeMinerLogic(blockMined, tool, player);
 
-                    // Prevent default drops
-                    e.setDropItems(false);
-                    //END ENCHANT LOGIC
+                        // Prevent default drops
+                        e.setDropItems(false);
+                        //END ENCHANT LOGIC
+                    }
                 }
             }
         }

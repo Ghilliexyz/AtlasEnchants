@@ -2,7 +2,9 @@ package com.atlasplugins.atlasenchants.listeners;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
+import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -11,6 +13,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -251,6 +254,65 @@ public class AltarOfCirceEvent implements Listener {
         if (state instanceof TileState tileState) {
             tileState.getPersistentDataContainer().set(Main.customAltarOfCirceKeys, PersistentDataType.STRING, "altar_of_circe");
             tileState.update();
+        }
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+        ItemStack tool = player.getInventory().getItemInMainHand();
+
+        String enchantName = "";
+
+        if(tool != null && tool.hasItemMeta())
+        {
+            ItemMeta toolMeta = tool.getItemMeta();
+            PersistentDataContainer toolPDC = toolMeta.getPersistentDataContainer();
+            String enchantedItemData = toolPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+
+            // Ensure the enchantment data is not null or empty
+            if (enchantedItemData == null || enchantedItemData.isEmpty()){
+
+            }else{
+                String[] enchantments = enchantedItemData.split(",");
+
+                for (String enchantment : enchantments) {
+                    String[] enchantParts = enchantment.split(":");
+
+                    // Ensure the format is correct
+                    if (enchantParts.length == 3) {
+                        enchantName = enchantParts[0];
+                        int enchantLevel = Integer.parseInt(enchantParts[1]);
+                        int enchantID = Integer.parseInt(enchantParts[2]);
+                    }
+                }
+            }
+        }
+
+        if (block.getType() != Material.ENCHANTING_TABLE) return;
+
+        BlockState state = block.getState();
+        if (!(state instanceof TileState tileState)) return;
+
+        PersistentDataContainer container = tileState.getPersistentDataContainer();
+
+        if (container.has(Main.customAltarOfCirceKeys, PersistentDataType.STRING)) {
+            String value = container.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
+            if ("altar_of_circe".equals(value)) {
+                // Create an instance of CreateAltarOfCirce and call the method
+                CreateAltarOfCirce createAltarOfCirce = new CreateAltarOfCirce(main);
+
+                if (!enchantName.contains("SAFE-MINER")) {
+                    // Cancel normal drops
+                    event.setDropItems(false);
+
+                    Bukkit.getConsoleSender().sendMessage("Drop2");
+                    // Drop the custom altar instead
+                    ItemStack customAltar = createAltarOfCirce.CreateAltarOfCirceItem(1, null);
+                    block.getWorld().dropItemNaturally(block.getLocation(), customAltar);
+                }
+            }
         }
     }
 

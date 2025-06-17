@@ -1347,10 +1347,7 @@ AltarOfCirce:
   AltarOfCirce-Enabled: true
   #If true Oracle's Table will allow players to enchant Armour and Tools
   #Note this is false by default due to how OP it is.
-  AltarOfCirce-ArmourTools-Enchanter-Enabled: true
-  #If true Oracle's Table will allow players to enchant with vanilla enchants and custom enchants at the same time
-  #Note only works when ArmourTools-Enchanter is set to true as well.
-  AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
+  AltarOfCirce-ArmourTools-Enchanter-Enabled: false
   #If true Oracle's Table will allow players to enchant Books
   AltarOfCirce-Book-Enchanter-Enabled: true
   #A list of all rarity's in the plugin. (0.5 = 50%)
