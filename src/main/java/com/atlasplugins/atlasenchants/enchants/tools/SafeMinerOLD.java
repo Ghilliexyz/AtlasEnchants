@@ -35,13 +35,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class SafeMiner implements Listener {
+public class SafeMinerOLD implements Listener {
 
     private static final Logger log = LogManager.getLogger(SafeMinerOLD.class);
     private Main main;
     private WorldGuardPlugin worldGuardPlugin;
 
-    public SafeMiner(Main main) {
+    public SafeMinerOLD(Main main) {
         this.main = main;
         this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
@@ -132,7 +132,7 @@ public class SafeMiner implements Listener {
                             }
                         }
                     }else{
-                        SafeMinerLogic(blockMined, e, tool, player);
+                        SafeMinerLogic(blockMined, tool, player);
 
                         // Prevent default drops
                         e.setDropItems(false);
@@ -143,7 +143,7 @@ public class SafeMiner implements Listener {
         }
     }
 
-    public void SafeMinerLogic(Block blockMined, BlockBreakEvent event, ItemStack tool, Player player) {
+    public void SafeMinerLogic(Block blockMined, ItemStack tool, Player player) {
         List<ItemStack> drops = new ArrayList<>(blockMined.getDrops(tool, player));
 
         if (blockMined.getBlockData() instanceof Bed) {
@@ -168,7 +168,7 @@ public class SafeMiner implements Listener {
             handleEdgeCases(blockMined, tool, drops, player);
         }else {
             // Check for attached items like Torches
-            handleAttachedItems(event);
+            handleAttachedItems(blockMined, player, tool, drops);
         }
 
         // Add drops to the player's inventory or drop them if the inventory is full
@@ -269,19 +269,15 @@ public class SafeMiner implements Listener {
     private void handleContainers(Block block, ItemStack tool, Collection<ItemStack> drops, Player player) {
         BlockState blockState = block.getState();
 
-        // Skip shulker boxes to avoid dupe exploits
-        if (isShulkerBox(block)) return;
-
-        if (blockState instanceof Container container) {
-            Inventory containerInventory = container.getInventory();
-
-            if (!containerInventory.isEmpty()) {
-                for (ItemStack item : containerInventory.getContents()) {
-                    if (item != null) {
-                        drops.add(item.clone()); // Clone to prevent modifying original reference
-                    }
+        // If the block is a container (e.g., chest), add its contents to the drops
+        Inventory containerInventory = ((Container) blockState).getInventory();
+        // return if the container is a shulker box (prevents duping)
+        if(isShulkerBox(block)) return;
+        if(!containerInventory.isEmpty()){
+            for (ItemStack item : containerInventory.getContents()) {
+                if (item != null) {
+                    drops.add(item);
                 }
-                containerInventory.clear(); // Important: Clear items to prevent duping
             }
         }
     }
@@ -305,9 +301,167 @@ public class SafeMiner implements Listener {
         }
     }
 
-    private void handleAttachedItems(BlockBreakEvent event) {
-        event.setCancelled(true);
-        event.getBlock().setType(Material.AIR);
+    private void handleAttachedItems(Block block, Player player, ItemStack tool, Collection<ItemStack> drops) {
+        dropAttachedItems(block, player);
+        Bukkit.getLogger().info("3");
+    }
+
+    private void dropAttachedItems(Block origin, Player player) {
+        for (BlockFace face : BlockFace.values()) {
+            Block relative = origin.getRelative(face);
+            BlockData data = relative.getBlockData();
+
+            if (data instanceof Directional directional) {
+                BlockFace attachedFace = directional.getFacing().getOppositeFace();
+                if (relative.getRelative(attachedFace).equals(origin)) {
+                    dropAndClear(relative, player);
+                }
+            } else if (data instanceof MultipleFacing multipleFacing) {
+                for (BlockFace f : multipleFacing.getAllowedFaces()) {
+                    if (multipleFacing.hasFace(f)) {
+                        if (relative.getRelative(f).equals(origin)) {
+                            dropAndClear(relative, player);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void dropAndClear(Block block, Player player) {
+        Material itemDrop = getItemFromBlock(block.getType());
+        if (itemDrop != null) {
+            block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(itemDrop));
+        }
+        block.setType(Material.AIR);
+    }
+
+    public Material getItemFromBlock(Material blockType) {
+        // --- Buttons & Pressure Plates (They drop themselves) ---
+        if (blockType.name().endsWith("_BUTTON") || blockType.name().endsWith("_PRESSURE_PLATE")) {
+            return blockType;
+        }
+
+        // --- Torches ---
+        // Redstone Torch (handles both standing and wall)
+        if (blockType.name().contains("REDSTONE_") && blockType.name().contains("TORCH")) {
+            return Material.REDSTONE_TORCH;
+        }
+        // Soul Torch (handles both standing and wall)
+        if (blockType.name().contains("SOUL_") && blockType.name().contains("TORCH")) {
+            return Material.SOUL_TORCH;
+        }
+        // Regular Torch (handles both standing and wall)
+        if (blockType == Material.TORCH || blockType == Material.WALL_TORCH) {
+            return Material.TORCH;
+        }
+
+        if(blockType == Material.LANTERN)
+        {
+            return Material.LANTERN;
+        }
+
+        // --- Signs & Hanging Signs ---
+        if (blockType.name().endsWith("_WALL_SIGN")) {
+            // Converts e.g., OAK_WALL_SIGN to OAK_SIGN
+            return Material.valueOf(blockType.name().replace("_WALL_", "_"));
+        }
+        if (blockType.name().endsWith("_HANGING_SIGN")) {
+            return blockType; // Hanging signs drop themselves
+        }
+        if (blockType.name().endsWith("_WALL_HANGING_SIGN")) {
+            // Converts e.g., OAK_WALL_HANGING_SIGN to OAK_HANGING_SIGN
+            return Material.valueOf(blockType.name().replace("_WALL_", "_"));
+        }
+
+
+        // --- Levers & Bells ---
+        if (blockType == Material.LEVER) return Material.LEVER;
+        if (blockType == Material.BELL) return Material.BELL;
+
+        // --- Ladders & Vines ---
+        if (blockType == Material.LADDER) return Material.LADDER;
+        if (blockType == Material.VINE) return Material.VINE;
+
+        // --- Redstone Components (non-torch) ---
+        if (blockType == Material.REDSTONE_WIRE) return Material.REDSTONE;
+        if (blockType == Material.REPEATER) return Material.REPEATER;
+        if (blockType == Material.COMPARATOR) return Material.COMPARATOR;
+        if (blockType == Material.TRIPWIRE_HOOK) return Material.TRIPWIRE_HOOK;
+        if (blockType == Material.TRIPWIRE) return Material.STRING; // Tripwire drops string
+
+        // --- Crops ---
+        // These typically drop themselves or specific items
+        if (blockType.name().endsWith("_STEM") || blockType.name().endsWith("_CROP")) {
+            // Most crops drop their seeds + potentially the crop item
+            // For simplicity, return the block type for harvestable crops.
+            // For unharvested crops, they typically don't drop anything or just seeds.
+            // This is where block.getDrops() is more accurate, as it handles age.
+            return blockType.isItem() ? blockType : null; // Fallback for specific crops
+        }
+        // Specific crop block types that are not _CROP or _STEM
+        if (blockType == Material.WHEAT || blockType == Material.POTATOES || blockType == Material.CARROTS ||
+                blockType == Material.BEETROOTS || blockType == Material.SWEET_BERRY_BUSH ||
+                blockType == Material.COCOA) {
+            return blockType.isItem() ? blockType : null;
+        }
+
+        // --- Flowers & Mushrooms ---
+        if (blockType.name().endsWith("_FLOWER") || blockType.name().contains("ROSE_BUSH") ||
+                blockType.name().contains("SUNFLOWER") || blockType.name().contains("LILAC") ||
+                blockType.name().contains("PEONY") || blockType.name().contains("PITCHER_PLANT")) {
+            return blockType;
+        }
+        if (blockType == Material.BROWN_MUSHROOM || blockType == Material.RED_MUSHROOM ||
+                blockType == Material.CRIMSON_FUNGUS || blockType == Material.WARPED_FUNGUS) { // Fungi are similar
+            return blockType;
+        }
+        if (blockType == Material.FLOWER_POT) return Material.FLOWER_POT;
+
+        // --- Saplings ---
+        if (blockType.name().endsWith("_SAPLING")) {
+            return blockType;
+        }
+
+        // --- Doors & Beds (complex, usually handled by getDrops for correct item) ---
+        // These usually drop themselves. If you break the bottom, it drops one door item.
+        if (blockType.name().endsWith("_DOOR")) {
+            return blockType;
+        }
+        if (blockType.name().endsWith("_BED")) {
+            return blockType; // Beds drop themselves
+        }
+
+        // --- Rails ---
+        if (blockType.name().endsWith("_RAIL") || blockType == Material.RAIL) {
+            return blockType;
+        }
+
+        // --- Item Frames ---
+        if (blockType == Material.ITEM_FRAME || blockType == Material.GLOW_ITEM_FRAME) {
+            return blockType;
+        }
+
+        // --- Banners, Heads, Skulls ---
+        if (blockType.name().endsWith("_BANNER") || blockType.name().endsWith("_HEAD") || blockType.name().endsWith("_SKULL")) {
+            return blockType;
+        }
+
+        // --- Other common attached/dependent blocks ---
+        if (blockType == Material.CONDUIT) return Material.CONDUIT;
+        if (blockType == Material.END_ROD) return Material.END_ROD;
+        if (blockType == Material.CAVE_VINES || blockType == Material.CAVE_VINES_PLANT) return Material.CAVE_VINES;
+        if (blockType == Material.GLOW_LICHEN) return Material.GLOW_LICHEN;
+        if (blockType == Material.SHULKER_BOX || blockType.name().endsWith("_SHULKER_BOX")) {
+            return Material.SHULKER_BOX; // Shulker boxes drop as a generic shulker box
+        }
+
+
+        // Default fallback: If it's an item, return itself. Otherwise, null.
+        // This catches many blocks that are placed and break themselves (e.g., dirt, stone)
+        // or simple blocks that don't have complex attachment logic and drop themselves.
+        return blockType.isItem() ? blockType : null;
     }
 
     private void giveOrDropItems(Player player, Collection<ItemStack> items, Location dropLocation) {

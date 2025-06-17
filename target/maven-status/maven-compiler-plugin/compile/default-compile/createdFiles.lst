@@ -22,6 +22,7 @@ com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot.class
 com\atlasplugins\atlasenchants\enchants\armor\WingsOfAegis.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth$1.class
 com\atlasplugins\atlasenchants\enchants\weapons\Extractor.class
+com\atlasplugins\atlasenchants\enchants\tools\SafeMinerOLD.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.class
 com\atlasplugins\atlasenchants\Metrics$MultiLineChart.class
 com\atlasplugins\atlasenchants\Metrics$DrilldownPie.class

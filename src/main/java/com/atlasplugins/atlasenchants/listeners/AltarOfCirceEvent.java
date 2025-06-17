@@ -122,6 +122,13 @@ public class AltarOfCirceEvent implements Listener {
             }
         }
 
+        boolean canGetVanillaEnchantments = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled");
+
+        if(!canGetVanillaEnchantments)
+        {
+            e.setCancelled(true);
+        }
+
         boolean canEnchantBook = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Book-Enchanter-Enabled");
 
         if(canEnchantBook){

@@ -1321,7 +1321,7 @@ AltarOfCirce:
   AltarOfCirce-Item: ENCHANTING_TABLE
   #If true the OraclesOfEnchantment-Item will have an enchantment glint on it.
   AltarOfCirce-Glint-Toggle: true
-  #If true Oracle's Table can be crafted.
+  #If true Altar Of Circe can be crafted.
   AltarOfCirce-Crafting-Enabled: true
   #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
   # **NOTE** USE the letter 'X' if you want them to use the Oracles Of Enchantment Book in the recipe
@@ -1343,12 +1343,15 @@ AltarOfCirce:
   AltarOfCirce-Crafting-Materials-G: ECHO_SHARD
   AltarOfCirce-Crafting-Materials-H: ECHO_SHARD
   AltarOfCirce-Crafting-Materials-I: ECHO_SHARD
-  #If true Oracle's Table can be used.
+  #If true Altar Of Circe can be used.
   AltarOfCirce-Enabled: true
-  #If true Oracle's Table will allow players to enchant Armour and Tools
+  #If true Altar Of Circe will allow players to enchant Armour and Tools
   #Note this is false by default due to how OP it is.
   AltarOfCirce-ArmourTools-Enchanter-Enabled: false
-  #If true Oracle's Table will allow players to enchant Books
+  #If true Altar Of Circe will allow players to enchant with vanilla enchants and custom enchants at the same time
+  #Note only works when ArmourTools-Enchanter is set to true as well.
+  AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
+  #If true Altar Of Circe will allow players to enchant Books
   AltarOfCirce-Book-Enchanter-Enabled: true
   #A list of all rarity's in the plugin. (0.5 = 50%)
   AltarOfCirce-Book-Enchanter-Odds:
@@ -1365,9 +1368,9 @@ AltarOfCirce:
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
   AltarOfCirce-Flip-List: true
-  #The name of the Oracles of Enchantment.
+  #The name of the Altar Of Circe.
   AltarOfCirce-DisplayName: "&f&k*&l &d&lAltar Of Circe &f&k*"
-  #Lore for the Oracles of Enchantment.
+  #Lore for the Altar Of Circe.
   AltarOfCirce-Lore:
     - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
     - ""
