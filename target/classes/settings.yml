@@ -265,6 +265,8 @@ EnchantItems:
   EnchantItem-Spawn-Chance: 0.10
   #A list of all rarity's in the plugin. (0.5 = 50%)
   EnchantItem-Rarity-List:
+    #Chance to get a Divine enchantment. default is 0.1 so you have a 1 in 100 chance.
+    DIVINE: 0.01
     #Chance to get a Godly enchantment.
     GODLY: 0.15
     #Chance to get a Legendary enchantment.
@@ -273,6 +275,8 @@ EnchantItems:
     EPIC: 0.25
     #Chance to get a Rare enchantment.
     RARE: 0.40
+    #Chance to get a Trash book. default is 0 because it's only meant to be obtainable via the Altar Of Circe
+    TRASH: 0
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true

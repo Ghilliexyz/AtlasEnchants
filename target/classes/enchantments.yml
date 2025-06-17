@@ -16,6 +16,56 @@
 #
 
 Enchantments:
+  # --------------------- DIVINE ENCHANTS --------------------- #
+  POSEIDONS-BAIT:
+    #Max Level of this Enchantment.
+    Enchantment-MaxLvl: 3
+    #The Rarity of the enchantment.
+    Enchantment-Rarity: "DIVINE"
+    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
+    Enchantment-Enabled: true
+    #The name of the Enchantment.
+    Enchantment-Title: "&4&lDIVINE &7Poseidon's Bait"
+    #Lore for the Enchantment.
+    Enchantment-Lore:
+      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - ""
+      - "&c● &7Effect: &e&lFishing Luck     &c● &7Enchant Lvl: &e&l{lvl}"
+      - ""
+      - "&c● &7Description:"
+      - "  &eGives a {BaitChance}% Chance to find custom enchants while fishing."
+      - ""
+      - "&c● &7Type: &eFishing Rod Enchantment"
+      - ""
+      - "&c● &7Usage: &eDrag n' Drop onto Fishing Rod to enchant."
+      - ""
+      - "&c&m&l-----------------------------------------"
+    #The lore that will be added to the enchanted Item.
+    Enchantment-Apply-Lore: "&4● &7{enchantmentName} {lvl}"
+    #The Item that the enchantment can be applied to.
+    Enchantment-Apply-Item:
+      # Fishing rod
+      - FISHING_ROD
+    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
+    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
+    #Note 2: Make sure to add this enchant Name (POSEIDONS-BAIT) to the enchantment Blacklist of the other enchantments you have listed below.
+    Enchantment-Blacklist-Enchants:
+      -
+      #Particle Settings for PoseidonsBait
+    PoseidonsBait-Particle-Settings:
+      #Particle Toggle (if true the particles will show)
+      PoseidonsBait-Particle-Toggle: true
+      PoseidonsBait-Particle-1:
+        #Particle Name (The particle that will spawn)
+        PoseidonsBait-Particle-Name-1: SOUL_FIRE_FLAME
+        #Particle Amount (50 = 50 Particles)
+        PoseidonsBait-Particle-Amount-1: 50
+        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
+        PoseidonsBait-Particle-Size-1: 0.1
+    #The % chance of catching an enchant. ( 0.05 = 5% | 0.5 = 50% )
+    PoseidonsBait-Proc-Chance-1: 0.01
+    PoseidonsBait-Proc-Chance-2: 0.02
+    PoseidonsBait-Proc-Chance-3: 0.03
   # --------------------- GODLY ENCHANTS --------------------- #
   FEARSIGHT:
     #Max Level of this Enchantment.
@@ -217,55 +267,6 @@ Enchantments:
     #Radius of how far the glow goes per Tier.
     Asclepius-HealthBoost-1: 1
     Asclepius-HealthBoost-2: 2
-  POSEIDONS-BAIT:
-    #Max Level of this Enchantment.
-    Enchantment-MaxLvl: 3
-    #The Rarity of the enchantment.
-    Enchantment-Rarity: "GODLY"
-    #If true the enchantment can be Found, Applied, and Used if already applied. if false the opposite for all happens.
-    Enchantment-Enabled: true
-    #The name of the Enchantment.
-    Enchantment-Title: "&c&lGODLY &7Poseidon's Bait"
-    #Lore for the Enchantment.
-    Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-      - ""
-      - "&c● &7Effect: &e&lFishing Luck     &c● &7Enchant Lvl: &e&l{lvl}"
-      - ""
-      - "&c● &7Description:"
-      - "  &eGives a {BaitChance}% Chance to find custom enchants while fishing."
-      - ""
-      - "&c● &7Type: &eFishing Rod Enchantment"
-      - ""
-      - "&c● &7Usage: &eDrag n' Drop onto Fishing Rod to enchant."
-      - ""
-      - "&c&m&l-----------------------------------------"
-    #The lore that will be added to the enchanted Item.
-    Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
-    #The Item that the enchantment can be applied to.
-    Enchantment-Apply-Item:
-      # Fishing rod
-      - FISHING_ROD
-    #This enchantment cannot be applied if any of the following enchantments are applied to the item.
-    #Note 1: Make sure the enchantment name is the exact name of the enchantment in the config, or it won't work
-    #Note 2: Make sure to add this enchant Name (POSEIDONS-BAIT) to the enchantment Blacklist of the other enchantments you have listed below.
-    Enchantment-Blacklist-Enchants:
-      -
-    #Particle Settings for PoseidonsBait
-    PoseidonsBait-Particle-Settings:
-      #Particle Toggle (if true the particles will show)
-      PoseidonsBait-Particle-Toggle: true
-      PoseidonsBait-Particle-1:
-        #Particle Name (The particle that will spawn)
-        PoseidonsBait-Particle-Name-1: SOUL_FIRE_FLAME
-        #Particle Amount (50 = 50 Particles)
-        PoseidonsBait-Particle-Amount-1: 50
-        #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoseidonsBait-Particle-Size-1: 0.1
-    #The % chance of catching an enchant. ( 0.05 = 5% | 0.5 = 50% )
-    PoseidonsBait-Proc-Chance-1: 0.01
-    PoseidonsBait-Proc-Chance-2: 0.02
-    PoseidonsBait-Proc-Chance-3: 0.03
   # --------------------- LEGENDARY ENCHANTS --------------------- #
   LEECH:
     #Max Level of this Enchantment.
@@ -1355,6 +1356,8 @@ AltarOfCirce:
   AltarOfCirce-Book-Enchanter-Enabled: true
   #A list of all rarity's in the plugin. (0.5 = 50%)
   AltarOfCirce-Book-Enchanter-Odds:
+    #Chance to get a Divine enchantment. default is 0 because it's not meant to be obtainable via the Altar Of Circe
+    DIVINE: 0
     #Chance to get a Godly enchantment. default is 1 in 1000
     GODLY: 0.001
     #Chance to get a Legendary enchantment.
