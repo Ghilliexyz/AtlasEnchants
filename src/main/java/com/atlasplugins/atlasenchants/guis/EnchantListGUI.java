@@ -8,10 +8,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EnchantListGUI extends Gui {
 
@@ -19,17 +16,13 @@ public class EnchantListGUI extends Gui {
     private final Player player;
 
     private String raritySelected = "";
-    // Map rarity name to material icon (customize icons as you want)
-    private final Map<String, Material> rarityIcons = new HashMap<>();
+
+    private final Map<Integer, String> raritySlotMap = new HashMap<>();
 
     public EnchantListGUI(Main main, Player player) {
         super(player, Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Title")), 27);
         this.main = main;
         this.player = player;
-        rarityIcons.put("GODLY", Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.GODLY.Item")));
-        rarityIcons.put("LEGENDARY", Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.LEGENDARY.Item")));
-        rarityIcons.put("EPIC", Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.EPIC.Item")));
-        rarityIcons.put("RARE", Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.RARE.Item")));
         setupItems();
     }
 
@@ -37,22 +30,30 @@ public class EnchantListGUI extends Gui {
     public void setupItems() {
         setupFiller();
 
-//        int slot = 10; // Start slot to place rarity items
+        String configPath = "EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities";
 
-        for (Map.Entry<String, Material> entry : rarityIcons.entrySet()) {
-            String rarity = entry.getKey();
-            Material icon = entry.getValue();
+        Set<String> rarityKeys = main.getMenusConfig().getConfigurationSection(configPath).getKeys(false);
 
-            int slot = main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities." + rarity + ".Slot");
+        for (String rarity : rarityKeys) {
+            String path = configPath + "." + rarity;
+
+            // Get slot and Icon
+            int slot = main.getMenusConfig().getInt(path + ".Slot");
+            String displayName = main.getMenusConfig().getString(path + ".Display-Name");
+
+            Material icon = Material.valueOf(main.getMenusConfig().getString(path + ".Item"));
+
+            if(icon == null || displayName == null) return;
 
             ItemStack item = new ItemStack(icon);
             ItemMeta meta = item.getItemMeta();
 
-            if (meta != null) {
-                meta.setDisplayName(Main.color(Main.getRarityColorCode(main, rarity) + rarity));
+            if(meta != null)
+            {
+                meta.setDisplayName(Main.color(displayName.replace("{rarityColor}", Main.getRarityColorCode(main, rarity))));
 
-                ArrayList<String> enchantmentLore = new ArrayList<>();
-                List<String> loreList = main.getMenusConfig().getStringList("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities." + rarity + ".Lore");
+                List<String> enchantmentLore = new ArrayList<>();
+                List<String> loreList = main.getMenusConfig().getStringList(path + ".Lore");
 
                 for (String lore : loreList) {
                     String colored = Main.color(lore)
@@ -68,6 +69,7 @@ public class EnchantListGUI extends Gui {
             }
 
             inventory.setItem(slot, item);
+            raritySlotMap.put(slot, rarity);
         }
     }
 
@@ -77,39 +79,20 @@ public class EnchantListGUI extends Gui {
         String title = event.getView().getTitle();
         // Get the EnchantListGUI Menu title from the config
         String EnchantListGUIMenuTitle = Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Title"));
-        // Check if the clicked inventory matches your custom GUI title
-        if (title.equals(Main.color(EnchantListGUIMenuTitle))) {
-            // Check if the clicked inventory is the custom GUI, not the player's inventory
-            if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
-                int slot = event.getSlot();
 
-                // Cancel clicks on specific slots in the GUI
-                if (slot >= 0 && slot <= 26) {
-                    event.setCancelled(true);
-                }
+        if(!title.equals(Main.color(EnchantListGUIMenuTitle))) return;
+        if(event.getClickedInventory() == null || !event.getClickedInventory().equals(event.getView().getTopInventory())) return;
 
-                // Handle clicks within your custom GUI
-                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.GODLY.Slot")) {
-                    raritySelected = "GODLY";
-                    GuiManager.setRarity(player.getUniqueId(), raritySelected);
-                    main.openEnchantRarityListGUI(player, raritySelected);
-                }
-                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.LEGENDARY.Slot")) {
-                    raritySelected = "LEGENDARY";
-                    GuiManager.setRarity(player.getUniqueId(), raritySelected);
-                    main.openEnchantRarityListGUI(player, raritySelected);
-                }
-                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.EPIC.Slot")) {
-                    raritySelected = "EPIC";
-                    GuiManager.setRarity(player.getUniqueId(), raritySelected);
-                    main.openEnchantRarityListGUI(player, raritySelected);
-                }
-                if (slot == main.getMenusConfig().getInt("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities.RARE.Slot")) {
-                    raritySelected = "RARE";
-                    GuiManager.setRarity(player.getUniqueId(), raritySelected);
-                    main.openEnchantRarityListGUI(player, raritySelected);
-                }
-            }
+        int slot = event.getSlot();
+        if(slot >= 0 && slot <= 26) {
+            event.setCancelled(true);
+        }
+
+        // Handle Dynamically
+        if(raritySlotMap.containsKey(slot)){
+            raritySelected = raritySlotMap.get(slot);
+            GuiManager.setRarity(player.getUniqueId(), raritySelected);
+            main.openEnchantRarityListGUI(player, raritySelected);
         }
     }
 

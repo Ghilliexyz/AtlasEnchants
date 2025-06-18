@@ -61,26 +61,35 @@ EnchantList-Gui:
     RarityList-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
     RarityList-Menu-Filler-Title: "&0_"
     RarityList-Menu-Rarities:
-      GODLY:
-        Display-Name: "&4&lGodly Enchants"
+      DIVINE:
+        Display-Name: "{rarityColor}Divine Enchants"
         Lore:
           - ""
           - "&7Click to view {rarityColor}{rarityName} &7enchants"
           - ""
         Item: ENCHANTED_BOOK
-        Slot: 16
-        Color: "&c&l"
-      LEGENDARY:
-        Display-Name: "&6&lLegendary Enchants"
+        Slot: 15
+        Color: "&4&l"
+      GODLY:
+        Display-Name: "{rarityColor}Godly Enchants"
         Lore:
           - ""
           - "&7Click to view {rarityColor}{rarityName} &7enchants"
           - ""
         Item: ENCHANTED_BOOK
         Slot: 14
+        Color: "&c&l"
+      LEGENDARY:
+        Display-Name: "{rarityColor}Legendary Enchants"
+        Lore:
+          - ""
+          - "&7Click to view {rarityColor}{rarityName} &7enchants"
+          - ""
+        Item: ENCHANTED_BOOK
+        Slot: 13
         Color: "&6&l"
       EPIC:
-        Display-Name: "&5&lEpic Enchants"
+        Display-Name: "{rarityColor}Epic Enchants"
         Lore:
           - ""
           - "&7Click to view {rarityColor}{rarityName} &7enchants"
@@ -89,13 +98,13 @@ EnchantList-Gui:
         Slot: 12
         Color: "&d&l"
       RARE:
-        Display-Name: "&9&lRare Enchants"
+        Display-Name: "{rarityColor}Rare Enchants"
         Lore:
           - ""
           - "&7Click to view {rarityColor}{rarityName} &7enchants"
           - ""
         Item: ENCHANTED_BOOK
-        Slot: 10
+        Slot: 11
         Color: "&b&l"
   EnchantList-Menu:
     EnchantList-Menu-Title: "{rarityColor}{rarityName} &7&lEnchants"
