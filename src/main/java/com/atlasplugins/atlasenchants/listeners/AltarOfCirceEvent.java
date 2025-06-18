@@ -124,7 +124,7 @@ public class AltarOfCirceEvent implements Listener {
 
         boolean canGetVanillaEnchantments = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled");
 
-        if(!canGetVanillaEnchantments)
+        if(!canGetVanillaEnchantments && targetItem.getType() != Material.BOOK)
         {
             e.setCancelled(true);
         }
