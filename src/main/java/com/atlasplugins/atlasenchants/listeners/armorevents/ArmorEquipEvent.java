@@ -130,7 +130,8 @@ public class ArmorEquipEvent extends Event implements Cancellable {
         HELMET,
         CHESTPLATE,
         LEGGINGS,
-        BOOTS
+        BOOTS,
+        ELYTRA
     }
 
     /**

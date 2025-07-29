@@ -67,17 +67,26 @@ public class ArmorEquipListener implements Listener {
         ItemStack equippedArmor = null;
 
         // Detecting Removing Armor from the armor slots
-        if(action == InventoryAction.PICKUP_ALL || action == InventoryAction.PICKUP_ONE || action == InventoryAction.PICKUP_SOME || action == InventoryAction.PICKUP_HALF) {
+//        if(action == InventoryAction.PICKUP_ALL || action == InventoryAction.PICKUP_ONE || action == InventoryAction.PICKUP_SOME || action == InventoryAction.PICKUP_HALF) {
+//            if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
+//                // player.sendMessage(Main.color("&3Pick Action"));
+//                // Determine if the item being Unequipped is armor or not
+//                if (isArmor(clickedItem)) {
+//                    // Unequipped armor to another slot
+//                    equippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
+//                    unequippedArmor = clickedItem;
+//                }
+//            }
+//        }
+        if ((action == InventoryAction.HOTBAR_SWAP || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
             if (event.getSlotType() == InventoryType.SlotType.ARMOR || (rawSlot >= 5 && rawSlot <= 8)) {
-                // player.sendMessage(Main.color("&3Pick Action"));
-                // Determine if the item being Unequipped is armor or not
                 if (isArmor(clickedItem)) {
-                    // Unequipped armor to another slot
-                    equippedArmor = cursorItem != null && cursorItem.getType() != Material.AIR ? cursorItem : null;
                     unequippedArmor = clickedItem;
+                    equippedArmor = player.getInventory().getItem(event.getHotbarButton());
                 }
             }
         }
+
 
         // Detecting Adding Armor from the armor slots
         if(action == InventoryAction.PLACE_ALL || action == InventoryAction.PLACE_ONE || action == InventoryAction.PLACE_SOME){
@@ -152,7 +161,32 @@ public class ArmorEquipListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
 
+        Player player = (Player) event.getWhoClicked();
+        ItemStack cursorItem = event.getOldCursor();
+
+        if (!isArmor(cursorItem)) return;
+
+        for (int rawSlot : event.getRawSlots()) {
+            if (rawSlot >= 5 && rawSlot <= 8) {
+                ArmorEquipEvent.ArmorType armorType = getArmorType(rawSlot);
+                if (armorType == null) continue;
+
+                ItemStack unequippedArmor = event.getView().getItem(rawSlot);
+                ItemStack equippedArmor = cursorItem;
+
+                ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, unequippedArmor, equippedArmor, armorType, ArmorEquipEvent.EquipMethod.DRAG);
+                Bukkit.getScheduler().runTaskLater(main, () -> player.getServer().getPluginManager().callEvent(armorEquipEvent), 1);
+
+                if (armorEquipEvent.isCancelled()) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 
 //    @EventHandler
 //    public void onInventoryDrag(InventoryDragEvent event) {
@@ -354,6 +388,8 @@ public class ArmorEquipListener implements Listener {
             case DIAMOND_BOOTS:
             case NETHERITE_BOOTS: // Added Netherite Boots
                 return ArmorEquipEvent.ArmorType.BOOTS;
+            case ELYTRA: // Add this to support Elytras as chestplates
+                return ArmorEquipEvent.ArmorType.ELYTRA;
             default:
                 return null;
         }

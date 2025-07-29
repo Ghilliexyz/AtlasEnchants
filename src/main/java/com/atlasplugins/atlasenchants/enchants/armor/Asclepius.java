@@ -30,11 +30,6 @@ public class Asclepius implements Listener {
         // Get the player's helmet item
         ItemStack armor = p.getInventory().getChestplate();
 
-//        if(armor != null)
-//        {
-//            p.sendMessage(Main.color("&eHasArmor Check: &f" + armor.getType().toString()));
-//        }
-
         // Get the list of items the Enchant can be applied to from the config
         List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.ASCLEPIUS.Enchantment-Apply-Item");
 
@@ -50,32 +45,14 @@ public class Asclepius implements Listener {
         ItemStack equippedArmor = event.getEquippedArmor();
         ItemStack unequippedArmor = event.getUnequippedArmor();
 
-//        p.sendMessage(Main.color("&3Armor Type: &f" + armorType.toString()));
-//        if(equippedArmor != null) {
-//            p.sendMessage(Main.color("&bEquippedArmor: &f" + equippedArmor.getType().toString()));
-//        }
-//        if(unequippedArmor != null)
-//        {
-//            p.sendMessage(Main.color("&bUnequippedArmor: &f" + unequippedArmor.getType().toString()));
-//        }
-//        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
-
-
         // if the armor is not of the correct type then exit the method.
-        if(!hasArmor(p)) return;
+        if(!hasArmor(p)){
+            removePlayerMaxHealth(p);
+            return;
+        }
 
         // if the armor is not of the correct type return.
         if(!armorType.equals(ArmorEquipEvent.ArmorType.CHESTPLATE)) return;
-
-        // Get the relevant item based on the event type
-//        ItemStack relevantItem = (equippedArmor != null && equippedArmor.getType() != Material.AIR) ? equippedArmor : unequippedArmor;
-//
-//        if (relevantItem == null || relevantItem.getItemMeta() == null) {
-//            return;
-//        }
-
-//        PersistentDataContainer enchantedItemPDC = relevantItem.getItemMeta().getPersistentDataContainer();
-//        p.sendMessage(Main.color("&3Item Found: &f" + relevantItem.getType().toString()));
 
         PersistentDataContainer enchantedItemPDC = p.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
         String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
