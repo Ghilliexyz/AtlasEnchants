@@ -42,7 +42,7 @@
 
 ### 🔹 Rare & Below
 * **Rare:** Includes **Hunter** (Passive mob damage), **Propel** (Launch enemies), **Freezing Shot**, **Regrowth** (Auto-replant), and **Decapitate** (Head drops).
-* **Trash:** **Tainted Book** — A failed enchantment result used in various crafting or recycling mechanics.
+* **Trash:** **Tainted Book** A failed enchantment result used in various crafting or recycling mechanics.
 
 ---
 
