@@ -22,7 +22,7 @@ public class Asclepius implements Listener {
 
     public boolean isArmorMaterialValid(ItemStack item) {
         if (item == null) return false;
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.GROWTH.Enchantment-Apply-Item");
+        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.ASCLEPIUS.Enchantment-Apply-Item");
         return armorMat.contains(item.getType().toString());
     }
 
