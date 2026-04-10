@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -8,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
@@ -34,6 +33,7 @@ public class Hunter implements Listener
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent e) {
+        if(e.isCancelled()) return;
         if (!(e.getDamager() instanceof Player)) {
             return;
         }
@@ -56,34 +56,18 @@ public class Hunter implements Listener
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("HUNTER")) {
+                    //PUT ENCHANT LOGIC HERE
+                    // get the item in the player hand
+                    Material itemInHand = p.getInventory().getItemInMainHand().getType();
+                    // return if user tries to hit the entity with their bow
+                    if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("HUNTER")) {
-                            //PUT ENCHANT LOGIC HERE
-                            // get the item in the player hand
-                            Material itemInHand = p.getInventory().getItemInMainHand().getType();
-                            // return if user tries to hit the entity with their bow
-                            if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
-
-                            LivingEntity hitEntity = (LivingEntity) entity;
-                            ApplyDamage(hitEntity, enchantLevel, p);
-                            //END ENCHANT LOGIC
-                        }
-                    }
+                    if(!(entity instanceof LivingEntity)) return;
+                    LivingEntity hitEntity = (LivingEntity) entity;
+                    ApplyDamage(hitEntity, enchant.level, p);
+                    //END ENCHANT LOGIC
                 }
             }
         }
@@ -91,6 +75,7 @@ public class Hunter implements Listener
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent e) {
+        if(e.isCancelled()) return;
         if (!(e.getEntity().getShooter() instanceof Player)) {
             return;
         }
@@ -112,30 +97,14 @@ public class Hunter implements Listener
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("HUNTER")) {
+                    //PUT ENCHANT LOGIC HERE
+                    if(e.getHitEntity() == null || !(e.getHitEntity() instanceof LivingEntity)) return;
+                    LivingEntity hitEntity = (LivingEntity) e.getHitEntity();
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("HUNTER")) {
-                            //PUT ENCHANT LOGIC HERE
-                            LivingEntity hitEntity = (LivingEntity) e.getHitEntity();
-
-                            ApplyDamage(hitEntity, enchantLevel, p);
-                            //END ENCHANT LOGIC
-                        }
-                    }
+                    ApplyDamage(hitEntity, enchant.level, p);
+                    //END ENCHANT LOGIC
                 }
             }
         }
@@ -144,7 +113,7 @@ public class Hunter implements Listener
     private void ApplyDamage(LivingEntity entity, int enchantLevel, Player player)
     {
         if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
-            double extraDamage = main.getEnchantmentsConfig().getDouble("Enchantments.HUNTER.Hunter-Damage-Amount-" + enchantLevel);
+            double extraDamage = main.getEnchantmentsConfig().getDouble("Enchantments.HUNTER.Hunter-DamageAmount-" + enchantLevel);
 
             entity.damage(extraDamage);
         }

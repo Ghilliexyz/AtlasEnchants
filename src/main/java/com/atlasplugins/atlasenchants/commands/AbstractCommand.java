@@ -10,5 +10,6 @@ public abstract class AbstractCommand {
     public abstract void complete(JavaPlugin plugin, CommandSender sender, String label, List<String> args, List<String> completions);
     public abstract List<String> getLabels();
     public abstract String getPermission();
+    public boolean requiresPlayer() { return true; }
 }
 

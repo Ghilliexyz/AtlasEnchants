@@ -36,6 +36,10 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         registerCommand(new GiveScrapOfCirceCommand(main));
         registerCommand(new UpgradeCommand(main));
         registerCommand(new EnchantListCommand(main));
+        registerCommand(new GuideCommand(main));
+        registerCommand(new GiveCircesEmberCommand(main));
+        registerCommand(new GiveCircesAnvilCommand(main));
+        registerCommand(new GiveCommand(main));
     }
 
     private void registerCommand(AbstractCommand command) {
@@ -56,16 +60,20 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
         if (target == null) {
             // Send unknownCommand Message in chat when called.
             for (String unknownCommand : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-UnknownCommand")) {
-                String withPAPISet = main.setPlaceholders((Player) sender, unknownCommand);
-                sender.sendMessage(Main.color(withPAPISet));
+                if (sender instanceof Player) {
+                    String withPAPISet = main.setPlaceholders((Player) sender, unknownCommand);
+                    sender.sendMessage(Main.color(withPAPISet));
+                } else {
+                    sender.sendMessage(Main.color(unknownCommand));
+                }
             }
             return true;
         }
 
-        if (!(sender instanceof Player)) {
+        // Allow console to run commands that don't require a player (e.g., reload, help)
+        if (!(sender instanceof Player) && target.requiresPlayer()) {
             // Send NotAPlayer Message in chat when called.
             for (String NotAPlayerMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NotAPlayer")) {
-//                String withPAPISet = main.setPlaceholders(((OfflinePlayer) sender).getPlayer(), NotAPlayerMessage);
                 sender.sendMessage(Main.color(NotAPlayerMessage));
             }
             return true;
@@ -73,12 +81,15 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
 
         String permission = target.getPermission();
         if (permission != null && !permission.isEmpty()) {
-            // Check if the sender does not have the permission and is not an operator
             if (!sender.hasPermission(permission) && !sender.isOp()) {
                 // Send noPermission Message in chat when called.
                 for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
-                    String withPAPISet = main.setPlaceholders((Player) sender, noPermission);
-                    sender.sendMessage(Main.color(withPAPISet));
+                    if (sender instanceof Player) {
+                        String withPAPISet = main.setPlaceholders((Player) sender, noPermission);
+                        sender.sendMessage(Main.color(withPAPISet));
+                    } else {
+                        sender.sendMessage(Main.color(noPermission));
+                    }
                 }
                 return true;
             }

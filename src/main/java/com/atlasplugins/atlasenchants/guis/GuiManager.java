@@ -46,4 +46,9 @@ public class GuiManager {
     public static void clear(UUID playerId) {
         raritySelectionMap.remove(playerId);
     }
+
+    public static void cleanupAll() {
+        openGuis.clear();
+        raritySelectionMap.clear();
+    }
 }

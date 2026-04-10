@@ -1,15 +1,12 @@
 package com.atlasplugins.atlasenchants.enchants.armor;
 
 import com.atlasplugins.atlasenchants.Main;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateCustomEnchant;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,6 +34,7 @@ public class Rush implements Listener
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e)
     {
+        if(e.isCancelled()) return;
         if(!(e.getEntity() instanceof Player)) {return;}
 
         Player p = (Player) e.getEntity();
@@ -49,44 +47,28 @@ public class Rush implements Listener
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getLeggings().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getLeggings())) {
+                if (enchant.name.contains("RUSH"))
+                {
+                    // PUT ENCHANT LOGIC HERE
+                    if (e.getDamageSource() == null) return;
+                    Entity damagingEntity = e.getDamageSource().getDirectEntity();
+                    if (damagingEntity instanceof LivingEntity)
+                    {
+                        // Get speed level and duration from the configuration
+                        int speedLvl = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-SpeedAmount-" + enchant.level);
+                        int speedTimer = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-SpeedTimer-" + enchant.level);
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                        // Ensure the timer is in ticks (20 ticks = 1 second)
+                        speedTimer = speedTimer * 20;
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
+                        // Create the potion effect
+                        PotionEffect potionType = new PotionEffect(PotionEffectType.SPEED, speedTimer, speedLvl - 1, true, false, true);
 
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("RUSH"))
-                        {
-                            // PUT ENCHANT LOGIC HERE
-                            Entity damagingEntity = e.getDamageSource().getDirectEntity();
-                            if (damagingEntity instanceof LivingEntity)
-                            {
-                                // Get speed level and duration from the configuration
-                                int speedLvl = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-Speed-Amount-" + enchantLevel);
-                                int speedTimer = main.getEnchantmentsConfig().getInt("Enchantments.RUSH.Rush-Speed-Timer-" + enchantLevel);
-
-                                // Ensure the timer is in ticks (20 ticks = 1 second)
-                                speedTimer = speedTimer * 20;
-
-                                // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.SPEED, speedTimer, speedLvl - 1, true, false, true);
-
-                                // Apply the potion effect to the player
-                                p.addPotionEffect(potionType);
-                            }
-                            //END ENCHANT LOGIC
-                        }
+                        // Apply the potion effect to the player
+                        p.addPotionEffect(potionType);
                     }
+                    //END ENCHANT LOGIC
                 }
             }
         }

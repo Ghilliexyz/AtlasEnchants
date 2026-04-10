@@ -10,57 +10,73 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.3.4
+#    Plugin Version 1.3.5
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
 
+# =====================================================================
+#  TABLE OF CONTENTS
+# =====================================================================
+#  Upgrade Enchant GUI ..................... Line ~30
+#    - Upgrade Enchant Menu ............... Line ~31
+#    - Upgrade Reward Menu ................ Line ~62
+#  Enchant List GUI ....................... Line ~67
+#    - Rarity List Menu ................... Line ~68
+#    - Enchant List Menu .................. Line ~123
+#  Guide GUI .............................. Line ~136
+#    - Guide Menu ......................... Line ~137
+#    - Recipe Menu ........................ Line ~247
+# =====================================================================
+
 UpgradeEnchant-Gui:
   UpgradeEnchant-Menu:
     #If this is true then the command /ae upgrade will open the upgrade menu
-    UpgradeEnchant-Menu-Toggle: true
-    UpgradeEnchant-Menu-Title: "&c&lUpgrade"
-    UpgradeEnchant-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
-    UpgradeEnchant-Menu-Filler-Title: "&0_"
-    UpgradeEnchant-Menu-Btn:
-      #The Item of the upgrade btn if items are acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Item: GREEN_STAINED_GLASS_PANE
-      #The Title of the upgrade btn if items are acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Title: "&a&lUPGRADE!"
-      #The Lore of the upgrade btn if items are acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-Acceptable-Lore:
-        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-        - ""
-        - "&c● &7This action cannot be undone."
-        - ""
-        - "&c&m&l-----------------------------------------"
-      #The Item of the upgrade btn if items are not acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Item: RED_STAINED_GLASS_PANE
-      #The Title of the upgrade btn if items are not acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Title: "&c&lMISMATCHED ENCHANTS!"
-      #The Lore of the upgrade btn if items are not acceptable
-      UpgradeEnchant-Menu-Upgrade-Btn-NotAcceptable-Lore:
-        - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-        - ""
-        - "&c● &7You must fill all 10 slots with enchants of the same rarity"
-        - ""
-        - "&c&m&l-----------------------------------------"
+    Toggle: true
+    Title: "&c&lUpgrade"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
+    Btn:
+      Acceptable:
+        #The Item of the upgrade btn if items are acceptable
+        Item: GREEN_STAINED_GLASS_PANE
+        #The Title of the upgrade btn if items are acceptable
+        Title: "&a&lUPGRADE!"
+        #The Lore of the upgrade btn if items are acceptable
+        Lore:
+          - "{header}"
+          - ""
+          - "&c● &7This action cannot be undone."
+          - ""
+          - "{footer}"
+      NotAcceptable:
+        #The Item of the upgrade btn if items are not acceptable
+        Item: RED_STAINED_GLASS_PANE
+        #The Title of the upgrade btn if items are not acceptable
+        Title: "&c&lMISMATCHED ENCHANTS!"
+        #The Lore of the upgrade btn if items are not acceptable
+        Lore:
+          - "{header}"
+          - ""
+          - "&c● &7You must fill all {requiredBooks} slots with enchants of the same rarity"
+          - ""
+          - "{footer}"
   UpgradeReward-Menu:
-    UpgradeReward-Menu-Title: "&c&lREWARD!"
-    UpgradeReward-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
-    UpgradeReward-Menu-Filler-Title: "&0_"
+    Title: "&c&lREWARD!"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
 
 EnchantList-Gui:
   RarityList-Menu:
     # If this is true then the command /ae list will open the enchant list menu instead of upgrade menu
-    RarityList-Menu-Toggle: true
+    Toggle: true
     # If this is true then the player will be sent a message when they do not have permission to grab enchants from the GUI
-    # This message is the default Command-Messages-NoPermissions Message located in Settings.yml Line: 30
-    RarityList-Menu-Grabber-Message: true
-    RarityList-Menu-Title: "&c&lSelect Rarity"
-    RarityList-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
-    RarityList-Menu-Filler-Title: "&0_"
-    RarityList-Menu-Rarities:
+    # This message is the default Command-Messages.NoPermissions Message located in Settings.yml
+    Grabber-Message: true
+    Title: "&c&lSelect Rarity"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
+    Rarities:
       DIVINE:
         Display-Name: "{rarityColor}Divine Enchants"
         Lore:
@@ -107,14 +123,140 @@ EnchantList-Gui:
         Slot: 11
         Color: "&b&l"
   EnchantList-Menu:
-    EnchantList-Menu-Title: "{rarityColor}{rarityName} &7&lEnchants"
-    EnchantList-Menu-Filler-Item: BLACK_STAINED_GLASS_PANE
-    EnchantList-Menu-Filler-Title: "&0_"
+    Title: "{rarityColor}{rarityName} &7&lEnchants"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
     # Back button to return to rarity menu
-    EnchantList-Menu-Back-Button:
+    Back-Button:
       Material: RED_STAINED_GLASS_PANE
       Title: "&cBack"
       Lore:
         - ""
         - "&7Click to return to the rarity selection."
+        - ""
+
+Guide-Gui:
+  Guide-Menu:
+    Title: "&c&lPlugin Guide"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
+    Items:
+      EnchantBooks:
+        Display-Name: "&6&lEnchant Books"
+        Item: ENCHANTED_BOOK
+        Slot: 10
+        Lore:
+          - ""
+          - "&c● &7Custom enchantments come as &eenchanted books&7."
+          - "&c● &7Drag and drop a book onto any compatible item"
+          - "   &7in your inventory to apply the enchantment."
+          - ""
+          - "&c● &7Enchantments come in rarity tiers:"
+          - "   &7&lTRASH &8| &b&lRARE &8| &d&lEPIC &8| &6&lLEGENDARY &8| &c&lGODLY &8| &4&lDIVINE"
+          - ""
+          - "&c● &7Higher rarity = stronger effects!"
+          - ""
+      OblivionShard:
+        Display-Name: "&6&lOblivion Shard"
+        Item: PRISMARINE_SHARD
+        Slot: 11
+        Lore:
+          - ""
+          - "&c● &7Removes a random custom enchant from any item."
+          - "&c● &7Drag and drop onto an enchanted item to use."
+          - ""
+          - "&c● &7Has a &e{oblivionShardChance}% &7chance to return the removed"
+          - "   &7enchantment as a book."
+          - ""
+          - "&c● &7Found in loot chests."
+          - ""
+      Oracle:
+        Display-Name: "&b&lOracle of Enchantment"
+        Item: WRITTEN_BOOK
+        Slot: 12
+        Lore:
+          - ""
+          - "&c● &7A cryptic tome of ancient knowledge."
+          - "&c● &7Place on a &eLectern &7to learn its secrets."
+          - ""
+          - "&c● &7Can also be purchased from the"
+          - "   &eWandering Trader &7when available."
+          - ""
+          - "&c● &7Used in crafting the &dAltar of Circe&7."
+          - ""
+      Altar:
+        Display-Name: "&d&lAltar of Circe"
+        Item: ENCHANTING_TABLE
+        Slot: 13
+        Lore:
+          - ""
+          - "&c● &7A mythic enchanting altar."
+          - "&c● &7Place and interact to enchant books"
+          - "   &7with random custom enchantments."
+          - ""
+          - "&c● &7Crafted using Oracle Books, Scraps,"
+          - "   &7and other rare materials."
+          - ""
+          - "&a► Click to view crafting recipe"
+          - ""
+      Anvil:
+        Display-Name: "&c&lCirce's Anvil"
+        Item: ANVIL
+        Slot: 14
+        Lore:
+          - ""
+          - "&c● &7A divine upgrade station."
+          - "&c● &7Place and &eright-click &7to open the Upgrade Menu."
+          - ""
+          - "&c● &7Place &e{requiredBooks} enchant books &7of the same rarity"
+          - "   &7to upgrade them into one of the next rarity tier."
+          - ""
+          - "&c● &7Crafted with Netherite, Circe's Ember,"
+          - "   &7Scraps, an Anvil, and Obsidian."
+          - ""
+          - "&a► Click to view crafting recipe"
+          - ""
+      Scrapping:
+        Display-Name: "&3&lCauldron Scrapping"
+        Item: CAULDRON
+        Slot: 15
+        Lore:
+          - ""
+          - "&c● &7Wash enchanted items in a &ewater cauldron"
+          - "   &7to break them down."
+          - ""
+          - "&c● &7Has a &e{scrapSuccessChance}% &7chance to produce a"
+          - "   &3Scrap of Circe's Weave&7."
+          - ""
+          - "&c● &7Scraps are used in crafting recipes."
+          - ""
+      Loot:
+        Display-Name: "&e&lFinding Enchants"
+        Item: CHEST
+        Slot: 16
+        Lore:
+          - ""
+          - "&c● &7Custom enchant books can be found in any"
+          - "   &7naturally spawning &eloot container &7(chests, pots, etc)."
+          - ""
+          - "&c● &7Rarer enchantments have lower drop chances."
+          - "&c● &7Oblivion Shards and Circe's Embers"
+          - "   &7can also appear in loot."
+          - ""
+          - "&c● &7Some enchants can be found while &efishing"
+          - "   &7with the Poseidon's Bait enchantment."
+          - ""
+  Recipe-Menu:
+    Title: "&c&l{recipeName} Recipe"
+    Filler-Item: BLACK_STAINED_GLASS_PANE
+    Filler-Title: "&0_"
+    Arrow:
+      Item: ARROW
+      Title: "&7&l>>>"
+    Back-Button:
+      Material: RED_STAINED_GLASS_PANE
+      Title: "&cBack"
+      Lore:
+        - ""
+        - "&7Click to return to the guide."
         - ""

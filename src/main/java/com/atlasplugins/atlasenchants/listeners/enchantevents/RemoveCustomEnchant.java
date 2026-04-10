@@ -27,7 +27,7 @@ public class RemoveCustomEnchant implements Listener {
             for (String enchantment : enchantments) {
                 String[] enchantParts = enchantment.split(":");
 
-                if (enchantParts.length == 2) {
+                if (enchantParts.length >= 2) {
                     String currentEnchantName = enchantParts[0];
 
                     if (!currentEnchantName.equalsIgnoreCase(enchantName)) {

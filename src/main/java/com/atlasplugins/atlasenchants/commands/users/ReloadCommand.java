@@ -28,8 +28,12 @@ public class ReloadCommand extends AbstractCommand {
 
         // Send ConfigReloaded Message in chat when called.
         for (String ConfigReloadedMessage : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-ReloadConfig-ConfigReloaded")) {
-            String withPAPISet = main.setPlaceholders((Player) sender, ConfigReloadedMessage);
-            sender.sendMessage(Main.color(withPAPISet));
+            if (sender instanceof Player) {
+                String withPAPISet = main.setPlaceholders((Player) sender, ConfigReloadedMessage);
+                sender.sendMessage(Main.color(withPAPISet));
+            } else {
+                sender.sendMessage(Main.color(ConfigReloadedMessage));
+            }
         }
     }
 
@@ -45,7 +49,10 @@ public class ReloadCommand extends AbstractCommand {
 
     @Override
     public String getPermission() {
-        return "atlasenchants.reload";  // permission required for help command
+        return "atlasenchants.reloadconfig";
     }
+
+    @Override
+    public boolean requiresPlayer() { return false; }
 }
 

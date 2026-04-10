@@ -20,18 +20,18 @@ public class EnchantListGUI extends Gui {
     private final Map<Integer, String> raritySlotMap = new HashMap<>();
 
     public EnchantListGUI(Main main, Player player) {
-        super(player, Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Title")), 27);
+        super(player, Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.Title")), 27);
         this.main = main;
         this.player = player;
-        setupItems();
     }
 
     @Override
     public void setupItems() {
         setupFiller();
 
-        String configPath = "EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities";
+        String configPath = "EnchantList-Gui.RarityList-Menu.Rarities";
 
+        if (main.getMenusConfig().getConfigurationSection(configPath) == null) return;
         Set<String> rarityKeys = main.getMenusConfig().getConfigurationSection(configPath).getKeys(false);
 
         for (String rarity : rarityKeys) {
@@ -41,9 +41,14 @@ public class EnchantListGUI extends Gui {
             int slot = main.getMenusConfig().getInt(path + ".Slot");
             String displayName = main.getMenusConfig().getString(path + ".Display-Name");
 
-            Material icon = Material.valueOf(main.getMenusConfig().getString(path + ".Item"));
+            Material icon;
+            try {
+                icon = Material.valueOf(main.getMenusConfig().getString(path + ".Item"));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
 
-            if(icon == null || displayName == null) return;
+            if(displayName == null) continue;
 
             ItemStack item = new ItemStack(icon);
             ItemMeta meta = item.getItemMeta();
@@ -78,7 +83,7 @@ public class EnchantListGUI extends Gui {
         // Get the inventory title
         String title = event.getView().getTitle();
         // Get the EnchantListGUI Menu title from the config
-        String EnchantListGUIMenuTitle = Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Title"));
+        String EnchantListGUIMenuTitle = Main.color(main.getMenusConfig().getString("EnchantList-Gui.RarityList-Menu.Title"));
 
         if(!title.equals(Main.color(EnchantListGUIMenuTitle))) return;
         if(event.getClickedInventory() == null || !event.getClickedInventory().equals(event.getView().getTopInventory())) return;

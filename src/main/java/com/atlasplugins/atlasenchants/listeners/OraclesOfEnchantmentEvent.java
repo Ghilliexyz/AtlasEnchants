@@ -92,12 +92,12 @@ public class OraclesOfEnchantmentEvent implements Listener {
 
                     if(!isOracleEnabled){
                         // Get oracle Disabled sound via config.
-                        Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.OracleItem-DisabledOracle-Sound"));
-                        float oracleDisabledVolume = main.getSettingsConfig().getInt("OracleItemSounds.OracleItem-DisabledOracle-Volume");
-                        float oracleDisabledPitch = main.getSettingsConfig().getInt("OracleItemSounds.OracleItem-DisabledOracle-Pitch");
+                        Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.DisabledOracle.Sound"));
+                        float oracleDisabledVolume = (float) main.getSettingsConfig().getDouble("OracleItemSounds.DisabledOracle.Volume");
+                        float oracleDisabledPitch = (float) main.getSettingsConfig().getDouble("OracleItemSounds.DisabledOracle.Pitch");
 
                         // Get the bool to check if the user wants to play the oracle Disabled sound
-                        boolean oracleDisabledPlaySound = main.getSettingsConfig().getBoolean("OracleItemSounds.OracleItem-DisabledOracle-Sound-Toggle");
+                        boolean oracleDisabledPlaySound = main.getSettingsConfig().getBoolean("OracleItemSounds.DisabledOracle.Toggle");
 
                         // check if the user doesn't want to play the sound then return if not.
                         if(oracleDisabledPlaySound) {
@@ -106,11 +106,11 @@ public class OraclesOfEnchantmentEvent implements Listener {
                         }
 
                         // Get the bool to check if the user wants to show the oracle Disabled message
-                        boolean oracleDisabledSendMessage = main.getSettingsConfig().getBoolean("OracleItemMessages.OracleItem-DisabledOracle-Message-Toggle");
+                        boolean oracleDisabledSendMessage = main.getSettingsConfig().getBoolean("OracleItemMessages.DisabledOracle.Toggle");
                         // check if the user doesn't want to send the oracle Disabled Message, return if not.
                         if (oracleDisabledSendMessage) {
                             // Send blacklisted Message in chat
-                            for (String BlacklistMessage : main.getSettingsConfig().getStringList("OracleItemMessages.OracleItem-DisabledOracle-Message")) {
+                            for (String BlacklistMessage : main.getSettingsConfig().getStringList("OracleItemMessages.DisabledOracle.Message")) {
                                 String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
                                 String message = Main.color(withPAPISet1)
                                         .replace("{oracleName}", formatOracleName(oracleName));
@@ -122,12 +122,12 @@ public class OraclesOfEnchantmentEvent implements Listener {
                     }
 
                     // Get oracle Opening sound via config.
-                    Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.OracleItem-Opening-Sound"));
-                    float oracleDisabledVolume = main.getSettingsConfig().getInt("OracleItemSounds.OracleItem-Opening-Volume");
-                    float oracleDisabledPitch = main.getSettingsConfig().getInt("OracleItemSounds.OracleItem-Opening-Pitch");
+                    Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.Opening.Sound"));
+                    float oracleDisabledVolume = (float) main.getSettingsConfig().getDouble("OracleItemSounds.Opening.Volume");
+                    float oracleDisabledPitch = (float) main.getSettingsConfig().getDouble("OracleItemSounds.Opening.Pitch");
 
                     // Get the bool to check if the user wants to play the oracle Disabled sound
-                    boolean oracleDisabledPlaySound = main.getSettingsConfig().getBoolean("OracleItemSounds.OracleItem-Opening-Sound-Toggle");
+                    boolean oracleDisabledPlaySound = main.getSettingsConfig().getBoolean("OracleItemSounds.Opening.Toggle");
 
                     // check if the user doesn't want to play the sound then return if not.
                     if(oracleDisabledPlaySound) {
@@ -136,11 +136,11 @@ public class OraclesOfEnchantmentEvent implements Listener {
                     }
 
                     // Get the bool to check if the user wants to show the oracle Disabled message
-                    boolean oracleDisabledSendMessage = main.getSettingsConfig().getBoolean("OracleItemMessages.OracleItem-Opening-Message-Toggle");
+                    boolean oracleDisabledSendMessage = main.getSettingsConfig().getBoolean("OracleItemMessages.Opening.Toggle");
                     // check if the user doesn't want to send the oracle Disabled Message, return if not.
                     if (oracleDisabledSendMessage) {
                         // Send blacklisted Message in chat
-                        for (String BlacklistMessage : main.getSettingsConfig().getStringList("OracleItemMessages.OracleItem-Opening-Message")) {
+                        for (String BlacklistMessage : main.getSettingsConfig().getStringList("OracleItemMessages.Opening.Message")) {
                             String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
                             String message = Main.color(withPAPISet1)
                                     .replace("{oracleName}", formatOracleName(oracleName));

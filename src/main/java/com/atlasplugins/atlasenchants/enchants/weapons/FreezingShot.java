@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -10,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
@@ -35,6 +34,7 @@ public class FreezingShot implements Listener {
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent e) {
+        if(e.isCancelled()) return;
         if (!(e.getDamager() instanceof Player)) {
             return;
         }
@@ -49,32 +49,15 @@ public class FreezingShot implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
-
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("FREEZING-SHOT")) {
-                            //PUT ENCHANT LOGIC HERE
-                            // get the item in the player hand
-                            Material itemInHand = p.getInventory().getItemInMainHand().getType();
-                            // return if user tries to hit the entity with their bow
-                            if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
-                            ApplyFreezingShotEffect(e.getEntity(), enchantLevel, p);
-                            //END ENCHANT LOGIC
-                        }
-                    }
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("FREEZING-SHOT")) {
+                    //PUT ENCHANT LOGIC HERE
+                    // get the item in the player hand
+                    Material itemInHand = p.getInventory().getItemInMainHand().getType();
+                    // return if user tries to hit the entity with their bow
+                    if(itemInHand == Material.BOW || itemInHand == Material.CROSSBOW) {return;}
+                    ApplyFreezingShotEffect(e.getEntity(), enchant.level, p);
+                    //END ENCHANT LOGIC
                 }
             }
         }
@@ -82,6 +65,7 @@ public class FreezingShot implements Listener {
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent e) {
+        if(e.isCancelled()) return;
         if (!(e.getEntity().getShooter() instanceof Player)) {
             return;
         }
@@ -95,29 +79,13 @@ public class FreezingShot implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
-
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("FREEZING-SHOT")) {
-                            //PUT ENCHANT LOGIC HERE
-                            Entity hitEntity = e.getHitEntity();
-                            ApplyFreezingShotEffect(hitEntity, enchantLevel, p);
-                            //END ENCHANT LOGIC
-                        }
-                    }
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("FREEZING-SHOT")) {
+                    //PUT ENCHANT LOGIC HERE
+                    Entity hitEntity = e.getHitEntity();
+                    if(hitEntity == null) return;
+                    ApplyFreezingShotEffect(hitEntity, enchant.level, p);
+                    //END ENCHANT LOGIC
                 }
             }
         }
@@ -125,23 +93,19 @@ public class FreezingShot implements Listener {
 
     private void ApplyFreezingShotEffect(Entity entity, int enchantLevel, Player player) {
         if (entity instanceof LivingEntity) {
-            int freezingShotTimer = main.getEnchantmentsConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-Freeze-Timer-" + enchantLevel);
+            int freezingShotTimer = main.getEnchantmentsConfig().getInt("Enchantments.FREEZING-SHOT.FreezingShot-FreezeTimer-" + enchantLevel);
             int freezeDurationTicks = freezingShotTimer * 20; // Convert seconds to ticks
 
             ((LivingEntity) entity).setAI(false); // Disable AI or apply the effect
-
-//            player.sendMessage(Main.color("&aEntity: &7" + entity));
-//            player.sendMessage(Main.color("&cTimer: &7" + freezingShotTimer + " seconds"));
 
             // Schedule a task to run after freezeDurationTicks ticks
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     // This code will run after the freeze duration has elapsed
-                    ((LivingEntity) entity).setAI(true); // Re-enable AI or remove the effect
-
-//                    player.sendMessage(Main.color("&aEntity: &7" + entity));
-//                    player.sendMessage(Main.color("&cFreezing Shot effect has ended."));
+                    if (entity.isValid()) {
+                        ((LivingEntity) entity).setAI(true); // Re-enable AI or remove the effect
+                    }
                 }
             }.runTaskLater(main, freezeDurationTicks);
         }

@@ -11,9 +11,12 @@ import com.atlasplugins.atlasenchants.listeners.CauldronEvent;
 import com.atlasplugins.atlasenchants.listeners.OraclesOfEnchantmentEvent;
 import com.atlasplugins.atlasenchants.listeners.AltarOfCirceCraftingRecipe;
 import com.atlasplugins.atlasenchants.listeners.AltarOfCirceEvent;
+import com.atlasplugins.atlasenchants.listeners.CircesAnvilCraftingRecipe;
+import com.atlasplugins.atlasenchants.listeners.CircesAnvilEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
+import com.atlasplugins.atlasenchants.managers.CircesAnvilManager;
 import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
 import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
@@ -40,8 +43,14 @@ public final class Main extends JavaPlugin implements Listener {
 
     private ExperienceManager experienceManager;
 
-    // Change chat colors
+    // Change chat colors and resolve {header}/{footer} placeholders
     public static String color(String string) {
+        if (instance != null && instance.getSettingsConfig() != null) {
+            String header = instance.getSettingsConfig().getString("Header", "");
+            String footer = instance.getSettingsConfig().getString("Footer", "");
+            string = string.replace("{header}", header);
+            string = string.replace("{footer}", footer);
+        }
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
@@ -54,12 +63,16 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey customOracleBookKeys;
     public static NamespacedKey customAltarOfCirceKeys;
     public static NamespacedKey customScrapOfCirceKeys;
+    public static NamespacedKey customCircesEmberKeys;
+    public static NamespacedKey customCircesAnvilKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
     private LogsPlacedManager logsPlacedManager;
     // Ores Placed Stuff
     private OresPlacedManager oresPlacedManager;
+    // Circe's Anvil Stuff
+    private CircesAnvilManager circesAnvilManager;
     // Block Radius Finder Stuff
     public BlockRadiusFinder blockRadiusFinder;
 
@@ -121,12 +134,16 @@ public final class Main extends JavaPlugin implements Listener {
         customOracleBookKeys = new NamespacedKey(this, "Custom_Oracle_Books");
         customAltarOfCirceKeys = new NamespacedKey(this, "Custom_Oracle_Table");
         customScrapOfCirceKeys = new NamespacedKey(this, "Custom_ScrapOfCirce");
+        customCircesEmberKeys = new NamespacedKey(this, "Custom_CircesEmber");
+        customCircesAnvilKeys = new NamespacedKey(this, "Custom_CircesAnvil");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
         logsPlacedManager = new LogsPlacedManager(this);
         // Initialize PlayerPlacedBlocksManager
         oresPlacedManager = new OresPlacedManager(this);
+        // Initialize CircesAnvilManager
+        circesAnvilManager = new CircesAnvilManager(this);
         // Initialize BlockUtils instance
         blockRadiusFinder = new BlockRadiusFinder(this);
         // Register experienceManager
@@ -173,10 +190,17 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new AltarOfCirceEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new WanderingTraderEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new CauldronEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateCircesEmber(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateCircesAnvil(this), this);
+        this.getServer().getPluginManager().registerEvents(new CircesAnvilEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Crafting Recipe
         new AltarOfCirceCraftingRecipe(this).registerOracleTableRecipe();
+        boolean isCircesAnvilCraftingEnabled = getEnchantmentsConfig().getBoolean("CircesAnvil.CircesAnvil-Crafting-Enabled", true);
+        if (isCircesAnvilCraftingEnabled) {
+            new CircesAnvilCraftingRecipe(this).registerCircesAnvilRecipe();
+        }
 
         // Register commands
         this.commandRouter = new CommandRouter(this);
@@ -189,7 +213,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.4"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.5"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -206,9 +230,14 @@ public final class Main extends JavaPlugin implements Listener {
         logsPlacedManager.saveDataToFile();
         // Save data to file on plugin disable
         oresPlacedManager.saveDataToFile();
+        // Save Circe's Anvil locations on plugin disable
+        circesAnvilManager.saveDataToFile();
+
+        // Clean up GUI tracking maps to prevent memory leaks on reload
+        GuiManager.cleanupAll();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.4"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.5"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -328,6 +357,15 @@ public final class Main extends JavaPlugin implements Listener {
         enchantRarityListGUI.open();
     }
 
+    public CircesAnvilManager getCircesAnvilManager() {
+        return circesAnvilManager;
+    }
+
+    public void openGuideGUI(Player player){
+        GuideGUI guideGUI = new GuideGUI(this, player);
+        guideGUI.open();
+    }
+
     public void openUpgradeEnchantGUI(Player player){
         UpgradeEnchantGUI upgradeEnchantGUI = new UpgradeEnchantGUI(this, player);
         upgradeEnchantGUI.open();
@@ -353,7 +391,7 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public static String getRarityColorCode(Main main, String rarity) {
-        String path = "EnchantList-Gui.RarityList-Menu.RarityList-Menu-Rarities." + rarity.toUpperCase() + ".Color";
+        String path = "EnchantList-Gui.RarityList-Menu.Rarities." + rarity.toUpperCase() + ".Color";
         String color = main.getMenusConfig().getString(path);
         return color != null ? color : "f"; // fallback to white
     }
@@ -363,30 +401,29 @@ public final class Main extends JavaPlugin implements Listener {
 
         placeholders.put("{lvl}", String.valueOf(enchantmentLevel));
         placeholders.put("{blacklistEnchant}", String.valueOf(main.getEnchantmentsConfig().getStringList("Enchantments." + enchantmentName + ".Enchantment-Blacklist-Enchants")));
-        placeholders.put("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Radius-of-glowing-" + enchantmentLevel)));
-        placeholders.put("{time}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Time-underwater-" + enchantmentLevel)));
-        placeholders.put("{hunterDamageAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Hunter-Damage-Amount-" + enchantmentLevel)));
-        placeholders.put("{speedLvl}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Amount-" + enchantmentLevel)));
-        placeholders.put("{speedTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-Speed-Timer-" + enchantmentLevel)));
-        placeholders.put("{propelBlockDistance}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Propel-Height-Amount-" + enchantmentLevel)));
-        placeholders.put("{freezingTimer}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FreezingShot-Freeze-Timer-" + enchantmentLevel)));
-        placeholders.put("{healthTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".HealthBar-Timer-" + enchantmentLevel)));
-        placeholders.put("{extraHearts}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Growth-Heart-Increase-" + enchantmentLevel)));
-        placeholders.put("{poisonTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Timer-" + enchantmentLevel)));
-        placeholders.put("{poisonLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-Poison-Level-" + enchantmentLevel)));
-        placeholders.put("{stunTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Timer-" + enchantmentLevel)));
-        placeholders.put("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-Stun-Levels-" + enchantmentLevel)));
-        placeholders.put("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-Frozen-Timer-" + enchantmentLevel)));
-        placeholders.put("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-EXP-Multiplier-" + enchantmentLevel)));
-        placeholders.put("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Healing-Amount-" + enchantmentLevel)));
-        placeholders.put("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-Start-Healing-Amount-" + enchantmentLevel)));
-        placeholders.put("{wingsDamageReduction}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Protection-Percentage-" + enchantmentLevel)));
+        placeholders.put("{glowRange}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Fearsight-GlowRadius-" + enchantmentLevel)));
+        placeholders.put("{hunterDamageAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Hunter-DamageAmount-" + enchantmentLevel)));
+        placeholders.put("{speedLvl}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-SpeedAmount-" + enchantmentLevel)));
+        placeholders.put("{speedTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Rush-SpeedTimer-" + enchantmentLevel)));
+        placeholders.put("{propelBlockDistance}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Propel-HeightAmount-" + enchantmentLevel)));
+        placeholders.put("{freezingTimer}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FreezingShot-FreezeTimer-" + enchantmentLevel)));
+        placeholders.put("{healthTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".BlessingOfKnowledge-HealthTimer-" + enchantmentLevel)));
+        placeholders.put("{poisonTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-PoisonTimer-" + enchantmentLevel)));
+        placeholders.put("{poisonLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".PoisonAspect-PoisonLevel-" + enchantmentLevel)));
+        placeholders.put("{stunTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-StunTimer-" + enchantmentLevel)));
+        placeholders.put("{stunLevel}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Stunning-StunLevel-" + enchantmentLevel)));
+        placeholders.put("{iceTimer}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".IceAspect-FreezeTimer-" + enchantmentLevel)));
+        placeholders.put("{extractorMultiplier}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Extractor-ExpMultiplier-" + enchantmentLevel)));
+        placeholders.put("{healingAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-HealAmount-" + enchantmentLevel)));
+        placeholders.put("{healingStartAmount}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".EnergyAbsorption-StartHealAmount-" + enchantmentLevel)));
+        placeholders.put("{wingsDefensePoints}", String.valueOf((int) main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Armor-Defense-Points")));
+        placeholders.put("{wingsToughness}", String.valueOf((int) main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".WingsOfAegis-Armor-Toughness")));
         placeholders.put("{AsclepiusHearts}", String.valueOf(main.getEnchantmentsConfig().getInt("Enchantments." + enchantmentName + ".Asclepius-HealthBoost-" + enchantmentLevel) * 2));
-        placeholders.put("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-Proc-Chance-" + enchantmentLevel) * 100));
-        placeholders.put("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Protection-Percent-" + enchantmentLevel) * 100));
-        placeholders.put("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-Repair-Percent-" + enchantmentLevel) * 100));
-        placeholders.put("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-Proc-Chance-" + enchantmentLevel) * 100));
-        placeholders.put("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-Healing-Amount-Percent-" + enchantmentLevel) * 100));
+        placeholders.put("{decapitateChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Decapitate-ProcChance-" + enchantmentLevel) * 100));
+        placeholders.put("{finalGuardProtectionPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-ProtectionChance-" + enchantmentLevel) * 100));
+        placeholders.put("{finalGuardRepairPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".FinalGuard-RepairPercent-" + enchantmentLevel) * 100));
+        placeholders.put("{BaitChance}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".PoseidonsBait-ProcChance-" + enchantmentLevel) * 100));
+        placeholders.put("{leechPercent}", String.valueOf(main.getEnchantmentsConfig().getDouble("Enchantments." + enchantmentName + ".Leech-HealPercent-" + enchantmentLevel) * 100));
 
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
             input = input.replace(entry.getKey(), entry.getValue());

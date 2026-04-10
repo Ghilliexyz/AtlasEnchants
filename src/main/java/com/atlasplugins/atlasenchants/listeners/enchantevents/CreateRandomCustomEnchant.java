@@ -38,7 +38,8 @@ public class CreateRandomCustomEnchant implements Listener {
         }
 
         // If a specific rarity is provided, use it, otherwise, continue with random selection
-        while (!hasFoundEnchantment) {
+        int maxAttempts = 100;
+        while (!hasFoundEnchantment && maxAttempts-- > 0) {
             for (String rarity : enchantmentRarity) {
                 // If a specific rarity is chosen, skip this loop unless it's the desired rarity
                 if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) {
@@ -126,7 +127,8 @@ public class CreateRandomCustomEnchant implements Listener {
             Collections.reverse(allRarities);
         }
 
-        while (!hasFoundEnchantment) {
+        int maxOracleAttempts = 100;
+        while (!hasFoundEnchantment && maxOracleAttempts-- > 0) {
             for (String rarity : allRarities) {
                 if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) continue;
 

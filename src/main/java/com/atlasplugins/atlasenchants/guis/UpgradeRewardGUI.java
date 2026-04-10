@@ -20,14 +20,13 @@ public class UpgradeRewardGUI extends Gui {
     public UpgradeRewardGUI(Main main, Player player, String rarity) {
         // Directly pass the fetched values to super()
         super(player,
-                Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")), 27);
+                Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Title")), 27);
 
         this.player = player;
         this.rarity = rarity;
 
         // Continue with the rest of your constructor logic
         this.main = main;
-        setupItems();
     }
 
 
@@ -44,14 +43,14 @@ public class UpgradeRewardGUI extends Gui {
 
         // ---------- GLASS FILLER ---------- \\
         // Create Item \\
-        String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Title");
-        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Filler-Item"));
+        String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Filler-Title");
+        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Filler-Item"));
         ItemStack GlassItem = new ItemStack(GlassConfigItem);
         ItemMeta GlassItemMeta = GlassItem.getItemMeta();
         // Set Title \\
         String GlassItemDisplayName = Main.color(GlassTitle).replace("{Player}", player.getName());
         String GlassItemDisplayNamePAPISet = main.setPlaceholders(player, GlassItemDisplayName);
-        assert GlassItemMeta != null;
+        if (GlassItemMeta == null) return;
         GlassItemMeta.setDisplayName(Main.color(GlassItemDisplayNamePAPISet));
         GlassItem.setItemMeta(GlassItemMeta);
         // Place Items in correct slots \\
@@ -88,7 +87,7 @@ public class UpgradeRewardGUI extends Gui {
         // Get the inventory title
         String title = event.getView().getTitle();
         // Get the UpgradeReward Menu title from the config
-        String upgradeRewardMenuTitle = Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title"));
+        String upgradeRewardMenuTitle = Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Title"));
         // Check if the clicked inventory matches your custom GUI title
         if (title.equals(Main.color(upgradeRewardMenuTitle))) {
             // Check if the clicked inventory is the custom GUI, not the player's inventory
@@ -108,7 +107,7 @@ public class UpgradeRewardGUI extends Gui {
         // Get the inventory title
         String title = event.getView().getTitle();
         // Check if the title matches your custom GUI title
-        if (title.equals(Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.UpgradeReward-Menu-Title")))) {  // Replace with your actual GUI title
+        if (title.equals(Main.color(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Title")))) {  // Replace with your actual GUI title
 
             // Define the slots where players can place their items (e.g., 13)
             int[] validSlots = {13};

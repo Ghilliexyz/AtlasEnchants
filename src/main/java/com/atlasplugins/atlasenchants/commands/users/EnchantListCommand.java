@@ -18,12 +18,12 @@ public class EnchantListCommand extends AbstractCommand {
     public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
         Player player = (Player) sender;
 
-        if(main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Toggle")) {
+        if(main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.Toggle")) {
             main.openEnchantListGUI(player);
         }else {
-            if(main.getSettingsConfig().getBoolean("EnchantListMessages.EnchantList-DisabledMenu-Message-Toggle")) {
+            if(main.getSettingsConfig().getBoolean("EnchantListMessages.DisabledMenu.Toggle")) {
                 // Send UpgradeMenu Disabled Message in chat when called.
-                for (String UpgradeMenuDisabledMessage : main.getSettingsConfig().getStringList("EnchantListMessages.EnchantList-DisabledMenu-Message")) {
+                for (String UpgradeMenuDisabledMessage : main.getSettingsConfig().getStringList("EnchantListMessages.DisabledMenu.Message")) {
                     String withPAPISet = main.setPlaceholders((Player) sender, UpgradeMenuDisabledMessage);
                     String message = Main.color(withPAPISet);
                     sender.sendMessage(message);

@@ -10,10 +10,55 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.3.4
+#    Plugin Version 1.3.5
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
+
+# =====================================================================
+#  HEADER & FOOTER - Used by {header} and {footer} placeholders
+#  throughout this config, enchantments.yml, and menus.yml.
+#  Change these once and it updates everywhere.
+# =====================================================================
+Header: "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+Footer: "&c&m&l-----------------------------------------"
+
+# =====================================================================
+#  TABLE OF CONTENTS
+# =====================================================================
+#  Header & Footer ......................... Line ~23
+#  Command Messages ........................ Line ~60
+#    - Default Messages .................... Line ~63
+#    - Reload Config ....................... Line ~86
+#    - Give Enchant ........................ Line ~97
+#    - Give Oblivion Shard ................. Line ~144
+#    - Give Oracle of Enchantment .......... Line ~173
+#    - Give Oracle's Table ................. Line ~202
+#    - Give Scrap of Circe ................. Line ~231
+#    - Give Random Enchant ................. Line ~260
+#    - Enchant List ........................ Line ~289
+#    - Give Circe's Ember .................. Line ~300
+#    - Give Circe's Anvil .................. Line ~329
+#  Help Messages ........................... Line ~358
+#  Circe's Anvil Messages .................. Line ~406
+#  Circe's Anvil Sounds .................... Line ~417
+#  Enchant Item Settings ................... Line ~424
+#    - Spawn Chance & Rarity List .......... Line ~434
+#  Upgrade Enchant Settings ................ Line ~452
+#  Upgrade Enchant Sounds .................. Line ~458
+#  Upgrade Enchant Messages ................ Line ~484
+#  Enchant List Messages ................... Line ~530
+#  Enchant Item Sounds ..................... Line ~545
+#  Enchant Item Messages ................... Line ~571
+#  Shard Item Sounds ....................... Line ~625
+#  Shard Item Messages ..................... Line ~645
+#  Oracle Item Sounds ...................... Line ~691
+#  Oracle Item Messages .................... Line ~705
+#  Oracle Table Item Sounds ................ Line ~731
+#  Oracle Table Item Messages .............. Line ~745
+#  Scrap of Circe Weave Sounds ............. Line ~771
+#  Scrap of Circe Weave Messages ........... Line ~791
+# =====================================================================
 
 Command-Messages:
   ##########################################################
@@ -22,237 +67,362 @@ Command-Messages:
   #                                                        #
   ##########################################################
   Command-Messages-UnknownCommand:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7This command is not recognised."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-NoPermissions:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You do not have the correct &cPermissions &7or you are not &cOped&7."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-NotAPlayer:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7This command can only be used by players."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #                RELOAD CONFIG MESSAGES                  #
   #                                                        #
   ##########################################################
   Command-Messages-ReloadConfig-ConfigReloaded:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You have &aReloaded &7the config."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #                 GIVE ENCHANT MESSAGES                  #
   #                                                        #
   ##########################################################
   Command-Messages-GiveEnchant-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae giveenchant &e<player> <enchant> <level> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-EnchantmentNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Enchantment Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-InvalidLevel-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Level, Level must be between &e1 &7and &e{enchantMaxLvl}"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-LevelRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Level must be between &e1 &7and &e{enchantMaxLvl}"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveEnchant-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #             GIVE OBLIVION SHARD MESSAGES               #
   #                                                        #
   ##########################################################
   Command-Messages-GiveOblivionShard-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae giveshard &e<player> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveOblivionShard-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveOblivionShard-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveOblivionShard-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #           GIVE Oracle Of Enchantment MESSAGES          #
   #                                                        #
   ##########################################################
   Command-Messages-OracleOfEnchantment-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae giveoraclebook &e<player> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleOfEnchantment-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleOfEnchantment-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleOfEnchantment-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #               GIVE Oracle's Table MESSAGES             #
   #                                                        #
   ##########################################################
   Command-Messages-OracleTable-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae giveoracletable &e<player> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleTable-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleTable-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-OracleTable-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #           GIVE Scrap of Circe's Weave MESSAGES         #
   #                                                        #
   ##########################################################
   Command-Messages-ScrapOfCirceWeave-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae givescrapofcirce &e<player> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-ScrapOfCirceWeave-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-ScrapOfCirceWeave-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-ScrapOfCirceWeave-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #             GIVE RANDOM ENCHANT MESSAGES               #
   #                                                        #
   ##########################################################
   Command-Messages-GiveRandomEnchant-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae giverandom &e<player> <amount>"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveRandomEnchant-PlayerNotFound-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveRandomEnchant-InvalidAmount-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   Command-Messages-GiveRandomEnchant-AmountRange-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
   ##########################################################
   #                                                        #
   #                  ENCHANT LIST MESSAGES                 #
   #                                                        #
   ##########################################################
   Command-Messages-EnchantList-Usage-Message:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Usage: &c/ae list"
     - ""
+    - "{footer}"
+  ##########################################################
+  #                                                        #
+  #             GIVE CIRCE'S EMBER MESSAGES                #
+  #                                                        #
+  ##########################################################
+  Command-Messages-CircesEmber-Usage-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Usage: &c/ae givecircesember &e<player> <amount>"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesEmber-PlayerNotFound-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesEmber-InvalidAmount-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  Command-Messages-CircesEmber-AmountRange-Message:
+    - "{header}"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  ##########################################################
+  #                                                        #
+  #             GIVE CIRCE'S ANVIL MESSAGES                #
+  #                                                        #
+  ##########################################################
+  Command-Messages-CircesAnvil-Usage-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Usage: &c/ae givecircesanvil &e<player> <amount>"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesAnvil-PlayerNotFound-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesAnvil-InvalidAmount-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  Command-Messages-CircesAnvil-AmountRange-Message:
+    - "{header}"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+
+#Help messages shown when using /ae help
+Help-Messages:
+  #Player commands - shown to all players (no permission required)
+  Player-Help:
+    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - ""
+    - "&c● &7Guide command: &c/ae guide"
+    - "&c● &7Learn how the plugin works"
+    - ""
+    - "&c● &7Enchant List command: &c/ae list"
+    - "&c● &7Browse all custom enchantments"
+    - ""
+    - "&c● &7Upgrade command: &c/ae upgrade"
+    - "&c● &7Open the upgrade menu"
+    - ""
+  #Admin commands - only shown to players with atlasenchants.help or OP
+  Admin-Help:
+    - "&c&m&l-----------&f&l [&c&lAdmin Commands&f&l] &c&m&l-----------"
+    - ""
+    - "&c● &7Reload: &c/ae reload"
+    - "&c● &7Reloads the Atlas Enchants configs"
+    - ""
+    - "&c● &7Give Enchant: &c/ae giveenchant &e<player> <name> <level> <amount>"
+    - "&c● &7Gives a custom enchant to a player"
+    - ""
+    - "&c● &7Give Random Enchant: &c/ae giverandomenchant &e<player> <amount>"
+    - "&c● &7Gives a random custom enchant to a player"
+    - ""
+    - "&c● &7Give Shard: &c/ae giveshard &e<player> <amount>"
+    - "&c● &7Gives an oblivion shard to a player"
+    - ""
+    - "&c● &7Give Oracle Book: &c/ae giveoraclebook &e<player> <amount>"
+    - "&c● &7Gives an oracle book to a player"
+    - ""
+    - "&c● &7Give Altar of Circe: &c/ae givealtarofcirce &e<player> <amount>"
+    - "&c● &7Gives an Altar of Circe to a player"
+    - ""
+    - "&c● &7Give Scrap of Circe: &c/ae givescrapofcirce &e<player> <amount>"
+    - "&c● &7Gives a Scrap of Circe's Weave to a player"
+    - ""
+    - "&c● &7Give Circe's Ember: &c/ae givecircesember &e<player> <amount>"
+    - "&c● &7Gives a Circe's Ember to a player"
+    - ""
+    - "&c● &7Give Circe's Anvil: &c/ae givecircesanvil &e<player> <amount>"
+    - "&c● &7Gives a Circe's Anvil to a player"
+    - ""
     - "&c&m&l-----------------------------------------"
+
+#Circe's Anvil Messages
+CircesAnvilMessages:
+  DisabledAnvil:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7Circe's Anvil is currently disabled."
+      - ""
+      - "{footer}"
+
+#Circe's Anvil Sounds
+CircesAnvilSounds:
+  OpenAnvil:
+    Toggle: true
+    Sound: BLOCK_ANVIL_USE
+    Volume: 1
+    Pitch: 1
 
 EnchantItems:
   #Type of Item the Enchantments will be.
@@ -281,446 +451,375 @@ EnchantItems:
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true
 
+#Settings for Upgrading Enchantments.
+UpgradeEnchantSettings:
+  #The number of matching enchantment books required to upgrade. Min: 1, Max: 10.
+  Required-Books: 10
+
 #The sound that will play when the player applies a new Upgrade to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 UpgradeEnchantSounds:
   #------------------UPGRADING SUCCESSFUL SOUNDS------------------#
-  #If True the custom SUCCESSFUL sound will play.
-  UpgradeEnchant-SuccessUpgrade-Sound-Toggle: true
-  #The sound that plays when a successful Upgrade happens.
-  UpgradeEnchant-SuccessUpgrade-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound plays at when a successful Upgrade happens.
-  UpgradeEnchant-SuccessUpgrade-Volume: 1
-  #The pitch the sound plays at when a successful Upgrade happens.
-  UpgradeEnchant-SuccessUpgrade-Pitch: 0.1
+  SuccessUpgrade:
+    Toggle: true
+    Sound: BLOCK_AMETHYST_BLOCK_BREAK
+    Volume: 1
+    Pitch: 0.1
   #------------------UPGRADING NOT ENOUGH ITEMS SOUNDS------------------#
-  #If True the custom NOT ENOUGH ITEMS sound will play.
-  UpgradeEnchant-NotEnoughItems-Sound-Toggle: true
-  #The sound that plays when you don't have enough items.
-  UpgradeEnchant-NotEnoughItems-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound plays at when you don't have enough items.
-  UpgradeEnchant-NotEnoughItems-Volume: 1
-  #The pitch the sound that plays at when you don't have enough items.
-  UpgradeEnchant-NotEnoughItems-Pitch: 0.1
+  NotEnoughItems:
+    Toggle: true
+    Sound: ENTITY_IRON_GOLEM_REPAIR
+    Volume: 1
+    Pitch: 0.1
   #------------------UPGRADING MAX RARITY SOUNDS------------------#
-  #If True the custom MAX RARITY sound will play.
-  UpgradeEnchant-MaxRarity-Sound-Toggle: true
-  #The sound that plays when you try to upgrade a max Rarity Enchant.
-  UpgradeEnchant-MaxRarity-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound plays at when you try to upgrade a max Rarity Enchant.
-  UpgradeEnchant-MaxRarity-Volume: 1
-  #The pitch the sound plays at when you try to upgrade a max Rarity Enchant.
-  UpgradeEnchant-MaxRarity-Pitch: 0.01
+  MaxRarity:
+    Toggle: true
+    Sound: ENTITY_IRON_GOLEM_REPAIR
+    Volume: 1
+    Pitch: 0.01
   #------------------UPGRADING DISABLED SOUNDS------------------#
-  #If True the custom DISABLED sound will play.
-  UpgradeEnchant-DisabledMenu-Sound-Toggle: true
-  #The sound that plays when Upgrading is disabled.
-  UpgradeEnchant-DisabledMenu-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays at when Upgrading is disabled.
-  UpgradeEnchant-DisabledMenu-Volume: 1
-  #The pitch the sound plays at when Upgrading is disabled.
-  UpgradeEnchant-DisabledMenu-Pitch: 0.1
+  DisabledMenu:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 UpgradeEnchantMessages:
   #------------------UPGRADING SUCCESSFUL Message------------------#
-  #If True the SUCCESSFUL message will be sent to the player.
-  UpgradeEnchant-SuccessUpgrade-Message-Toggle: true
-  #The message that will be sent when successfully upgrading an item.
-  UpgradeEnchant-SuccessUpgrade-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully Upgraded: &7from 10 &e&l{oldRarity} &7to 1 &e&l{newRarity}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  SuccessUpgrade:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully Upgraded: &7from {requiredBooks} &e&l{oldRarity} &7to 1 &e&l{newRarity}"
+      -  ""
+      -  "{footer}"
   #------------------UPGRADING NEED MORE ITEMS Message------------------#
-  #If True the NEED MORE ITEMS message will be sent to the player.
-  UpgradeEnchant-NotEnoughItems-Message-Toggle: true
-  #The message that will be sent when you don't have enough items.
-  UpgradeEnchant-NotEnoughItems-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot upgrade."
-    -  ""
-    -  "&c● &7Reason: &eNot enough matching rarity enchantments&7."
-    -  ""
-    -  "&c● &7You need 10: &e{oldRarity}&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  NotEnoughItems:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot upgrade."
+      -  ""
+      -  "&c● &7Reason: &eNot enough matching rarity enchantments&7."
+      -  ""
+      -  "&c● &7You need {requiredBooks}: &e{oldRarity}&7."
+      -  ""
+      -  "{footer}"
   #------------------UPGRADING MAX RARITY Message------------------#
-  #If True the MAX RARITY message will be sent to the player.
-  UpgradeEnchant-MaxRarity-Message-Toggle: true
-  #The message that will be sent when you try to upgrade a maxed enchant.
-  UpgradeEnchant-MaxRarity-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot upgrade."
-    -  ""
-    -  "&c● &7Reason: &eYour enchantment is already at the highest rarity (GODLY) and cannot be upgraded&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  MaxRarity:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot upgrade."
+      -  ""
+      -  "&c● &7Reason: &eYour enchantment is already at the highest rarity (GODLY) and cannot be upgraded&7."
+      -  ""
+      -  "{footer}"
   #------------------UPGRADING DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  #if the upgrade menu is also disabled
-  UpgradeEnchant-DisabledMenu-Message-Toggle: true
-  #The message that will be sent when the menu is disabled.
-  UpgradeEnchant-DisabledMenu-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot upgrade."
-    -  ""
-    -  "&c● &7Reason: &eUpgrading is currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledMenu:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot upgrade."
+      -  ""
+      -  "&c● &7Reason: &eUpgrading is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 EnchantListMessages:
   #------------------Enchant List DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  #if the enchant list menu is also disabled
-  EnchantList-DisabledMenu-Message-Toggle: true
-  #The message that will be sent when the menu is disabled.
-  EnchantList-DisabledMenu-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot view the Enchant List."
-    -  ""
-    -  "&c● &7Reason: &eEnchant List is currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledMenu:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot view the Enchant List."
+      -  ""
+      -  "&c● &7Reason: &eEnchant List is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 #The sound that will play when the player applies a new Shard to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 EnchantItemSounds:
   #------------------APPLYING ENCHANT SOUNDS------------------#
-  #If True the custom enchant apply sound will play.
-  EnchantItem-Apply-Sound-Toggle: true
-  #The sound that plays when applying a custom enchant.
-  EnchantItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound that plays at when applying a custom enchant.
-  EnchantItem-Apply-Volume: 1
-  #The pitch the sound that plays at when applying a custom enchant.
-  EnchantItem-Apply-Pitch: 0.1
+  Apply:
+    Toggle: true
+    Sound: BLOCK_AMETHYST_BLOCK_BREAK
+    Volume: 1
+    Pitch: 0.1
   #------------------ENCHANT ALREADY APPLIED SOUNDS------------------#
-  #If True the custom enchant apply sound will play.
-  EnchantItem-AlreadyApplied-Sound-Toggle: true
-  #The sound that plays when a custom enchant is already applied.
-  EnchantItem-AlreadyApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound that plays when a custom enchant is already applied.
-  EnchantItem-AlreadyApplied-Volume: 1
-  #The pitch the sound that plays when a custom enchant is already applied.
-  EnchantItem-AlreadyApplied-Pitch: 0.1
+  AlreadyApplied:
+    Toggle: true
+    Sound: ENTITY_IRON_GOLEM_REPAIR
+    Volume: 1
+    Pitch: 0.1
   #------------------BLACK LISTED SOUNDS------------------#
-  #If True the custom enchant apply sound will play.
-  EnchantItem-Blacklisted-Sound-Toggle: true
-  #The sound that plays when a blacklisted enchant is found.
-  EnchantItem-Blacklisted-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound that plays when a blacklisted enchant is found.
-  EnchantItem-Blacklisted-Volume: 1
-  #The pitch the sound that plays when a blacklisted enchant is found.
-  EnchantItem-Blacklisted-Pitch: 0.1
+  Blacklisted:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
   #------------------DISABLED ENCHANT SOUNDS------------------#
-  #If True the custom enchant apply sound will play.
-  EnchantItem-DisabledEnchant-Sound-Toggle: true
-  #The sound that plays when a blacklisted enchant is found.
-  EnchantItem-DisabledEnchant-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound that plays when a blacklisted enchant is found.
-  EnchantItem-DisabledEnchant-Volume: 1
-  #The pitch the sound that plays when a blacklisted enchant is found.
-  EnchantItem-DisabledEnchant-Pitch: 0.1
+  DisabledEnchant:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 EnchantItemMessages:
   #------------------APPLYING ENCHANT Message------------------#
-  #If True the success message will be sent to the player.
-  EnchantItem-Success-Message-Toggle: true
-  #The message that will be sent when applying a custom enchant to an item.
-  EnchantItem-Success-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Applied: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  Success:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Applied: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+      -  ""
+      -  "{footer}"
   #------------------ENCHANT ALREADY APPLIED Message------------------#
-  #If True the Already Applied message will be sent to the player.
-  EnchantItem-AlreadyApplied-Message-Toggle: true
-  #The message that will be sent when trying to apply an enchant to an item that has the same enchant already applied.
-  EnchantItem-AlreadyApplied-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
-    -  ""
-    -  "&c● &7Because the item already has &c&l{existingEnchantName} &7applied."
-    -  ""
-    -  "&c● &7Existing Enchant: &c&l{existingEnchantName} &7has the same or lower level to &e&l{enchantName}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  AlreadyApplied:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+      -  ""
+      -  "&c● &7Because the item already has &c&l{existingEnchantName} &7applied."
+      -  ""
+      -  "&c● &7Existing Enchant: &c&l{existingEnchantName} &7has the same or lower level to &e&l{enchantName}"
+      -  ""
+      -  "{footer}"
   #------------------BLACK LISTED Message------------------#
-  #If True blacklist system will work.
-  EnchantItem-Blacklisted-Toggle: true
-  #If True the blacklist message will be sent to the player.
-  EnchantItem-Blacklisted-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom enchant has been found on the item already.
-  EnchantItem-Blacklisted-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
-    -  ""
-    -  "&c● &7Because there is a &c&lBlacklisted Enchant &7already."
-    -  ""
-    -  "&c● &7Blacklisted Enchant: &c&l{blackListedEnchantName} &7lvl: &c&l{blackListedEnchantLevel}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  Blacklisted:
+    #If True blacklist system will work.
+    Enabled: true
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+      -  ""
+      -  "&c● &7Because there is a &c&lBlacklisted Enchant &7already."
+      -  ""
+      -  "&c● &7Blacklisted Enchant: &c&l{blackListedEnchantName} &7lvl: &c&l{blackListedEnchantLevel}"
+      -  ""
+      -  "{footer}"
   #------------------ENCHANT DISABLED Message------------------#
-  #If True blacklist system will work.
-  EnchantItem-DisabledEnchant-Toggle: true
-  #If True the blacklist message will be sent to the player.
-  EnchantItem-DisabledEnchant-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom enchant has been found on the item already.
-  EnchantItem-DisabledEnchant-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{disabledEnchantName} &7lvl: &e&l{disabledEnchantLevel}"
-    -  ""
-    -  "&c● &7Because that &cEnchant &7is currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledEnchant:
+    #If True disabled enchant system will work.
+    Enabled: true
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{disabledEnchantName} &7lvl: &e&l{disabledEnchantLevel}"
+      -  ""
+      -  "&c● &7Because that &cEnchant &7is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 #The sound that will play when the player applies a new Shard to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 ShardItemSounds:
   #------------------APPLYING SHARD SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-Apply-Sound-Toggle: true
-  #The sound that plays when applying a custom Shard.
-  ShardItem-Apply-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound plays at when applying a custom Shard.
-  ShardItem-Apply-Volume: 1
-  #The pitch the sound plays at when applying a custom Shard.
-  ShardItem-Apply-Pitch: 0.1
+  Apply:
+    Toggle: true
+    Sound: BLOCK_AMETHYST_BLOCK_BREAK
+    Volume: 1
+    Pitch: 0.1
   #------------------NO ENCHANTS APPLIED SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-NoEnchantsApplied-Sound-Toggle: true
-  #The sound that plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Sound: ENTITY_IRON_GOLEM_REPAIR
-  #The volume the sound plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Volume: 1
-  #The pitch the sound plays when a custom Shard is already applied.
-  ShardItem-NoEnchantsApplied-Pitch: 0.1
+  NoEnchantsApplied:
+    Toggle: true
+    Sound: ENTITY_IRON_GOLEM_REPAIR
+    Volume: 1
+    Pitch: 0.1
   #------------------DISABLED SHARD SOUNDS------------------#
-  #If True the custom Shard apply sound will play.
-  ShardItem-DisabledShard-Sound-Toggle: true
-  #The sound that plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Volume: 1
-  #The pitch the sound plays when a blacklisted Shard is found.
-  ShardItem-DisabledShard-Pitch: 0.1
+  DisabledShard:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 ShardItemMessages:
   #------------------APPLYING SHARD Message------------------#
-  #If True the success message will be sent to the player.
-  ShardItem-Success-Message-Toggle: true
-  #The message that will be sent when applying a custom Shard to an item.
-  ShardItem-Success-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
-  #------------------APPLYING SHARD Message------------------#
-  #If True the success and refund message will be sent to the player.
-  ShardItem-SuccessAndRefund-Message-Toggle: true
-  #The message that will be sent when applying a custom Shard to an item.
-  ShardItem-SuccessAndRefund-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
-    -  ""
-    -  "&c● &7You managed to grab the enchantment before it faded away!"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  Success:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+      -  ""
+      -  "{footer}"
+  #------------------APPLYING SHARD WITH REFUND Message------------------#
+  SuccessAndRefund:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Removed: &c&l{removedEnchantmentName} &7lvl: &c&l{removedEnchantmentLevel}"
+      -  ""
+      -  "&c● &7You managed to grab the enchantment before it faded away!"
+      -  ""
+      -  "{footer}"
   #------------------NO ENCHANTS APPLIED Message------------------#
-  #If True the Already Applied message will be sent to the player.
-  ShardItem-NoEnchantsApplied-Message-Toggle: true
-  #The message that will be sent when trying to apply a Shard to an item that has the same Shard already applied.
-  ShardItem-NoEnchantsApplied-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{shardName}"
-    -  ""
-    -  "&c● &7Because the item does not have any custom enchants applied."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  NoEnchantsApplied:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{shardName}"
+      -  ""
+      -  "&c● &7Because the item does not have any custom enchants applied."
+      -  ""
+      -  "{footer}"
   #------------------SHARD DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  ShardItem-DisabledShard-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom Shard has been found on the item already.
-  ShardItem-DisabledShard-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot apply: &e&l{shardName}"
-    -  ""
-    -  "&c● &7Because &cShard's &7are currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledShard:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{shardName}"
+      -  ""
+      -  "&c● &7Because &cShard's &7are currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 #The sound that will play when the player opens the Oracle.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 OracleItemSounds:
   #------------------OPENING ORACLE SOUNDS------------------#
-  #If True the custom Oracle open sound will play.
-  OracleItem-Opening-Sound-Toggle: true
-  #The sound that plays when opening a custom Oracle.
-  OracleItem-Opening-Sound: ITEM_BOOK_PAGE_TURN
-  #The volume the sound plays at when opening a custom Oracle.
-  OracleItem-Opening-Volume: 1
-  #The pitch the sound plays at when opening a custom Oracle.
-  OracleItem-Opening-Pitch: 1
+  Opening:
+    Toggle: true
+    Sound: ITEM_BOOK_PAGE_TURN
+    Volume: 1
+    Pitch: 1
   #------------------DISABLED Oracle SOUNDS------------------#
-  #If True the custom Oracle Disabled sound will play.
-  OracleItem-DisabledOracle-Sound-Toggle: true
-  #The sound that plays when the Oracle is Disabled.
-  OracleItem-DisabledOracle-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays when the Oracle is Disabled.
-  OracleItem-DisabledOracle-Volume: 1
-  #The pitch the sound plays when the Oracle is Disabled.
-  OracleItem-DisabledOracle-Pitch: 0.1
+  DisabledOracle:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 OracleItemMessages:
   #------------------OPENING ORACLE Message------------------#
-  #If True the success and refund message will be sent to the player.
-  OracleItem-Opening-Message-Toggle: true
-  #The message that will be sent when applying a custom Oracle to an item.
-  OracleItem-Opening-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Opened the Oracle"
-    -  ""
-    -  "&c● &7Learn new knowledge now!"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  Opening:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Opened the Oracle"
+      -  ""
+      -  "&c● &7Learn new knowledge now!"
+      -  ""
+      -  "{footer}"
   #------------------ORACLE DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  OracleItem-DisabledOracle-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom Oracle has been found on the item already.
-  OracleItem-DisabledOracle-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot open: &e&l{oracleName}"
-    -  ""
-    -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledOracle:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot open: &e&l{oracleName}"
+      -  ""
+      -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 #The sound that will play when the player opens the Oracle.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 OracleTableItemSounds:
   #------------------OPENING ORACLE SOUNDS------------------#
-  #If True the custom Oracle open sound will play.
-  OracleTableItem-Opening-Sound-Toggle: true
-  #The sound that plays when opening a custom Oracle.
-  OracleTableItem-Opening-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-  #The volume the sound plays at when opening a custom Oracle.
-  OracleTableItem-Opening-Volume: 1
-  #The pitch the sound plays at when opening a custom Oracle.
-  OracleTableItem-Opening-Pitch: 0.1
+  Opening:
+    Toggle: true
+    Sound: BLOCK_AMETHYST_BLOCK_BREAK
+    Volume: 1
+    Pitch: 0.1
   #------------------DISABLED Oracle SOUNDS------------------#
-  #If True the custom Oracle Disabled sound will play.
-  OracleTableItem-DisabledOracle-Sound-Toggle: true
-  #The sound that plays when the Oracle is Disabled.
-  OracleTableItem-DisabledOracle-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays when the Oracle is Disabled.
-  OracleTableItem-DisabledOracle-Volume: 1
-  #The pitch the sound plays when the Oracle is Disabled.
-  OracleTableItem-DisabledOracle-Pitch: 0.1
+  DisabledOracle:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 OracleTableItemMessages:
   #------------------OPENING ORACLE Message------------------#
-  #If True the success and refund message will be sent to the player.
-  OracleTableItem-Opening-Message-Toggle: true
-  #The message that will be sent when applying a custom Oracle to an item.
-  OracleTableItem-Opening-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You &a&lSuccessfully &7Opening: {oracleName}"
-    -  ""
-    -  "&c● &7Learn new knowledge now!"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  Opening:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You &a&lSuccessfully &7Opening: {oracleName}"
+      -  ""
+      -  "&c● &7Learn new knowledge now!"
+      -  ""
+      -  "{footer}"
   #------------------ORACLE DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  OracleTableItem-DisabledOracle-Message-Toggle: true
-  #The message that will be sent when a blacklisted a custom Oracle has been found on the item already.
-  OracleTableItem-DisabledOracle-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot open: &e&l{oracleName}"
-    -  ""
-    -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledOracle:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot open: &e&l{oracleName}"
+      -  ""
+      -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
 
 #The sound that will play when the player opens the Oracle.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 ScrapOfCirceWeaveSounds:
   #------------------SCRAPPED A ENCHANTMENT SOUNDS------------------#
-  #If True the custom Scrapped Enchantment sound will play.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Sound-Toggle: true
-  #The sound that plays when the player has Scrapped an Enchantment.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Sound: ENTITY_DROWNED_AMBIENT_WATER
-  #The volume the sound plays when the player has Scrapped an Enchantment.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Volume: 1
-  #The pitch the sound plays when the player has Scrapped an Enchantment.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Pitch: 0.1
+  ScrappedEnchantment:
+    Toggle: true
+    Sound: ENTITY_DROWNED_AMBIENT_WATER
+    Volume: 1
+    Pitch: 0.1
   #------------------Failed CIRCE SOUNDS------------------#
-  #If True the custom Circe Failed sound will play.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Sound-Toggle: true
-  #The sound that plays when the CIRCE is Failed.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Sound: ITEM_AXE_STRIP
-  #The volume the sound plays when the CIRCE is Failed.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Volume: 1
-  #The pitch the sound plays when the CIRCE is Failed.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Pitch: 2
+  FailedScrap:
+    Toggle: true
+    Sound: ITEM_AXE_STRIP
+    Volume: 1
+    Pitch: 2
   #------------------DISABLED CIRCE SOUNDS------------------#
-  #If True the custom Circe Disabled sound will play.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound-Toggle: true
-  #The sound that plays when the CIRCE is Disabled.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Sound: BLOCK_ANVIL_LAND
-  #The volume the sound plays when the CIRCE is Disabled.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Volume: 1
-  #The pitch the sound plays when the CIRCE is Disabled.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Pitch: 0.1
+  DisabledScrap:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
 
 ScrapOfCirceWeaveMessages:
   #------------------SCRAPPED A ENCHANTMENT Message------------------#
-  #If True the Scrapped Enchantment message will be sent to the player.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Message-Toggle: true
-  #The message that will be sent when the player has Scrapped an Enchantment.
-  ScrapOfCirceWeave-ScrappedAEnchantment-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  ScrappedEnchantment:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
+      -  ""
+      -  "{footer}"
   #------------------CIRCE FAILED Message------------------#
-  #If True the disabled message will be sent to the player.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Message-Toggle: true
-  #The message that will be sent when Circe has been Failed.
-  ScrapOfCirceWeave-FailedScrapEnchantment-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
-    -  ""
-    -  "&c● &7You received nothing."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  FailedScrap:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You have scrapped: &e&l{enchantmentName} {enchantmentLevel}"
+      -  ""
+      -  "&c● &7You received nothing."
+      -  ""
+      -  "{footer}"
   #------------------CIRCE DISABLED Message------------------#
-  #If True the disabled message will be sent to the player.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Message-Toggle: true
-  #The message that will be sent when Circe has been disabled.
-  ScrapOfCirceWeave-DisabledScrapEnchantment-Message:
-    -  "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
-    -  ""
-    -  "&c● &7You cannot scrap: &e&l{enchantmentName} {enchantmentLevel}"
-    -  ""
-    -  "&c● &7Because &cScrapping &7is currently &cDisabled&7."
-    -  ""
-    -  "&c&m&l-----------------------------------------"
+  DisabledScrap:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot scrap: &e&l{enchantmentName} {enchantmentLevel}"
+      -  ""
+      -  "&c● &7Because &cScrapping &7is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"

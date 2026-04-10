@@ -31,7 +31,7 @@ public class CreateCustomEnchant implements Listener {
 
         String displayName = main.getEnchantmentsConfig().getString("Enchantments." + enchantmentName + ".Enchantment-Title");
         String withPAPISet = main.setPlaceholders(p, displayName);
-        assert enchantMeta != null;
+        if (enchantMeta == null) return enchant;
         enchantMeta.setDisplayName(main.applyPlaceholders(Main.color(withPAPISet), main, enchantmentName, enchantmentLevel));
 
         ArrayList<String> enchantmentLore = new ArrayList<>();

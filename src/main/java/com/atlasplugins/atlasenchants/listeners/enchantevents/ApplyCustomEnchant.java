@@ -89,10 +89,10 @@ public class ApplyCustomEnchant implements Listener {
 
         // If the enchantment was successfully applied (modifiedItem is not null)
         if (modifiedItem != null) {
-            invEvent.setCurrentItem(modifiedItem); // Explicitly set the modified item back to the slot
-            invEvent.setCursor(new ItemStack(Material.AIR)); // Consume the enchantment item
+            invEvent.setCancelled(true); // Prevent default inventory click behavior first
+            invEvent.getClickedInventory().setItem(invEvent.getSlot(), modifiedItem); // Directly set item in slot
+            player.setItemOnCursor(new ItemStack(Material.AIR)); // Consume the enchantment item (avoid deprecated setCursor)
             player.updateInventory(); // Refresh player's inventory display
-            invEvent.setCancelled(true); // Prevent default inventory click behavior
         }
     }
 
@@ -131,7 +131,7 @@ public class ApplyCustomEnchant implements Listener {
         // 1. Check if the enchantment is enabled
         boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + enchantName + ".Enchantment-Enabled");
         if (!isEnchantmentEnabled) {
-            handleFeedback(main, player, "EnchantItemSounds.EnchantItem-DisabledEnchant", "EnchantItemMessages.EnchantItem-DisabledEnchant",
+            handleFeedback(main, player, "EnchantItemSounds.DisabledEnchant", "EnchantItemMessages.DisabledEnchant",
                     "{disabledEnchantName}", formatEnchantName(enchantName), "{disabledEnchantLevel}", String.valueOf(enchantLevel));
             return null; // Enchantment is disabled
         }
@@ -155,11 +155,11 @@ public class ApplyCustomEnchant implements Listener {
                     int existingEnchantLevel = Integer.parseInt(existingEnchantParts[1]);
 
                     // 2a. Check against blacklist (if the new enchant is blacklisted by an existing one)
-                    boolean blacklistSystemEnabled = main.getSettingsConfig().getBoolean("EnchantItemMessages.EnchantItem-Blacklisted-Toggle");
+                    boolean blacklistSystemEnabled = main.getSettingsConfig().getBoolean("EnchantItemMessages.Blacklisted.Enabled");
                     List<String> blacklist = main.getEnchantmentsConfig().getStringList("Enchantments." + enchantName + ".Enchantment-Blacklist-Enchants");
 
                     if (blacklistSystemEnabled && blacklist.contains(existingEnchantName)) {
-                        handleFeedback(main, player, "EnchantItemSounds.EnchantItem-Blacklisted", "EnchantItemMessages.EnchantItem-Blacklisted",
+                        handleFeedback(main, player, "EnchantItemSounds.Blacklisted", "EnchantItemMessages.Blacklisted",
                                 "{enchantName}", formatEnchantName(enchantName),
                                 "{enchantLevel}", String.valueOf(enchantLevel),
                                 "{blackListedEnchantName}", formatEnchantName(existingEnchantName),
@@ -170,7 +170,7 @@ public class ApplyCustomEnchant implements Listener {
                     // 2b. Check if the exact enchantment already exists at equal or higher level
                     if (existingEnchantName.equals(enchantName)) {
                         if (existingEnchantLevel >= enchantLevel) {
-                            handleFeedback(main, player, "EnchantItemSounds.EnchantItem-AlreadyApplied", "EnchantItemMessages.EnchantItem-AlreadyApplied",
+                            handleFeedback(main, player, "EnchantItemSounds.AlreadyApplied", "EnchantItemMessages.AlreadyApplied",
                                     "{enchantName}", formatEnchantName(enchantName),
                                     "{enchantLevel}", String.valueOf(enchantLevel),
                                     "{existingEnchantName}", formatEnchantName(existingEnchantName),
@@ -223,7 +223,7 @@ public class ApplyCustomEnchant implements Listener {
             targetItem.setItemMeta(itemMeta);
 
             // Handle success feedback (sound and message)
-            handleFeedback(main, player, "EnchantItemSounds.EnchantItem-Apply", "EnchantItemMessages.EnchantItem-Success",
+            handleFeedback(main, player, "EnchantItemSounds.Apply", "EnchantItemMessages.Success",
                     "{enchantName}", formattedEnchantName, "{enchantLevel}", String.valueOf(enchantLevel));
 
             return targetItem; // Enchantment applied successfully, return the modified item
@@ -248,22 +248,22 @@ public class ApplyCustomEnchant implements Listener {
      */
     private static void handleFeedback(Main main, Player player, String soundConfigPath, String messageConfigPath, String... placeholders) {
         // Sound handling
-        boolean playSound = main.getSettingsConfig().getBoolean(soundConfigPath + "-Sound-Toggle");
+        boolean playSound = main.getSettingsConfig().getBoolean(soundConfigPath + ".Toggle");
         if (playSound) {
             try {
-                Sound sound = Sound.valueOf(main.getSettingsConfig().getString(soundConfigPath + "-Sound"));
-                float volume = (float) main.getSettingsConfig().getDouble(soundConfigPath + "-Volume");
-                float pitch = (float) main.getSettingsConfig().getDouble(soundConfigPath + "-Pitch");
+                Sound sound = Sound.valueOf(main.getSettingsConfig().getString(soundConfigPath + ".Sound"));
+                float volume = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Volume");
+                float pitch = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Pitch");
                 player.playSound(player.getLocation(), sound, volume, pitch);
             } catch (IllegalArgumentException e) {
-                main.getLogger().warning("Invalid sound specified in config path: " + soundConfigPath + "-Sound. Error: " + e.getMessage());
+                main.getLogger().warning("Invalid sound specified in config path: " + soundConfigPath + ".Sound. Error: " + e.getMessage());
             }
         }
 
         // Message handling
-        boolean sendMessage = main.getSettingsConfig().getBoolean(messageConfigPath + "-Message-Toggle");
+        boolean sendMessage = main.getSettingsConfig().getBoolean(messageConfigPath + ".Toggle");
         if (sendMessage) {
-            List<String> messages = main.getSettingsConfig().getStringList(messageConfigPath + "-Message");
+            List<String> messages = main.getSettingsConfig().getStringList(messageConfigPath + ".Message");
             for (String msg : messages) {
                 String processedMsg = main.setPlaceholders(player, msg);
                 for (int i = 0; i < placeholders.length; i += 2) {

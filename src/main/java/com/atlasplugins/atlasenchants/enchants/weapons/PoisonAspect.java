@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -10,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,8 +22,6 @@ public class PoisonAspect implements Listener {
     public PoisonAspect (Main main) {
         this.main = main;
     }
-
-    private BukkitRunnable particleTask;
 
     public boolean hasWeapon (Player p)
     {
@@ -41,13 +38,14 @@ public class PoisonAspect implements Listener {
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent e)
     {
+        if(e.isCancelled()) return;
         if(!(e.getDamager() instanceof Player)) {return;}
 
         Player p = (Player) e.getDamager();
 
         Entity entity = e.getEntity();
 
-        // Check if the player has an enchanted swordd
+        // Check if the player has an enchanted sword
         if(hasWeapon(p)) {
 
             // Get Enchantment Enabled Status
@@ -55,98 +53,80 @@ public class PoisonAspect implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("POISON-ASPECT")) {
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                    //PUT ENCHANT LOGIC HERE
+                    if (entity instanceof LivingEntity) {
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
+                        int poisonTimer = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-PoisonTimer-" + enchant.level);
+                        int poisonLevel = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-PoisonLevel-" + enchant.level);
 
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
+                        int finalPoisonTimer = poisonTimer * 20;
 
-                        if (enchantName.contains("POISON-ASPECT")) {
+                        // Create the potion effect
+                        PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel - 1, false, false, true);
 
-                            //PUT ENCHANT LOGIC HERE
-                            if (entity instanceof LivingEntity) {
+                        // Apply the potion effect to the entity
+                        ((LivingEntity) entity).addPotionEffect(potionType);
 
-                                int poisonTimer = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Timer-" + enchantLevel);
-                                int poisonLevel = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Poison-Level-" + enchantLevel);
+                        // Particle Settings Controlled Via Config
+                        // Get the bool to see if the user wants to display the particles
+                        boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.POISON-ASPECT.Particle-Settings.Toggle");
 
-                                int finalPoisonTimer = poisonTimer * 20;
+                        Particle particle1Name;
+                        Particle particle2Name;
+                        try {
+                            // Get the Particle 1 Name
+                            particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.Particle-Settings.Particle-1.Name"));
+                            // Get the Particle 2 Name
+                            particle2Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.Particle-Settings.Particle-2.Name"));
+                        } catch (IllegalArgumentException ex) {
+                            return;
+                        }
 
-                                // Create the potion effect
-                                PotionEffect potionType = new PotionEffect(PotionEffectType.POISON, finalPoisonTimer, poisonLevel - 1, false, false, true);
+                        // Get the Particle 1 Amount
+                        int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.Particle-Settings.Particle-1.Amount");
+                        // Get the Particle 1 Size
+                        float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.Particle-Settings.Particle-1.Size");
+                        // Get the Particle 2 Amount
+                        int particle2Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.Particle-Settings.Particle-2.Amount");
+                        // Get the Particle 2 Size
+                        float particle2Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.Particle-Settings.Particle-2.Size");
 
-                                // Apply the potion effect to the entity
-                                ((LivingEntity) entity).addPotionEffect(potionType);
+                        if(useParticles) {
+                            new BukkitRunnable() {
+                                int count = 0;
 
-                                // Particle Settings Controlled Via Config
-                                // Get the bool to see if the user wants to display the particles
-                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-Toggle");
-                                // Get the Particle 1 Name
-                                Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Name-1"));
-                                // Get the Particle 1 Amount
-                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Amount-1");
-                                // Get the Particle 1 Size
-                                float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-1.PoisonAspect-Particle-Size-1");
-                                // Get the Particle 2 Name
-                                Particle particle2Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Name-2"));
-                                // Get the Particle 2 Amount
-                                int particle2Amount = main.getEnchantmentsConfig().getInt("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Amount-2");
-                                // Get the Particle 2 Size
-                                float particle2Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POISON-ASPECT.PoisonAspect-Particle-Settings.PoisonAspect-Particle-2.PoisonAspect-Particle-Size-2");
+                                @Override
+                                public void run() {
+                                    if (count >= poisonTimer) {
+                                        cancel(); // Stop the task after maxCount iterations
+                                        return;
+                                    }
 
-                                if(useParticles) {
-                                    stopParticleLoop(); // Reset the Particle Loop
+                                    // check if the entity has died or been removed
+                                    if(!entity.isValid() || ((LivingEntity) entity).isDead()) {
+                                        cancel();
+                                        return;
+                                    }
 
-                                    particleTask = new BukkitRunnable() {
-                                        int count = 0;
+                                    // Update location in case entity moves
+                                    Location entityLoc = entity.getLocation();
 
-                                        @Override
-                                        public void run() {
-                                            if (count >= poisonTimer) {
-                                                cancel(); // Stop the task after maxCount iterations
-                                                return;
-                                            }
+                                    // Spawn particle effect
+                                    entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+                                    entity.getWorld().spawnParticle(particle2Name, entityLoc, particle2Amount, 1, 1, 1, particle2Size);
 
-                                            // Update location in case entity moves
-                                            Location entityLoc = entity.getLocation();
-
-                                            // Spawn particle effect
-                                            entity.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
-                                            entity.getWorld().spawnParticle(particle2Name, entityLoc, particle2Amount, 1, 1, 1, particle2Size);
-
-                                            // check if the entity has died and if so then stop the particles
-                                            if(((LivingEntity) entity).getHealth() <= 0)
-                                            {
-                                                stopParticleLoop();
-                                            }
-
-                                            count++;
-                                        }
-                                    };particleTask.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
+                                    count++;
                                 }
-                            }
-                            //END ENCHANT LOGIC
+                            }.runTaskTimer(main, 0L, 20L); // 0L means start immediately, 20L means run every 1 second (20 ticks)
                         }
                     }
+                    //END ENCHANT LOGIC
                 }
             }
         }
     }
 
-    // Method to stop particle task
-    private void stopParticleLoop() {
-        if (particleTask != null) {
-            particleTask.cancel();
-            particleTask = null;
-        }
-    }
 }

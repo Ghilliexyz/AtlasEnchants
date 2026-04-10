@@ -24,7 +24,6 @@ public class EnchantRarityListGUI extends Gui {
 
     private final Map<Integer, List<String>> enchantmentsByLevel = new TreeMap<>();
     private int currentPage = 0;
-    private final int ITEMS_PER_PAGE = 21; // Slots available for enchants
 
     public EnchantRarityListGUI(Main main, Player player, String rarity) {
         super(player, Main.color(buildTitle(main, rarity)), 54);
@@ -34,11 +33,10 @@ public class EnchantRarityListGUI extends Gui {
         this.rarity = rarity.toUpperCase();
 
         loadEnchantments();
-        setupItems();
     }
 
     private static String buildTitle(Main main, String rarity) {
-        return Objects.requireNonNull(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Title"))
+        return Objects.requireNonNull(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Title"))
                 .replace("{rarityColor}", Main.getRarityColorCode(main, rarity))
                 .replace("{rarityName}", rarity);
     }
@@ -70,17 +68,30 @@ public class EnchantRarityListGUI extends Gui {
         raritySelected = GuiManager.getRarity(player.getUniqueId());
 
         // Back button
-        ItemStack backBtn = new ItemStack(Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Back-Button.Material")));
+        ItemStack backBtn = new ItemStack(Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Back-Button.Material")));
         ItemMeta backMeta = backBtn.getItemMeta();
-        backMeta.setDisplayName(Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Back-Button.Title")));
+        backMeta.setDisplayName(Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Back-Button.Title")));
 
         List<String> backButtonLore = new ArrayList<>();
-        for (String lore : main.getMenusConfig().getStringList("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Back-Button.Lore")) {
+        for (String lore : main.getMenusConfig().getStringList("EnchantList-Gui.EnchantList-Menu.Back-Button.Lore")) {
             backButtonLore.add(Main.color(main.setPlaceholders(player, lore)));
         }
         backMeta.setLore(backButtonLore);
         backBtn.setItemMeta(backMeta);
         inventory.setItem(0, backBtn);
+
+        // Get enchantments for this rarity
+        List<String> enchantNames = new ArrayList<>();
+        for (String enchantName : main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)) {
+            if (main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Rarity", "").equalsIgnoreCase(rarity)) {
+                enchantNames.add(enchantName);
+            }
+        }
+        enchantNames.sort(String::compareToIgnoreCase);
+
+        int maxRows = 4;
+        int maxCols = 7;
+        int totalPages = Math.max(1, (int) Math.ceil(enchantNames.size() / (double) maxCols));
 
         // Pagination controls
         if (currentPage > 0) {
@@ -91,14 +102,6 @@ public class EnchantRarityListGUI extends Gui {
             inventory.setItem(18, prevPage);
         }
 
-        // Next page logic if needed
-        int enchantCount = 0;
-        for (String enchantName : main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)) {
-            if (main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Rarity", "").equalsIgnoreCase(rarity)) {
-                enchantCount++;
-            }
-        }
-        int totalPages = (int) Math.ceil(enchantCount / (double) ITEMS_PER_PAGE);
         if (currentPage < totalPages - 1) {
             ItemStack nextPage = new ItemStack(Material.ARROW);
             ItemMeta meta = nextPage.getItemMeta();
@@ -107,24 +110,11 @@ public class EnchantRarityListGUI extends Gui {
             inventory.setItem(26, nextPage);
         }
 
-        // Get enchantments
-        List<String> enchantNames = new ArrayList<>();
-        for (String enchantName : main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)) {
-            if (main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Rarity", "").equalsIgnoreCase(rarity)) {
-                enchantNames.add(enchantName);
-            }
-        }
-        enchantNames.sort(String::compareToIgnoreCase);
+        // Slots where enchants go (grid layout)
+        List<Integer> validSlots = generateGridSlots(1, 1, maxRows, maxCols, 9);
 
-        // Slots where enchants go (start at slot 10, skip border)
-        List<Integer> validSlots = generateGridSlots(1, 1, 4, 7, 9); // Assuming 9 columns in inventory grid
+        int enchantIndex = currentPage * maxCols;
 
-        int maxRows = 4;
-        int maxCols = 7;
-
-        int enchantIndex = 0;
-
-        outer:
         for (int col = 0; col < maxCols; col++) {
             if (enchantIndex >= enchantNames.size()) break;
 
@@ -158,7 +148,7 @@ public class EnchantRarityListGUI extends Gui {
         if (meta != null) {
             container = meta.getPersistentDataContainer();
         }
-        String EnchantRarityListGUI = Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.EnchantList-Menu-Title"))
+        String EnchantRarityListGUI = Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Title"))
                 .replace("{rarityColor}", Main.getRarityColorCode(main, raritySelected))
                 .replace("{rarityName}", raritySelected);
         // Check if the clicked inventory matches your custom GUI title
@@ -175,6 +165,19 @@ public class EnchantRarityListGUI extends Gui {
                 // Handle clicks within your custom GUI
                 if (slot == 0) {
                     main.openEnchantListGUI(player);
+                    return;
+                }
+
+                // Pagination
+                if (slot == 18 && currentPage > 0) {
+                    currentPage--;
+                    setupItems();
+                    return;
+                }
+                if (slot == 26 && currentPage < Math.max(1, (int) Math.ceil(enchantsWithLevels.size() / 7.0)) - 1) {
+                    currentPage++;
+                    setupItems();
+                    return;
                 }
 
                 if (clicked == null) return;
@@ -185,7 +188,7 @@ public class EnchantRarityListGUI extends Gui {
                 // Check if the sender does not have the permission and is not an operator
                 if (!player.hasPermission("atlasenchants.enchantlistgrabber") && !player.isOp()) {
                     // Send noPermission Message in chat when called.
-                    if (main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.RarityList-Menu-Grabber-Message")) {
+                    if (main.getMenusConfig().getBoolean("EnchantList-Gui.RarityList-Menu.Grabber-Message")) {
                         for (String noPermission : main.getSettingsConfig().getStringList("Command-Messages.Command-Messages-NoPermissions")) {
                             String withPAPISet = main.setPlaceholders((Player) player, noPermission);
                             player.sendMessage(Main.color(withPAPISet));
@@ -224,10 +227,10 @@ public class EnchantRarityListGUI extends Gui {
     }
 
     private void setupFiller() {
-        String fillerTitle = main.getSettingsConfig().getString("EnchantList-Gui.EnchantList-Menu.Filler-Title", "&0_");
+        String fillerTitle = main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Filler-Title", "&0_");
         Material fillerItem;
         try {
-            fillerItem = Material.valueOf(main.getSettingsConfig().getString("EnchantList-Gui.EnchantList-Menu.Filler-Item", "BLACK_STAINED_GLASS_PANE"));
+            fillerItem = Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Filler-Item", "BLACK_STAINED_GLASS_PANE"));
         } catch (IllegalArgumentException e) {
             fillerItem = Material.BLACK_STAINED_GLASS_PANE;
         }

@@ -2,13 +2,12 @@ package com.atlasplugins.atlasenchants.enchants.armor;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipEvent;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -40,7 +39,6 @@ public class Asclepius implements Listener {
     @EventHandler
     public void onArmorEquip(ArmorEquipEvent event) {
         Player p = event.getPlayer();
-        // p.sendMessage(Main.color("&c----- &6&lArmorEquipEvent EVENT CALLED &c-----"));
         ArmorEquipEvent.ArmorType armorType = event.getArmorType();
         ItemStack equippedArmor = event.getEquippedArmor();
         ItemStack unequippedArmor = event.getUnequippedArmor();
@@ -54,83 +52,31 @@ public class Asclepius implements Listener {
         // if the armor is not of the correct type return.
         if(!armorType.equals(ArmorEquipEvent.ArmorType.CHESTPLATE)) return;
 
-        PersistentDataContainer enchantedItemPDC = p.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
-        String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+        // Get Enchantment Enabled Status
+        boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.ASCLEPIUS.Enchantment-Enabled");
+        if(!isEnchantmentEnabled) return;
 
-        if(enchantedItemPDC.isEmpty()){
-            // Disable The enchant since the new one doesn't have it active on the armor.
-            removePlayerMaxHealth(p);
-            return;
-        }
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getChestplate())) {
+            if (enchant.name.contains("ASCLEPIUS")) {
+                // PUT ENCHANT LOGIC HERE
+                int healthBoostLevel = main.getEnchantmentsConfig().getInt("Enchantments.ASCLEPIUS.Asclepius-HealthBoost-" + enchant.level);
 
-//        if(equippedArmor != null) {
-//            p.sendMessage(Main.color("&3Equipped Item Found: &f" + equippedArmor.getType().toString()));
-//        }
-//        if(unequippedArmor != null) {
-//            p.sendMessage(Main.color("&3Unequipped Item Found: &f" + unequippedArmor.getType().toString()));
-//        }
-//        p.sendMessage(Main.color("&m&l&c---------------------------------------"));
-
-        // Ensure the enchantment data is not null or empty
-        String[] enchantments = enchantedItemData.split(",");
-
-        for (String enchantment : enchantments) {
-            String[] enchantParts = enchantment.split(":");
-
-            // Ensure the format is correct
-            if (enchantParts.length == 3) {
-                String enchantName = enchantParts[0];
-                int enchantLevel = Integer.parseInt(enchantParts[1]);
-                int enchantID = Integer.parseInt(enchantParts[2]);
-
-                if (enchantName.contains("ASCLEPIUS")) {
-                    // PUT ENCHANT LOGIC HERE
-                    int healthBoostLevel = main.getEnchantmentsConfig().getInt("Enchantments.ASCLEPIUS.Asclepius-HealthBoost-" + enchantLevel);
-
-                    if (equippedArmor != null && !equippedArmor.getType().equals(Material.AIR)) {
-                        // Player equipped new armor
-                        // p.sendMessage(Main.color("&2You equipped: &f" + equippedArmor.getType().toString()));
-
-                        setPlayerMaxHealth(p, healthBoostLevel);
-
-                        // p.sendMessage(Main.color("&m&l&c---------------------------------------"));
-                        // Handle any effects or logic related to equipping armor
-                    } else if (unequippedArmor != null && !unequippedArmor.getType().equals(Material.AIR)) {
-                        // Player unequipped armor
-                        // p.sendMessage(Main.color("&4You unequipped: &f" + unequippedArmor.getType().toString()));
-
-                        removePlayerMaxHealth(p);
-
-                        // p.sendMessage(Main.color("&m&l&c---------------------------------------"));
-                        // Handle any effects or logic related to unequipping armor
-                    }
-                    // END ENCHANT LOGIC
+                if (equippedArmor != null && !equippedArmor.getType().equals(Material.AIR)) {
+                    setPlayerMaxHealth(p, healthBoostLevel);
+                } else if (unequippedArmor != null && !unequippedArmor.getType().equals(Material.AIR)) {
+                    removePlayerMaxHealth(p);
                 }
+                // END ENCHANT LOGIC
             }
         }
     }
 
     private void setPlayerMaxHealth(Player p, int level) {
-        // p.sendMessage(Main.color("&aAdded Player's Max Health: &f" + p.getMaxHealth()));
-
-        // Create the potion effect
         PotionEffect potionType = new PotionEffect(PotionEffectType.HEALTH_BOOST, PotionEffect.INFINITE_DURATION, level - 1, false, false, true);
-
-        // Apply the potion effect to the entity
         p.addPotionEffect(potionType);
-
-        // p.sendMessage(Main.color("&2Player's NEW Max Health: &f" + p.getMaxHealth()));
     }
 
     private void removePlayerMaxHealth(Player p) {
-        // p.sendMessage(Main.color("&cRemoved Player's Max Health: &f" + p.getMaxHealth()));
-
-        // Create the potion effect
-        PotionEffectType potionType = PotionEffectType.HEALTH_BOOST;
-
-        // Apply the potion effect to the entity
-        p.removePotionEffect(potionType);
-
-        // p.sendMessage(Main.color("&4Player's NEW Max Health: &f" + p.getMaxHealth()));
+        p.removePotionEffect(PotionEffectType.HEALTH_BOOST);
     }
 }

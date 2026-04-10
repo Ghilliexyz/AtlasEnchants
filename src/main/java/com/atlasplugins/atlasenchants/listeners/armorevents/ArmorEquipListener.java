@@ -101,10 +101,8 @@ public class ArmorEquipListener implements Listener {
             }
         }
 
-        // Detecting shift-click Adding armor
-        if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY)
-                || (action == InventoryAction.HOTBAR_SWAP
-                || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
+        // Detecting shift-click Adding armor (from inventory to armor slot)
+        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY && !(rawSlot >= 5 && rawSlot <= 8)) {
             // player.sendMessage(Main.color("&3Shift Click Action"));
             // Determine if armor is being equipped or unequipped
             if(isArmor(clickedItem)) {
@@ -114,10 +112,8 @@ public class ArmorEquipListener implements Listener {
             }
         }
 
-        // Detecting shift-click Removing armor
-        if ((action == InventoryAction.MOVE_TO_OTHER_INVENTORY && (rawSlot >= 5 && rawSlot <= 8))
-                || (action == InventoryAction.HOTBAR_SWAP
-                || action == InventoryAction.HOTBAR_MOVE_AND_READD)) {
+        // Detecting shift-click Removing armor (from armor slot to inventory)
+        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY && (rawSlot >= 5 && rawSlot <= 8)) {
             // player.sendMessage(Main.color("&3Shift Click Action"));
             // Determine if armor is being equipped or unequipped
             if(isArmor(clickedItem)) {

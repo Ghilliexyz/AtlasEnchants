@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -20,8 +21,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 import java.util.List;
@@ -49,6 +48,7 @@ public class Regrowth implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
+        if(e.isCancelled()) return;
         //Grabbing the player
         Player p = e.getPlayer();
         // Grabbing the broken block
@@ -82,100 +82,83 @@ public class Regrowth implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("REGROWTH")) {
+                    // PUT ENCHANT LOGIC HERE
+                    Material cropBrokenMat = cropBroken.getType();
+                    BlockData cropBrokenData = cropBroken.getBlockData();
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                    ItemStack tool = p.getInventory().getItemInMainHand();
+                    ItemMeta toolMeta = tool.getItemMeta();
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
+                    // Check if the block is ageable (crop)
+                    if (!(cropBrokenData instanceof Ageable)) {
+                        return;
+                    }
 
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
+                    Location cropLoc = cropBroken.getLocation();
 
-                        if (enchantName.contains("REGROWTH")) {
-                            // PUT ENCHANT LOGIC HERE
-                            Material cropBrokenMat = cropBroken.getType();
-                            BlockData cropBrokenData = cropBroken.getBlockData();
+                    // Check if the block below is farmland or netherwart
+                    if (cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.FARMLAND && cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.SOUL_SAND) {
+                        return;
+                    }
 
-                            ItemStack tool = p.getInventory().getItemInMainHand();
-                            ItemMeta toolMeta = tool.getItemMeta();
+                    if (((Ageable) cropBrokenData).getAge() == ((Ageable) cropBrokenData).getMaximumAge()) {
+                        // Collect the drops manually
+                        Collection<ItemStack> drops = cropBroken.getDrops();
 
-                            // Check if the block is ageable (crop)
-                            if (!(cropBrokenData instanceof Ageable)) {
-                                return;
-                            }
-
-                            Location cropLoc = cropBroken.getLocation();
-
-                            // Check if the block below is farmland or netherwart
-                            if (cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.FARMLAND && cropLoc.clone().subtract(0, 1, 0).getBlock().getType() != Material.SOUL_SAND) {
-                                return;
-                            }
-
-                            if (((Ageable) cropBrokenData).getAge() == ((Ageable) cropBrokenData).getMaximumAge()) {
-                                // Collect the drops manually
-                                Collection<ItemStack> drops = cropBroken.getDrops();
-
-                                // Drop the items manually at the block's location
-                                for (ItemStack drop : drops) {
-                                    cropLoc.getWorld().dropItemNaturally(cropLoc, drop);
-                                }
-                            }
-
-                            // Determine the type of crop and replant it as the initial stage
-                            Material seedType;
-                            switch (cropBrokenMat) {
-                                case WHEAT:
-                                    seedType = Material.WHEAT;
-                                    break;
-                                case CARROTS:
-                                    seedType = Material.CARROT;
-                                    break;
-                                case POTATOES:
-                                    seedType = Material.POTATO;
-                                    break;
-                                case BEETROOTS:
-                                    seedType = Material.BEETROOTS;
-                                    break;
-                                case NETHER_WART:
-                                    seedType = Material.NETHER_WART;
-                                    break;
-                                default:
-                                    return;
-                            }
-
-                            // Plant the crop by setting the block type to the crop type (not the seed)
-                            cropBroken.setType(cropBrokenMat);
-
-                            // Set the crop's age to 0 (seedling state)
-                            BlockData newCropData = cropLoc.getBlock().getBlockData();
-                            if (newCropData instanceof Ageable) {
-                                Ageable ageableCrop = (Ageable) newCropData;
-                                ageableCrop.setAge(0);  // Set age to 0 (seedling state)
-                                cropLoc.getBlock().setBlockData(ageableCrop);
-                            }
-
-                            // Force a block update to ensure the change is reflected
-                            cropLoc.getBlock().getState().update(true, false);
-
-                            if (toolMeta instanceof Damageable) {
-                                Damageable damageableToolMeta = (Damageable) toolMeta;
-
-                                damageableToolMeta.setDamage(damageableToolMeta.getDamage() + 1);
-
-                                tool.setItemMeta(toolMeta);  // Don't forget to set the item meta back to the tool
-                            }
-
-                            e.setCancelled(true);
-                            // END ENCHANT LOGIC
+                        // Drop the items manually at the block's location
+                        for (ItemStack drop : drops) {
+                            cropLoc.getWorld().dropItemNaturally(cropLoc, drop);
                         }
                     }
+
+                    // Determine the type of crop and replant it as the initial stage
+                    Material seedType;
+                    switch (cropBrokenMat) {
+                        case WHEAT:
+                            seedType = Material.WHEAT;
+                            break;
+                        case CARROTS:
+                            seedType = Material.CARROT;
+                            break;
+                        case POTATOES:
+                            seedType = Material.POTATO;
+                            break;
+                        case BEETROOTS:
+                            seedType = Material.BEETROOTS;
+                            break;
+                        case NETHER_WART:
+                            seedType = Material.NETHER_WART;
+                            break;
+                        default:
+                            return;
+                    }
+
+                    // Plant the crop by setting the block type to the crop type (not the seed)
+                    cropBroken.setType(cropBrokenMat);
+
+                    // Set the crop's age to 0 (seedling state)
+                    BlockData newCropData = cropLoc.getBlock().getBlockData();
+                    if (newCropData instanceof Ageable) {
+                        Ageable ageableCrop = (Ageable) newCropData;
+                        ageableCrop.setAge(0);  // Set age to 0 (seedling state)
+                        cropLoc.getBlock().setBlockData(ageableCrop);
+                    }
+
+                    // Force a block update to ensure the change is reflected
+                    cropLoc.getBlock().getState().update(true, false);
+
+                    if (toolMeta instanceof Damageable) {
+                        Damageable damageableToolMeta = (Damageable) toolMeta;
+
+                        damageableToolMeta.setDamage(damageableToolMeta.getDamage() + 1);
+
+                        tool.setItemMeta(damageableToolMeta);
+                    }
+
+                    e.setCancelled(true);
+                    // END ENCHANT LOGIC
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -55,25 +56,10 @@ public class Decapitate implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
-
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("DECAPITATE")) {
-                            //PUT ENCHANT LOGIC HERE
-                            double decapitateProcChance = main.getEnchantmentsConfig().getDouble("Enchantments.DECAPITATE.Decapitate-Proc-Chance-" + enchantLevel);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("DECAPITATE")) {
+                    //PUT ENCHANT LOGIC HERE
+                    double decapitateProcChance = main.getEnchantmentsConfig().getDouble("Enchantments.DECAPITATE.Decapitate-ProcChance-" + enchant.level);
 
                             if (random.nextDouble() < decapitateProcChance) {
 
@@ -83,9 +69,11 @@ public class Decapitate implements Listener {
 
 
                                 if(deadEntity instanceof Player){
-                                    drops.add(CreatePlayerHead(entityType, (OfflinePlayer) deadEntity));
+                                    ItemStack head = CreatePlayerHead(entityType, (OfflinePlayer) deadEntity);
+                                    if (head != null) drops.add(head);
                                 }else if(deadEntity instanceof Mob) {
-                                    drops.add(CreateMobHead(deadEntity, entityType, p));
+                                    ItemStack head = CreateMobHead(deadEntity, entityType, p);
+                                    if (head != null) drops.add(head);
                                 }
 
                                 // Get the location of the dead entity
@@ -93,22 +81,25 @@ public class Decapitate implements Listener {
 
                                 // Particle Settings Controlled Via Config
                                 // Get the bool to see if the user wants to display the particles
-                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-Toggle");
+                                boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.DECAPITATE.Particle-Settings.Toggle");
                                 // Get the Particle 1 Name
-                                Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-1.Decapitate-Particle-Name-1"));
+                                Particle particle1Name;
+                                try {
+                                    particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.DECAPITATE.Particle-Settings.Particle-1.Name"));
+                                } catch (IllegalArgumentException ex) {
+                                    return;
+                                }
                                 // Get the Particle 1 Amount
-                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-1.Decapitate-Particle-Amount-1");
+                                int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.DECAPITATE.Particle-Settings.Particle-1.Amount");
                                 // Get the Particle 1 Size
-                                float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.DECAPITATE.Decapitate-Particle-Settings.Decapitate-Particle-1.Decapitate-Particle-Size-1");
+                                float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.DECAPITATE.Particle-Settings.Particle-1.Size");
 
                                 if (useParticles) {
                                     // Spawn particle effect
                                     e.getEntity().getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
                                 }
                             }
-                            //END ENCHANT LOGIC
-                        }
-                    }
+                    //END ENCHANT LOGIC
                 }
             }
         }
@@ -118,8 +109,7 @@ public class Decapitate implements Listener {
         if (entityType.equals(EntityType.PLAYER)) {
             ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
-
-            assert playerHeadMeta != null;
+            if (playerHeadMeta == null) return null;
             playerHeadMeta.setOwningPlayer(player);
             playerHeadMeta.setDisplayName("SKULL OF " + player.getName());
 
@@ -133,25 +123,26 @@ public class Decapitate implements Listener {
     private ItemStack CreateMobHead(Entity entity, EntityType entityType, Player p) {
         ItemStack mobHead = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (SkullMeta) mobHead.getItemMeta();
+        if (skullMeta == null) return mobHead;
 
         // Reformat spawner name
         String headNameReformatted = reformatString(entityType.name());
 
         // Set Spawners Name
-        String displayName = main.getEnchantmentsConfig().getString("Enchantments.DECAPITATE.Decapitate-Head-Title-Style");
+        String displayName = main.getEnchantmentsConfig().getString("Enchantments.DECAPITATE.Decapitate-HeadTitleStyle");
         String withPAPISet = main.setPlaceholders(p, displayName);
 
         switch (entityType) {
             case ALLAY:
                 PlayerProfile allayProfile = getProfile("https://textures.minecraft.net/texture/e50294a1747310f104124c6373cc639b712baa57b7d926297b645188b7bb9ab9", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(allayProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ARMADILLO:
                 PlayerProfile armadilloProfile = getProfile("https://textures.minecraft.net/texture/e78833844319909f1238405015d8740ae96c6fb3fa4c739e1cdfc379cd7e9a6", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(armadilloProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -180,21 +171,21 @@ public class Decapitate implements Listener {
                 {
                     axolotlProfile = getProfile("https://textures.minecraft.net/texture/357b32c2933bebcd6502cbf406f7df996c8e46e7c6cbfefc5dcdc2fbf5bb54bb", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(axolotlProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case BAT:
                 PlayerProfile batProfile = getProfile("https://textures.minecraft.net/texture/6681a72da7263ca9aef066542ecca7a180c40e328c0463fcb114cb3b83057552", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(batProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case CAMEL:
                 PlayerProfile camelProfile = getProfile("https://textures.minecraft.net/texture/8d4c32449ad23060c3f41ba9d27cd51ec2eece63bcff304ae44075043a2ec440", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(camelProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -247,35 +238,35 @@ public class Decapitate implements Listener {
                 {
                     catProfile = getProfile("https://textures.minecraft.net/texture/5e3bbae5aad148624c602b680ef007f015f24e9b94a26384e5c6635e5fea4389", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(catProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case CHICKEN:
                 PlayerProfile chickenProfile = getProfile("https://textures.minecraft.net/texture/3ad3dd0083faa69a062f9ad81418f5a596180bf1592e4b8d1303b230b64bc79e", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(chickenProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case COD:
                 PlayerProfile codProfile = getProfile("https://textures.minecraft.net/texture/7892d7dd6aadf35f86da27fb63da4edda211df96d2829f691462a4fb1cab0", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(codProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case COW:
                 PlayerProfile cowProfile = getProfile("https://textures.minecraft.net/texture/dc4b5f6d75126380f520a67ca57bc9a56aa11db8afe7e5dcb2a52dfcfeae0785", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(cowProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case DONKEY:
                 PlayerProfile donkeyProfile = getProfile("https://textures.minecraft.net/texture/399bb50d1a214c394917e25bb3f2e20698bf98ca703e4cc08b42462df309d6e6", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(donkeyProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -296,14 +287,14 @@ public class Decapitate implements Listener {
                 {
                     frogProfile = getProfile("https://textures.minecraft.net/texture/45852a95928897746012988fbd5dbaa1b70b7a5fb65157016f4ff3f245374c08", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(frogProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case GLOW_SQUID:
                 PlayerProfile glowSquidProfile = getProfile("https://textures.minecraft.net/texture/45c999dd12dd1c866fdd0ee94a3973533428cd72d9296c62724f429365da8eeb", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(glowSquidProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -340,7 +331,7 @@ public class Decapitate implements Listener {
                 {
                     horseProfile = getProfile("https://textures.minecraft.net/texture/8b03eb13d798f3823703357aa6e8fd29dff3010871b4e54f928e270d7410969b", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(horseProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -357,21 +348,21 @@ public class Decapitate implements Listener {
                 {
                     mushroomCowProfile = getProfile("https://textures.minecraft.net/texture/199cd80c0a353b181b6588e9d820671c59ed9f27f1cfcd2195e65b918fb65e47", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(mushroomCowProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case MULE:
                 PlayerProfile muleProfile = getProfile("https://textures.minecraft.net/texture/46dcda265e57e4f51b145aacbf5b59bdc6099ffd3cce0a661b2c0065d80930d8", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(muleProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case OCELOT:
                 PlayerProfile ocelotProfile = getProfile("https://textures.minecraft.net/texture/d03a2e37418e0cffaa2b513910c5282b9bb06c35a1d47039a5cc51b234a542f3", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(ocelotProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -400,21 +391,21 @@ public class Decapitate implements Listener {
                 {
                     parrotProfile = getProfile("https://textures.minecraft.net/texture/a3c34722ac64496c9b84d0c54019daae6185d6094990133ad6810eea3d24067a", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(parrotProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PIG:
                 PlayerProfile pigProfile = getProfile("https://textures.minecraft.net/texture/9b1760e3778f8087046b86bec6a0a83a567625f30f0d6bce866d4bed95dba6c1", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(pigProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PUFFERFISH:
                 PlayerProfile pufferfishProfile = getProfile("https://textures.minecraft.net/texture/292350c9f0993ed54db2c7113936325683ffc20104a9b622aa457d37e708d931", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(pufferfishProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -451,14 +442,14 @@ public class Decapitate implements Listener {
                 {
                     rabbitProfile = getProfile("https://textures.minecraft.net/texture/a0dcddc236972edcd48e825b6b0054b7b6e1a781e6f12ae04c14a07827ca8dcc", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(rabbitProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SALMON:
                 PlayerProfile salmonProfile = getProfile("https://textures.minecraft.net/texture/d4d001589b86c22cf24f1618fe7efef12932aa9148b5e4fc6ff4a614b990ae12", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(salmonProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -531,63 +522,63 @@ public class Decapitate implements Listener {
                 {
                     sheepProfile = getProfile("https://textures.minecraft.net/texture/634ac5b398cf7c86e3f6f188a5127d8b283d772bf5885c70e0c130805f069950", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(sheepProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SKELETON_HORSE:
                 PlayerProfile skeletonHorseProfile = getProfile("https://textures.minecraft.net/texture/47effce35132c86ff72bcae77dfbb1d22587e94df3cbc2570ed17cf8973a", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(skeletonHorseProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SNIFFER:
                 PlayerProfile snifferProfile = getProfile("https://textures.minecraft.net/texture/87ad920a66e38cc3426a5bff084667e8772116915e298098567c139f222e2c42", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(snifferProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SNOW_GOLEM:
                 PlayerProfile snowGolemProfile = getProfile("https://textures.minecraft.net/texture/4208d5d8032fc98138237c0b0bfe5c3eab50fb2ff8a8022f32c1197ec16418dd", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(snowGolemProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SQUID:
                 PlayerProfile squidProfile = getProfile("https://textures.minecraft.net/texture/49c2c9ce67eb5971cc5958463e6c9abab8e599adc295f4d4249936b0095769dd", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(squidProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case STRIDER:
                 PlayerProfile striderProfile = getProfile("https://textures.minecraft.net/texture/a13cb566124aed3b5d86bfaf1d1b01f69526645622ed8510aa86a66d57096fe4", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(striderProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case TADPOLE:
                 PlayerProfile tadpoleProfile = getProfile("https://textures.minecraft.net/texture/b23ebf26b7a441e10a86fb5c2a5f3b519258a5c5dddd6a1a75549f517332815b", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(tadpoleProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case TROPICAL_FISH:
                 PlayerProfile tropicalFishProfile = getProfile("https://textures.minecraft.net/texture/d6dd5e6addb56acbc694ea4ba5923b1b25688178feffa72290299e2505c97281", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(tropicalFishProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case TURTLE:
                 PlayerProfile turtleProfile = getProfile("https://textures.minecraft.net/texture/0a4050e7aacc4539202658fdc339dd182d7e322f9fbcc4d5f99b5718a", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(turtleProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -656,14 +647,14 @@ public class Decapitate implements Listener {
                 {
                     villagerProfile = getProfile("https://textures.minecraft.net/texture/5e409b958bc4fe045e95d325e6e97a533137e33fec7042ac027b30bb693a9d42", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(villagerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WANDERING_TRADER:
                 PlayerProfile wanderingTraderProfile = getProfile("https://textures.minecraft.net/texture/ee011aac817259f2b48da3e5ef266094703866608b3d7d1754432bf249cd2234", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(wanderingTraderProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -671,35 +662,35 @@ public class Decapitate implements Listener {
             // NEUTRAL MOBS ----------------------------------------
             case BEE:
                 PlayerProfile beeProfile = getProfile("https://textures.minecraft.net/texture/886a509ff3cd471f1b428a194b6711470a54773e5de6ee07f7e601cc5e75a200", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(beeProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case CAVE_SPIDER:
                 PlayerProfile caveSpiderProfile = getProfile("https://textures.minecraft.net/texture/eccc4a32d45d74e8b14ef1ffd55cd5f381a06d4999081d52eaea12e13293e209", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(caveSpiderProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case DOLPHIN:
                 PlayerProfile dolphinProfile = getProfile("https://textures.minecraft.net/texture/8e9688b950d880b55b7aa2cfcd76e5a0fa94aac6d16f78e833f7443ea29fed3", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(dolphinProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case DROWNED:
                 PlayerProfile drownedProfile = getProfile("https://textures.minecraft.net/texture/c84df79c49104b198cdad6d99fd0d0bcf1531c92d4ab6269e40b7d3cbbb8e98c", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(drownedProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ENDERMAN:
                 PlayerProfile endermanProfile = getProfile("https://textures.minecraft.net/texture/8a108a0a7a387859f2c44fb9702cf73dbafee3ecfdc4f5def46c0d651b7a49f7", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(endermanProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -716,28 +707,28 @@ public class Decapitate implements Listener {
                 {
                     foxProfile = getProfile("https://textures.minecraft.net/texture/635b7fc33eaa9fb20c16dc8e9db1897966ebecaee2f0209205123910da9886d5", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(foxProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case GOAT:
                 PlayerProfile goatProfile = getProfile("https://textures.minecraft.net/texture/f03330398a0d833f53ae8c9a1cb393c74e9d31e18885870e86a2133d44f0c63c", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(goatProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case IRON_GOLEM:
                 PlayerProfile ironGolemProfile = getProfile("https://textures.minecraft.net/texture/e13f34227283796bc017244cb46557d64bd562fa9dab0e12af5d23ad699cf697", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(ironGolemProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case LLAMA:
                 PlayerProfile llamaProfile = getProfile("https://textures.minecraft.net/texture/9f7d90b305aa64313c8d4404d8d652a96eba8a754b67f4347dcccdd5a6a63398", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(llamaProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -774,34 +765,34 @@ public class Decapitate implements Listener {
                 {
                     pandaProfile = getProfile("https://textures.minecraft.net/texture/b4f7c73fda6a34cf8be4c7907dd0f5f0865dd77fd882fc633563649c57517cae", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(pandaProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PIGLIN:
                 mobHead.setType(Material.PIGLIN_HEAD);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case POLAR_BEAR:
                 PlayerProfile polarBearProfile = getProfile("https://textures.minecraft.net/texture/3d3cd8548e7dceb5c2394d1b00da2c61ffc0dde46229b10509eb27a0dcb23bfb", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(polarBearProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SPIDER:
                 PlayerProfile spiderProfile = getProfile("https://textures.minecraft.net/texture/35e248da2e108f09813a6b848a0fcef111300978180eda41d3d1a7a8e4dba3c3", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(spiderProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case TRADER_LLAMA:
                 PlayerProfile traderLlamaProfile = getProfile("https://textures.minecraft.net/texture/56307f42fc88ebc211e04ea2bb4d247b7428b711df9a4e0c6d1b921589e443a1", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(traderLlamaProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -846,14 +837,14 @@ public class Decapitate implements Listener {
                 {
                     wolfProfile = getProfile("https://textures.minecraft.net/texture/6e8c2a6e104a3e9d7397326f01bf25862f0aaf9e3830d49dbb9b4a4305358404", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(wolfProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ZOMBIFIED_PIGLIN:
                 PlayerProfile zombifiedPiglinProfile = getProfile("https://textures.minecraft.net/texture/7eabaecc5fae5a8a49c8863ff4831aaa284198f1a2398890c765e0a8de18da8c", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(zombifiedPiglinProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
@@ -861,206 +852,206 @@ public class Decapitate implements Listener {
             // NEUTRAL MOBS ----------------------------------------
             case BLAZE:
                 PlayerProfile blazeProfile = getProfile("https://textures.minecraft.net/texture/b20657e24b56e1b2f8fc219da1de788c0c24f36388b1a409d0cd2d8dba44aa3b", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(blazeProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case BOGGED:
                 PlayerProfile boggedProfile = getProfile("https://textures.minecraft.net/texture/a3b9003ba2d05562c75119b8a62185c67130e9282f7acbac4bc2824c21eb95d9", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(boggedProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case BREEZE:
                 PlayerProfile breezeProfile = getProfile("https://textures.minecraft.net/texture/a275728af7e6a29c88125b675a39d88ae9919bb61fdc200337fed6ab0c49d65c", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(breezeProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case CREEPER:
                 mobHead.setType(Material.CREEPER_HEAD);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ELDER_GUARDIAN:
                 PlayerProfile elderGuardianProfile = getProfile("https://textures.minecraft.net/texture/92dd2579ed5bb1853805ff6341d4118b4a4f485fb07ad550320a86ac586ba993", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(elderGuardianProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ENDERMITE:
                 PlayerProfile endermiteProfile = getProfile("https://textures.minecraft.net/texture/1730127e3ac7677122422df0028d9e7368bd157738c8c3cddecc502e896be01c", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(endermiteProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ENDER_DRAGON:
                 mobHead.setType(Material.DRAGON_HEAD);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case EVOKER:
                 PlayerProfile evokerProfile = getProfile("https://textures.minecraft.net/texture/3433322e2ccbd9c55ef41d96f38dbc666c803045b24391ac9391dccad7cd", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(evokerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case GHAST:
                 PlayerProfile ghastProfile = getProfile("https://textures.minecraft.net/texture/64ab8a22e7687cc4c78f3b6ff5b1eb04917b51cd3cd7dbce36171160b3c77ced", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(ghastProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case GUARDIAN:
                 PlayerProfile guardianProfile = getProfile("https://textures.minecraft.net/texture/b8e725779c234c590cce854db5c10485ed8d8a33fa9b2bdc3424b68bb1380bed", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(guardianProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case HOGLIN:
                 PlayerProfile hoglinProfile = getProfile("https://textures.minecraft.net/texture/9bb9bc0f01dbd762a08d9e77c08069ed7c95364aa30ca1072208561b730e8d75", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(hoglinProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case HUSK:
                 PlayerProfile huskProfile = getProfile("https://textures.minecraft.net/texture/c096164f81950a5cc0e33e87999f98cde792517f4d7f99a647a9aedab23ae58", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(huskProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case MAGMA_CUBE:
                 PlayerProfile magmaCubeProfile = getProfile("https://textures.minecraft.net/texture/38957d5023c937c4c41aa2412d43410bda23cf79a9f6ab36b76fef2d7c429", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(magmaCubeProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PHANTOM:
                 PlayerProfile phantomProfile = getProfile("https://textures.minecraft.net/texture/b4ad63b697a4c4790d00c435460baf49191657e61bee611f7588dbcda7198bbd", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(phantomProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PIGLIN_BRUTE:
                 PlayerProfile piglinBruteProfile = getProfile("https://textures.minecraft.net/texture/a792b6997d739f535beed3ab1d4aeadfa76777bf8e38a666f54f82ff9f858186", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(piglinBruteProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case PILLAGER:
                 PlayerProfile pillagerProfile = getProfile("https://textures.minecraft.net/texture/32fb80a6b6833e31d9ce8313a54777645f9c1e55b810918a706e7bcc8d35a5a2", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(pillagerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case RAVAGER:
                 PlayerProfile ravagerProfile = getProfile("https://textures.minecraft.net/texture/5c73e16fa2926899cf18434360e2144f84ef1eb981f996148912148dd87e0b2a", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(ravagerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SHULKER:
                 PlayerProfile shulkerProfile = getProfile("https://textures.minecraft.net/texture/f8c9657d237773c3596e2c743c94a5be3849ebc28e1d4667b7accd93a48b04ab", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(shulkerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SILVERFISH:
                 PlayerProfile silverFishProfile = getProfile("https://textures.minecraft.net/texture/da91dab8391af5fda54acd2c0b18fbd819b865e1a8f1d623813fa761e924540", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(silverFishProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SKELETON:
                 mobHead.setType(Material.SKELETON_SKULL);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case SLIME:
                 PlayerProfile slimeProfile = getProfile("https://textures.minecraft.net/texture/86c27b013f1bf3344869e81e5c610027bc45ec5b79514fdc96e01df1b7e3a387", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(slimeProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case STRAY:
                 PlayerProfile strayProfile = getProfile("https://textures.minecraft.net/texture/2c5097916bc0565d30601c0eebfeb287277a34e867b4ea43c63819d53e89ede7", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(strayProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case VEX:
                 PlayerProfile vexProfile = getProfile("https://textures.minecraft.net/texture/b663134d7306bb604175d2575d686714b04412fe501143611fcf3cc19bd70abe", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(vexProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case VINDICATOR:
                 PlayerProfile vindicatorProfile = getProfile("https://textures.minecraft.net/texture/9e1cab382458e843ac4356e3e00e1d35c36f449fa1a84488ab2c6557b392d", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(vindicatorProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WARDEN:
                 PlayerProfile wardenProfile = getProfile("https://textures.minecraft.net/texture/b0b202de27ce278893031f93005fb1310bbf952058bc41fe079074f77605a906", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(wardenProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITCH:
                 PlayerProfile witchProfile = getProfile("https://textures.minecraft.net/texture/8aa986a6e1c2d88ff198ab2c3259e8d2674cb83a6d206f883bad2c8ada819", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(witchProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITHER:
                 PlayerProfile witherProfile = getProfile("https://textures.minecraft.net/texture/74f328f5044129b5d1f96affd1b8c05bcde6bd8e756aff5c5020585eef8a3daf", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(witherProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case WITHER_SKELETON:
                 mobHead.setType(Material.WITHER_SKELETON_SKULL);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ZOGLIN:
                 PlayerProfile zoglinProfile = getProfile("https://textures.minecraft.net/texture/e67e18602e03035ad68967ce090235d8996663fb9ea47578d3a7ebbc42a5ccf9", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(zoglinProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
             case ZOMBIE:
                 mobHead.setType(Material.ZOMBIE_HEAD);
-                assert skullMeta != null;
+
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));
                 break;
@@ -1128,7 +1119,7 @@ public class Decapitate implements Listener {
                 {
                     zombieVillagerProfile = getProfile("https://textures.minecraft.net/texture/f354a4172a9ba9c47fb853ab284fdc0a344326013e5d73c4bec7800d83f4e399", UUID.fromString("92deafa9-4307-42d9-b003-88601598d6c0"));
                 }
-                assert skullMeta != null;
+
                 skullMeta.setOwnerProfile(zombieVillagerProfile);
                 skullMeta.setDisplayName(Main.color(withPAPISet)
                         .replace("{headType}", headNameReformatted));

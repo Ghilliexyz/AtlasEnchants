@@ -1,14 +1,13 @@
 package com.atlasplugins.atlasenchants.enchants.weapons;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -36,6 +35,7 @@ public class Propel implements Listener
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent e)
     {
+        if(e.isCancelled()) return;
         if(!(e.getDamager() instanceof Player)) {return;}
 
         Player p = (Player) e.getDamager();
@@ -48,53 +48,22 @@ public class Propel implements Listener
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("PROPEL")) {
+                    // PUT ENCHANT LOGIC HERE
+                    if (e.getEntity() instanceof LivingEntity entityToLaunch) {
+                        // Get the block height from the configuration
+                        int blockHeight = main.getEnchantmentsConfig().getInt("Enchantments.PROPEL.Propel-HeightAmount-" + enchant.level);
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                        double velocityY = calculateInitialVelocity(blockHeight);
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("PROPEL")) {
-                            // PUT ENCHANT LOGIC HERE
-                            if (e.getEntity() instanceof LivingEntity entityToLaunch) {
-                                // Get the block height from the configuration
-                                int blockHeight = main.getEnchantmentsConfig().getInt("Enchantments.PROPEL.Propel-Height-Amount-" + enchantLevel);
-
-                                // Default Jump Height = 1.25220 (same as 0.42 Velocity)
-                                // Velocity: 0.42 = 1.25220
-                                // Velocity: 0.40 = 1.15311
-
-                                double velocityY = calculateInitialVelocity(blockHeight);
-
-//                                double entityDamage = e.getDamage();
-
-//                                main.getLogger().info("velocityY: " + velocityY);
-//                                main.getLogger().info("blockHeight: " + blockHeight);
-
-                                entityToLaunch.teleport(entityToLaunch.getLocation().add(0,1,0));
-
-                                // Add a small vertical offset to the entity's position to ensure it gets launched
-                                Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
-                                // Launch Entity Up
-                                entityToLaunch.setVelocity(entityVelocity);
-                                // Give The Entity the correct damage since e.setCancelled(true); cancels the damage as well.
-//                                entityToLaunch.damage(entityDamage);
-
-//                                e.setCancelled(true);
-                            }
-                            //END ENCHANT LOGIC
-                        }
+                        // Delay by 1 tick so velocity is applied after vanilla knockback processing
+                        main.getServer().getScheduler().runTaskLater(main, () -> {
+                            Vector entityVelocity = new Vector(entityToLaunch.getVelocity().getX(), velocityY, entityToLaunch.getVelocity().getZ());
+                            entityToLaunch.setVelocity(entityVelocity);
+                        }, 1L);
                     }
+                    //END ENCHANT LOGIC
                 }
             }
         }

@@ -10,10 +10,50 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.3.4
+#    Plugin Version 1.3.5
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
+
+# =====================================================================
+#  TABLE OF CONTENTS
+# =====================================================================
+#  Enchantments ............................ Line ~30
+#    - Divine Enchants ..................... Line ~31
+#        Poseidon's Bait .................. Line ~32
+#    - Godly Enchants ..................... Line ~82
+#        Fearsight ........................ Line ~84
+#        Blessing of Knowledge ........... Line ~133
+#        Miner's Touch ................... Line ~181
+#        Asclepius ........................ Line ~243
+#        Leech ........................... Line ~288
+#    - Legendary Enchants ................. Line ~286
+#        Safe Miner ...................... Line ~333
+#        Extractor ....................... Line ~391
+#        Vein Seeker ..................... Line ~444
+#        Wings of Aegis .................. Line ~506
+#        Final Guard ..................... Line ~546
+#        Rush ............................ Line ~672
+#        Stunning ........................ Line ~715
+#        Energy Absorption ............... Line ~779
+#    - Epic Enchants ...................... Line ~670
+#        Poison Aspect ................... Line ~829
+#        Ice Aspect ...................... Line ~902
+#        Tree Hugger ..................... Line ~965
+#    - Rare Enchants ...................... Line ~1019
+#        Hunter .......................... Line ~1021
+#        Propel .......................... Line ~1067
+#        Freezing Shot ................... Line ~1110
+#        Regrowth ........................ Line ~1148
+#        Decapitate ...................... Line ~1186
+#        Tainted Book .................... Line ~1250
+#  Oblivion Shard ......................... Line ~1274
+#  Oracles of Enchantment ................. Line ~1302
+#  Altar of Circe ......................... Line ~1341
+#  Scrap of Circe's Weave ................. Line ~1413
+#  Circe's Ember .......................... Line ~1441
+#  Circe's Anvil .......................... Line ~1468
+# =====================================================================
 
 Enchantments:
   # --------------------- DIVINE ENCHANTS --------------------- #
@@ -28,7 +68,7 @@ Enchantments:
     Enchantment-Title: "&4&lDIVINE &7Poseidon's Bait"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lFishing Luck     &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -39,7 +79,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Fishing Rod to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&4● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -52,21 +92,23 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
       #Particle Settings for PoseidonsBait
-    PoseidonsBait-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      PoseidonsBait-Particle-Toggle: true
-      PoseidonsBait-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        PoseidonsBait-Particle-Name-1: SOUL_FIRE_FLAME
+        Name: SOUL_FIRE_FLAME
         #Particle Amount (50 = 50 Particles)
-        PoseidonsBait-Particle-Amount-1: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoseidonsBait-Particle-Size-1: 0.1
+        Size: 0.1
     #The % chance of catching an enchant. ( 0.05 = 5% | 0.5 = 50% )
-    PoseidonsBait-Proc-Chance-1: 0.01
-    PoseidonsBait-Proc-Chance-2: 0.02
-    PoseidonsBait-Proc-Chance-3: 0.03
+    PoseidonsBait-ProcChance-1: 0.01
+    PoseidonsBait-ProcChance-2: 0.02
+    PoseidonsBait-ProcChance-3: 0.03
+
   # --------------------- GODLY ENCHANTS --------------------- #
+
   FEARSIGHT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
@@ -78,7 +120,7 @@ Enchantments:
     Enchantment-Title: "&c&lGODLY &7Fearsight"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lGlowing Entities      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -90,7 +132,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Helmet to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -108,13 +150,14 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #Colour of the Glow per Mob Type.
-    Hostile-GLOW-Colour: RED
-    Passive-GLOW-Colour: GREEN
-    Player-Villager: WHITE
+    Glow-Colours:
+      Hostile: RED
+      Passive: GREEN
+      Player: WHITE
     #Radius of how far the glow goes per Tier.
-    Radius-of-glowing-1: 5
-    Radius-of-glowing-2: 10
-    Radius-of-glowing-3: 15
+    Fearsight-GlowRadius-1: 5
+    Fearsight-GlowRadius-2: 10
+    Fearsight-GlowRadius-3: 15
   BLESSING-OF-KNOWLEDGE:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -126,7 +169,7 @@ Enchantments:
     Enchantment-Title: "&c&lGODLY &7Blessing of Knowledge"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lHealth Bar      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -137,7 +180,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Helmet to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -155,14 +198,14 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #The amount of time the Health bar effect will Show. (Timer is in seconds 5 = 5 seconds)
-    HealthBar-Timer-1: 5
+    BlessingOfKnowledge-HealthTimer-1: 5
     #The style of the Health bar effect.
-    HealthBar-Style-1:
-      HealthBar-Style-Below-10: "&4{entityHealth} ♥ &f| {entityMaxHealth} ♥"
-      HealthBar-Style-Below-25: "&c{entityHealth} ♥ &f| {entityMaxHealth} ♥"
-      HealthBar-Style-Below-50: "&6{entityHealth} ♥ &f| {entityMaxHealth} ♥"
-      HealthBar-Style-Below-75: "&e{entityHealth} ♥ &f| {entityMaxHealth} ♥"
-      HealthBar-Style-Below-100: "&a{entityHealth} ♥ &f| {entityMaxHealth} ♥"
+    BlessingOfKnowledge-HealthStyle-1:
+      Below-10: "&4{entityHealth} ♥ &f| {entityMaxHealth} ♥"
+      Below-25: "&c{entityHealth} ♥ &f| {entityMaxHealth} ♥"
+      Below-50: "&6{entityHealth} ♥ &f| {entityMaxHealth} ♥"
+      Below-75: "&e{entityHealth} ♥ &f| {entityMaxHealth} ♥"
+      Below-100: "&a{entityHealth} ♥ &f| {entityMaxHealth} ♥"
   MINERS-TOUCH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -174,7 +217,7 @@ Enchantments:
     Enchantment-Title: "&c&lGODLY &7Miners Touch"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lMine Spawners      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -187,7 +230,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -204,27 +247,27 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
     #Particle Settings for Miners Touch
-    MinersTouch-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      MinersTouch-Particle-Toggle: true
-      MinersTouch-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        MinersTouch-Particle-Name-1: SOUL_FIRE_FLAME
+        Name: SOUL_FIRE_FLAME
         #Particle Amount (50 = 50 Particles)
-        MinersTouch-Particle-Amount-1: 25
+        Amount: 25
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        MinersTouch-Particle-Size-1: 0.1
+        Size: 0.1
     #The style of the Spawner Title.
-    MinersTouch-Spawner-Title-Style: "&c&lSpawner: &7{spawnerType}"
+    MinersTouch-SpawnerTitleStyle: "&c&lSpawner: &7{spawnerType}"
     #The style of the Spawner lore.
-    MinersTouch-Spawner-Lore-Style:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    MinersTouch-SpawnerLoreStyle:
+      - "{header}"
       - ""
       - "&c● &7Spawner Type: &e&l{spawnerType}"
       - ""
       - "&c● &7Description: &eThis spawner spawns {spawnerType}s"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
   ASCLEPIUS:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
@@ -236,7 +279,7 @@ Enchantments:
     Enchantment-Title: "&c&lGODLY &7Asclepius"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lHealth Boost      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -248,7 +291,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Chestplate to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&c● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -267,7 +310,9 @@ Enchantments:
     #Radius of how far the glow goes per Tier.
     Asclepius-HealthBoost-1: 1
     Asclepius-HealthBoost-2: 2
+
   # --------------------- LEGENDARY ENCHANTS --------------------- #
+
   LEECH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
@@ -279,7 +324,7 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Leech"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lLife Steal      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -293,7 +338,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -310,9 +355,9 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - HUNTER
     #The amount of healing % the enchant does (0.05 = 5% of the damage done will be turned into health).
-    Leech-Healing-Amount-Percent-1: 0.05
-    Leech-Healing-Amount-Percent-2: 0.15
-    Leech-Healing-Amount-Percent-3: 0.30
+    Leech-HealPercent-1: 0.05
+    Leech-HealPercent-2: 0.15
+    Leech-HealPercent-3: 0.30
   SAFE-MINER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -324,7 +369,7 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Safe Miner"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lAuto Collect      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -338,7 +383,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -382,7 +427,7 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Extractor"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lMore XP     &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -393,7 +438,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -411,19 +456,19 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #Particle Settings for Extractor
-    Extractor-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      Extractor-Particle-Toggle: true
-      Extractor-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        Extractor-Particle-Name-1: SOUL_FIRE_FLAME
+        Name: SOUL_FIRE_FLAME
         #Particle Amount (50 = 50 Particles)
-        Extractor-Particle-Amount-1: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        Extractor-Particle-Size-1: 0.1
+        Size: 0.1
     #The amount of time the Stun effect will last. (Slowness and Weakness)
-    Extractor-EXP-Multiplier-1: 1.5
-    Extractor-EXP-Multiplier-2: 2
+    Extractor-ExpMultiplier-1: 1.5
+    Extractor-ExpMultiplier-2: 2
   VEIN-SEEKER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -435,7 +480,7 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Vein Seeker"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lVein Miner     &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -449,7 +494,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -497,18 +542,19 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Wings Of Aegis"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lProtection     &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
       - "&c● &7Description:"
-      - "  &eGain a damage reduction of {wingsDamageReduction}%"
+      - "  &eGrants &f{wingsDefensePoints} &edefense points and"
+      - "  &eProtection {lvl} &eto your Elytra"
       - ""
       - "&c● &7Type: &eElytra Enchantment"
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Elytra to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -519,12 +565,12 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (WINGS-OF-AEGIS) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       -
-    #The amount of Protection resistance you gain per level (0.04 = 4% Damage reduction 1 = 100% Damage Reduction)
-    #These values follow Vanilla minecraft protection stats
-    WingsOfAegis-Protection-Percentage-1: 0.20
-    WingsOfAegis-Protection-Percentage-2: 0.24
-    WingsOfAegis-Protection-Percentage-3: 0.28
-    WingsOfAegis-Protection-Percentage-4: 0.32
+    #The armor defense points the elytra provides (replicates vanilla armor material values)
+    #Vanilla reference: Leather Chest = 3, Chainmail Chest = 5, Iron Chest = 6, Diamond Chest = 8, Netherite Chest = 8
+    WingsOfAegis-Armor-Defense-Points: 6
+    #The armor toughness (reduces effectiveness of strong attacks, like vanilla)
+    #Vanilla reference: Leather/Iron/Chain = 0, Diamond = 2, Netherite = 3
+    WingsOfAegis-Armor-Toughness: 0
   FINAL-GUARD:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
@@ -536,7 +582,7 @@ Enchantments:
     Enchantment-Title: "&6&lLEGENDARY &7Final Guard"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lItem Protection      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -548,7 +594,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&6● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -631,23 +677,26 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #The chance the item will be protected and the max repair percent of the total items durability (0.05 = 5%).
-    FinalGuard-Protection-Percent-1: 0.25
-    FinalGuard-Repair-Percent-1: 0.05
-    FinalGuard-Protection-Percent-2: 0.50
-    FinalGuard-Repair-Percent-2: 0.10
-    FinalGuard-Protection-Percent-3: 0.75
-    FinalGuard-Repair-Percent-3: 0.15
+    FinalGuard-ProtectionChance-1: 0.25
+    FinalGuard-RepairPercent-1: 0.05
+    FinalGuard-ProtectionChance-2: 0.50
+    FinalGuard-RepairPercent-2: 0.10
+    FinalGuard-ProtectionChance-3: 0.75
+    FinalGuard-RepairPercent-3: 0.15
     #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
     #------------------Success SOUND------------------#
-    #If True the Success sound will play.
-    FinalGuard-Success-Sound-Toggle: true
-    #The sound that plays when the enchantment is successful.
-    FinalGuard-Success-Sound: BLOCK_AMETHYST_BLOCK_BREAK
-    #The volume the sound that plays at when the enchantment is successful.
-    FinalGuard-Success-Volume: 1
-    #The pitch the sound that plays at when the enchantment is successful.
-    FinalGuard-Success-Pitch: 0.1
+    Sound-Settings:
+      #If True the Success sound will play.
+      Toggle: true
+      #The sound that plays when the enchantment is successful.
+      Sound: BLOCK_AMETHYST_BLOCK_BREAK
+      #The volume the sound that plays at when the enchantment is successful.
+      Volume: 1
+      #The pitch the sound that plays at when the enchantment is successful.
+      Pitch: 0.1
+
   # --------------------- EPIC ENCHANTS --------------------- #
+
   RUSH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -659,7 +708,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Rush"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&l{speedLvl}x Speed      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -671,7 +720,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Leggings to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -688,9 +737,9 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
       #The amount of Speed the enchant gives.
-    Rush-Speed-Amount-1: 1
+    Rush-SpeedAmount-1: 1
     #The amount of time the Speed effect will last. (Timer is in seconds 5 = 5 seconds)
-    Rush-Speed-Timer-1: 5
+    Rush-SpeedTimer-1: 5
   STUNNING:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
@@ -702,7 +751,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Stunning"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lStunned      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -714,7 +763,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -739,22 +788,22 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
       #Particle Settings for Poison Aspect
-    Stunning-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      Stunning-Particle-Toggle: true
-      Stunning-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        Stunning-Particle-Name-1: ASH
+        Name: ASH
         #Particle Amount (50 = 50 Particles)
-        Stunning-Particle-Amount-1: 100
+        Amount: 100
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        Stunning-Particle-Size-1: 1
+        Size: 1
     #The amount of time the Stun effect will last. (Slowness and Weakness)
-    Stunning-Stun-Timer-1: 3
-    Stunning-Stun-Timer-2: 6
+    Stunning-StunTimer-1: 3
+    Stunning-StunTimer-2: 6
     #The Level the Stun effect will be. (Slowness and Weakness)
-    Stunning-Stun-Levels-1: 1
-    Stunning-Stun-Levels-2: 2
+    Stunning-StunLevel-1: 1
+    Stunning-StunLevel-2: 2
   ENERGY-ABSORPTION:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -766,7 +815,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Energy Absorption"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lHealing     &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -778,7 +827,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Shield to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -791,20 +840,20 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #Particle Settings for Poison Aspect
-    EnergyAbsorption-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      EnergyAbsorption-Particle-Toggle: true
-      EnergyAbsorption-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        EnergyAbsorption-Particle-Name-1: HEART
+        Name: HEART
         #Particle Amount (50 = 50 Particles)
-        EnergyAbsorption-Particle-Amount-1: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        EnergyAbsorption-Particle-Size-1: 0.1
+        Size: 0.1
     #The amount of hearts given when hit (0.5 = half a heart).
-    EnergyAbsorption-Healing-Amount-1: 0.5
+    EnergyAbsorption-HealAmount-1: 0.5
     #The amount of hearts given when hit (3 = 3 hearts).
-    EnergyAbsorption-Start-Healing-Amount-1: 3
+    EnergyAbsorption-StartHealAmount-1: 3
   POISON-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
@@ -816,7 +865,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Poison Aspect"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lPoison      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -830,7 +879,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -855,29 +904,29 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - ICE-ASPECT
     #Particle Settings for Poison Aspect
-    PoisonAspect-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      PoisonAspect-Particle-Toggle: true
-      PoisonAspect-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        PoisonAspect-Particle-Name-1: SQUID_INK
+        Name: SQUID_INK
         #Particle Amount (50 = 50 Particles)
-        PoisonAspect-Particle-Amount-1: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoisonAspect-Particle-Size-1: 0.1
-      PoisonAspect-Particle-2:
+        Size: 0.1
+      Particle-2:
         #Particle Name (The particle that will spawn)
-        PoisonAspect-Particle-Name-2: NAUTILUS
+        Name: NAUTILUS
         #Particle Amount (50 = 50 Particles)
-        PoisonAspect-Particle-Amount-2: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        PoisonAspect-Particle-Size-2: 0.5
+        Size: 0.5
     #The amount of time the poison effect will last.
-    PoisonAspect-Poison-Timer-1: 3
-    PoisonAspect-Poison-Timer-2: 6
+    PoisonAspect-PoisonTimer-1: 3
+    PoisonAspect-PoisonTimer-2: 6
     #The Level the poison effect will be.
-    PoisonAspect-Poison-Level-1: 1
-    PoisonAspect-Poison-Level-2: 2
+    PoisonAspect-PoisonLevel-1: 1
+    PoisonAspect-PoisonLevel-2: 2
   ICE-ASPECT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
@@ -889,7 +938,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Ice Aspect"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lFrozen      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -903,7 +952,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -928,19 +977,19 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - POISON-ASPECT
     #Particle Settings for Poison Aspect
-    IceAspect-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      IceAspect-Particle-Toggle: true
-      IceAspect-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        IceAspect-Particle-Name-1: SNOWFLAKE
+        Name: SNOWFLAKE
         #Particle Amount (50 = 50 Particles)
-        IceAspect-Particle-Amount-1: 50
+        Amount: 50
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        IceAspect-Particle-Size-1: 0.1
+        Size: 0.1
     #The amount of time the Frozen effect will last. (Timer is in seconds 15 = 15 seconds)
-    IceAspect-Frozen-Timer-1: 15
-    IceAspect-Frozen-Timer-2: 30
+    IceAspect-FreezeTimer-1: 15
+    IceAspect-FreezeTimer-2: 30
   TREE-HUGGER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -952,7 +1001,7 @@ Enchantments:
     Enchantment-Title: "&d&lEPIC &7Tree Hugger"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lTimber      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -964,7 +1013,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Axe to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&d● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -994,7 +1043,9 @@ Enchantments:
       - MANGROVE_ROOTS
       - CRIMSON_STEM
       - WARPED_STEM
+
   # --------------------- RARE ENCHANTS --------------------- #
+
   HUNTER:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
@@ -1006,7 +1057,7 @@ Enchantments:
     Enchantment-Title: "&b&lRARE &7Hunter"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lMore Damage      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1020,7 +1071,7 @@ Enchantments:
       - ""
       - "&c● &7Blacklist: &c{blacklistEnchant}"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -1038,9 +1089,9 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       - LEECH
     #The amount of damage the enchant does.
-    Hunter-Damage-Amount-1: 1
-    Hunter-Damage-Amount-2: 1.5
-    Hunter-Damage-Amount-3: 2
+    Hunter-DamageAmount-1: 1
+    Hunter-DamageAmount-2: 1.5
+    Hunter-DamageAmount-3: 2
   PROPEL:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 2
@@ -1052,7 +1103,7 @@ Enchantments:
     Enchantment-Title: "&b&lRARE &7Propel"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lLaunch Entities      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1065,7 +1116,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -1082,8 +1133,8 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
       #The amount of blocks the entity gets launched.
-    Propel-Height-Amount-1: 3
-    Propel-Height-Amount-2: 5
+    Propel-HeightAmount-1: 3
+    Propel-HeightAmount-2: 5
   FREEZING-SHOT:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 3
@@ -1095,7 +1146,7 @@ Enchantments:
     Enchantment-Title: "&b&lRARE &7Freezing Shot"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lFreeze Mobs      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1106,7 +1157,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Bow/Crossbow to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -1119,9 +1170,9 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
       #The amount of time the Freeze effect will last. (Timer is in seconds 5 = 5 seconds)
-    FreezingShot-Freeze-Timer-1: 1
-    FreezingShot-Freeze-Timer-2: 1.5
-    FreezingShot-Freeze-Timer-3: 2
+    FreezingShot-FreezeTimer-1: 1
+    FreezingShot-FreezeTimer-2: 1.5
+    FreezingShot-FreezeTimer-3: 2
   REGROWTH:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -1133,7 +1184,7 @@ Enchantments:
     Enchantment-Title: "&b&lRARE &7Regrowth"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lRe-Plant Seeds      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1144,7 +1195,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Hoe to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -1171,7 +1222,7 @@ Enchantments:
     Enchantment-Title: "&b&lRARE &7Decapitate"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lChop Heads Off      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1183,7 +1234,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eDrag n' Drop onto Sword/Axe to enchant."
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
     #The lore that will be added to the enchanted Item.
     Enchantment-Apply-Lore: "&b● &7{enchantmentName} {lvl}"
     #The Item that the enchantment can be applied to.
@@ -1208,22 +1259,22 @@ Enchantments:
     Enchantment-Blacklist-Enchants:
       -
     #Particle Settings for Extractor
-    Decapitate-Particle-Settings:
+    Particle-Settings:
       #Particle Toggle (if true the particles will show)
-      Decapitate-Particle-Toggle: true
-      Decapitate-Particle-1:
+      Toggle: true
+      Particle-1:
         #Particle Name (The particle that will spawn)
-        Decapitate-Particle-Name-1: LANDING_LAVA
+        Name: LANDING_LAVA
         #Particle Amount (50 = 50 Particles)
-        Decapitate-Particle-Amount-1: 250
+        Amount: 250
         #Particle Size (0.1 = 1 10th of the max scale, 1 = normal size)
-        Decapitate-Particle-Size-1: 0.1
+        Size: 0.1
     #The Chance of time the enchant working. (0.05 = 5% | 1 = 100%)
-    Decapitate-Proc-Chance-1: 0.01
-    Decapitate-Proc-Chance-2: 0.03
-    Decapitate-Proc-Chance-3: 0.05
+    Decapitate-ProcChance-1: 0.01
+    Decapitate-ProcChance-2: 0.03
+    Decapitate-ProcChance-3: 0.05
     #The style of the Head Title.
-    Decapitate-Head-Title-Style: "&c&lHead of &7{headType}"
+    Decapitate-HeadTitleStyle: "&c&lHead of &7{headType}"
   TAINTED-BOOK:
     #Max Level of this Enchantment.
     Enchantment-MaxLvl: 1
@@ -1235,7 +1286,7 @@ Enchantments:
     Enchantment-Title: "&8&lTRASH &7Tainted Book"
     #Lore for the Enchantment.
     Enchantment-Lore:
-      - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+      - "{header}"
       - ""
       - "&c● &7Effect: &e&lNothing      &c● &7Enchant Lvl: &e&l{lvl}"
       - ""
@@ -1246,7 +1297,7 @@ Enchantments:
       - ""
       - "&c● &7Usage: &eThrow into Lava"
       - ""
-      - "&c&m&l-----------------------------------------"
+      - "{footer}"
 
 OblivionShard:
   #Type of Item the Oblivion Shard will be.
@@ -1257,16 +1308,14 @@ OblivionShard:
   OblivionShard-Spawn-Chance: 0.05
   #If true the Oblivion Shard can be Found, and Used. if false the opposite for all happens.
   OblivionShard-Enabled: true
-  #If true the Oblivion Shard can return the Enchant it removed.
-  OblivionShard-ReturnEnchant-Enabled: false
   #The chance that when removing an enchant from an item it will give the player the enchant back in its normal form.
-  #Default = 0.5 (0.5 = 50%) if you set it to 0 that will act as a disabled method, meaning it will never give the enchant back.
+  #(0.5 = 50%, 1 = 100%, 0 = disabled)
   OblivionShard-ReturnEnchant-Chance: 0.5
   #The name of the Oblivion Shard.
   OblivionShard-DisplayName: "&c&l&k@ &6&lOblivion Shard &c&l&k@"
   #Lore for the Oblivion Shard.
   OblivionShard-Lore:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Description:"
     - "  &eRemoves a random custom enchant from any item."
@@ -1276,7 +1325,7 @@ OblivionShard:
     - ""
     - "&c● &7Usage: &eDrag n' Drop onto Any Item."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
 
 OraclesOfEnchantment:
   #Type of Item the Oracles of Enchantment will be.
@@ -1303,7 +1352,7 @@ OraclesOfEnchantment:
   OraclesOfEnchantment-DisplayName: "&f&kv&l &b&lOracle Of Enchantment &f&kv"
   #Lore for the Oracles of Enchantment.
   OraclesOfEnchantment-Lore:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Description:"
     - "  &eA cryptic tome once whispered by the Oracles of Delphi,"
@@ -1315,7 +1364,7 @@ OraclesOfEnchantment:
     - ""
     - "&c● &7Usage: &ePlace in Lectern to learn its Knowledge"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
 
 AltarOfCirce:
   #Type of Item the Oracles of Enchantment will be.
@@ -1375,7 +1424,7 @@ AltarOfCirce:
   AltarOfCirce-DisplayName: "&f&k*&l &d&lAltar Of Circe &f&k*"
   #Lore for the Altar Of Circe.
   AltarOfCirce-Lore:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Description:"
     - "  &eForged by the enchantress Circe, mistress of lost magic,"
@@ -1387,7 +1436,7 @@ AltarOfCirce:
     - ""
     - "&c● &7Usage: &ePlace and interact to invoke forgotten enchantments."
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
 
 ScrapOfCirceWeave:
   #Type of Item the Scrap of Circes Weave will be.
@@ -1403,7 +1452,7 @@ ScrapOfCirceWeave:
   ScrapOfCirceWeave-DisplayName: "&f&kv&l &3&lScrap Of Circe's Weave &f&kv"
   #Lore for the Scrap of Circes Weave.
   ScrapOfCirceWeave-Lore:
-    - "&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"
+    - "{header}"
     - ""
     - "&c● &7Description:"
     - "  &eA damp and fragile remnant from the enchantress Circe's spellwork,"
@@ -1415,4 +1464,75 @@ ScrapOfCirceWeave:
     - ""
     - "&c● &7Usage: &eCreating The Alter Of Circe"
     - ""
-    - "&c&m&l-----------------------------------------"
+    - "{footer}"
+
+CircesEmber:
+  #Type of Item the Circe's Ember will be.
+  CircesEmber-Item: BLAZE_POWDER
+  #If true the CircesEmber-Item will have an enchantment glint on it.
+  CircesEmber-Glint-Toggle: true
+  #If true Circe's Ember can be Found, and Used. if false the opposite for all happens.
+  CircesEmber-Enabled: true
+  #The chance of a Circe's Ember spawning in loot chests (0.03 = 3%)
+  CircesEmber-Spawn-Chance: 0.03
+  #The name of the Circe's Ember.
+  CircesEmber-DisplayName: "&c&l&k@ &6&lCirce's Ember &c&l&k@"
+  #Lore for the Circe's Ember.
+  CircesEmber-Lore:
+    - "{header}"
+    - ""
+    - "&c● &7Description:"
+    - "  &eA fragment of divine flame, torn from the heart"
+    - "  &eof Circe's eternal hearth. It pulses with a warmth"
+    - "  &ethat transcends mortality, yearning to be forged"
+    - "  &einto something greater."
+    - ""
+    - "&c● &7Type: &eMythic Crafting Material"
+    - ""
+    - "&c● &7Usage: &eCrafting Circe's Anvil"
+    - ""
+    - "{footer}"
+
+CircesAnvil:
+  #Type of Item the Circe's Anvil will be.
+  CircesAnvil-Item: ANVIL
+  #If true the CircesAnvil-Item will have an enchantment glint on it.
+  CircesAnvil-Glint-Toggle: true
+  #If true Circe's Anvil can be crafted.
+  CircesAnvil-Crafting-Enabled: true
+  #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
+  # **NOTE** USE the letter 'Y' if you want them to use the Scrap Of Circe's Weave in the recipe
+  # **NOTE** USE the letter 'Z' if you want them to use Circe's Ember in the recipe
+  CircesAnvil-Crafting-Row-1: "AZA"
+  CircesAnvil-Crafting-Row-2: "YEY"
+  CircesAnvil-Crafting-Row-3: "GGG"
+  #These are the Crafting Materials inside the recipe
+  # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
+  CircesAnvil-Crafting-Materials-A: NETHERITE_INGOT
+  CircesAnvil-Crafting-Materials-B: BLAZE_POWDER
+  CircesAnvil-Crafting-Materials-C: NETHERITE_INGOT
+  CircesAnvil-Crafting-Materials-D: PAPER
+  CircesAnvil-Crafting-Materials-E: ANVIL
+  CircesAnvil-Crafting-Materials-F: PAPER
+  CircesAnvil-Crafting-Materials-G: OBSIDIAN
+  CircesAnvil-Crafting-Materials-H: OBSIDIAN
+  CircesAnvil-Crafting-Materials-I: OBSIDIAN
+  #If true Circe's Anvil can be used.
+  CircesAnvil-Enabled: true
+  #The name of the Circe's Anvil.
+  CircesAnvil-DisplayName: "&f&k*&l &c&lCirce's Anvil &f&k*"
+  #Lore for the Circe's Anvil.
+  CircesAnvil-Lore:
+    - "{header}"
+    - ""
+    - "&c● &7Description:"
+    - "  &eAn anvil imbued with the power of Circe herself,"
+    - "  &eforged in divine flame and tempered by ancient magic."
+    - "  &eIts surface shimmers with arcane energy, capable of"
+    - "  &eascending enchantments to higher forms of power."
+    - ""
+    - "&c● &7Type: &eMythic Upgrade Station"
+    - ""
+    - "&c● &7Usage: &ePlace and right-click to open the Upgrade Menu."
+    - ""
+    - "{footer}"

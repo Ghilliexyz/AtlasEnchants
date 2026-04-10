@@ -48,7 +48,8 @@ public class LootTableEvent implements Listener {
             Collections.reverse(enchantmentRarity);
         }
 
-        while (!hasFoundEnchantment) {
+        int maxAttempts = 100;
+        while (!hasFoundEnchantment && maxAttempts-- > 0) {
             for (String rarity : enchantmentRarity) {
                 double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
                 if (random.nextDouble() <= rarityChance) {
@@ -107,6 +108,20 @@ public class LootTableEvent implements Listener {
 
                 event.getLoot().add(customShardItem);
                 return;
+            }
+        }
+
+        // Circe's Ember Spawner
+        boolean isEmberEnabled = main.getEnchantmentsConfig().getBoolean("CircesEmber.CircesEmber-Enabled", true);
+
+        if(isEmberEnabled) {
+            double emberSpawnChance = main.getEnchantmentsConfig().getDouble("CircesEmber.CircesEmber-Spawn-Chance", 0.03);
+
+            if(random.nextDouble() < emberSpawnChance) {
+                CreateCircesEmber createCircesEmber = new CreateCircesEmber(main);
+                ItemStack customEmberItem = createCircesEmber.CreateCircesEmberItem(1, null);
+
+                event.getLoot().add(customEmberItem);
             }
         }
     }

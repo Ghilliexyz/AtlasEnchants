@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -18,8 +19,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -28,14 +27,12 @@ public class TreeHugger implements Listener {
     private Main main;
     private WorldGuardPlugin worldGuardPlugin;
 
+    private static final int MAX_BLOCKS = 256;
+
     public TreeHugger (Main main) {
         this.main = main;
         this.worldGuardPlugin = main.getWorldGuardPlugin();
     }
-
-    private int removeDurability = 0;
-
-    private List<String> LOGS;
 
     public boolean hasTool (Player p) {
         // Get the player's tool(s)
@@ -50,6 +47,7 @@ public class TreeHugger implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
+        if(e.isCancelled()) return;
         //Grabbing the player
         Player p = e.getPlayer();
         // Grabbing the broken block
@@ -89,75 +87,58 @@ public class TreeHugger implements Listener {
         if(!isEnchantmentEnabled) return;
 
         // Get the block list.
-        LOGS = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
+        List<String> logs = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
 
-        PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-        String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+            if (enchant.name.contains("TREE-HUGGER")) {
+                // PUT ENCHANT LOGIC HERE
+                ItemStack tool = p.getInventory().getItemInMainHand();
+                ItemMeta toolMeta = tool.getItemMeta();
 
-        // Ensure the enchantment data is not null or empty
-        if (enchantedItemData == null) return;
+                if (logs.contains(blockBroken.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(blockBroken)) {
 
-        String[] enchantments = enchantedItemData.split(",");
+                    int blocksChopped = chopTree(blockBroken, tool, logs);
 
-        for (String enchantment : enchantments) {
-            String[] enchantParts = enchantment.split(":");
+                    if (toolMeta instanceof Damageable damageableToolMeta) {
+                        // Manually remove durability
+                        damageableToolMeta.setDamage(damageableToolMeta.getDamage() + blocksChopped);
 
-            // Ensure the format is correct
-            if (enchantParts.length == 3) {
-                String enchantName = enchantParts[0];
-                int enchantLevel = Integer.parseInt(enchantParts[1]);
-                int enchantID = Integer.parseInt(enchantParts[2]);
-
-                if (enchantName.contains("TREE-HUGGER")) {
-                    // PUT ENCHANT LOGIC HERE
-                    ItemStack tool = p.getInventory().getItemInMainHand();
-                    ItemMeta toolMeta = tool.getItemMeta();
-
-                    if (LOGS.contains(blockBroken.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(blockBroken)) {
-
-                        chopTree(blockBroken, tool);
-
-                        if (toolMeta instanceof Damageable damageableToolMeta) {
-                            // Manually remove durability
-                            damageableToolMeta.setDamage(damageableToolMeta.getDamage() + removeDurability);
-
-                            // Apply the modified meta back to the item
-                            tool.setItemMeta(damageableToolMeta);
-
-                            // Reset durability removal
-                            removeDurability = 0;
-                        }
+                        // Apply the modified meta back to the item
+                        tool.setItemMeta(damageableToolMeta);
                     }
-                    //END ENCHANT LOGIC
                 }
+                //END ENCHANT LOGIC
             }
         }
     }
 
-    // Breaks the blocks.
-    private void chopTree(Block block, ItemStack tool) {
+    // Breaks the blocks and returns how many were chopped.
+    private int chopTree(Block block, ItemStack tool, List<String> logs) {
         Set<Block> logsToChop = new HashSet<>();
-        findLogs(block, logsToChop);
+        findLogs(block, logsToChop, logs);
         for (Block log : logsToChop) {
-            // Break the block
             log.breakNaturally(tool);
-
-            // Increase Durability counter
-            removeDurability++;
         }
+        return logsToChop.size();
     }
 
-    // Finds the blocks to break.
-    private void findLogs(Block block, Set<Block> logsToChop) {
-        if (logsToChop.contains(block)) return;
+    // Iterative block search with a max block cap to prevent stack overflow.
+    private void findLogs(Block start, Set<Block> logsToChop, List<String> logs) {
+        Queue<Block> queue = new LinkedList<>();
+        queue.add(start);
 
-        logsToChop.add(block);
+        while (!queue.isEmpty() && logsToChop.size() < MAX_BLOCKS) {
+            Block block = queue.poll();
+            if (logsToChop.contains(block)) continue;
 
-        List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
+            logsToChop.add(block);
 
-        for (Block nblock : nearbyBlocks) {
-            if (LOGS.contains(nblock.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {
-                findLogs(nblock, logsToChop);
+            List<Block> nearbyBlocks = main.blockRadiusFinder.getBlocks(block, 1, 1, 1);
+
+            for (Block nblock : nearbyBlocks) {
+                if (!logsToChop.contains(nblock) && logs.contains(nblock.getType().toString()) && !main.getLogsPlacedManager().isPlayerPlacedLog(nblock)) {
+                    queue.add(nblock);
+                }
             }
         }
     }
@@ -168,9 +149,9 @@ public class TreeHugger implements Listener {
         Material blockMaterial = blockPlaced.getType();
 
         // Get the block list.
-        LOGS = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
+        List<String> logs = main.getEnchantmentsConfig().getStringList("Enchantments.TREE-HUGGER.TreeHugger-Block-List");
 
-        if(LOGS.contains(blockMaterial.toString())) {
+        if(logs.contains(blockMaterial.toString())) {
             main.getLogsPlacedManager().markPlayerPlacedLog(blockPlaced);
             // Save data to file
             main.getLogsPlacedManager().saveDataToFile();

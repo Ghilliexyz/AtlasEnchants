@@ -2,7 +2,7 @@ package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
-import org.bukkit.Material;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Particle;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -10,8 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.Random;
@@ -39,12 +37,14 @@ public class PoseidonsBait implements Listener {
     @EventHandler
     public void onPlayerFish(PlayerFishEvent e)
     {
+        if(e.isCancelled()) return;
         Player p = e.getPlayer();
-
-        Item item = (Item) e.getCaught();
 
         // if the player hasn't caught a fish then return
         if(!(e.getState() == PlayerFishEvent.State.CAUGHT_FISH)) return;
+
+        if(!(e.getCaught() instanceof Item)) return;
+        Item item = (Item) e.getCaught();
 
         // Check if the player has an enchanted sword
         if (hasTool(p)) {
@@ -54,54 +54,39 @@ public class PoseidonsBait implements Listener {
             // if Enchantment Enabled = false return.
             if (!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("POSEIDONS-BAIT")) {
+                    //PUT ENCHANT LOGIC HERE
+                    double procChance = main.getEnchantmentsConfig().getDouble("Enchantments.POSEIDONS-BAIT.PoseidonsBait-ProcChance-" + enchant.level);
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                    if (random.nextDouble() > procChance) return;
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
-
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        if (enchantName.contains("POSEIDONS-BAIT")) {
-                            //PUT ENCHANT LOGIC HERE
-                            double procChance = main.getEnchantmentsConfig().getDouble("Enchantments.POSEIDONS-BAIT.PoseidonsBait-Proc-Chance-" + enchantLevel);
-
-                            if (random.nextDouble() > procChance) return;
-
-                            // Particle Settings Controlled Via Config
-                            // Get the bool to see if the user wants to display the particles
-                            boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.POSEIDONS-BAIT.PoseidonsBait-Particle-Settings.PoseidonsBait-Particle-Toggle");
-                            // Get the Particle 1 Name
-                            Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POSEIDONS-BAIT.PoseidonsBait-Particle-Settings.PoseidonsBait-Particle-1.PoseidonsBait-Particle-Name-1"));
-                            // Get the Particle 1 Amount
-                            int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.POSEIDONS-BAIT.PoseidonsBait-Particle-Settings.PoseidonsBait-Particle-1.PoseidonsBait-Particle-Amount-1");
-                            // Get the Particle 1 Size
-                            float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POSEIDONS-BAIT.PoseidonsBait-Particle-Settings.PoseidonsBait-Particle-1.PoseidonsBait-Particle-Size-1");
-
-                            if (useParticles) {
-                                // Spawn particle effect
-                                p.getWorld().spawnParticle(particle1Name, p.getLocation(), particle1Amount, 1, 1, 1, particle1Size);
-                            }
-
-                            // create random custom enchant
-                            CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
-                            ItemStack enchant = createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(p, 1, false, null);
-
-                            item.setItemStack(enchant);
-
-                            // cancel event to stop the default loot being given.
-//                            e.setCancelled(true);
-                            //END ENCHANT LOGIC
-                        }
+                    // Particle Settings Controlled Via Config
+                    // Get the bool to see if the user wants to display the particles
+                    boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.POSEIDONS-BAIT.Particle-Settings.Toggle");
+                    // Get the Particle 1 Name
+                    Particle particle1Name;
+                    try {
+                        particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.POSEIDONS-BAIT.Particle-Settings.Particle-1.Name"));
+                    } catch (IllegalArgumentException ex) {
+                        return;
                     }
+                    // Get the Particle 1 Amount
+                    int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.POSEIDONS-BAIT.Particle-Settings.Particle-1.Amount");
+                    // Get the Particle 1 Size
+                    float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.POSEIDONS-BAIT.Particle-Settings.Particle-1.Size");
+
+                    if (useParticles) {
+                        // Spawn particle effect
+                        p.getWorld().spawnParticle(particle1Name, p.getLocation(), particle1Amount, 1, 1, 1, particle1Size);
+                    }
+
+                    // create random custom enchant
+                    CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
+                    ItemStack enchantItem = createRandomCustomEnchant.CreateRandomCustomEnchantmentItem(p, 1, false, null);
+
+                    item.setItemStack(enchantItem);
+                    //END ENCHANT LOGIC
                 }
             }
         }

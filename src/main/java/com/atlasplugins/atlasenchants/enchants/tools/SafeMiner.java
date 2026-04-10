@@ -2,6 +2,7 @@ package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -9,15 +10,9 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.*;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
@@ -37,7 +32,6 @@ import java.util.List;
 
 public class SafeMiner implements Listener {
 
-    private static final Logger log = LogManager.getLogger(SafeMinerOLD.class);
     private Main main;
     private WorldGuardPlugin worldGuardPlugin;
 
@@ -59,6 +53,7 @@ public class SafeMiner implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
+        if(e.isCancelled()) return;
         // Grabbing the player
         Player player = e.getPlayer();
         // Grabbing the broken block
@@ -92,23 +87,8 @@ public class SafeMiner implements Listener {
         // if Enchantment Enabled = false return.
         if (!isEnchantmentEnabled) return;
 
-        PersistentDataContainer enchantedItemPDC = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-        String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
-
-        // Ensure the enchantment data is not null or empty
-        if (enchantedItemData == null || enchantedItemData.isEmpty()) return;
-        String[] enchantments = enchantedItemData.split(",");
-
-        for (String enchantment : enchantments) {
-            String[] enchantParts = enchantment.split(":");
-
-            // Ensure the format is correct
-            if (enchantParts.length == 3) {
-                String enchantName = enchantParts[0];
-                int enchantLevel = Integer.parseInt(enchantParts[1]);
-                int enchantID = Integer.parseInt(enchantParts[2]);
-
-                if (enchantName.contains("SAFE-MINER")) {
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(player.getInventory().getItemInMainHand())) {
+            if (enchant.name.contains("SAFE-MINER")) {
                     // PUT ENCHANT LOGIC HERE
                     // Handle block drops manually
                     ItemStack tool = player.getInventory().getItemInMainHand();
@@ -140,47 +120,35 @@ public class SafeMiner implements Listener {
                     }
                 }
             }
-        }
     }
 
     public void SafeMinerLogic(Block blockMined, BlockBreakEvent event, ItemStack tool, Player player) {
         List<ItemStack> drops = new ArrayList<>(blockMined.getDrops(tool, player));
 
         if (blockMined.getBlockData() instanceof Bed) {
-            // Handle breaking Beds to make sure you can mine any part of it.
+            // getDrops() only returns the bed from the head part, so grab from other half too
             handleBed(blockMined, tool, drops);
         } else if (blockMined.getBlockData() instanceof Door) {
-            // Handle breaking Doors to make sure you can mine any part of it.
+            // getDrops() only returns the door from the bottom part
             handleDoor(blockMined, tool, drops);
         } else if (isTallFlower(blockMined)) {
-            // Handle breaking tall flowers
+            // getDrops() only returns the flower from the bottom part
             handleTallFlower(blockMined, tool, drops);
         } else if (isPiston(blockMined)) {
-            // Handle breaking Pistons
+            // getDrops() only returns the piston from the base when powered
             handlePiston(blockMined, tool, drops);
         } else if (blockMined.getState() instanceof Container) {
-            // Check for loot inside Containers like Chests, half working still need to open it to generate the loot.
+            // Check for loot inside Containers like Chests
             handleContainers(blockMined, tool, drops, player);
-        }else if(blockMined.getType() == Material.JUKEBOX
+        } else if(blockMined.getType() == Material.JUKEBOX
                 || blockMined.getType() == Material.LECTERN
                 || blockMined.getType() == Material.CHISELED_BOOKSHELF
                 || blockMined.getType() == Material.DECORATED_POT) {
             handleEdgeCases(blockMined, tool, drops, player);
-        }else {
-            // Check for attached items like Torches
-            handleAttachedItems(event);
         }
 
         // Add drops to the player's inventory or drop them if the inventory is full
         giveOrDropItems(player, drops, blockMined.getLocation());
-//        for (ItemStack drop : drops) {
-//            HashMap<Integer, ItemStack> leftItems = player.getInventory().addItem(drop);
-//            if (!leftItems.isEmpty()) {
-//                for (ItemStack item : leftItems.values()) {
-//                    blockMined.getWorld().dropItemNaturally(blockMined.getLocation(), item);
-//                }
-//            }
-//        }
     }
 
     private boolean isTallFlower(Block block) {
@@ -198,25 +166,8 @@ public class SafeMiner implements Listener {
     }
 
     private boolean isShulkerBox(Block block) {
-        return block.getType().equals(Material.SHULKER_BOX) ||
-                block.getType().equals(Material.WHITE_SHULKER_BOX) ||
-                block.getType().equals(Material.LIGHT_GRAY_SHULKER_BOX) ||
-                block.getType().equals(Material.GRAY_SHULKER_BOX) ||
-                block.getType().equals(Material.BLACK_SHULKER_BOX) ||
-                block.getType().equals(Material.BROWN_SHULKER_BOX) ||
-                block.getType().equals(Material.RED_SHULKER_BOX) ||
-                block.getType().equals(Material.ORANGE_SHULKER_BOX) ||
-                block.getType().equals(Material.YELLOW_SHULKER_BOX) ||
-                block.getType().equals(Material.GREEN_SHULKER_BOX) ||
-                block.getType().equals(Material.LIME_SHULKER_BOX) ||
-                block.getType().equals(Material.LIGHT_BLUE_SHULKER_BOX) ||
-                block.getType().equals(Material.BLUE_SHULKER_BOX) ||
-                block.getType().equals(Material.CYAN_SHULKER_BOX) ||
-                block.getType().equals(Material.PURPLE_SHULKER_BOX) ||
-                block.getType().equals(Material.MAGENTA_SHULKER_BOX) ||
-                block.getType().equals(Material.PINK_SHULKER_BOX);
+        return block.getType().name().endsWith("SHULKER_BOX");
     }
-
 
     private void handleBed(Block block, ItemStack tool, Collection<ItemStack> drops) {
         Bed bedData = (Bed) block.getBlockData();
@@ -255,16 +206,14 @@ public class SafeMiner implements Listener {
             for (BlockFace face : faces) {
                 Block relative = block.getRelative(face);
                 if (relative.getType().equals(Material.PISTON) || relative.getType().equals(Material.STICKY_PISTON)) {
-                    drops.add((ItemStack) relative);
+                    drops.addAll(relative.getDrops(tool));
                     break;
                 }
             }
         } else if (block.getType().equals(Material.PISTON) || block.getType().equals(Material.STICKY_PISTON)) {
-            // Add drops for the piston base
-            drops.add((ItemStack) block.getDrops(tool));
+            // drops already collected from initial getDrops() call
         }
     }
-
 
     private void handleContainers(Block block, ItemStack tool, Collection<ItemStack> drops, Player player) {
         BlockState blockState = block.getState();
@@ -303,11 +252,6 @@ public class SafeMiner implements Listener {
                 }
             }
         }
-    }
-
-    private void handleAttachedItems(BlockBreakEvent event) {
-        event.setCancelled(true);
-        event.getBlock().setType(Material.AIR);
     }
 
     private void giveOrDropItems(Player player, Collection<ItemStack> items, Location dropLocation) {

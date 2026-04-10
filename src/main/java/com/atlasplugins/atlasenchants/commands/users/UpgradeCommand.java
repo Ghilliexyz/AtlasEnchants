@@ -19,13 +19,13 @@ public class UpgradeCommand extends AbstractCommand {
     public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
         Player player = (Player) sender;
 
-        if(main.getMenusConfig().getBoolean("UpgradeEnchant-Gui.UpgradeEnchant-Menu.UpgradeEnchant-Menu-Toggle"))
+        if(main.getMenusConfig().getBoolean("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Toggle"))
         {
             main.openUpgradeEnchantGUI(player);
         }else {
-            if(main.getSettingsConfig().getBoolean("UpgradeEnchantMessages.UpgradeEnchant-DisabledMenu-Message-Toggle")) {
+            if(main.getSettingsConfig().getBoolean("UpgradeEnchantMessages.DisabledMenu.Toggle")) {
                 // Send UpgradeMenu Disabled Message in chat when called.
-                for (String UpgradeMenuDisabledMessage : main.getSettingsConfig().getStringList("UpgradeEnchantMessages.UpgradeEnchant-DisabledMenu-Message")) {
+                for (String UpgradeMenuDisabledMessage : main.getSettingsConfig().getStringList("UpgradeEnchantMessages.DisabledMenu.Message")) {
                     String withPAPISet = main.setPlaceholders((Player) sender, UpgradeMenuDisabledMessage);
                     String message = Main.color(withPAPISet);
                     sender.sendMessage(message);
@@ -33,13 +33,13 @@ public class UpgradeCommand extends AbstractCommand {
             }
 
             // Get the bool to check if the user wants to play the blacklisted enchant sound
-            boolean UpgradeMenuDisabledPlaySound = main.getSettingsConfig().getBoolean("UpgradeEnchantSounds.UpgradeEnchant-DisabledMenu-Sound-Toggle");
+            boolean UpgradeMenuDisabledPlaySound = main.getSettingsConfig().getBoolean("UpgradeEnchantSounds.DisabledMenu.Toggle");
             // check if the user wants to play the Already Applied sound
             if(UpgradeMenuDisabledPlaySound){
                 // Get apply sound via config.
-                Sound upgradeMenuDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.UpgradeEnchant-DisabledMenu-Sound"));
-                float upgradeMenuDisabledVolume = main.getSettingsConfig().getInt("UpgradeEnchantSounds.UpgradeEnchant-DisabledMenu-Volume");
-                float upgradeMenuDisabledPitch = main.getSettingsConfig().getInt("UpgradeEnchantSounds.UpgradeEnchant-DisabledMenu-Pitch");
+                Sound upgradeMenuDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.DisabledMenu.Sound"));
+                float upgradeMenuDisabledVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.DisabledMenu.Volume");
+                float upgradeMenuDisabledPitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.DisabledMenu.Pitch");
 
                 // Play sound for when enchant is Already Applied.
                 player.playSound(player.getLocation(), upgradeMenuDisabledSound, upgradeMenuDisabledVolume, upgradeMenuDisabledPitch);

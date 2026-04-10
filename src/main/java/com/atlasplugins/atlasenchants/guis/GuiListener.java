@@ -42,6 +42,7 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         GuiManager.closeGui(event.getPlayer());
+        GuiManager.clear(event.getPlayer().getUniqueId());
     }
 
 //    private int getCurrentPageFromTitle(String title) {

@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -51,6 +52,7 @@ public class MinersTouch implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
+        if(e.isCancelled()) return;
         //Grabbing the player
         Player p = e.getPlayer();
         // Grabbing the broken block
@@ -84,93 +86,82 @@ public class MinersTouch implements Listener {
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getItemInMainHand())) {
+                if (enchant.name.contains("MINERS-TOUCH")) {
+                    // PUT ENCHANT LOGIC HERE
+                    // if block isn't an instance of CreatureSpawner return
+                    if(!(blockBroken.getState() instanceof CreatureSpawner)) return;
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                    // Set Block Exp to 0, so they can't gain an infinite amount of xp.
+                    e.setExpToDrop(0);
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
+                    // Get the CreatureSpawner State
+                    CreatureSpawner spawnerBlock = (CreatureSpawner) blockBroken.getState();
 
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
+                    // Get the SpawnerType (Cow, Pig, Zombie etc)
+                    EntityType spawnerType = spawnerBlock.getSpawnedType();
 
-                        if (enchantName.contains("MINERS-TOUCH")) {
-                            // PUT ENCHANT LOGIC HERE
-                            // if block isn't an instance of CreatureSpawner return
-                            if(!(blockBroken.getState() instanceof CreatureSpawner)) return;
+                    // Create a fake spawner to drop on the ground when the spawner is mined
+                    ItemStack fakeSpawner = new ItemStack(Material.SPAWNER);
+                    ItemMeta fakeSpawnerMeta = fakeSpawner.getItemMeta();
+                    if(fakeSpawnerMeta == null) return;
 
-                            // Set Block Exp to 0, so they can't gain an infinite amount of xp.
-                            e.setExpToDrop(0);
+                    // Set the entity type in the items Persistent data container
+                    PersistentDataContainer spawnerPDC = fakeSpawnerMeta.getPersistentDataContainer();
+                    spawnerPDC.set(Main.spawnerKeys, PersistentDataType.STRING, spawnerType.name());
 
-                            // Get the CreatureSpawner State
-                            CreatureSpawner spawnerBlock = (CreatureSpawner) blockBroken.getState();
+                    // Reformat spawner name
+                    String spawnerNameReformatted = reformatString(spawnerType.name());
 
-                            // Get the SpawnerType (Cow, Pig, Zombie etc)
-                            EntityType spawnerType = spawnerBlock.getSpawnedType();
+                    // Set Spawners Name
+                    String displayName = main.getEnchantmentsConfig().getString("Enchantments.MINERS-TOUCH.MinersTouch-SpawnerTitleStyle");
+                    String withPAPISet = main.setPlaceholders(p, displayName);
+                    fakeSpawnerMeta.setDisplayName(Main.color(withPAPISet)
+                            .replace("{spawnerType}", spawnerNameReformatted));
 
-                            // Create a fake spawner to drop on the ground when the spawner is mined
-                            ItemStack fakeSpawner = new ItemStack(Material.SPAWNER);
-                            ItemMeta fakeSpawnerMeta = fakeSpawner.getItemMeta();
+                    // Hide Random Lore Message
+                    fakeSpawnerMeta.addItemFlags(ItemFlag.values());
 
-                            // Set the entity type in the items Persistent data container
-                            PersistentDataContainer spawnerPDC = fakeSpawnerMeta.getPersistentDataContainer();
-                            spawnerPDC.set(Main.spawnerKeys, PersistentDataType.STRING, spawnerType.name());
-
-                            // Reformat spawner name
-                            String spawnerNameReformatted = reformatString(spawnerType.name());
-
-                            // Set Spawners Name
-                            String displayName = main.getEnchantmentsConfig().getString("Enchantments.MINERS-TOUCH.MinersTouch-Spawner-Title-Style");
-                            String withPAPISet = main.setPlaceholders(p, displayName);
-                            fakeSpawnerMeta.setDisplayName(Main.color(withPAPISet)
-                                    .replace("{spawnerType}", spawnerNameReformatted));
-
-                            // Hide Random Lore Message
-                            fakeSpawnerMeta.addItemFlags(ItemFlag.values());
-
-                            // Set Spawners Lore
-                            ArrayList<String> fakeSpawnerLore = new ArrayList<>();
-                            List<String> loreList = main.getEnchantmentsConfig().getStringList("Enchantments.MINERS-TOUCH.MinersTouch-Spawner-Lore-Style");
-                            for (String lore : loreList) {
-                                String withPAPISet1 = main.setPlaceholders(p, lore);
-                                fakeSpawnerLore.add(Main.color(withPAPISet1)
-                                        .replace("{spawnerType}", spawnerNameReformatted));
-                            }
-
-                            // Set the new item meta
-                            fakeSpawnerMeta.setLore(fakeSpawnerLore);
-                            fakeSpawner.setItemMeta(fakeSpawnerMeta);
-
-                            // Drop the spawner item on the ground
-                            blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), fakeSpawner);
-
-                            // Particle Settings Controlled Via Config
-                            // Get the bool to see if the user wants to display the particles
-                            boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.MINERS-TOUCH.MinersTouch-Particle-Settings.MinersTouch-Particle-Toggle");
-                            // Get the Particle 1 Name
-                            Particle particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.MINERS-TOUCH.MinersTouch-Particle-Settings.MinersTouch-Particle-1.MinersTouch-Particle-Name-1"));
-                            // Get the Particle 1 Amount
-                            int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.MINERS-TOUCH.MinersTouch-Particle-Settings.MinersTouch-Particle-1.MinersTouch-Particle-Amount-1");
-                            // Get the Particle 1 Size
-                            float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.MINERS-TOUCH.MinersTouch-Particle-Settings.MinersTouch-Particle-1.MinersTouch-Particle-Size-1");
-
-                            if(useParticles) {
-                                // Update location in case entity moves
-                                Location entityLoc = blockBroken.getLocation();
-
-                                // Spawn particle effect
-                                blockBroken.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
-                            }
-
-                            //END ENCHANT LOGIC
-                        }
+                    // Set Spawners Lore
+                    ArrayList<String> fakeSpawnerLore = new ArrayList<>();
+                    List<String> loreList = main.getEnchantmentsConfig().getStringList("Enchantments.MINERS-TOUCH.MinersTouch-SpawnerLoreStyle");
+                    for (String lore : loreList) {
+                        String withPAPISet1 = main.setPlaceholders(p, lore);
+                        fakeSpawnerLore.add(Main.color(withPAPISet1)
+                                .replace("{spawnerType}", spawnerNameReformatted));
                     }
+
+                    // Set the new item meta
+                    fakeSpawnerMeta.setLore(fakeSpawnerLore);
+                    fakeSpawner.setItemMeta(fakeSpawnerMeta);
+
+                    // Drop the spawner item on the ground
+                    blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), fakeSpawner);
+
+                    // Particle Settings Controlled Via Config
+                    // Get the bool to see if the user wants to display the particles
+                    boolean useParticles = main.getEnchantmentsConfig().getBoolean("Enchantments.MINERS-TOUCH.Particle-Settings.Toggle");
+                    // Get the Particle 1 Name
+                    Particle particle1Name;
+                    try {
+                        particle1Name = Particle.valueOf(main.getEnchantmentsConfig().getString("Enchantments.MINERS-TOUCH.Particle-Settings.Particle-1.Name"));
+                    } catch (IllegalArgumentException ex) {
+                        return;
+                    }
+                    // Get the Particle 1 Amount
+                    int particle1Amount = main.getEnchantmentsConfig().getInt("Enchantments.MINERS-TOUCH.Particle-Settings.Particle-1.Amount");
+                    // Get the Particle 1 Size
+                    float particle1Size = (float) main.getEnchantmentsConfig().getDouble("Enchantments.MINERS-TOUCH.Particle-Settings.Particle-1.Size");
+
+                    if(useParticles) {
+                        // Update location in case entity moves
+                        Location entityLoc = blockBroken.getLocation();
+
+                        // Spawn particle effect
+                        blockBroken.getWorld().spawnParticle(particle1Name, entityLoc, particle1Amount, 1, 1, 1, particle1Size);
+                    }
+
+                    //END ENCHANT LOGIC
                 }
             }
         }

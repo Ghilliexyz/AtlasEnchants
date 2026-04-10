@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.armor;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -9,14 +10,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
-// ADD crouch ability activator for different levels and different times it lasts for
-// example level 1 = 5 block distance with 5 seconds of fear sight vision
-// then it has 5 minute cooldown or something.
-// or you have like 0.5 seconds of vision and then you get like 20-30 second cooldown so you are forced to take advantage of it.
+import java.util.*;
+
 public class Fearsight implements Listener
 {
 
@@ -25,7 +21,7 @@ public class Fearsight implements Listener
         this.main = main;
     }
 
-    private List<Entity> ListEntity;
+    private final Map<UUID, List<Entity>> playerEntityMap = new HashMap<>();
 
     public boolean hasArmor (Player p) {
         // Get the player's helmet item
@@ -50,66 +46,60 @@ public class Fearsight implements Listener
             // if Enchantment Enabled = false return.
             if(!isEnchantmentEnabled) return;
 
-            PersistentDataContainer enchantedItemPDC = p.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
-            String enchantedItemData = enchantedItemPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
+            for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(p.getInventory().getHelmet())) {
+                double enchantRadius = main.getEnchantmentsConfig().getInt("Enchantments.FEARSIGHT.Fearsight-GlowRadius-" + enchant.level);
 
-            // Ensure the enchantment data is not null or empty
-            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
-                String[] enchantments = enchantedItemData.split(",");
+                ChatColor hostileMobColor;
+                ChatColor passiveMobColor;
+                ChatColor normalMobColor;
+                try {
+                    hostileMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Hostile").toUpperCase());
+                    passiveMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Passive").toUpperCase());
+                    normalMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Player").toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    return;
+                }
 
-                for (String enchantment : enchantments) {
-                    String[] enchantParts = enchantment.split(":");
+                if (enchant.name.contains("FEARSIGHT"))
+                {
+                    //PUT ENCHANT LOGIC HERE
+                    List<Entity> nearbyEntities = p.getNearbyEntities(enchantRadius, enchantRadius, enchantRadius);
 
-                    // Ensure the format is correct
-                    if (enchantParts.length == 3) {
-                        String enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
-
-                        double enchantRadius = main.getEnchantmentsConfig().getInt("Enchantments.FEARSIGHT.Radius-of-glowing-" + enchantLevel);
-
-                        ListEntity = p.getNearbyEntities(enchantRadius, enchantRadius, enchantRadius);
-
-                        ChatColor hostileMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Hostile-GLOW-Colour").toUpperCase());
-                        ChatColor passiveMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Passive-GLOW-Colour").toUpperCase());
-                        ChatColor normalMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Player-Villager").toUpperCase());
-
-                        if (enchantName.contains("FEARSIGHT"))
-                        {
-                            //PUT ENCHANT LOGIC HERE
-                            for (Entity entity : ListEntity) {
+                    // Remove glow from entities that were previously glowing but are no longer nearby
+                    List<Entity> previousEntities = playerEntityMap.get(p.getUniqueId());
+                    if (previousEntities != null) {
+                        for (Entity prevEntity : previousEntities) {
+                            if (!nearbyEntities.contains(prevEntity)) {
                                 try {
-                                    if (entity instanceof Monster || entity instanceof Flying || entity instanceof Slime || entity instanceof Boss) {
-                                        main.glowingEntities.setGlowing(entity, p, hostileMobColor);
-                                    } else if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
-                                        main.glowingEntities.setGlowing(entity, p, passiveMobColor);
-                                    } else if (entity instanceof Player || entity instanceof Villager || entity instanceof WanderingTrader || entity instanceof IronGolem) {
-                                        main.glowingEntities.setGlowing(entity, p, normalMobColor);
-                                    }
-
-                                    // Remove glow if entity is out of range
-                                    if (entity.getLocation().distance(p.getLocation()) >= enchantRadius) {
-                                        main.glowingEntities.unsetGlowing(entity, p);
-                                    }
+                                    main.glowingEntities.unsetGlowing(prevEntity, p);
                                 } catch (ReflectiveOperationException ex) {
-                                    throw new RuntimeException(ex);
+                                    // Entity may have been removed, ignore
                                 }
                             }
-                            //END ENCHANT LOGIC
                         }
                     }
+
+                    playerEntityMap.put(p.getUniqueId(), nearbyEntities);
+
+                    for (Entity entity : nearbyEntities) {
+                        try {
+                            if (entity instanceof Monster || entity instanceof Flying || entity instanceof Slime || entity instanceof Boss) {
+                                main.glowingEntities.setGlowing(entity, p, hostileMobColor);
+                            } else if (entity instanceof Animals || entity instanceof Ambient || entity instanceof WaterMob) {
+                                main.glowingEntities.setGlowing(entity, p, passiveMobColor);
+                            } else if (entity instanceof Player || entity instanceof Villager || entity instanceof WanderingTrader || entity instanceof IronGolem) {
+                                main.glowingEntities.setGlowing(entity, p, normalMobColor);
+                            }
+                        } catch (ReflectiveOperationException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    //END ENCHANT LOGIC
                 }
             }
         } else {
             // If no helmet is worn, remove glow from all entities
-            if(ListEntity == null) { return; }
-            try {
-                for (Entity removeGlow : ListEntity) {
-                    main.glowingEntities.unsetGlowing(removeGlow, p);
-                }
-            } catch (ReflectiveOperationException ex) {
-                throw new RuntimeException(ex);
-            }
+            removeGlowForPlayer(p);
         }
     }
 
@@ -117,22 +107,20 @@ public class Fearsight implements Listener
     public void PlayerDeathEvent(PlayerDeathEvent e) {
         Player player = e.getEntity();
         // Remove glow effect when the player dies
-        if(ListEntity == null) { return; }
-        for (Entity entity : ListEntity) {
-            try {
-                main.glowingEntities.unsetGlowing(entity, player);
-            } catch (ReflectiveOperationException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        removeGlowForPlayer(player);
     }
 
     @EventHandler
     public void PlayerLeaveEvent(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         // Remove glow effect when the player leaves the game
-        if(ListEntity == null) { return; }
-        for (Entity entity : ListEntity) {
+        removeGlowForPlayer(player);
+    }
+
+    private void removeGlowForPlayer(Player player) {
+        List<Entity> entities = playerEntityMap.remove(player.getUniqueId());
+        if (entities == null) return;
+        for (Entity entity : entities) {
             try {
                 main.glowingEntities.unsetGlowing(entity, player);
             } catch (ReflectiveOperationException ex) {

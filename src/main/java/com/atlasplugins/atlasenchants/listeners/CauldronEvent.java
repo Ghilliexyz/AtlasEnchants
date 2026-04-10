@@ -122,12 +122,12 @@ public class CauldronEvent implements Listener {
     private void PlayScrappedMessageAndSound(Player player, String enchantmentName, int enchantmentLevel)
     {
         // Get the bool to check if the user wants to show the successful enchant message
-        boolean hasScrappedEnchantmentMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-ScrappedAEnchantment-Message-Toggle");
+        boolean hasScrappedEnchantmentMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.ScrappedEnchantment.Toggle");
 
         // check if the user wants to show the Already Applied message
         if (hasScrappedEnchantmentMessage) {
             // Send Already Applied Message in chat when applying a enchant.
-            for (String ScrappedEnchantmentMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-ScrappedAEnchantment-Message")) {
+            for (String ScrappedEnchantmentMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.ScrappedEnchantment.Message")) {
                 String withPAPISet2 = main.setPlaceholders(player, ScrappedEnchantmentMessage);
                 String message = Main.color(withPAPISet2)
                         .replace("{enchantmentName}", formatEnchantmentName(enchantmentName))
@@ -137,14 +137,14 @@ public class CauldronEvent implements Listener {
         }
 
         // Get the bool to check if the user wants to play the blacklisted enchant sound
-        boolean hasScrappedEnchantmentSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-ScrappedAEnchantment-Sound-Toggle");
+        boolean hasScrappedEnchantmentSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Toggle");
 
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-ScrappedAEnchantment-Sound"));
-            float scrappedEnchantmentVolume = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-ScrappedAEnchantment-Volume");
-            float scrappedEnchantmentPitch = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-ScrappedAEnchantment-Pitch");
+            Sound scrappedEnchantmentSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Sound"));
+            float scrappedEnchantmentVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Volume");
+            float scrappedEnchantmentPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Pitch");
             // Play sound for when enchant is Already Applied.
             player.playSound(player.getLocation(), scrappedEnchantmentSound, scrappedEnchantmentVolume, scrappedEnchantmentPitch);
         }
@@ -153,12 +153,12 @@ public class CauldronEvent implements Listener {
     private void PlayScrappedFailedMessageAndSound(Player player, String enchantmentName, int enchantmentLevel)
     {
         // Get the bool to check if the user wants to show the Disabled message
-        boolean hasScrappedEnchantmentFailedMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-FailedScrapEnchantment-Message-Toggle");
+        boolean hasScrappedEnchantmentFailedMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.FailedScrap.Toggle");
 
         // check if the user wants to show the Failed message
         if (hasScrappedEnchantmentFailedMessage) {
             // Send Failed Message in chat.
-            for (String ScrappedEnchantmentFailedMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-FailedScrapEnchantment-Message")) {
+            for (String ScrappedEnchantmentFailedMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.FailedScrap.Message")) {
                 String withPAPISet2 = main.setPlaceholders(player, ScrappedEnchantmentFailedMessage);
                 String message = Main.color(withPAPISet2)
                         .replace("{enchantmentName}", formatEnchantmentName(enchantmentName))
@@ -169,14 +169,14 @@ public class CauldronEvent implements Listener {
         }
 
         // Get the bool to check if the user wants to play the blacklisted enchant sound
-        boolean hasScrappedEnchantmentFailedSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-FailedScrapEnchantment-Sound-Toggle");
+        boolean hasScrappedEnchantmentFailedSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.FailedScrap.Toggle");
 
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentFailedSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentFailedSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-FailedScrapEnchantment-Sound"));
-            float scrappedEnchantmentFailedVolume = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-FailedScrapEnchantment-Volume");
-            float scrappedEnchantmentFailedPitch = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-FailedScrapEnchantment-Pitch");
+            Sound scrappedEnchantmentFailedSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.FailedScrap.Sound"));
+            float scrappedEnchantmentFailedVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.FailedScrap.Volume");
+            float scrappedEnchantmentFailedPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.FailedScrap.Pitch");
             // Play sound for when enchant is Already Applied.
             player.playSound(player.getLocation(), scrappedEnchantmentFailedSound, scrappedEnchantmentFailedVolume, scrappedEnchantmentFailedPitch);
         }
@@ -185,12 +185,12 @@ public class CauldronEvent implements Listener {
     private void PlayScrappedDisabledMessageAndSound(Player player, String enchantmentName, int enchantmentLevel)
     {
         // Get the bool to check if the user wants to show the Disabled message
-        boolean hasScrappedEnchantmentDisabledMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-DisabledScrapEnchantment-Message-Toggle");
+        boolean hasScrappedEnchantmentDisabledMessage = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveMessages.DisabledScrap.Toggle");
 
         // check if the user wants to show the Disabled message
         if (hasScrappedEnchantmentDisabledMessage) {
             // Send Disabled Message in chat.
-            for (String ScrappedEnchantmentDisabledMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.ScrapOfCirceWeave-DisabledScrapEnchantment-Message")) {
+            for (String ScrappedEnchantmentDisabledMessage : main.getSettingsConfig().getStringList("ScrapOfCirceWeaveMessages.DisabledScrap.Message")) {
                 String withPAPISet2 = main.setPlaceholders(player, ScrappedEnchantmentDisabledMessage);
                 String message = Main.color(withPAPISet2)
                         .replace("{enchantmentName}", formatEnchantmentName(enchantmentName))
@@ -201,14 +201,14 @@ public class CauldronEvent implements Listener {
         }
 
         // Get the bool to check if the user wants to play the blacklisted enchant sound
-        boolean hasScrappedEnchantmentDisabledSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-DisabledScrapEnchantment-Sound-Toggle");
+        boolean hasScrappedEnchantmentDisabledSound = main.getSettingsConfig().getBoolean("ScrapOfCirceWeaveSounds.DisabledScrap.Toggle");
 
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentDisabledSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-DisabledScrapEnchantment-Sound"));
-            float scrappedEnchantmentDisabledVolume = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-DisabledScrapEnchantment-Volume");
-            float scrappedEnchantmentDisabledPitch = main.getSettingsConfig().getInt("ScrapOfCirceWeaveSounds.ScrapOfCirceWeave-DisabledScrapEnchantment-Pitch");
+            Sound scrappedEnchantmentDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.DisabledScrap.Sound"));
+            float scrappedEnchantmentDisabledVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.DisabledScrap.Volume");
+            float scrappedEnchantmentDisabledPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.DisabledScrap.Pitch");
             // Play sound for when enchant is Already Applied.
             player.playSound(player.getLocation(), scrappedEnchantmentDisabledSound, scrappedEnchantmentDisabledVolume, scrappedEnchantmentDisabledPitch);
         }

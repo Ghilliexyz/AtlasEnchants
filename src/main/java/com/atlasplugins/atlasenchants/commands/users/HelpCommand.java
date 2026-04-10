@@ -3,6 +3,7 @@ package com.atlasplugins.atlasenchants.commands.users;
 import com.atlasplugins.atlasenchants.commands.AbstractCommand;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
@@ -15,37 +16,27 @@ public class HelpCommand extends AbstractCommand {
 
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String label, List<String> args) {
-        // if all checks, check out then move on to the command
-        sender.sendMessage(Main.color("&c&m&l------------&f&l [&x&F&F&3&C&3&C&lA&x&F&F&4&C&3&E&lt&x&F&E&5&C&4&0&ll&x&F&E&6&C&4&2&la&x&F&E&7&C&4&4&ls &x&F&D&8&C&4&6&lE&x&F&D&9&C&4&8&ln&x&F&D&A&B&4&A&lc&x&F&C&B&B&4&C&lh&x&F&C&C&B&4&E&la&x&F&C&D&B&5&0&ln&x&F&B&E&B&5&2&lt&x&F&B&F&B&5&4&ls&f&l] &c&m&l-------------"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Reload command: &c/aenchants reload"));
-        sender.sendMessage(Main.color("&c● &7reloads the Atlas Enchants configs"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveenchant &e<PlayerName> <EnchantName> <EnchantLevel> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Enchant"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giverandomenchant &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Random Custom Enchant"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveshard &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Shard"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoraclebook &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle book"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants giveoracletable &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a Custom Oracle Table"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Give Enchant command: &c/aenchants givescrapofcirce &e<PlayerName> <Amount>"));
-        sender.sendMessage(Main.color("&c● &7Gives the named user a scrap of circe's weave"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Show Enchant List menu command: &c/aenchants list"));
-        sender.sendMessage(Main.color("&c● &7Opens a Enchant List menu"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c● &7Show Enchant Upgrade menu command: &c/aenchants upgrade"));
-        sender.sendMessage(Main.color("&c● &7Opens a Upgrade Enchant menu"));
-        sender.sendMessage(Main.color(""));
-        sender.sendMessage(Main.color("&c&m&l-----------------------------------------"));
+        // Player commands - always shown
+        for (String line : main.getSettingsConfig().getStringList("Help-Messages.Player-Help")) {
+            if (sender instanceof Player) {
+                String withPAPISet = main.setPlaceholders((Player) sender, line);
+                sender.sendMessage(Main.color(withPAPISet));
+            } else {
+                sender.sendMessage(Main.color(line));
+            }
+        }
+
+        // Admin commands - only shown if sender has atlasenchants.help or is OP
+        if (sender.hasPermission("atlasenchants.help") || sender.isOp()) {
+            for (String line : main.getSettingsConfig().getStringList("Help-Messages.Admin-Help")) {
+                if (sender instanceof Player) {
+                    String withPAPISet = main.setPlaceholders((Player) sender, line);
+                    sender.sendMessage(Main.color(withPAPISet));
+                } else {
+                    sender.sendMessage(Main.color(line));
+                }
+            }
+        }
     }
 
     @Override
@@ -60,8 +51,11 @@ public class HelpCommand extends AbstractCommand {
 
     @Override
     public String getPermission() {
-        return "atlasenchants.help";  // permission required for help command
+        return null;
     }
+
+    @Override
+    public boolean requiresPlayer() { return false; }
 }
 
 

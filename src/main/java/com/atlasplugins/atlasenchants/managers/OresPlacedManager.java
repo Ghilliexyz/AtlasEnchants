@@ -79,6 +79,7 @@ public class OresPlacedManager {
         String key = getKey(location);
         if (playerPlacedLogs.containsKey(key)) {
             playerPlacedLogs.remove(key);
+            saveDataToFile();
         }
     }
 

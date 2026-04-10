@@ -79,6 +79,7 @@ public class LogsPlacedManager {
         String key = getKey(location);
         if(playerPlacedLogs.containsKey(key)) {
             playerPlacedLogs.remove(key);
+            saveDataToFile();
         }
     }
 

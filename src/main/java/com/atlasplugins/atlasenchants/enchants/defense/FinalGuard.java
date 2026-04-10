@@ -2,16 +2,14 @@ package com.atlasplugins.atlasenchants.enchants.defense;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.RemoveCustomEnchant;
+import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.Random;
@@ -53,9 +51,7 @@ public class FinalGuard implements Listener {
 
     public boolean hasToolMainHand (Player p) {
         // Get the items in the main hand
-        ItemStack armor = null;
-
-        armor = p.getInventory().getItemInMainHand();
+        ItemStack armor = p.getInventory().getItemInMainHand();
 
         // Get the list of items the Enchant can be applied to from the config
         List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
@@ -65,21 +61,19 @@ public class FinalGuard implements Listener {
     }
     public boolean hasToolOffHand(Player p) {
         // Get the items in the offhand
-        ItemStack armor = null;
-
-        armor = p.getInventory().getItemInOffHand();
+        ItemStack armor = p.getInventory().getItemInOffHand();
 
         // Get the list of items the Enchant can be applied to from the config
         List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
 
-
         // Check if the player is holding an applicable item in their hand
 
-        return armorMat.contains(armor.getType().toString());
+        return armor != null && armorMat.contains(armor.getType().toString());
     }
 
     @EventHandler
     public void onBreakItem(PlayerItemDamageEvent e) {
+        if(e.isCancelled()) return;
         Player p = (Player) e.getPlayer();
 
         // Get the broken item
@@ -98,90 +92,67 @@ public class FinalGuard implements Listener {
         // if Enchantment Enabled = false return.
         if(!isEnchantmentEnabled) return;
 
-        PersistentDataContainer container = null;
+        // Find the item that has the FINAL-GUARD enchant
+        ItemStack enchantedItem = null;
+        if(p.getInventory().getHelmet() != null) enchantedItem = p.getInventory().getHelmet();
+        else if(p.getInventory().getChestplate() != null) enchantedItem = p.getInventory().getChestplate();
+        else if(p.getInventory().getLeggings() != null) enchantedItem = p.getInventory().getLeggings();
+        else if(p.getInventory().getBoots() != null) enchantedItem = p.getInventory().getBoots();
+        else if(hasToolMainHand(p)) enchantedItem = p.getInventory().getItemInMainHand();
+        else if(hasToolOffHand(p)) enchantedItem = p.getInventory().getItemInOffHand();
 
-        if(p.getInventory().getHelmet() != null)
-        {
-            container = p.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
-        }
-        else if(p.getInventory().getChestplate() != null)
-        {
-            container = p.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
-        }
-        else if(p.getInventory().getLeggings() != null)
-        {
-            container = p.getInventory().getLeggings().getItemMeta().getPersistentDataContainer();
-        }
-        else if(p.getInventory().getBoots() != null)
-        {
-            container = p.getInventory().getBoots().getItemMeta().getPersistentDataContainer();
-        } else if(hasToolMainHand(p))
-        {
-            container = p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-        } else if(hasToolOffHand(p))
-        {
-            container = p.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer();
-        }
+        if(enchantedItem == null) return;
 
-        String enchantmentData = container.getOrDefault(Main.customEnchantKeys, PersistentDataType.STRING, "");
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(enchantedItem)) {
+            if (enchant.name.contains("FINAL-GUARD")) {
+                // PUT ENCHANT LOGIC HERE
 
-        if (!enchantmentData.isEmpty()) {
-            String[] enchantments = enchantmentData.split(",");
-            for (String enchantment : enchantments) {
-                String[] enchantParts = enchantment.split(":");
-                // Ensure the format is correct
-                if (enchantParts.length == 3) {
-                    String enchantName = enchantParts[0];
-                    int enchantLevel = Integer.parseInt(enchantParts[1]);
-                    int enchantID = Integer.parseInt(enchantParts[2]);
+                // Get the enchantments protection Success Chance
+                double protectionChance = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-ProtectionChance-" + enchant.level);
 
-                    if (enchantName.contains("FINAL-GUARD")) {
-                        // PUT ENCHANT LOGIC HERE
+                // Check if the protection Chance is less than the random double and if not then return
+                if(random.nextDouble() > protectionChance) return;
 
-                        // Get the enchantments protection Success Chance
-                        double protectionChance = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-Protection-Percent-" + enchantLevel);
+                // Get the enchantments repair amount
+                double repairAmount = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-RepairPercent-" + enchant.level);
 
-                        // Check if the protection Chance is less than the random double and if not then return
-                        if(random.nextDouble() > protectionChance) return;
+                // Get the items max durability
+                int maxDurability = brokenItem.getType().getMaxDurability();
 
-                        // Get the enchantments repair amount
-                        double repairAmount = main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.FinalGuard-Repair-Percent-" + enchantLevel);
+                // Calculate the durability that remains (which is inverted)
+                int newDurability = (int) ((1 - repairAmount) * maxDurability);
 
-                        // Get the items max durability
-                        int maxDurability = brokenItem.getType().getMaxDurability();
+                // Ensure the new durability does not exceed the maximum durability
+                newDurability = Math.min(maxDurability, newDurability);
 
-                        // Calculate the durability that remains (which is inverted)
-                        int newDurability = (int) ((1 - repairAmount) * maxDurability);
+                // Set the new Durability
+                brokenItem.setDurability((short) newDurability);
 
-                        // Ensure the new durability does not exceed the maximum durability
-                        newDurability = Math.min(maxDurability, newDurability);
-
-                        // Set the new Durability
-                        brokenItem.setDurability((short) newDurability);
-
-                        // Play Success sound
-                        Sound finalGaurdSuccessSound = Sound.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FINAL-GUARD.FinalGuard-Success-Sound"));
-                        float finalGaurdSuccessVolume = main.getEnchantmentsConfig().getInt("Enchantments.FINAL-GUARD.FinalGuard-Success-Volume");
-                        float finalGaurdSuccessPitch = main.getEnchantmentsConfig().getInt("Enchantments.FINAL-GUARD.FinalGuard-Success-Pitch");
-
-                        // Get the bool to check if the user wants to play the Enchantment Disabled sound
-                        boolean finalGaurdSuccessPlaySound = main.getEnchantmentsConfig().getBoolean("Enchantments.FINAL-GUARD.FinalGuard-Success-Sound-Toggle");
-
-                        // check if the user doesn't want to play the sound then return if not.
-                        if(finalGaurdSuccessPlaySound){
-                            // Play sound for when enchant is blacklisted.
-                            p.playSound(p.getLocation(), finalGaurdSuccessSound, finalGaurdSuccessVolume, finalGaurdSuccessPitch);
-                        }
-
-                        // Remove an enchant from an item by calling RemoveCustomEnchant and call the method
-                        RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
-                        removeCustomEnchant.RemoveEnchantment(brokenItem, enchantName);
-
-                        e.setCancelled(true);
-
-                        //END ENCHANT LOGIC
-                    }
+                // Play Success sound
+                Sound finalGuardSuccessSound;
+                try {
+                    finalGuardSuccessSound = Sound.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FINAL-GUARD.Sound-Settings.Sound"));
+                } catch (IllegalArgumentException ex) {
+                    finalGuardSuccessSound = null;
                 }
+                float finalGuardSuccessVolume = (float) main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.Sound-Settings.Volume");
+                float finalGuardSuccessPitch = (float) main.getEnchantmentsConfig().getDouble("Enchantments.FINAL-GUARD.Sound-Settings.Pitch");
+
+                // Get the bool to check if the user wants to play the Enchantment Disabled sound
+                boolean finalGuardSuccessPlaySound = main.getEnchantmentsConfig().getBoolean("Enchantments.FINAL-GUARD.Sound-Settings.Toggle");
+
+                // check if the user doesn't want to play the sound then return if not.
+                if(finalGuardSuccessPlaySound && finalGuardSuccessSound != null){
+                    p.playSound(p.getLocation(), finalGuardSuccessSound, finalGuardSuccessVolume, finalGuardSuccessPitch);
+                }
+
+                // Remove an enchant from an item by calling RemoveCustomEnchant and call the method
+                RemoveCustomEnchant removeCustomEnchant = new RemoveCustomEnchant(main);
+                removeCustomEnchant.RemoveEnchantment(brokenItem, enchant.name);
+
+                e.setCancelled(true);
+
+                //END ENCHANT LOGIC
             }
         }
     }
