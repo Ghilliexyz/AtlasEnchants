@@ -92,7 +92,7 @@ public class OraclesOfEnchantmentEvent implements Listener {
 
                     if(!isOracleEnabled){
                         // Get oracle Disabled sound via config.
-                        Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.DisabledOracle.Sound"));
+                        Sound oracleDisabledSound = Main.getSound(main.getSettingsConfig().getString("OracleItemSounds.DisabledOracle.Sound"));
                         float oracleDisabledVolume = (float) main.getSettingsConfig().getDouble("OracleItemSounds.DisabledOracle.Volume");
                         float oracleDisabledPitch = (float) main.getSettingsConfig().getDouble("OracleItemSounds.DisabledOracle.Pitch");
 
@@ -122,7 +122,7 @@ public class OraclesOfEnchantmentEvent implements Listener {
                     }
 
                     // Get oracle Opening sound via config.
-                    Sound oracleDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("OracleItemSounds.Opening.Sound"));
+                    Sound oracleDisabledSound = Main.getSound(main.getSettingsConfig().getString("OracleItemSounds.Opening.Sound"));
                     float oracleDisabledVolume = (float) main.getSettingsConfig().getDouble("OracleItemSounds.Opening.Volume");
                     float oracleDisabledPitch = (float) main.getSettingsConfig().getDouble("OracleItemSounds.Opening.Pitch");
 

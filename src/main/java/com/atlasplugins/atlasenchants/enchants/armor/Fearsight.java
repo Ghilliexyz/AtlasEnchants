@@ -53,9 +53,10 @@ public class Fearsight implements Listener
                 ChatColor passiveMobColor;
                 ChatColor normalMobColor;
                 try {
-                    hostileMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Hostile").toUpperCase());
-                    passiveMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Passive").toUpperCase());
-                    normalMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Player").toUpperCase());
+                    // Fall back to sensible defaults if the config key is missing (e.g. an older config file).
+                    hostileMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Hostile", "RED").toUpperCase());
+                    passiveMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Passive", "GREEN").toUpperCase());
+                    normalMobColor = ChatColor.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FEARSIGHT.Glow-Colours.Player", "WHITE").toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     return;
                 }

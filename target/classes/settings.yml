@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.3.5
+#    Plugin Version 1.4.0
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -27,37 +27,37 @@ Footer: "&c&m&l-----------------------------------------"
 #  TABLE OF CONTENTS
 # =====================================================================
 #  Header & Footer ......................... Line ~23
-#  Command Messages ........................ Line ~60
-#    - Default Messages .................... Line ~63
-#    - Reload Config ....................... Line ~86
-#    - Give Enchant ........................ Line ~97
-#    - Give Oblivion Shard ................. Line ~144
-#    - Give Oracle of Enchantment .......... Line ~173
-#    - Give Oracle's Table ................. Line ~202
-#    - Give Scrap of Circe ................. Line ~231
-#    - Give Random Enchant ................. Line ~260
-#    - Enchant List ........................ Line ~289
-#    - Give Circe's Ember .................. Line ~300
-#    - Give Circe's Anvil .................. Line ~329
-#  Help Messages ........................... Line ~358
-#  Circe's Anvil Messages .................. Line ~406
-#  Circe's Anvil Sounds .................... Line ~417
-#  Enchant Item Settings ................... Line ~424
-#    - Spawn Chance & Rarity List .......... Line ~434
-#  Upgrade Enchant Settings ................ Line ~452
-#  Upgrade Enchant Sounds .................. Line ~458
-#  Upgrade Enchant Messages ................ Line ~484
-#  Enchant List Messages ................... Line ~530
-#  Enchant Item Sounds ..................... Line ~545
-#  Enchant Item Messages ................... Line ~571
-#  Shard Item Sounds ....................... Line ~625
-#  Shard Item Messages ..................... Line ~645
-#  Oracle Item Sounds ...................... Line ~691
-#  Oracle Item Messages .................... Line ~705
-#  Oracle Table Item Sounds ................ Line ~731
-#  Oracle Table Item Messages .............. Line ~745
-#  Scrap of Circe Weave Sounds ............. Line ~771
-#  Scrap of Circe Weave Messages ........... Line ~791
+#  Command Messages ........................ Line ~63
+#    - Default Messages .................... Line ~65
+#    - Reload Config ....................... Line ~88
+#    - Give Enchant ........................ Line ~99
+#    - Give Oblivion Shard ................. Line ~146
+#    - Give Oracle of Enchantment .......... Line ~175
+#    - Give Oracle's Table ................. Line ~204
+#    - Give Scrap of Circe ................. Line ~233
+#    - Give Random Enchant ................. Line ~262
+#    - Enchant List ........................ Line ~291
+#    - Give Circe's Ember .................. Line ~302
+#    - Give Circe's Anvil .................. Line ~331
+#  Help Messages ........................... Line ~361
+#  Circe's Anvil Messages .................. Line ~409
+#  Circe's Anvil Sounds .................... Line ~420
+#  Enchant Item Settings ................... Line ~427
+#    - Spawn Chance & Rarity List .......... Line ~435
+#  Upgrade Enchant Settings ................ Line ~455
+#  Upgrade Enchant Sounds .................. Line ~461
+#  Upgrade Enchant Messages ................ Line ~487
+#  Enchant List Messages ................... Line ~533
+#  Enchant Item Sounds ..................... Line ~548
+#  Enchant Item Messages ................... Line ~574
+#  Shard Item Sounds ....................... Line ~628
+#  Shard Item Messages ..................... Line ~648
+#  Oracle Item Sounds ...................... Line ~694
+#  Oracle Item Messages .................... Line ~708
+#  Oracle Table Item Sounds ................ Line ~734
+#  Oracle Table Item Messages .............. Line ~748
+#  Scrap of Circe Weave Sounds ............. Line ~774
+#  Scrap of Circe Weave Messages ........... Line ~794
 # =====================================================================
 
 Command-Messages:

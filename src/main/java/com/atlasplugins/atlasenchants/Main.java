@@ -26,6 +26,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,22 @@ public final class Main extends JavaPlugin implements Listener {
             string = string.replace("{footer}", footer);
         }
         return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    // Resolve a Sound from a config string. Sound became an interface in 1.21+, but
+    // it still exposes a static valueOf(String) that maps the legacy enum-style names
+    // (e.g. "BLOCK_ANVIL_USE") to the right registry entry. We wrap it so a typo'd
+    // sound name in config logs a warning and is skipped instead of throwing.
+    public static Sound getSound(String name) {
+        if (name == null || name.isEmpty()) return null;
+        try {
+            return Sound.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            if (instance != null) {
+                instance.getLogger().warning("Unknown sound name in config: '" + name + "' - it will be skipped.");
+            }
+            return null;
+        }
     }
 
     // Glowing Stuff
@@ -213,7 +231,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.5"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.4.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -237,7 +255,7 @@ public final class Main extends JavaPlugin implements Listener {
         GuiManager.cleanupAll();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.3.5"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.4.0"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -305,6 +323,23 @@ public final class Main extends JavaPlugin implements Listener {
             saveResource("enchantments.yml", false);
         }
         enchantmentsConfig = YamlConfiguration.loadConfiguration(enchantmentsConfigFile);
+        mergeDefaults(enchantmentsConfig, "enchantments.yml", enchantmentsConfigFile);
+    }
+
+    // Fill in any keys missing from an existing config file using the bundled default
+    // resource, preserving the user's existing values. Prevents null-key crashes when a
+    // config from an older plugin version is missing newly-added keys.
+    private void mergeDefaults(FileConfiguration config, String resourceName, File file) {
+        try (InputStream defStream = getResource(resourceName)) {
+            if (defStream == null) return;
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(
+                    new InputStreamReader(defStream, StandardCharsets.UTF_8));
+            config.setDefaults(defConfig);
+            config.options().copyDefaults(true);
+            config.save(file);
+        } catch (IOException e) {
+            getLogger().warning("Could not merge default keys into " + resourceName + ": " + e.getMessage());
+        }
     }
 
     public FileConfiguration getSettingsConfig() {
@@ -325,6 +360,7 @@ public final class Main extends JavaPlugin implements Listener {
             saveResource("settings.yml", false);
         }
         settingsConfig = YamlConfiguration.loadConfiguration(settingsConfigFile);
+        mergeDefaults(settingsConfig, "settings.yml", settingsConfigFile);
     }
 
     public FileConfiguration getMenusConfig() {
@@ -345,6 +381,7 @@ public final class Main extends JavaPlugin implements Listener {
             saveResource("menus.yml", false);
         }
         menusConfig = YamlConfiguration.loadConfiguration(menusConfigFile);
+        mergeDefaults(menusConfig, "menus.yml", menusConfigFile);
     }
 
     public void openEnchantListGUI(Player player){

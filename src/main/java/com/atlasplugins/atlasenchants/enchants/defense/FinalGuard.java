@@ -131,7 +131,7 @@ public class FinalGuard implements Listener {
                 // Play Success sound
                 Sound finalGuardSuccessSound;
                 try {
-                    finalGuardSuccessSound = Sound.valueOf(main.getEnchantmentsConfig().getString("Enchantments.FINAL-GUARD.Sound-Settings.Sound"));
+                    finalGuardSuccessSound = Main.getSound(main.getEnchantmentsConfig().getString("Enchantments.FINAL-GUARD.Sound-Settings.Sound"));
                 } catch (IllegalArgumentException ex) {
                     finalGuardSuccessSound = null;
                 }

@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.3.5
+#    Plugin Version 1.4.0
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -18,15 +18,15 @@
 # =====================================================================
 #  TABLE OF CONTENTS
 # =====================================================================
-#  Upgrade Enchant GUI ..................... Line ~30
-#    - Upgrade Enchant Menu ............... Line ~31
-#    - Upgrade Reward Menu ................ Line ~62
-#  Enchant List GUI ....................... Line ~67
-#    - Rarity List Menu ................... Line ~68
-#    - Enchant List Menu .................. Line ~123
-#  Guide GUI .............................. Line ~136
-#    - Guide Menu ......................... Line ~137
-#    - Recipe Menu ........................ Line ~247
+#  Upgrade Enchant GUI ..................... Line ~32
+#    - Upgrade Enchant Menu ................ Line ~33
+#    - Upgrade Reward Menu ................. Line ~64
+#  Enchant List GUI ........................ Line ~69
+#    - Rarity List Menu .................... Line ~70
+#    - Enchant List Menu ................... Line ~125
+#  Guide GUI ............................... Line ~138
+#    - Guide Menu .......................... Line ~139
+#    - Recipe Menu ......................... Line ~249
 # =====================================================================
 
 UpgradeEnchant-Gui:

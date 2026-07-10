@@ -17,6 +17,7 @@ import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
@@ -51,9 +52,12 @@ public class SafeMiner implements Listener {
         return tool != null && armorMat.contains(tool.getType().toString());
     }
 
-    @EventHandler
+    // Run at HIGHEST + ignoreCancelled so that any protection / block-respawn plugin
+    // (which typically cancels the BlockBreakEvent) has already had its say. Otherwise
+    // SafeMiner would hand the player the drops before another plugin cancels/respawns
+    // the block, resulting in duplication.
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent e) {
-        if(e.isCancelled()) return;
         // Grabbing the player
         Player player = e.getPlayer();
         // Grabbing the broken block

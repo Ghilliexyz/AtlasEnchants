@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.3.5
+#    Plugin Version 1.4.0
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -18,41 +18,42 @@
 # =====================================================================
 #  TABLE OF CONTENTS
 # =====================================================================
-#  Enchantments ............................ Line ~30
-#    - Divine Enchants ..................... Line ~31
-#        Poseidon's Bait .................. Line ~32
-#    - Godly Enchants ..................... Line ~82
-#        Fearsight ........................ Line ~84
-#        Blessing of Knowledge ........... Line ~133
-#        Miner's Touch ................... Line ~181
-#        Asclepius ........................ Line ~243
-#        Leech ........................... Line ~288
-#    - Legendary Enchants ................. Line ~286
-#        Safe Miner ...................... Line ~333
-#        Extractor ....................... Line ~391
-#        Vein Seeker ..................... Line ~444
-#        Wings of Aegis .................. Line ~506
-#        Final Guard ..................... Line ~546
-#        Rush ............................ Line ~672
-#        Stunning ........................ Line ~715
-#        Energy Absorption ............... Line ~779
-#    - Epic Enchants ...................... Line ~670
-#        Poison Aspect ................... Line ~829
-#        Ice Aspect ...................... Line ~902
-#        Tree Hugger ..................... Line ~965
-#    - Rare Enchants ...................... Line ~1019
-#        Hunter .......................... Line ~1021
-#        Propel .......................... Line ~1067
-#        Freezing Shot ................... Line ~1110
-#        Regrowth ........................ Line ~1148
-#        Decapitate ...................... Line ~1186
-#        Tainted Book .................... Line ~1250
-#  Oblivion Shard ......................... Line ~1274
-#  Oracles of Enchantment ................. Line ~1302
-#  Altar of Circe ......................... Line ~1341
-#  Scrap of Circe's Weave ................. Line ~1413
-#  Circe's Ember .......................... Line ~1441
-#  Circe's Anvil .......................... Line ~1468
+#  Enchantments ............................ Line ~59
+#    - Divine Enchants ..................... Line ~60
+#        Poseidon's Bait ................... Line ~61
+#    - Godly Enchants ...................... Line ~111
+#        Fearsight ......................... Line ~113
+#        Blessing of Knowledge ............. Line ~162
+#        Miner's Touch ..................... Line ~210
+#        Asclepius ......................... Line ~272
+#    - Legendary Enchants .................. Line ~315
+#        Leech ............................. Line ~317
+#        Safe Miner ........................ Line ~362
+#        Extractor ......................... Line ~420
+#        Vein Seeker ....................... Line ~473
+#        Wings of Aegis .................... Line ~535
+#        Final Guard ....................... Line ~575
+#    - Epic Enchants ....................... Line ~699
+#        Rush .............................. Line ~701
+#        Stunning .......................... Line ~744
+#        Energy Absorption ................. Line ~808
+#        Poison Aspect ..................... Line ~858
+#        Ice Aspect ........................ Line ~931
+#        Tree Hugger ....................... Line ~994
+#    - Rare Enchants ....................... Line ~1048
+#        Hunter ............................ Line ~1050
+#        Propel ............................ Line ~1096
+#        Freezing Shot ..................... Line ~1139
+#        Regrowth .......................... Line ~1177
+#        Decapitate ........................ Line ~1215
+#    - Trash Enchants ...................... Line ~1279
+#        Tainted Book ...................... Line ~1279
+#  Oblivion Shard .......................... Line ~1303
+#  Oracles of Enchantment .................. Line ~1331
+#  Altar of Circe .......................... Line ~1370
+#  Scrap of Circe's Weave .................. Line ~1447
+#  Circe's Ember ........................... Line ~1475
+#  Circe's Anvil ........................... Line ~1502
 # =====================================================================
 
 Enchantments:
@@ -1373,17 +1374,22 @@ AltarOfCirce:
   AltarOfCirce-Glint-Toggle: true
   #If true Altar Of Circe can be crafted.
   AltarOfCirce-Crafting-Enabled: true
-  #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
-  # **NOTE** USE the letter 'X' if you want them to use the Oracles Of Enchantment Book in the recipe
-  # **NOTE** USE the letter 'Y' if you want them to use the Scrap Of Circe's Weave in the recipe
+  #The 3 crafting rows below form the 3x3 grid. Each row is exactly 3 characters.
+  #Each letter maps to a material defined further down. A space ' ' = an empty slot.
+  # **NOTE** USE the letter 'X' to place the Oracle Of Enchantment Book in the recipe.
+  # **NOTE** USE the letter 'Y' to place the Scrap Of Circe's Weave in the recipe.
+  #
+  # Default recipe (letter => material used in that slot):
+  #   A B C   =>  END_CRYSTAL      NETHERITE_INGOT   END_CRYSTAL
+  #   Y X Y   =>  Scrap of Circe   Oracle Book       Scrap of Circe
+  #   G H I   =>  ECHO_SHARD       ECHO_SHARD        ECHO_SHARD
   AltarOfCirce-Crafting-Row-1: "ABC"
   AltarOfCirce-Crafting-Row-2: "YXY"
   AltarOfCirce-Crafting-Row-3: "GHI"
-  #These are the Crafting Materials inside the recipe
-  # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
-  # Also you can reuse the same Material and change the order on crafting Row-1 for example:
-  # you can do "ACA" or "HHH" or even "HAA" if thats what you want.
-  # Just make sure all Materials have some sort of material despite you using them or not.
+  #Materials for each letter (A-I). The special items X and Y are handled above and are NOT set here.
+  # **NOTE** Every letter used in the rows above MUST have a valid material here, or the recipe won't register.
+  # **NOTE** Letters not used in the rows (by default D, E, F) are ignored, but keep a valid material anyway.
+  # You may reuse a material for multiple letters and arrange the rows however you like (e.g. "ACA", "HHH", "HAA").
   AltarOfCirce-Crafting-Materials-A: END_CRYSTAL
   AltarOfCirce-Crafting-Materials-B: NETHERITE_INGOT
   AltarOfCirce-Crafting-Materials-C: END_CRYSTAL
@@ -1500,14 +1506,21 @@ CircesAnvil:
   CircesAnvil-Glint-Toggle: true
   #If true Circe's Anvil can be crafted.
   CircesAnvil-Crafting-Enabled: true
-  #These are the crafting slots going from A = TOP LEFT to I = BOTTOM RIGHT
-  # **NOTE** USE the letter 'Y' if you want them to use the Scrap Of Circe's Weave in the recipe
-  # **NOTE** USE the letter 'Z' if you want them to use Circe's Ember in the recipe
+  #The 3 crafting rows below form the 3x3 grid. Each row is exactly 3 characters.
+  #Each letter maps to a material defined further down. A space ' ' = an empty slot.
+  # **NOTE** USE the letter 'Y' to place the Scrap Of Circe's Weave in the recipe.
+  # **NOTE** USE the letter 'Z' to place Circe's Ember in the recipe.
+  #
+  # Default recipe (letter => material used in that slot):
+  #   A Z A   =>  NETHERITE_INGOT   Circe's Ember    NETHERITE_INGOT
+  #   Y E Y   =>  Scrap of Circe    ANVIL            Scrap of Circe
+  #   G G G   =>  OBSIDIAN          OBSIDIAN         OBSIDIAN
   CircesAnvil-Crafting-Row-1: "AZA"
   CircesAnvil-Crafting-Row-2: "YEY"
   CircesAnvil-Crafting-Row-3: "GGG"
-  #These are the Crafting Materials inside the recipe
-  # **NOTE** Do not leave any of these empty even if you don't use them in the crafting rows.
+  #Materials for each letter (A-I). The special items Y and Z are handled above and are NOT set here.
+  # **NOTE** Every letter used in the rows above MUST have a valid material here, or the recipe won't register.
+  # **NOTE** Letters not used in the rows (by default B, C, D, F, H, I) are ignored, but keep a valid material anyway.
   CircesAnvil-Crafting-Materials-A: NETHERITE_INGOT
   CircesAnvil-Crafting-Materials-B: BLAZE_POWDER
   CircesAnvil-Crafting-Materials-C: NETHERITE_INGOT

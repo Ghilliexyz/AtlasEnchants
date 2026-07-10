@@ -35,7 +35,27 @@ public class LootTableEvent implements Listener {
 
         double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
 
-        // return if chance to spawn has failed.
+        // --- Oblivion Shard spawner (rolls independently of the enchant-book chance) ---
+        boolean isShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
+        if (isShardEnabled) {
+            double shardSpawnChance = main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-Spawn-Chance");
+            if (random.nextDouble() < shardSpawnChance) {
+                CreateShard createShard = new CreateShard(main);
+                event.getLoot().add(createShard.CreateShardItem(1, null));
+            }
+        }
+
+        // --- Circe's Ember spawner (rolls independently of the enchant-book chance) ---
+        boolean isEmberEnabled = main.getEnchantmentsConfig().getBoolean("CircesEmber.CircesEmber-Enabled", true);
+        if (isEmberEnabled) {
+            double emberSpawnChance = main.getEnchantmentsConfig().getDouble("CircesEmber.CircesEmber-Spawn-Chance", 0.03);
+            if (random.nextDouble() < emberSpawnChance) {
+                CreateCircesEmber createCircesEmber = new CreateCircesEmber(main);
+                event.getLoot().add(createCircesEmber.CreateCircesEmberItem(1, null));
+            }
+        }
+
+        // return if the enchant-book spawn chance has failed (books only; shard/ember already rolled above).
         if (random.nextDouble() > chanceToSpawnEnchants) return;
 
         List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
@@ -91,37 +111,6 @@ public class LootTableEvent implements Listener {
                         break; // Exit after adding one enchantment
                     }
                 }
-            }
-        }
-
-        // Oblivion Shard Spawner
-        boolean isShardEnabled = main.getSettingsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
-
-        if(isShardEnabled) {
-            double shardSpawnChance = main.getSettingsConfig().getDouble("OblivionShard.OblivionShard-Spawn-Chance");
-
-            // if the shard chance passes then well done!
-            if(random.nextDouble() < shardSpawnChance) {
-                // Create an instance of CreateShard and call the method
-                CreateShard createShard = new CreateShard(main);
-                ItemStack customShardItem = createShard.CreateShardItem(1, null);
-
-                event.getLoot().add(customShardItem);
-                return;
-            }
-        }
-
-        // Circe's Ember Spawner
-        boolean isEmberEnabled = main.getEnchantmentsConfig().getBoolean("CircesEmber.CircesEmber-Enabled", true);
-
-        if(isEmberEnabled) {
-            double emberSpawnChance = main.getEnchantmentsConfig().getDouble("CircesEmber.CircesEmber-Spawn-Chance", 0.03);
-
-            if(random.nextDouble() < emberSpawnChance) {
-                CreateCircesEmber createCircesEmber = new CreateCircesEmber(main);
-                ItemStack customEmberItem = createCircesEmber.CreateCircesEmberItem(1, null);
-
-                event.getLoot().add(customEmberItem);
             }
         }
     }

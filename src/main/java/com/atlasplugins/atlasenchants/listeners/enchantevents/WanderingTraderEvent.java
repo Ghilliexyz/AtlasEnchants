@@ -22,22 +22,29 @@ public class WanderingTraderEvent implements Listener {
     @EventHandler
     public void onWanderingTraderSpawn(CreatureSpawnEvent e)
     {
-        double chanceOfSpawning = main.getEnchantmentsConfig().getDouble("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Spawn-Chance");
-
+        // Bail out early so we do no work (and read no config) for unrelated mob spawns.
         boolean isTraderEnabled = main.getEnchantmentsConfig().getBoolean("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Enabled");
-
-        Material itemMaterial = Material.valueOf(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Cost-Item"));
-
-        int itemAmount = main.getEnchantmentsConfig().getInt("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Cost-Amount");
-
-        boolean isTraderSlotRandom = main.getEnchantmentsConfig().getBoolean("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Slot-Random");
-
-        int itemSlot = main.getEnchantmentsConfig().getInt("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Slot");
-
         if(!isTraderEnabled) return;
 
         if(e.getEntity() instanceof WanderingTrader)
         {
+            double chanceOfSpawning = main.getEnchantmentsConfig().getDouble("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Spawn-Chance");
+
+            // Null-safe material lookup: fall back to EMERALD if the key is missing or invalid (e.g. an older config file).
+            String costItemName = main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Cost-Item", "EMERALD");
+            Material itemMaterial;
+            try {
+                itemMaterial = Material.valueOf(costItemName.toUpperCase());
+            } catch (IllegalArgumentException ex) {
+                itemMaterial = Material.EMERALD;
+            }
+
+            int itemAmount = main.getEnchantmentsConfig().getInt("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Cost-Amount");
+
+            boolean isTraderSlotRandom = main.getEnchantmentsConfig().getBoolean("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Slot-Random");
+
+            int itemSlot = main.getEnchantmentsConfig().getInt("OraclesOfEnchantment.OraclesOfEnchantment-Trader-Slot");
+
             WanderingTrader trader = (WanderingTrader) e.getEntity();
 
             if(Math.random() < chanceOfSpawning)

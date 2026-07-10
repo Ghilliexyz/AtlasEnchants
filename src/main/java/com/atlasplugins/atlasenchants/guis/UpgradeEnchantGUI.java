@@ -165,7 +165,7 @@ public class UpgradeEnchantGUI extends Gui {
                                 // check if the user wants to play the Already Applied sound
                                 if (SuccessUpgradePlaySound) {
                                     // Get apply sound via config.
-                                    Sound SuccessUpgradeSound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.SuccessUpgrade.Sound"));
+                                    Sound SuccessUpgradeSound = Main.getSound(main.getSettingsConfig().getString("UpgradeEnchantSounds.SuccessUpgrade.Sound"));
                                     float SuccessUpgradeVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.SuccessUpgrade.Volume");
                                     float SuccessUpgradePitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.SuccessUpgrade.Pitch");
 
@@ -188,7 +188,7 @@ public class UpgradeEnchantGUI extends Gui {
                                 // check if the user wants to play the Already Applied sound
                                 if (NotEnoughItemsPlaySound) {
                                     // Get apply sound via config.
-                                    Sound NotEnoughItemsSound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.NotEnoughItems.Sound"));
+                                    Sound NotEnoughItemsSound = Main.getSound(main.getSettingsConfig().getString("UpgradeEnchantSounds.NotEnoughItems.Sound"));
                                     float NotEnoughItemsVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.NotEnoughItems.Volume");
                                     float NotEnoughItemsPitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.NotEnoughItems.Pitch");
 
@@ -213,7 +213,7 @@ public class UpgradeEnchantGUI extends Gui {
                         // check if the user wants to play the Already Applied sound
                         if (MaxRarityPlaySound) {
                             // Get apply sound via config.
-                            Sound MaxRaritySound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.MaxRarity.Sound"));
+                            Sound MaxRaritySound = Main.getSound(main.getSettingsConfig().getString("UpgradeEnchantSounds.MaxRarity.Sound"));
                             float MaxRarityVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.MaxRarity.Volume");
                             float MaxRarityPitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.MaxRarity.Pitch");
 

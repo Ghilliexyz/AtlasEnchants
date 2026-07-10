@@ -2,7 +2,7 @@
 
 Atlas Custom Enchants is a Minecraft Spigot plugin that adds 21 custom enchantments with a tiered rarity system, special items, crafting stations, and a full GUI-based browsing experience. Originally developed for a private Survival Multiplayer (SMP) server, it bridges the gap between vanilla gameplay and RPG-style progression.
 
-- **Version:** 1.3.5
+- **Version:** 1.4.0
 - **Platform:** Spigot 1.20.6+
 - **Java:** 21
 - **Authors:** _Ghillie

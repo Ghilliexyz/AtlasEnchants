@@ -4,7 +4,7 @@ main: com.atlasplugins.atlasenchants.Main
 version: '${project.version}'
 authors: [_Ghillie]
 
-api-version: '1.20'
+api-version: '1.21'
 description: Custom enchant plugin.
 
 # This sets PlaceholderAPI and WorldGuardAPI as an optional dependency for your plugin.

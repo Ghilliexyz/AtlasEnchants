@@ -251,7 +251,7 @@ public class ApplyCustomEnchant implements Listener {
         boolean playSound = main.getSettingsConfig().getBoolean(soundConfigPath + ".Toggle");
         if (playSound) {
             try {
-                Sound sound = Sound.valueOf(main.getSettingsConfig().getString(soundConfigPath + ".Sound"));
+                Sound sound = Main.getSound(main.getSettingsConfig().getString(soundConfigPath + ".Sound"));
                 float volume = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Volume");
                 float pitch = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Pitch");
                 player.playSound(player.getLocation(), sound, volume, pitch);

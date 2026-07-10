@@ -82,7 +82,7 @@ public class ApplyShard implements Listener {
                         if(!isOblivionShardEnabled)
                         {
                             // Get Shard Disabled sound via config.
-                            Sound shardDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("ShardItemSounds.DisabledShard.Sound"));
+                            Sound shardDisabledSound = Main.getSound(main.getSettingsConfig().getString("ShardItemSounds.DisabledShard.Sound"));
                             float shardDisabledVolume = (float) main.getSettingsConfig().getDouble("ShardItemSounds.DisabledShard.Volume");
                             float shardDisabledPitch = (float) main.getSettingsConfig().getDouble("ShardItemSounds.DisabledShard.Pitch");
 
@@ -132,7 +132,7 @@ public class ApplyShard implements Listener {
                             }
                         }else{
                             // Get apply sound via config.
-                            Sound shardNoEnchantsAppliedSound = Sound.valueOf(main.getSettingsConfig().getString("ShardItemSounds.NoEnchantsApplied.Sound"));
+                            Sound shardNoEnchantsAppliedSound = Main.getSound(main.getSettingsConfig().getString("ShardItemSounds.NoEnchantsApplied.Sound"));
                             float shardNoEnchantsAppliedVolume = (float) main.getSettingsConfig().getDouble("ShardItemSounds.NoEnchantsApplied.Volume");
                             float shardNoEnchantsAppliedPitch = (float) main.getSettingsConfig().getDouble("ShardItemSounds.NoEnchantsApplied.Pitch");
 
@@ -233,7 +233,7 @@ public class ApplyShard implements Listener {
                             // check if the user wants to play the Already Applied sound
                             if(shardApplyPlaySound){
                                 // Get apply sound via config.
-                                Sound shardApplySound = Sound.valueOf(main.getSettingsConfig().getString("ShardItemSounds.Apply.Sound"));
+                                Sound shardApplySound = Main.getSound(main.getSettingsConfig().getString("ShardItemSounds.Apply.Sound"));
                                 float shardApplyVolume = (float) main.getSettingsConfig().getDouble("ShardItemSounds.Apply.Volume");
                                 float shardApplyPitch = (float) main.getSettingsConfig().getDouble("ShardItemSounds.Apply.Pitch");
                                 // Play sound for when enchant is Already Applied.

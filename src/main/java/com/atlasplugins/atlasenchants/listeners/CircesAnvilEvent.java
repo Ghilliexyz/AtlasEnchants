@@ -72,7 +72,7 @@ public class CircesAnvilEvent implements Listener {
 
         boolean playSound = main.getSettingsConfig().getBoolean("CircesAnvilSounds.OpenAnvil.Toggle", false);
         if (playSound) {
-            Sound sound = Sound.valueOf(main.getSettingsConfig().getString("CircesAnvilSounds.OpenAnvil.Sound", "BLOCK_ANVIL_USE"));
+            Sound sound = Main.getSound(main.getSettingsConfig().getString("CircesAnvilSounds.OpenAnvil.Sound", "BLOCK_ANVIL_USE"));
             float volume = (float) main.getSettingsConfig().getDouble("CircesAnvilSounds.OpenAnvil.Volume", 1);
             float pitch = (float) main.getSettingsConfig().getDouble("CircesAnvilSounds.OpenAnvil.Pitch", 1);
             player.playSound(player.getLocation(), sound, volume, pitch);

@@ -37,7 +37,7 @@ public class UpgradeCommand extends AbstractCommand {
             // check if the user wants to play the Already Applied sound
             if(UpgradeMenuDisabledPlaySound){
                 // Get apply sound via config.
-                Sound upgradeMenuDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("UpgradeEnchantSounds.DisabledMenu.Sound"));
+                Sound upgradeMenuDisabledSound = Main.getSound(main.getSettingsConfig().getString("UpgradeEnchantSounds.DisabledMenu.Sound"));
                 float upgradeMenuDisabledVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.DisabledMenu.Volume");
                 float upgradeMenuDisabledPitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.DisabledMenu.Pitch");
 

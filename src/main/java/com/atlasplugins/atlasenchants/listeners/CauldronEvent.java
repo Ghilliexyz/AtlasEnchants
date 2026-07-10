@@ -142,7 +142,7 @@ public class CauldronEvent implements Listener {
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Sound"));
+            Sound scrappedEnchantmentSound = Main.getSound(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Sound"));
             float scrappedEnchantmentVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Volume");
             float scrappedEnchantmentPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.ScrappedEnchantment.Pitch");
             // Play sound for when enchant is Already Applied.
@@ -174,7 +174,7 @@ public class CauldronEvent implements Listener {
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentFailedSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentFailedSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.FailedScrap.Sound"));
+            Sound scrappedEnchantmentFailedSound = Main.getSound(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.FailedScrap.Sound"));
             float scrappedEnchantmentFailedVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.FailedScrap.Volume");
             float scrappedEnchantmentFailedPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.FailedScrap.Pitch");
             // Play sound for when enchant is Already Applied.
@@ -206,7 +206,7 @@ public class CauldronEvent implements Listener {
         // check if the user wants to play the Already Applied sound
         if (hasScrappedEnchantmentDisabledSound) {
             // Get apply sound via config.
-            Sound scrappedEnchantmentDisabledSound = Sound.valueOf(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.DisabledScrap.Sound"));
+            Sound scrappedEnchantmentDisabledSound = Main.getSound(main.getSettingsConfig().getString("ScrapOfCirceWeaveSounds.DisabledScrap.Sound"));
             float scrappedEnchantmentDisabledVolume = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.DisabledScrap.Volume");
             float scrappedEnchantmentDisabledPitch = (float) main.getSettingsConfig().getDouble("ScrapOfCirceWeaveSounds.DisabledScrap.Pitch");
             // Play sound for when enchant is Already Applied.
