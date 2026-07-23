@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie & Helix
 #
-#    Plugin Version 1.4.0
+#    Plugin Version 1.4.1
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -48,12 +48,13 @@
 #        Decapitate ........................ Line ~1215
 #    - Trash Enchants ...................... Line ~1279
 #        Tainted Book ...................... Line ~1279
-#  Oblivion Shard .......................... Line ~1303
-#  Oracles of Enchantment .................. Line ~1331
-#  Altar of Circe .......................... Line ~1370
-#  Scrap of Circe's Weave .................. Line ~1447
-#  Circe's Ember ........................... Line ~1475
-#  Circe's Anvil ........................... Line ~1502
+#  Oblivion Shard .......................... Line ~1304
+#  Oracles of Enchantment .................. Line ~1332
+#  Circe's Grimoire ........................ Line ~1375
+#  Altar of Circe .......................... Line ~1406
+#  Scrap of Circe's Weave .................. Line ~1483
+#  Circe's Ember ........................... Line ~1511
+#  Circe's Anvil ........................... Line ~1538
 # =====================================================================
 
 Enchantments:
@@ -1367,6 +1368,41 @@ OraclesOfEnchantment:
     - ""
     - "{footer}"
 
+#Circe's Grimoire - a Wandering Trader written book that documents how every custom
+#item is obtained, including the LIVE crafting grids for the Altar of Circe and Circe's
+#Anvil. The recipe pages are generated from the crafting rows/materials below each time
+#the book is created, so edits here (after a reload) are reflected in newly-sold books.
+CircesGrimoire:
+  #If true the Wandering Trader has a chance to sell Circe's Grimoire.
+  CircesGrimoire-Trader-Enabled: true
+  #The chance the Grimoire trade is offered (0.5 = 50% | 1 = 100%).
+  CircesGrimoire-Trader-Spawn-Chance: 0.5
+  #The item it costs to purchase the Grimoire.
+  CircesGrimoire-Trader-Cost-Item: EMERALD
+  #The amount of that item it will cost.
+  CircesGrimoire-Trader-Cost-Amount: 8
+  #If true the Grimoire will have an enchantment glint on it.
+  CircesGrimoire-Glint-Toggle: true
+  #The item name shown when holding the Grimoire.
+  CircesGrimoire-DisplayName: "&f&k*&l &5&lCirce's Grimoire &f&k*"
+  #The title written on the book's cover when opened (keep it plain, no colour codes).
+  CircesGrimoire-Title: "Circe's Grimoire"
+  #The author written on the book's cover.
+  CircesGrimoire-Author: "Circe, Daughter of Helios"
+  #Lore shown in the item tooltip.
+  CircesGrimoire-Lore:
+    - "{header}"
+    - ""
+    - "&c● &7Description:"
+    - "  &eThe spellbook of the enchantress Circe,"
+    - "  &edetailing how her relics are crafted and found."
+    - ""
+    - "&c● &7Type: &eRecipe Book"
+    - ""
+    - "&c● &7Usage: &eHold and read to learn the recipes."
+    - ""
+    - "{footer}"
+
 AltarOfCirce:
   #Type of Item the Oracles of Enchantment will be.
   AltarOfCirce-Item: ENCHANTING_TABLE
@@ -1496,6 +1532,104 @@ CircesEmber:
     - "&c● &7Type: &eMythic Crafting Material"
     - ""
     - "&c● &7Usage: &eCrafting Circe's Anvil"
+    - ""
+    - "{footer}"
+
+CircesBrand:
+  #Type of Item the Circe's Brand will be.
+  CircesBrand-Item: NAME_TAG
+  #If true the CircesBrand-Item will have an enchantment glint on it.
+  CircesBrand-Glint-Toggle: true
+  #If true Circe's Brand can be Found, and Used. if false the opposite for all happens.
+  CircesBrand-Enabled: true
+  #The chance of a Circe's Brand spawning in loot chests (0.01 = 1%)
+  CircesBrand-Spawn-Chance: 0.01
+  #If true the Wandering Trader has a chance to sell a Circe's Brand.
+  CircesBrand-Trader-Enabled: true
+  #The chance the Brand trade is offered (0.15 = 15% | 1 = 100%).
+  CircesBrand-Trader-Spawn-Chance: 0.15
+  #The item it costs to purchase the Brand.
+  CircesBrand-Trader-Cost-Item: EMERALD
+  #The amount of that item it will cost.
+  CircesBrand-Trader-Cost-Amount: 16
+  #The longest name a player may give an item, counted WITHOUT colour codes.
+  CircesBrand-Max-Name-Length: 32
+  #How the player enters the new name. ANVIL is the default and is the better experience -
+  #only switch to CHAT if you hit one of the specific problems listed below.
+  #
+  #  ANVIL - Right-click opens an anvil. Item in the left slot, Brand in the middle slot, type
+  #          the name, take the result out of the right slot.
+  #          + The player SEES the finished name, in colour, before committing to it.
+  #          + The Brand is only used up when they take the result. Closing the menu returns
+  #            everything, so a mistake or a change of mind costs them nothing.
+  #          - Needs the anvil menu. If another plugin on your server hooks or cancels anvil
+  #            interactions (anti-dupe, anvil-limiters, other custom-enchant plugins), it can
+  #            interfere with the preview. That is when you switch to CHAT.
+  #
+  #  CHAT  - Right-click uses up the Brand immediately, then the player holds the item in their
+  #          main hand and types the name in chat. The message is not broadcast.
+  #          + Uses no menu at all, so nothing can conflict with it.
+  #          - No preview. The player commits blind and only sees the result afterwards.
+  #          - The Brand is spent up front. It is refunded on a timeout, on typing the cancel
+  #            word, or on an invalid item, but that is a refund rather than never having
+  #            spent it.
+  #          - IMPORTANT: this listens on the older chat event. If you run a chat plugin that
+  #            uses Paper's newer chat event, it may broadcast the name publicly instead of
+  #            letting us intercept it. Test with a chat plugin loaded before going live.
+  CircesBrand-Mode: ANVIL
+  #CHAT MODE ONLY. How long the player has to type a name in chat after right-clicking, in seconds.
+  #The Brand is given back if they run out of time. Minimum 5.
+  CircesBrand-Chat-Timeout-Seconds: 60
+  #Typing this word instead of a name aborts the rename and returns the Brand.
+  CircesBrand-Cancel-Word: "cancel"
+  #Which items may be renamed. An entry starting with an underscore matches by suffix,
+  #so "_PICKAXE" covers every pickaxe material. Leave the list EMPTY to allow anything.
+  CircesBrand-Applicable-Items:
+    - "_SWORD"
+    - "_AXE"
+    - "_PICKAXE"
+    - "_SHOVEL"
+    - "_HOE"
+    - "_HELMET"
+    - "_CHESTPLATE"
+    - "_LEGGINGS"
+    - "_BOOTS"
+    - "BOW"
+    - "CROSSBOW"
+    - "TRIDENT"
+    - "SHIELD"
+    - "ELYTRA"
+    - "FISHING_ROD"
+    - "SHEARS"
+    - "FLINT_AND_STEEL"
+    - "MACE"
+  #Names containing any of these words are refused. Matching is case-insensitive and
+  #checks the name with colour codes stripped, so codes cannot be used to sneak a word past.
+  CircesBrand-Blocked-Words: []
+  #The name of the Circe's Brand.
+  CircesBrand-DisplayName: "&5&l&k@ &d&lCirce's Brand &5&l&k@"
+  #Lore for the Circe's Brand.
+  CircesBrand-Lore:
+    - "{header}"
+    - ""
+    - "&c● &7Description:"
+    - "  &eA searing mark cut from Circe's own sigil-work."
+    - "  &ePress it to a weapon or tool and the thing forgets"
+    - "  &ethe name it was born with, and answers only to"
+    - "  &ethe one you give it."
+    - ""
+    - "&c● &7Type: &eMythic Utility"
+    - ""
+    - "&c● &7Usage: &eRight-Click, then hold the item you want"
+    - "  &erenamed and type the new name in chat"
+    - ""
+    #The "&§c" bits below are not a typo. A plain "&&c" does NOT escape to a literal "&c" -
+    #the colour translator leaves the first & alone and then turns the second &c red, eating
+    #the letter. Following the & with a raw § stops it pairing with the letter after it.
+    - "&c● &7Colours: &eUse &c&§cc &efor red, &4&§44 &efor dark red, etc."
+    - "  &eHex colours work too: &d&#FF00FF"
+    - ""
+    - "&c● &7Consumed on use."
     - ""
     - "{footer}"
 

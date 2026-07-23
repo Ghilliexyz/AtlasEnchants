@@ -125,7 +125,7 @@ public class VeinSeeker implements Listener {
         boolean hasSafeMiner = hasSafeMinerEnchant(tool);
 
         for (Block ore : oresToMine) {
-            // Skip the start block — the BlockBreakEvent (and SafeMiner if present) handles it
+            // Skip the start block, the BlockBreakEvent (and SafeMiner if present) handles it
             if (ore.equals(startBlock)) continue;
 
             if (hasSafeMiner) {

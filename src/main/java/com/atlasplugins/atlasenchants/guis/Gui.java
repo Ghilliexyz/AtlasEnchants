@@ -15,6 +15,14 @@ public abstract class Gui {
         this.inventory = GuiManager.createGui(player, title, size);
     }
 
+    // For GUIs backed by a non-chest menu (e.g. the anvil used by Circe's Brand), which build
+    // their view through MenuType rather than GuiManager.createGui. Subclasses using this must
+    // also override open(), since the view - not the Inventory - is what gets opened.
+    protected Gui(Player player, Inventory inventory) {
+        this.player = player;
+        this.inventory = inventory;
+    }
+
     public abstract void setupItems();
 
     public abstract void handleClick(InventoryClickEvent event);

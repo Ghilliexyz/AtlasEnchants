@@ -23,6 +23,8 @@ public class GiveCommand extends AbstractCommand {
         subcommands.put("scrap", new GiveScrapOfCirceCommand(main));
         subcommands.put("ember", new GiveCircesEmberCommand(main));
         subcommands.put("anvil", new GiveCircesAnvilCommand(main));
+        subcommands.put("brand", new GiveCircesBrandCommand(main));
+        subcommands.put("grimoire", new GiveRecipeBookCommand(main));
     }
 
     @Override

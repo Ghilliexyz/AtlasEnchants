@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.4.0
+#    Plugin Version 1.4.1
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -28,6 +28,10 @@
 #    - Guide Menu .......................... Line ~139
 #    - Recipe Menu ......................... Line ~249
 # =====================================================================
+
+#The anvil opened by right-clicking a Circe's Brand.
+CircesBrand-Gui:
+  Title: "&5&lBranding"
 
 UpgradeEnchant-Gui:
   UpgradeEnchant-Menu:

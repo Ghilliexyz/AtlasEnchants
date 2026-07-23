@@ -6,7 +6,7 @@
 
     <groupId>com.atlasplugins</groupId>
     <artifactId>AtlasEnchants</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <name>Main</name>
@@ -104,6 +104,13 @@
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.10</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Provided by the Minecraft server at runtime; used only to filter vanilla console spam. -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.22.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

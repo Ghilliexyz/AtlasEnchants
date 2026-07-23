@@ -6,8 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -21,6 +23,10 @@ public class BlessingofKnowledge implements Listener {
     public BlessingofKnowledge(Main main) {this.main = main;}
 
     final HashMap<UUID, String> mobs = new HashMap<>();
+
+    // True for the tick during which a slime carrying our health bar is splitting,
+    // so its freshly spawned children don't inherit the stale "0 / X" name.
+    private boolean clearingSplitChildren = false;
 
     public double roundToOneDecimalPlace(double value) {
         return Math.round(value * 10.0) / 10.0;
@@ -175,6 +181,26 @@ public class BlessingofKnowledge implements Listener {
                 style.replace("{entityHealth}", String.valueOf(Math.max(0, finalHealth)))
                         .replace("{entityMaxHealth}", String.valueOf((int) maxHealth))
         ));
+    }
+
+    // When a slime/magma cube carrying our health bar splits, vanilla copies the
+    // parent's custom name onto the children. Flag the split so the child spawns
+    // (fired synchronously within this same tick) can strip the inherited bar.
+    @EventHandler
+    public void onSlimeSplit(SlimeSplitEvent e) {
+        if (mobs.containsKey(e.getEntity().getUniqueId())) {
+            clearingSplitChildren = true;
+            Bukkit.getScheduler().runTask((Plugin) this.main, () -> clearingSplitChildren = false);
+        }
+    }
+
+    @EventHandler
+    public void onSlimeChildSpawn(CreatureSpawnEvent e) {
+        if (clearingSplitChildren
+                && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SLIME_SPLIT) {
+            e.getEntity().setCustomName(null);
+            e.getEntity().setCustomNameVisible(false);
+        }
     }
 
 }

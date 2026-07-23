@@ -21,7 +21,7 @@ public class AltarOfCirceCraftingRecipe {
         this.main = main;
     }
 
-    public void registerOracleTableRecipe()
+    public void registerAltarOfCirceRecipe()
     {
         // Create result item
         CreateAltarOfCirce createAltarOfCirce = new CreateAltarOfCirce(main);

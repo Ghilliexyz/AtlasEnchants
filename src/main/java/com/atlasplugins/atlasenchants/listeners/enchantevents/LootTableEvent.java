@@ -1,6 +1,8 @@
 package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.LootGenerateEvent;
@@ -21,11 +23,45 @@ public class LootTableEvent implements Listener {
 
     private final Random random = new Random();
 
+    // Who/what triggered this loot generation, for the debug readout: the opening player
+    // if there is one, otherwise the context entity, otherwise the world-gen location.
+    private String resolveWho(LootGenerateEvent e) {
+        if (e.getEntity() instanceof Player player) return player.getName();
+        if (e.getEntity() != null) return e.getEntity().getType().toString();
+        Location loc = e.getLootContext() != null ? e.getLootContext().getLocation() : null;
+        if (loc != null) {
+            return String.format("world-gen @ %d,%d,%d", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        }
+        return "unknown";
+    }
+
+    // Small containers (decorated pots hold 1 slot, dispensers 9, ...) will make Spigot log
+    // "Tried to over-fill a container" if we append more loot than the destination can hold.
+    private boolean hasRoom(LootGenerateEvent e) {
+        if (e.getInventoryHolder() == null) return true; // entity/fishing loot, no fixed capacity
+        return e.getLoot().size() < e.getInventoryHolder().getInventory().getSize();
+    }
+
+    // Adds our item to the loot. When the destination is already full we displace a vanilla
+    // entry instead of dropping the item, but only once per generation - otherwise a later
+    // roll would overwrite the item an earlier roll just placed.
+    private boolean addLoot(LootGenerateEvent e, ItemStack item, boolean hasDisplaced) {
+        if (hasRoom(e)) {
+            e.getLoot().add(item);
+            return hasDisplaced;
+        }
+        if (hasDisplaced || e.getLoot().isEmpty()) return hasDisplaced;
+        e.getLoot().set(random.nextInt(e.getLoot().size()), item);
+        return true;
+    }
+
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
         // Enchantment Spawner
 //        main.getLogger().info("--------------------------------------------------");
         boolean hasFoundEnchantment = false;
+        boolean hasDisplaced = false;
+        String who = resolveWho(event);
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
                 .map(String::toUpperCase)
@@ -39,9 +75,12 @@ public class LootTableEvent implements Listener {
         boolean isShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
         if (isShardEnabled) {
             double shardSpawnChance = main.getEnchantmentsConfig().getDouble("OblivionShard.OblivionShard-Spawn-Chance");
-            if (random.nextDouble() < shardSpawnChance) {
+            double shardRoll = random.nextDouble();
+            boolean shardPassed = shardRoll < shardSpawnChance;
+            main.debugOddsRoll("Loot", who, "Oblivion Shard", shardRoll, shardSpawnChance, shardPassed);
+            if (shardPassed) {
                 CreateShard createShard = new CreateShard(main);
-                event.getLoot().add(createShard.CreateShardItem(1, null));
+                hasDisplaced = addLoot(event, createShard.CreateShardItem(1, null), hasDisplaced);
             }
         }
 
@@ -49,14 +88,34 @@ public class LootTableEvent implements Listener {
         boolean isEmberEnabled = main.getEnchantmentsConfig().getBoolean("CircesEmber.CircesEmber-Enabled", true);
         if (isEmberEnabled) {
             double emberSpawnChance = main.getEnchantmentsConfig().getDouble("CircesEmber.CircesEmber-Spawn-Chance", 0.03);
-            if (random.nextDouble() < emberSpawnChance) {
+            double emberRoll = random.nextDouble();
+            boolean emberPassed = emberRoll < emberSpawnChance;
+            main.debugOddsRoll("Loot", who, "Circe's Ember", emberRoll, emberSpawnChance, emberPassed);
+            if (emberPassed) {
                 CreateCircesEmber createCircesEmber = new CreateCircesEmber(main);
-                event.getLoot().add(createCircesEmber.CreateCircesEmberItem(1, null));
+                hasDisplaced = addLoot(event, createCircesEmber.CreateCircesEmberItem(1, null), hasDisplaced);
+            }
+        }
+
+        // --- Circe's Brand spawner (rolls independently of the enchant-book chance) ---
+        boolean isBrandEnabled = main.getEnchantmentsConfig().getBoolean("CircesBrand.CircesBrand-Enabled", true);
+        if (isBrandEnabled) {
+            double brandSpawnChance = main.getEnchantmentsConfig().getDouble("CircesBrand.CircesBrand-Spawn-Chance", 0.01);
+            double brandRoll = random.nextDouble();
+            boolean brandPassed = brandRoll < brandSpawnChance;
+            main.debugOddsRoll("Loot", who, "Circe's Brand", brandRoll, brandSpawnChance, brandPassed);
+            if (brandPassed) {
+                CreateCircesBrand createCircesBrand = new CreateCircesBrand(main);
+                hasDisplaced = addLoot(event, createCircesBrand.CreateCircesBrandItem(1, null), hasDisplaced);
             }
         }
 
         // return if the enchant-book spawn chance has failed (books only; shard/ember already rolled above).
-        if (random.nextDouble() > chanceToSpawnEnchants) return;
+        double enchantBookRoll = random.nextDouble();
+        boolean enchantBookPassed = enchantBookRoll <= chanceToSpawnEnchants;
+        main.debugOddsRoll("Loot", who, "Enchant Book", enchantBookRoll, chanceToSpawnEnchants, enchantBookPassed);
+        if (!enchantBookPassed) return;
+        if (!hasRoom(event) && hasDisplaced) return;
 
         List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
                 .stream()
@@ -72,7 +131,10 @@ public class LootTableEvent implements Listener {
         while (!hasFoundEnchantment && maxAttempts-- > 0) {
             for (String rarity : enchantmentRarity) {
                 double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-                if (random.nextDouble() <= rarityChance) {
+                double rarityRoll = random.nextDouble();
+                boolean rarityPassed = rarityRoll <= rarityChance;
+                main.debugOddsRoll("Loot", who, "Rarity " + rarity, rarityRoll, rarityChance, rarityPassed);
+                if (rarityPassed) {
                     String enchantRarity = rarity.toUpperCase();
 
                     // Filter enchantments by the current rarity
@@ -106,7 +168,7 @@ public class LootTableEvent implements Listener {
                         ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
 
 //                    main.getLogger().info("SPAWN ENCHANT: " + selectedEnchantment);
-                        event.getLoot().add(customItem);
+                        hasDisplaced = addLoot(event, customItem, hasDisplaced);
                         hasFoundEnchantment = true;
                         break; // Exit after adding one enchantment
                     }

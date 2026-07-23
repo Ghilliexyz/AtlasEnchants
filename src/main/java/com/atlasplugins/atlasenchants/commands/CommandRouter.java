@@ -25,20 +25,15 @@ public class CommandRouter implements CommandExecutor, TabCompleter {
     }
 
     private void registerCommands() {
-        // Register your commands here
+        // Register your commands here.
+        // All item-giving is routed through the single `give` command as `/ae give <type> ...`
+        // (see GiveCommand); the individual Give*Command classes are its subcommands, not
+        // standalone top-level commands.
         registerCommand(new HelpCommand(main));
         registerCommand(new ReloadCommand(main));
-        registerCommand(new GiveEnchantCommand(main));
-        registerCommand(new GiveOblivionShardCommand(main));
-        registerCommand(new GiveOracleOfEnchantmentCommand(main));
-        registerCommand(new GiveAltarOfCirceCommand(main));
-        registerCommand(new GiveRandomEnchantCommand(main));
-        registerCommand(new GiveScrapOfCirceCommand(main));
         registerCommand(new UpgradeCommand(main));
         registerCommand(new EnchantListCommand(main));
         registerCommand(new GuideCommand(main));
-        registerCommand(new GiveCircesEmberCommand(main));
-        registerCommand(new GiveCircesAnvilCommand(main));
         registerCommand(new GiveCommand(main));
     }
 

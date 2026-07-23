@@ -10,7 +10,7 @@
 #
 #    This plugin was made by _Ghillie
 #
-#    Plugin Version 1.4.0
+#    Plugin Version 1.4.1
 #
 #    Discord: https://discord.gg/f9swPR7NnV
 #
@@ -33,7 +33,7 @@ Footer: "&c&m&l-----------------------------------------"
 #    - Give Enchant ........................ Line ~99
 #    - Give Oblivion Shard ................. Line ~146
 #    - Give Oracle of Enchantment .......... Line ~175
-#    - Give Oracle's Table ................. Line ~204
+#    - Give Altar of Circe ................. Line ~204
 #    - Give Scrap of Circe ................. Line ~233
 #    - Give Random Enchant ................. Line ~262
 #    - Enchant List ........................ Line ~291
@@ -54,8 +54,6 @@ Footer: "&c&m&l-----------------------------------------"
 #  Shard Item Messages ..................... Line ~648
 #  Oracle Item Sounds ...................... Line ~694
 #  Oracle Item Messages .................... Line ~708
-#  Oracle Table Item Sounds ................ Line ~734
-#  Oracle Table Item Messages .............. Line ~748
 #  Scrap of Circe Weave Sounds ............. Line ~774
 #  Scrap of Circe Weave Messages ........... Line ~794
 # =====================================================================
@@ -103,7 +101,7 @@ Command-Messages:
   Command-Messages-GiveEnchant-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae giveenchant &e<player> <enchant> <level> <amount>"
+    - "&c● &7Usage: &c/ae give enchant &e<player> <enchant> <level> <amount>"
     - ""
     - "{footer}"
   Command-Messages-GiveEnchant-PlayerNotFound-Message:
@@ -150,7 +148,7 @@ Command-Messages:
   Command-Messages-GiveOblivionShard-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae giveshard &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give shard &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-GiveOblivionShard-PlayerNotFound-Message:
@@ -179,7 +177,7 @@ Command-Messages:
   Command-Messages-OracleOfEnchantment-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae giveoraclebook &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give oracle &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-OracleOfEnchantment-PlayerNotFound-Message:
@@ -202,28 +200,28 @@ Command-Messages:
     - "{footer}"
   ##########################################################
   #                                                        #
-  #               GIVE Oracle's Table MESSAGES             #
+  #              GIVE ALTAR OF CIRCE MESSAGES              #
   #                                                        #
   ##########################################################
-  Command-Messages-OracleTable-Usage-Message:
+  Command-Messages-AltarOfCirceItem-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae giveoracletable &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give altar &e<player> <amount>"
     - ""
     - "{footer}"
-  Command-Messages-OracleTable-PlayerNotFound-Message:
+  Command-Messages-AltarOfCirceItem-PlayerNotFound-Message:
     - "{header}"
     - ""
     - "&c● &7Player Not Found"
     - ""
     - "{footer}"
-  Command-Messages-OracleTable-InvalidAmount-Message:
+  Command-Messages-AltarOfCirceItem-InvalidAmount-Message:
     - "{header}"
     - ""
     - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
     - ""
     - "{footer}"
-  Command-Messages-OracleTable-AmountRange-Message:
+  Command-Messages-AltarOfCirceItem-AmountRange-Message:
     - "{header}"
     - ""
     - "&c● &7You can only spawn in &e1-64 &7at a time."
@@ -237,7 +235,7 @@ Command-Messages:
   Command-Messages-ScrapOfCirceWeave-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae givescrapofcirce &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give scrap &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-ScrapOfCirceWeave-PlayerNotFound-Message:
@@ -266,7 +264,7 @@ Command-Messages:
   Command-Messages-GiveRandomEnchant-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae giverandom &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give random &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-GiveRandomEnchant-PlayerNotFound-Message:
@@ -306,7 +304,7 @@ Command-Messages:
   Command-Messages-CircesEmber-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae givecircesember &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give ember &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-CircesEmber-PlayerNotFound-Message:
@@ -329,13 +327,71 @@ Command-Messages:
     - "{footer}"
   ##########################################################
   #                                                        #
+  #             GIVE CIRCE'S BRAND MESSAGES                #
+  #                                                        #
+  ##########################################################
+  Command-Messages-CircesBrand-Usage-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Usage: &c/ae give brand &e<player> <amount>"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesBrand-PlayerNotFound-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesBrand-InvalidAmount-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  Command-Messages-CircesBrand-AmountRange-Message:
+    - "{header}"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  ##########################################################
+  #                                                        #
+  #          GIVE CIRCE'S GRIMOIRE MESSAGES                #
+  #                                                        #
+  ##########################################################
+  Command-Messages-CircesGrimoire-Usage-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Usage: &c/ae give grimoire &e<player> <amount>"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesGrimoire-PlayerNotFound-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Player Not Found"
+    - ""
+    - "{footer}"
+  Command-Messages-CircesGrimoire-InvalidAmount-Message:
+    - "{header}"
+    - ""
+    - "&c● &7Invalid Amount, You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  Command-Messages-CircesGrimoire-AmountRange-Message:
+    - "{header}"
+    - ""
+    - "&c● &7You can only spawn in &e1-64 &7at a time."
+    - ""
+    - "{footer}"
+  ##########################################################
+  #                                                        #
   #             GIVE CIRCE'S ANVIL MESSAGES                #
   #                                                        #
   ##########################################################
   Command-Messages-CircesAnvil-Usage-Message:
     - "{header}"
     - ""
-    - "&c● &7Usage: &c/ae givecircesanvil &e<player> <amount>"
+    - "&c● &7Usage: &c/ae give anvil &e<player> <amount>"
     - ""
     - "{footer}"
   Command-Messages-CircesAnvil-PlayerNotFound-Message:
@@ -379,29 +435,32 @@ Help-Messages:
     - "&c● &7Reload: &c/ae reload"
     - "&c● &7Reloads the Atlas Enchants configs"
     - ""
-    - "&c● &7Give Enchant: &c/ae giveenchant &e<player> <name> <level> <amount>"
+    - "&c● &7Give Enchant: &c/ae give enchant &e<player> <name> <level> <amount>"
     - "&c● &7Gives a custom enchant to a player"
     - ""
-    - "&c● &7Give Random Enchant: &c/ae giverandomenchant &e<player> <amount>"
+    - "&c● &7Give Random Enchant: &c/ae give random &e<player> <amount>"
     - "&c● &7Gives a random custom enchant to a player"
     - ""
-    - "&c● &7Give Shard: &c/ae giveshard &e<player> <amount>"
+    - "&c● &7Give Shard: &c/ae give shard &e<player> <amount>"
     - "&c● &7Gives an oblivion shard to a player"
     - ""
-    - "&c● &7Give Oracle Book: &c/ae giveoraclebook &e<player> <amount>"
+    - "&c● &7Give Oracle Book: &c/ae give oracle &e<player> <amount>"
     - "&c● &7Gives an oracle book to a player"
     - ""
-    - "&c● &7Give Altar of Circe: &c/ae givealtarofcirce &e<player> <amount>"
+    - "&c● &7Give Altar of Circe: &c/ae give altar &e<player> <amount>"
     - "&c● &7Gives an Altar of Circe to a player"
     - ""
-    - "&c● &7Give Scrap of Circe: &c/ae givescrapofcirce &e<player> <amount>"
+    - "&c● &7Give Scrap of Circe: &c/ae give scrap &e<player> <amount>"
     - "&c● &7Gives a Scrap of Circe's Weave to a player"
     - ""
-    - "&c● &7Give Circe's Ember: &c/ae givecircesember &e<player> <amount>"
+    - "&c● &7Give Circe's Ember: &c/ae give ember &e<player> <amount>"
     - "&c● &7Gives a Circe's Ember to a player"
     - ""
-    - "&c● &7Give Circe's Anvil: &c/ae givecircesanvil &e<player> <amount>"
+    - "&c● &7Give Circe's Anvil: &c/ae give anvil &e<player> <amount>"
     - "&c● &7Gives a Circe's Anvil to a player"
+    - ""
+    - "&c● &7Give Grimoire: &c/ae give grimoire &e<player> <amount>"
+    - "&c● &7Gives Circe's Grimoire (recipe book) to a player"
     - ""
     - "&c&m&l-----------------------------------------"
 
@@ -423,6 +482,114 @@ CircesAnvilSounds:
     Sound: BLOCK_ANVIL_USE
     Volume: 1
     Pitch: 1
+
+#The sounds that play while using a Circe's Brand.
+CircesBrandSounds:
+  #Plays when the player right-clicks the Brand and the anvil opens.
+  OpenBrand:
+    Toggle: true
+    Sound: BLOCK_ANVIL_PLACE
+    Volume: 1
+    Pitch: 1
+  #Plays when the player takes the renamed item out and the Brand is consumed.
+  RenameItem:
+    Toggle: true
+    Sound: BLOCK_ANVIL_USE
+    Volume: 1
+    Pitch: 1
+
+#The messages sent while using a Circe's Brand.
+CircesBrandMessages:
+  #Sent when the player successfully renames an item.
+  RenameItem:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7Your item has been &a&lBranded&7."
+      - ""
+      - "{footer}"
+  #Sent right after the Brand is used, telling the player what to do next.
+  Prompt:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7Hold the item you want renamed in your &emain hand&7,"
+      - "  &7then &etype the new name in chat&7."
+      - ""
+      - "&c● &7Colours: &eUse &c&§cc &efor red, &4&§44 &efor dark red, etc."
+      - "&c● &7Type &ecancel &7to abort and get your Brand back."
+      - ""
+      - "{footer}"
+  #Sent when the player types the cancel word.
+  CancelledRename:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7Branding &ccancelled&7, your Brand has been returned."
+      - ""
+      - "{footer}"
+  #Sent when the player runs out of time without typing a name.
+  TimedOut:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7You took too long, your Brand has been returned."
+      - ""
+      - "{footer}"
+  #Sent when the player right-clicks a second Brand while already branding.
+  AlreadyBranding:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7You are &calready &7branding an item."
+      - "&c● &7Type the name in chat, or type &ecancel&7."
+      - ""
+      - "{footer}"
+  #Sent when the item in the player's main hand cannot be renamed.
+  InvalidItem:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7You must hold a &csingle &7renameable item in your main hand."
+      - "&c● &7Your Brand has been returned."
+      - ""
+      - "{footer}"
+  #Sent when the typed name is empty or longer than CircesBrand-Max-Name-Length.
+  InvalidName:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7That name is &cempty &7or &ctoo long&7."
+      - "&c● &7Your Brand has been returned."
+      - ""
+      - "{footer}"
+  #Sent when the typed name contains a word from CircesBrand-Blocked-Words.
+  BlockedName:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7That name contains a &cblocked word&7."
+      - "&c● &7Your Brand has been returned."
+      - ""
+      - "{footer}"
+  #Sent when a player right-clicks a Brand while Brands are disabled.
+  DisabledBrand:
+    Toggle: true
+    Message:
+      - "{header}"
+      - ""
+      - "&c● &7You &cCannot &7use this item"
+      - "&c● &7Because &cBrand's &7are currently &cDisabled&7."
+      - ""
+      - "{footer}"
 
 EnchantItems:
   #Type of Item the Enchantments will be.
@@ -450,6 +617,11 @@ EnchantItems:
   #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
   #if false then it will check Godly first and make its way down to Rares.
   EnchantItem-Flip-List: true
+  #TESTING ONLY. When true, loot generation and Wandering Trader spawns log their
+  #spawn rolls (who/what triggered it, the configured chance, the rolled value, and
+  #pass/fail) to the SERVER CONSOLE only (never player chat) so you can see the odds in
+  #action. Leave false in production - it is spammy.
+  EnchantItem-Debug-Odds: true
 
 #Settings for Upgrading Enchantments.
 UpgradeEnchantSettings:
@@ -729,47 +901,7 @@ OracleItemMessages:
       -  ""
       -  "{footer}"
 
-#The sound that will play when the player opens the Oracle.
-#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
-OracleTableItemSounds:
-  #------------------OPENING ORACLE SOUNDS------------------#
-  Opening:
-    Toggle: true
-    Sound: BLOCK_AMETHYST_BLOCK_BREAK
-    Volume: 1
-    Pitch: 0.1
-  #------------------DISABLED Oracle SOUNDS------------------#
-  DisabledOracle:
-    Toggle: true
-    Sound: BLOCK_ANVIL_LAND
-    Volume: 1
-    Pitch: 0.1
-
-OracleTableItemMessages:
-  #------------------OPENING ORACLE Message------------------#
-  Opening:
-    Toggle: true
-    Message:
-      -  "{header}"
-      -  ""
-      -  "&c● &7You &a&lSuccessfully &7Opening: {oracleName}"
-      -  ""
-      -  "&c● &7Learn new knowledge now!"
-      -  ""
-      -  "{footer}"
-  #------------------ORACLE DISABLED Message------------------#
-  DisabledOracle:
-    Toggle: true
-    Message:
-      -  "{header}"
-      -  ""
-      -  "&c● &7You cannot open: &e&l{oracleName}"
-      -  ""
-      -  "&c● &7Because &cOracle's &7are currently &cDisabled&7."
-      -  ""
-      -  "{footer}"
-
-#The sound that will play when the player opens the Oracle.
+#The sound that will play when the player scraps an enchantment in a cauldron.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
 ScrapOfCirceWeaveSounds:
   #------------------SCRAPPED A ENCHANTMENT SOUNDS------------------#

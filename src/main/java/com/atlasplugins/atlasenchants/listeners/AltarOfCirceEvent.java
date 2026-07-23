@@ -39,9 +39,9 @@ public class AltarOfCirceEvent implements Listener {
     {
         if(e.getRecipe() == null) return;
 
-        boolean isOracleTableCraftingEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Crafting-Enabled");
+        boolean isAltarOfCirceCraftingEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Crafting-Enabled");
 
-        if(!isOracleTableCraftingEnabled) return;
+        if(!isAltarOfCirceCraftingEnabled) return;
 
         ItemStack result = e.getRecipe().getResult();
         if(result == null || !result.hasItemMeta()) return;

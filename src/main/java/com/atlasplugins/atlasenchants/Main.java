@@ -13,6 +13,7 @@ import com.atlasplugins.atlasenchants.listeners.AltarOfCirceCraftingRecipe;
 import com.atlasplugins.atlasenchants.listeners.AltarOfCirceEvent;
 import com.atlasplugins.atlasenchants.listeners.CircesAnvilCraftingRecipe;
 import com.atlasplugins.atlasenchants.listeners.CircesAnvilEvent;
+import com.atlasplugins.atlasenchants.listeners.CircesBrandEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
 import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
@@ -72,6 +73,18 @@ public final class Main extends JavaPlugin implements Listener {
         }
     }
 
+    // TESTING ONLY: log a spawn/odds roll to the server console (NOT player chat) so the odds
+    // are visible while testing. Gated behind EnchantItems.EnchantItem-Debug-Odds. Shared by the
+    // loot-chest spawner and the Wandering Trader so both report through one format.
+    // 'source' = where the roll happened (Loot/Trader), 'who' = who/what triggered it.
+    public void debugOddsRoll(String source, String who, String label, double roll, double chance, boolean passed) {
+        if (!getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Debug-Odds")) return;
+        String msg = color(String.format(
+                "&8[&bAE Debug&8] &7(%s) &f%s &7by &e%s&7: roll &e%.4f &7vs chance &e%.4f &7-> %s",
+                source, label, who, roll, chance, passed ? "&aPASS" : "&cFAIL"));
+        Bukkit.getConsoleSender().sendMessage(msg);
+    }
+
     // Glowing Stuff
     public GlowingEntities glowingEntities;
 
@@ -83,6 +96,7 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey customScrapOfCirceKeys;
     public static NamespacedKey customCircesEmberKeys;
     public static NamespacedKey customCircesAnvilKeys;
+    public static NamespacedKey customCircesBrandKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
     // Logs Placed Stuff
@@ -115,6 +129,10 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+
+        // Suppress vanilla "Named entity ... died: ..." console spam caused by
+        // enchants (e.g. Blessing of Knowledge) that name mobs to show a health bar.
+        com.atlasplugins.atlasenchants.utils.NamedEntityLogFilter.install();
 
         // check if placeholderAPI is present on the server.
         isPlaceholderAPIPresent = checkForPlaceholderAPI();
@@ -154,6 +172,7 @@ public final class Main extends JavaPlugin implements Listener {
         customScrapOfCirceKeys = new NamespacedKey(this, "Custom_ScrapOfCirce");
         customCircesEmberKeys = new NamespacedKey(this, "Custom_CircesEmber");
         customCircesAnvilKeys = new NamespacedKey(this, "Custom_CircesAnvil");
+        customCircesBrandKeys = new NamespacedKey(this, "Custom_CircesBrand");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
         // Initialize PlayerPlacedBlocksManager
@@ -211,10 +230,12 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new CreateCircesEmber(this), this);
         this.getServer().getPluginManager().registerEvents(new CreateCircesAnvil(this), this);
         this.getServer().getPluginManager().registerEvents(new CircesAnvilEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new CreateCircesBrand(this), this);
+        this.getServer().getPluginManager().registerEvents(new CircesBrandEvent(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Crafting Recipe
-        new AltarOfCirceCraftingRecipe(this).registerOracleTableRecipe();
+        new AltarOfCirceCraftingRecipe(this).registerAltarOfCirceRecipe();
         boolean isCircesAnvilCraftingEnabled = getEnchantmentsConfig().getBoolean("CircesAnvil.CircesAnvil-Crafting-Enabled", true);
         if (isCircesAnvilCraftingEnabled) {
             new CircesAnvilCraftingRecipe(this).registerCircesAnvilRecipe();
@@ -242,6 +263,8 @@ public final class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        com.atlasplugins.atlasenchants.utils.NamedEntityLogFilter.uninstall();
+
         glowingEntities.disable();
 
         // Save data to file on plugin disable

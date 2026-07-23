@@ -59,3 +59,18 @@ permissions:
   atlasenchants.givecircesanvil:
     description: Permission needed to use the give Circe's Anvil command.
     default: false
+  atlasenchants.givegrimoire:
+    description: Permission needed to use the give Circe's Grimoire command.
+    default: false
+  atlasenchants.givecircesbrand:
+    description: Permission needed to use the give Circe's Brand command.
+    default: false
+  atlasenchants.circesbrand.use:
+    description: Permission needed to open a Circe's Brand and rename an item.
+    default: true
+  atlasenchants.circesbrand.format:
+    description: >-
+      Permission needed to use the formatting codes &k &l &m &n &o in a Circe's Brand name.
+      Colour codes and hex colours never require this. Set to false to stop players making
+      unreadable item names with &k, which is a common item-scam vector on trading servers.
+    default: true
