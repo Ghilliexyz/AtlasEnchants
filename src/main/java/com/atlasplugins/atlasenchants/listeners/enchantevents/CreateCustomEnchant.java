@@ -25,8 +25,41 @@ public class CreateCustomEnchant implements Listener {
         this.main = main;
     }
 
+    /**
+     * Builds {@code enchantmentAmount} books and, when {@code p} is non-null, hands them over.
+     *
+     * <p>Each book is built separately so it gets its own enchant ID. Building one book and adding
+     * it repeatedly produced identical meta, which meant the books <em>stacked</em> - and applying
+     * a stack consumed all of it for a single enchant.
+     *
+     * @return one of the created books (with amount 1), for callers that only want the item.
+     */
     public ItemStack CreateCustomEnchantmentItem(String enchantmentName, int enchantmentLevel, int enchantmentAmount, Player p) {
-        ItemStack enchant = new ItemStack(Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem")));
+        ItemStack last = buildEnchantmentBook(enchantmentName, enchantmentLevel, p);
+
+        if (p != null) {
+            for (int i = 0; i < enchantmentAmount; i++) {
+                // A fresh book per iteration, so no two carry the same ID and they never stack.
+                ItemStack book = (i == 0) ? last : buildEnchantmentBook(enchantmentName, enchantmentLevel, p);
+                last = book;
+
+                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(book);
+
+                // If the inventory is full and the item could not be added, drop it at the player's feet
+                if (!remainingItems.isEmpty()) {
+                    for (ItemStack item : remainingItems.values()) {
+                        p.getWorld().dropItemNaturally(p.getLocation(), item);
+                    }
+                }
+            }
+        }
+
+        return last;
+    }
+
+    /** Builds a single enchant book with its own randomly generated enchant ID. */
+    private ItemStack buildEnchantmentBook(String enchantmentName, int enchantmentLevel, Player p) {
+        ItemStack enchant = new ItemStack(Main.getMaterial(main.getSettingsConfig().getString("EnchantItems.EnchantItem"), Material.ENCHANTED_BOOK));
         ItemMeta enchantMeta = enchant.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("Enchantments." + enchantmentName + ".Enchantment-Title");
@@ -56,21 +89,6 @@ public class CreateCustomEnchant implements Listener {
 
         enchantMeta.setLore(enchantmentLore);
         enchant.setItemMeta(enchantMeta);
-
-        // Add items to player's inventory if player is not null
-        if (p != null) {
-            for (int i = 0; i < enchantmentAmount; i++) {
-                // Check if there's space in the player's inventory
-                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(enchant);
-
-                // If the inventory is full and the item could not be added, drop it at the player's feet
-                if (!remainingItems.isEmpty()) {
-                    for (ItemStack item : remainingItems.values()) {
-                        p.getWorld().dropItemNaturally(p.getLocation(), item);
-                    }
-                }
-            }
-        }
 
         return enchant;
     }

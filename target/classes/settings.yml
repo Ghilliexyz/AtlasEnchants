@@ -600,23 +600,25 @@ EnchantItems:
   #Default Spawn Chance = 0.10 (0.10 = 10% chance that it will allow the spawning system to loop through all the enchants)
   #if the spawning chance fails no enchantment attempt to be spawned.
   EnchantItem-Spawn-Chance: 0.10
-  #A list of all rarity's in the plugin. (0.5 = 50%)
+  #Rarity WEIGHTS used once the spawn chance above has passed. A single roll picks exactly one
+  #rarity, with each rarity's chance equal to its weight divided by the total of all weights.
+  #Bigger weight = more likely. The numbers do NOT have to add up to 1 - they are relative.
+  #A weight of 0 makes that rarity impossible. (With the defaults below the total is 1.01, so each
+  #weight is very close to its real percentage, e.g. DIVINE ~= 0.01 / 1.01 = ~0.99%.)
   EnchantItem-Rarity-List:
-    #Chance to get a Divine enchantment. default is 0.01 so you have a 1 in 100 chance.
+    #Weights below sum to 1.00, so each value is also the % chance of that tier.
+    #Weight for Divine enchantments. ~1% (1 enchant, so ~1 in 100 books).
     DIVINE: 0.01
-    #Chance to get a Godly enchantment.
-    GODLY: 0.15
-    #Chance to get a Legendary enchantment.
-    LEGENDARY: 0.20
-    #Chance to get an Epic enchantment.
-    EPIC: 0.25
-    #Chance to get a Rare enchantment.
-    RARE: 0.40
-    #Chance to get a Trash book. default is 0 because it's only meant to be obtainable via the Altar Of Circe
+    #Weight for Godly enchantments. ~5% (4 enchants, so ~1 in 20 books).
+    GODLY: 0.05
+    #Weight for Legendary enchantments. ~11% (6 enchants, so ~1 in 9 books).
+    LEGENDARY: 0.11
+    #Weight for Epic enchantments. ~28%.
+    EPIC: 0.28
+    #Weight for Rare enchantments. ~55%.
+    RARE: 0.55
+    #Weight for Trash books. default is 0 because they're only meant to be obtainable via the Altar Of Circe.
     TRASH: 0
-  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
-  #if false then it will check Godly first and make its way down to Rares.
-  EnchantItem-Flip-List: true
   #TESTING ONLY. When true, loot generation and Wandering Trader spawns log their
   #spawn rolls (who/what triggered it, the configured chance, the rolled value, and
   #pass/fail) to the SERVER CONSOLE only (never player chat) so you can see the odds in
@@ -627,6 +629,14 @@ EnchantItems:
 UpgradeEnchantSettings:
   #The number of matching enchantment books required to upgrade. Min: 1, Max: 10.
   Required-Books: 10
+  #How upgrading charges players XP.
+  #  true  = charge experience LEVELS (the green number) using Upgrade-Cost-Levels below.
+  #  false = charge raw XP POINTS using Upgrade-Cost-XP below.
+  Upgrade-Cost-Use-Levels: true
+  #LEVELS cost (used when Upgrade-Cost-Use-Levels is true). Set to 0 to make upgrading free.
+  Upgrade-Cost-Levels: 10
+  #RAW XP POINTS cost (used when Upgrade-Cost-Use-Levels is false). Set to 0 to make upgrading free.
+  Upgrade-Cost-XP: 500
 
 #The sound that will play when the player applies a new Upgrade to an item.
 #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
@@ -690,6 +700,50 @@ UpgradeEnchantMessages:
       -  "&c● &7Reason: &eYour enchantment is already at the highest rarity (GODLY) and cannot be upgraded&7."
       -  ""
       -  "{footer}"
+  #------------------UPGRADING LEVELS TAKEN Message (used when Upgrade-Cost-Use-Levels is true)------------------#
+  LevelsTaken:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7Upgrading took &e&l{levelCost} &7levels."
+      -  ""
+      -  "&c● &7You now have &e&l{playerLevel} &7levels."
+      -  ""
+      -  "{footer}"
+  #------------------UPGRADING NOT ENOUGH LEVELS Message (used when Upgrade-Cost-Use-Levels is true)------------------#
+  NotEnoughLevels:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot upgrade."
+      -  ""
+      -  "&c● &7Reason: &eIt costs &c&l{levelCost} &7levels and you only have &c&l{playerLevel}&7."
+      -  ""
+      -  "{footer}"
+  #------------------UPGRADING XP TAKEN Message (used when Upgrade-Cost-Use-Levels is false)------------------#
+  XPTaken:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7Upgrading took &e&l{xpCost} &7XP."
+      -  ""
+      -  "&c● &7You now have &e&l{playerXP} &7XP."
+      -  ""
+      -  "{footer}"
+  #------------------UPGRADING NOT ENOUGH XP Message (used when Upgrade-Cost-Use-Levels is false)------------------#
+  NotEnoughXP:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot upgrade."
+      -  ""
+      -  "&c● &7Reason: &eIt costs &c&l{xpCost} &7XP and you only have &c&l{playerXP}&7."
+      -  ""
+      -  "{footer}"
   #------------------UPGRADING DISABLED Message------------------#
   DisabledMenu:
     Toggle: true
@@ -730,6 +784,13 @@ EnchantItemSounds:
     Sound: ENTITY_IRON_GOLEM_REPAIR
     Volume: 1
     Pitch: 0.1
+  #------------------WRONG ITEM TYPE SOUNDS------------------#
+  #Played when a book is dropped onto an item the enchant cannot go on.
+  NotApplicable:
+    Toggle: true
+    Sound: ENTITY_VILLAGER_NO
+    Volume: 1
+    Pitch: 1
   #------------------BLACK LISTED SOUNDS------------------#
   Blacklisted:
     Toggle: true
@@ -792,6 +853,21 @@ EnchantItemMessages:
       -  "&c● &7You cannot apply: &e&l{disabledEnchantName} &7lvl: &e&l{disabledEnchantLevel}"
       -  ""
       -  "&c● &7Because that &cEnchant &7is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
+  #------------------WRONG ITEM TYPE Message------------------#
+  #Shown when a book is dropped onto an item the enchant cannot go on
+  #(e.g. a pickaxe enchant onto a helmet). {applicableItems} lists what it does fit.
+  NotApplicable:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot apply: &e&l{enchantName} &7lvl: &e&l{enchantLevel}"
+      -  ""
+      -  "&c● &7Because it does not fit on a &c&l{itemName}&7."
+      -  ""
+      -  "&c● &7It can go on: &e{applicableItems}"
       -  ""
       -  "{footer}"
 
@@ -953,5 +1029,67 @@ ScrapOfCirceWeaveMessages:
       -  "&c● &7You cannot scrap: &e&l{enchantmentName} {enchantmentLevel}"
       -  ""
       -  "&c● &7Because &cScrapping &7is currently &cDisabled&7."
+      -  ""
+      -  "{footer}"
+
+#The sound that will play when a player enchants at the Altar Of Circe.
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html < list of all sounds in minecraft.
+AltarOfCirceSounds:
+  #------------------LEVELS TAKEN SOUNDS------------------#
+  LevelsTaken:
+    Toggle: true
+    Sound: ENTITY_PLAYER_LEVELUP
+    Volume: 1
+    Pitch: 0.1
+  #------------------NOT ENOUGH LEVELS SOUNDS------------------#
+  NotEnoughLevels:
+    Toggle: true
+    Sound: BLOCK_ANVIL_LAND
+    Volume: 1
+    Pitch: 0.1
+
+AltarOfCirceMessages:
+  #------------------LEVELS TAKEN Message------------------#
+  LevelsTaken:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7The Altar took &e&l{levelCost} &7levels."
+      -  ""
+      -  "&c● &7You now have &e&l{playerLevel} &7levels."
+      -  ""
+      -  "{footer}"
+  #------------------NOT ENOUGH LEVELS Message------------------#
+  NotEnoughLevels:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot use the &d&lAltar Of Circe&7."
+      -  ""
+      -  "&c● &7Because it costs &c&l{levelCost} &7levels and you only have &c&l{playerLevel}&7."
+      -  ""
+      -  "{footer}"
+  #------------------XP TAKEN Message (used when AltarOfCirce-Cost-Use-Levels is false)------------------#
+  XPTaken:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7The Altar took &e&l{xpCost} &7XP."
+      -  ""
+      -  "&c● &7You now have &e&l{playerXP} &7XP."
+      -  ""
+      -  "{footer}"
+  #------------------NOT ENOUGH XP Message (used when AltarOfCirce-Cost-Use-Levels is false)------------------#
+  NotEnoughXP:
+    Toggle: true
+    Message:
+      -  "{header}"
+      -  ""
+      -  "&c● &7You cannot use the &d&lAltar Of Circe&7."
+      -  ""
+      -  "&c● &7Because it costs &c&l{xpCost} &7XP and you only have &c&l{playerXP}&7."
       -  ""
       -  "{footer}"

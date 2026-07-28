@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateCircesEmber implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateCircesEmber(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateCircesEmberItem(int emberAmount, Player p) {
-        ItemStack ember = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("CircesEmber.CircesEmber-Item")));
+        ItemStack ember = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("CircesEmber.CircesEmber-Item"), Material.BLAZE_POWDER));
         ItemMeta emberMeta = ember.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("CircesEmber.CircesEmber-DisplayName");
@@ -50,10 +48,8 @@ public class CreateCircesEmber implements Listener {
             emberMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int emberID = random.nextInt();
-
         PersistentDataContainer pdc = emberMeta.getPersistentDataContainer();
-        pdc.set(Main.customCircesEmberKeys, PersistentDataType.STRING, "circes_ember:" + emberID);
+        pdc.set(Main.customCircesEmberKeys, PersistentDataType.STRING, "circes_ember");
 
         emberMeta.setLore(enchantmentLore);
         ember.setItemMeta(emberMeta);

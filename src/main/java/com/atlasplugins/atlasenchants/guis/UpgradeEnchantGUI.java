@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.guis;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.managers.ExperienceManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class UpgradeEnchantGUI extends Gui {
     public void setupItems() {
         // ---------- GLASS FILLER ---------- \\
         String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Filler-Title");
-        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Filler-Item"));
+        Material GlassConfigItem = Main.getMaterial(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Filler-Item"), Material.BLACK_STAINED_GLASS_PANE);
         ItemStack GlassItem = new ItemStack(GlassConfigItem);
         ItemMeta GlassItemMeta = GlassItem.getItemMeta();
         String GlassItemDisplayName = Main.color(GlassTitle).replace("{Player}", player.getName());
@@ -61,7 +62,7 @@ public class UpgradeEnchantGUI extends Gui {
 
         // ---------- Upgrade Enchant Btn ---------- \\
         String UpgradeAcceptableBtnTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Acceptable.Title");
-        Material UpgradeAcceptableBtnConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Acceptable.Item"));
+        Material UpgradeAcceptableBtnConfigItem = Main.getMaterial(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Acceptable.Item"), Material.ANVIL);
         ItemStack UpgradeAcceptableBtnItem = new ItemStack(UpgradeAcceptableBtnConfigItem);
         ItemMeta UpgradeAcceptableBtnItemMeta = UpgradeAcceptableBtnItem.getItemMeta();
         String UpgradeAcceptableBtnItemDisplayName = Main.color(UpgradeAcceptableBtnTitle).replace("{Player}", player.getName());
@@ -70,12 +71,52 @@ public class UpgradeEnchantGUI extends Gui {
         ArrayList<String> UpgradeAcceptableBtnLore = new ArrayList<>();
         for (String WorldInfo : main.getMenusConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Acceptable.Lore")) {
             String withPAPISet = main.setPlaceholders(player, WorldInfo);
-            UpgradeAcceptableBtnLore.add(Main.color(withPAPISet));
+            UpgradeAcceptableBtnLore.add(Main.color(withPAPISet)
+                    .replace("{upgradeCost}", getUpgradeCostDisplay()));
         }
         UpgradeAcceptableBtnItemMeta.setLore(UpgradeAcceptableBtnLore);
         UpgradeAcceptableBtnItemMeta.setDisplayName(Main.color(UpgradeAcceptableBtnItemDisplayNamePAPISet));
         UpgradeAcceptableBtnItem.setItemMeta(UpgradeAcceptableBtnItemMeta);
         inventory.setItem(40, UpgradeAcceptableBtnItem);
+
+        // ---------- Info Btn (2 slots left of the upgrade btn) ---------- \\
+        String InfoBtnTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Info.Title");
+        Material InfoBtnConfigItem = Main.getMaterial(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Info.Item"), Material.BOOK);
+        ItemStack InfoBtnItem = new ItemStack(InfoBtnConfigItem);
+        ItemMeta InfoBtnItemMeta = InfoBtnItem.getItemMeta();
+        String InfoBtnItemDisplayName = Main.color(InfoBtnTitle).replace("{Player}", player.getName());
+        String InfoBtnItemDisplayNamePAPISet = main.setPlaceholders(player, InfoBtnItemDisplayName);
+        if (InfoBtnItemMeta == null) return;
+        ArrayList<String> InfoBtnLore = new ArrayList<>();
+        for (String InfoLine : main.getMenusConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Info.Lore")) {
+            String withPAPISet = main.setPlaceholders(player, InfoLine);
+            InfoBtnLore.add(Main.color(withPAPISet)
+                    .replace("{requiredBooks}", String.valueOf(requiredBooks)));
+        }
+        InfoBtnItemMeta.setLore(InfoBtnLore);
+        InfoBtnItemMeta.setDisplayName(Main.color(InfoBtnItemDisplayNamePAPISet));
+        InfoBtnItem.setItemMeta(InfoBtnItemMeta);
+        inventory.setItem(38, InfoBtnItem);
+
+        // ---------- Cost Btn (2 slots right of the upgrade btn) ---------- \\
+        String CostBtnTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Cost.Title");
+        Material CostBtnConfigItem = Main.getMaterial(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Cost.Item"), Material.EXPERIENCE_BOTTLE);
+        ItemStack CostBtnItem = new ItemStack(CostBtnConfigItem);
+        ItemMeta CostBtnItemMeta = CostBtnItem.getItemMeta();
+        String CostBtnItemDisplayName = Main.color(CostBtnTitle).replace("{Player}", player.getName());
+        String CostBtnItemDisplayNamePAPISet = main.setPlaceholders(player, CostBtnItemDisplayName);
+        if (CostBtnItemMeta == null) return;
+        ArrayList<String> CostBtnLore = new ArrayList<>();
+        for (String CostLine : main.getMenusConfig().getStringList("UpgradeEnchant-Gui.UpgradeEnchant-Menu.Btn.Cost.Lore")) {
+            String withPAPISet = main.setPlaceholders(player, CostLine);
+            CostBtnLore.add(Main.color(withPAPISet)
+                    .replace("{upgradeCost}", getUpgradeCostDisplay())
+                    .replace("{costMode}", getCostModeDisplay()));
+        }
+        CostBtnItemMeta.setLore(CostBtnLore);
+        CostBtnItemMeta.setDisplayName(Main.color(CostBtnItemDisplayNamePAPISet));
+        CostBtnItem.setItemMeta(CostBtnItemMeta);
+        inventory.setItem(42, CostBtnItem);
 
         // ---------- Clear valid book slots based on Required-Books config ---------- \\
         for (int slot : validSlots) {
@@ -146,8 +187,11 @@ public class UpgradeEnchantGUI extends Gui {
                         // Upgrade logic
                         if (requiredRarity != null) {
                             String newRarity = getNextRarity(requiredRarity);
-                            //                            main.getLogger().info("next rarity: " + newRarity);
                             if (newRarity != null) {
+                                // Charge the XP cost first; if the player cannot pay, keep their books and stop.
+                                if (!chargeUpgradeCost()) {
+                                    return;
+                                }
                                 hasUpgraded = true;
                                 if (main.getSettingsConfig().getBoolean("UpgradeEnchantMessages.SuccessUpgrade.Toggle")) {
                                     // Send UpgradeMaxRarity Message in chat when called.
@@ -252,6 +296,109 @@ public class UpgradeEnchantGUI extends Gui {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Charges the player the configured XP cost for upgrading.
+     *
+     * @return true when the player paid (or the cost is 0), false when they cannot afford it.
+     */
+    private boolean chargeUpgradeCost() {
+        if (isChargingLevels()) {
+            // --- Experience LEVELS mode (the vanilla-style green number) ---
+            int levelCost = getLevelCost();
+            if (player.getLevel() < levelCost) {
+                sendCostMessage("UpgradeEnchantMessages.NotEnoughLevels",
+                        "{levelCost}", String.valueOf(levelCost),
+                        "{playerLevel}", String.valueOf(player.getLevel()));
+                playNotEnoughItemsSound();
+                return false;
+            }
+            if (levelCost > 0) {
+                player.setLevel(player.getLevel() - levelCost);
+                sendCostMessage("UpgradeEnchantMessages.LevelsTaken",
+                        "{levelCost}", String.valueOf(levelCost),
+                        "{playerLevel}", String.valueOf(player.getLevel()));
+            }
+        } else {
+            // --- Raw XP POINTS mode ---
+            int xpCost = getXpCost();
+            ExperienceManager xpManager = new ExperienceManager(main);
+            int playerXp = xpManager.getExp(player);
+            if (playerXp < xpCost) {
+                // Reuses the NotEnoughItems sound; the message is the XP-worded variant.
+                sendCostMessage("UpgradeEnchantMessages.NotEnoughXP",
+                        "{xpCost}", String.valueOf(xpCost),
+                        "{playerXP}", String.valueOf(playerXp));
+                playNotEnoughItemsSound();
+                return false;
+            }
+            if (xpCost > 0) {
+                xpManager.changeExp(player, -xpCost);
+                sendCostMessage("UpgradeEnchantMessages.XPTaken",
+                        "{xpCost}", String.valueOf(xpCost),
+                        "{playerXP}", String.valueOf(xpManager.getExp(player)));
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return true when upgrading charges experience levels, false when it charges raw XP points.
+     */
+    private boolean isChargingLevels() {
+        return main.getSettingsConfig().getBoolean("UpgradeEnchantSettings.Upgrade-Cost-Use-Levels", true);
+    }
+
+    private int getLevelCost() {
+        return Math.max(0, main.getSettingsConfig().getInt("UpgradeEnchantSettings.Upgrade-Cost-Levels", 10));
+    }
+
+    private int getXpCost() {
+        return Math.max(0, main.getSettingsConfig().getInt("UpgradeEnchantSettings.Upgrade-Cost-XP", 500));
+    }
+
+    /**
+     * @return the configured cost formatted for display (e.g. "10 Levels" or "500 XP").
+     */
+    private String getUpgradeCostDisplay() {
+        if (isChargingLevels()) {
+            return getLevelCost() + " Levels";
+        }
+        return getXpCost() + " XP";
+    }
+
+    /**
+     * @return the configured cost mode formatted for display (e.g. "experience levels" or "XP points").
+     */
+    private String getCostModeDisplay() {
+        return isChargingLevels() ? "experience levels" : "XP points";
+    }
+
+    /**
+     * Sends a toggled config message with placeholder replacement (e.g., "{levelCost}", "10").
+     */
+    private void sendCostMessage(String messageConfigPath, String... placeholders) {
+        if (!main.getSettingsConfig().getBoolean(messageConfigPath + ".Toggle")) return;
+        for (String line : main.getSettingsConfig().getStringList(messageConfigPath + ".Message")) {
+            String withPAPISet = main.setPlaceholders(player, line);
+            String message = Main.color(withPAPISet);
+            for (int i = 0; i + 1 < placeholders.length; i += 2) {
+                message = message.replace(placeholders[i], placeholders[i + 1]);
+            }
+            player.sendMessage(message);
+        }
+    }
+
+    private void playNotEnoughItemsSound() {
+        boolean NotEnoughItemsPlaySound = main.getSettingsConfig().getBoolean("UpgradeEnchantSounds.NotEnoughItems.Toggle");
+        if (NotEnoughItemsPlaySound) {
+            Sound NotEnoughItemsSound = Main.getSound(main.getSettingsConfig().getString("UpgradeEnchantSounds.NotEnoughItems.Sound"));
+            float NotEnoughItemsVolume = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.NotEnoughItems.Volume");
+            float NotEnoughItemsPitch = (float) main.getSettingsConfig().getDouble("UpgradeEnchantSounds.NotEnoughItems.Pitch");
+
+            player.playSound(player.getLocation(), NotEnoughItemsSound, NotEnoughItemsVolume, NotEnoughItemsPitch);
         }
     }
 

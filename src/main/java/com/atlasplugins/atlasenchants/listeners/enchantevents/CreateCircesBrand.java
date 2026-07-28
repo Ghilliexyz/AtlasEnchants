@@ -14,12 +14,13 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateCircesBrand implements Listener {
 
+    /** PDC marker shared by every Brand, so they all stack together. */
+    private static final String BRAND_TAG = "circes_brand";
+
     private Main main;
-    private final Random random = new Random();
 
     public CreateCircesBrand(Main main) {
         this.main = main;
@@ -28,7 +29,7 @@ public class CreateCircesBrand implements Listener {
     public ItemStack CreateCircesBrandItem(int brandAmount, Player p) {
         Material brandMaterial;
         try {
-            brandMaterial = Material.valueOf(main.getEnchantmentsConfig().getString("CircesBrand.CircesBrand-Item", "NAME_TAG").toUpperCase());
+            brandMaterial = Main.getMaterial(main.getEnchantmentsConfig().getString("CircesBrand.CircesBrand-Item", "NAME_TAG"), Material.NAME_TAG);
         } catch (IllegalArgumentException ex) {
             brandMaterial = Material.NAME_TAG;
         }
@@ -57,22 +58,22 @@ public class CreateCircesBrand implements Listener {
             brandMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int brandID = random.nextInt();
-
+        // A constant tag value, deliberately not a per-item random ID: two Brands only stack when
+        // their meta is identical, and a unique ID per item would make every Brand its own stack.
         PersistentDataContainer pdc = brandMeta.getPersistentDataContainer();
-        pdc.set(Main.customCircesBrandKeys, PersistentDataType.STRING, "circes_brand:" + brandID);
+        pdc.set(Main.customCircesBrandKeys, PersistentDataType.STRING, BRAND_TAG);
 
         brandMeta.setLore(brandLore);
         brand.setItemMeta(brandMeta);
 
         if (p != null) {
-            for (int i = 0; i < brandAmount; i++) {
-                HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(brand);
-                if (!remainingItems.isEmpty()) {
-                    for (ItemStack item : remainingItems.values()) {
-                        p.getWorld().dropItemNaturally(p.getLocation(), item);
-                    }
-                }
+            ItemStack toGive = brand.clone();
+            toGive.setAmount(Math.max(1, brandAmount));
+
+            // addItem splits across stacks itself, so one call covers any amount.
+            HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(toGive);
+            for (ItemStack item : remainingItems.values()) {
+                p.getWorld().dropItemNaturally(p.getLocation(), item);
             }
         }
 

@@ -68,7 +68,7 @@ public class EnchantRarityListGUI extends Gui {
         raritySelected = GuiManager.getRarity(player.getUniqueId());
 
         // Back button
-        ItemStack backBtn = new ItemStack(Material.valueOf(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Back-Button.Material")));
+        ItemStack backBtn = new ItemStack(Main.getMaterial(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Back-Button.Material"), Material.RED_STAINED_GLASS_PANE));
         ItemMeta backMeta = backBtn.getItemMeta();
         backMeta.setDisplayName(Main.color(main.getMenusConfig().getString("EnchantList-Gui.EnchantList-Menu.Back-Button.Title")));
 

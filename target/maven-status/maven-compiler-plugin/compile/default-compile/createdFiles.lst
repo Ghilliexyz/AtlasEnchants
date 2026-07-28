@@ -21,13 +21,11 @@ com\atlasplugins\atlasenchants\Metrics$DrilldownPie.class
 com\atlasplugins\atlasenchants\guis\GuiListener.class
 com\atlasplugins\atlasenchants\guis\UpgradeEnchantGUI.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect.class
-com\atlasplugins\atlasenchants\managers\LogsPlacedManager.class
 com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipEvent$ArmorType.class
 com\atlasplugins\atlasenchants\commands\CommandRouter.class
 com\atlasplugins\atlasenchants\enchants\armor\Asclepius.class
 com\atlasplugins\atlasenchants\guis\EnchantListGUI.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCircesBrand.class
-com\atlasplugins\atlasenchants\managers\BlockRadiusFinder.class
 com\atlasplugins\atlasenchants\managers\ExperienceManager.class
 com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyShard.class
@@ -59,7 +57,6 @@ com\atlasplugins\atlasenchants\listeners\CircesBrandEvent.class
 com\atlasplugins\atlasenchants\commands\users\GuideCommand.class
 com\atlasplugins\atlasenchants\commands\users\ReloadCommand.class
 com\atlasplugins\atlasenchants\guis\GuiManager.class
-com\atlasplugins\atlasenchants\managers\OresPlacedManager.class
 com\atlasplugins\atlasenchants\commands\users\GiveRecipeBookCommand.class
 com\atlasplugins\atlasenchants\guis\GuideGUI.class
 com\atlasplugins\atlasenchants\commands\users\GiveCircesEmberCommand.class
@@ -68,6 +65,7 @@ com\atlasplugins\atlasenchants\listeners\CauldronEvent.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\CreateRecipeBook.class
 com\atlasplugins\atlasenchants\enchants\weapons\Extractor.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.class
+com\atlasplugins\atlasenchants\listeners\enchantevents\RarityRoller.class
 com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.class
 com\atlasplugins\atlasenchants\enchants\weapons\IceAspect$1.class
 com\atlasplugins\atlasenchants\listeners\enchantevents\LootTableEvent.class
@@ -81,6 +79,7 @@ com\atlasplugins\atlasenchants\guis\CraftingRecipeGUI.class
 com\atlasplugins\atlasenchants\commands\users\HelpCommand.class
 com\atlasplugins\atlasenchants\commands\users\GiveCircesAnvilCommand.class
 com\atlasplugins\atlasenchants\enchants\armor\BlessingofKnowledge.class
+com\atlasplugins\atlasenchants\listeners\blockevents\ChainBlockBreakEvent.class
 com\atlasplugins\atlasenchants\enchants\tools\Regrowth.class
 com\atlasplugins\atlasenchants\commands\users\GiveCommand.class
 com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.class
@@ -90,7 +89,6 @@ com\atlasplugins\atlasenchants\Metrics$JsonObjectBuilder$JsonObject.class
 com\atlasplugins\atlasenchants\commands\users\GiveOracleOfEnchantmentCommand.class
 com\atlasplugins\atlasenchants\utils\EnchantUtils$EnchantData.class
 com\atlasplugins\atlasenchants\enchants\weapons\Stunning$1.class
-com\atlasplugins\atlasenchants\managers\CircesAnvilManager.class
 com\atlasplugins\atlasenchants\enchants\armor\Rush.class
 com\atlasplugins\atlasenchants\listeners\AltarOfCirceEvent.class
 com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.class
@@ -100,6 +98,7 @@ com\atlasplugins\atlasenchants\enchants\weapons\Propel.class
 com\atlasplugins\atlasenchants\enchants\weapons\Hunter.class
 com\atlasplugins\atlasenchants\listeners\CircesBrandEvent$PendingRename.class
 com\atlasplugins\atlasenchants\Metrics$CustomChart.class
+com\atlasplugins\atlasenchants\enchants\tools\SafeMiner$RecentBreak.class
 com\atlasplugins\atlasenchants\Metrics$MetricsBase.class
 com\atlasplugins\atlasenchants\utils\EnchantUtils.class
 com\atlasplugins\atlasenchants\listeners\AltarOfCirceCraftingRecipe.class

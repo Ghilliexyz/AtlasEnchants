@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateOracleBook implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateOracleBook(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateOracleItem(int oracleAmount, Player p) {
-        ItemStack oracle = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Item")));
+        ItemStack oracle = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Item"), Material.WRITTEN_BOOK));
         ItemMeta oracleMeta = oracle.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-DisplayName");
@@ -50,10 +48,7 @@ public class CreateOracleBook implements Listener {
             oracleMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int oracleID = random.nextInt();
-
         PersistentDataContainer pdc = oracleMeta.getPersistentDataContainer();
-//        pdc.set(Main.customOracleKeys, PersistentDataType.STRING, "Oracle" + ":" + oracleID);
         pdc.set(Main.customOracleBookKeys, PersistentDataType.STRING, "oracle_book");
 
         oracleMeta.setLore(enchantmentLore);

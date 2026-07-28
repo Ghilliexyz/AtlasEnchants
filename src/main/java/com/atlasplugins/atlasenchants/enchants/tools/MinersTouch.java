@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.blockevents.ChainBlockBreakEvent;
 import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -53,6 +54,9 @@ public class MinersTouch implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         if(e.isCancelled()) return;
+        // Only the block the player actually struck should mint a spawner. Without this, adding
+        // SPAWNER to a chain enchant's block list would hand out one spawner per block in the vein.
+        if(e instanceof ChainBlockBreakEvent) return;
         //Grabbing the player
         Player p = e.getPlayer();
         // Grabbing the broken block
@@ -135,8 +139,18 @@ public class MinersTouch implements Listener {
                     fakeSpawnerMeta.setLore(fakeSpawnerLore);
                     fakeSpawner.setItemMeta(fakeSpawnerMeta);
 
-                    // Drop the spawner item on the ground
-                    blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), fakeSpawner);
+                    // Hand the spawner over. Safe Miner redirects drops through BlockDropItemEvent,
+                    // which a manually spawned item entity never passes through - and a broken
+                    // spawner has no vanilla drops, so that event doesn't fire for it at all.
+                    // Safe Miner therefore has to be honoured here explicitly.
+                    if (hasSafeMinerEnchant(p.getInventory().getItemInMainHand())) {
+                        for (ItemStack leftover : p.getInventory().addItem(fakeSpawner).values()) {
+                            blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), leftover);
+                        }
+                    } else {
+                        // Drop the spawner item on the ground
+                        blockBroken.getWorld().dropItemNaturally(blockBroken.getLocation(), fakeSpawner);
+                    }
 
                     // Particle Settings Controlled Via Config
                     // Get the bool to see if the user wants to display the particles
@@ -165,6 +179,12 @@ public class MinersTouch implements Listener {
                 }
             }
         }
+    }
+
+    private boolean hasSafeMinerEnchant(ItemStack tool) {
+        if (tool == null || tool.getItemMeta() == null) return false;
+        String enchantData = tool.getItemMeta().getPersistentDataContainer().get(Main.customEnchantKeys, PersistentDataType.STRING);
+        return enchantData != null && enchantData.contains("SAFE-MINER");
     }
 
     public static String reformatString(String input) {

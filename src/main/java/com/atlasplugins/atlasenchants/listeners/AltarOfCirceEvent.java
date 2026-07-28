@@ -4,18 +4,24 @@ import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.ApplyCustomEnchant;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateRandomCustomEnchant;
-import org.bukkit.Bukkit;
+import com.atlasplugins.atlasenchants.managers.ExperienceManager;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Registry;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,9 +30,12 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class AltarOfCirceEvent implements Listener {
+
+    private static final String ALTAR_TAG = "altar_of_circe";
 
     private Main main;
 
@@ -66,37 +75,239 @@ public class AltarOfCirceEvent implements Listener {
         }
     }
 
+    /**
+     * Rewrites the three offers shown in the enchanting screen when the block is an Altar Of Circe.
+     * Disabled slots are removed entirely, and the enabled ones advertise the Altar's own flat level
+     * price so the client shows the real cost and vanilla refuses the click when the player is short.
+     */
+    @EventHandler
+    public void onPrepareEnchant(PrepareItemEnchantEvent e)
+    {
+        boolean isAltarOfCirceEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Enabled");
+
+        if(!isAltarOfCirceEnabled) return;
+
+        if(!isAltarOfCirce(e.getEnchantBlock())) return;
+
+        int displayCost = getDisplayCost();
+        Enchantment displayEnchantment = getSlotDisplayEnchantment();
+        int displayLevel = Math.max(1, main.getEnchantmentsConfig().getInt("AltarOfCirce.AltarOfCirce-Slot-Display-Level", 1));
+
+        EnchantmentOffer[] offers = e.getOffers();
+
+        for (int i = 0; i < offers.length; i++) {
+            // A null offer renders as an empty, unclickable slot.
+            if (!isSlotEnabled(i + 1)) {
+                offers[i] = null;
+                continue;
+            }
+
+            // Vanilla had nothing to offer for this item, nothing for us to relabel.
+            if (offers[i] == null) continue;
+
+            if (displayEnchantment != null) {
+                offers[i].setEnchantment(displayEnchantment);
+                offers[i].setEnchantmentLevel(displayLevel);
+            }
+
+            // The cost must be at least 1 or the client will not let the slot be clicked.
+            offers[i].setCost(Math.max(1, displayCost));
+        }
+    }
+
     @EventHandler
     public void onEnchantItem(EnchantItemEvent e)
     {
-        boolean isAltarOfCirceCraftingEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Enabled");
+        boolean isAltarOfCirceEnabled = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Enabled");
 
-        if(!isAltarOfCirceCraftingEnabled) return;
+        if(!isAltarOfCirceEnabled) return;
 
         ItemStack item = e.getItem();
         Player player = e.getEnchanter();
 
-        Block block = e.getEnchantBlock();
+        if(!isAltarOfCirce(e.getEnchantBlock())) return;
+
+        // The Altar never uses the vanilla enchanting cost, it charges its own flat level price below.
+        // Cancelling also stops vanilla from taking any levels or lapis of its own.
+        e.setCancelled(true);
+
+        // Slots the server owner has switched off do nothing at all.
+        if (!isSlotEnabled(e.whichButton() + 1)) return;
+
+        boolean chargePlayer = shouldChargePlayer(player);
+
+        if (isChargingLevels()) {
+            // --- Experience LEVELS mode (the vanilla-style green number) ---
+            int levelCost = chargePlayer ? getLevelCost() : 0;
+
+            if (player.getLevel() < levelCost) {
+                handleFeedback(main, player, "AltarOfCirceSounds.NotEnoughLevels", "AltarOfCirceMessages.NotEnoughLevels",
+                        "{levelCost}", String.valueOf(levelCost),
+                        "{playerLevel}", String.valueOf(player.getLevel()));
+                return;
+            }
+
+            applyRandomCustomEnchantments(main, player, item, 1, e);
+
+            if (levelCost > 0) {
+                player.setLevel(player.getLevel() - levelCost);
+
+                handleFeedback(main, player, "AltarOfCirceSounds.LevelsTaken", "AltarOfCirceMessages.LevelsTaken",
+                        "{levelCost}", String.valueOf(levelCost),
+                        "{playerLevel}", String.valueOf(player.getLevel()));
+            }
+        } else {
+            // --- Raw XP POINTS mode ---
+            int xpCost = chargePlayer ? getXpCost() : 0;
+            ExperienceManager xpManager = new ExperienceManager(main);
+            int playerXp = xpManager.getExp(player);
+
+            if (playerXp < xpCost) {
+                // Reuses the NotEnoughLevels sound; the message is the XP-worded variant.
+                handleFeedback(main, player, "AltarOfCirceSounds.NotEnoughLevels", "AltarOfCirceMessages.NotEnoughXP",
+                        "{xpCost}", String.valueOf(xpCost),
+                        "{playerXP}", String.valueOf(playerXp));
+                return;
+            }
+
+            applyRandomCustomEnchantments(main, player, item, 1, e);
+
+            if (xpCost > 0) {
+                xpManager.changeExp(player, -xpCost);
+
+                // Reuses the LevelsTaken sound; the message is the XP-worded variant.
+                handleFeedback(main, player, "AltarOfCirceSounds.LevelsTaken", "AltarOfCirceMessages.XPTaken",
+                        "{xpCost}", String.valueOf(xpCost),
+                        "{playerXP}", String.valueOf(xpManager.getExp(player)));
+            }
+        }
+
+        consumeLapis(e);
+    }
+
+    /**
+     * @return true when the given block is a placed Altar Of Circe rather than a normal enchanting table.
+     */
+    private static boolean isAltarOfCirce(Block block) {
+        if (block == null) return false;
+
         BlockState state = block.getState();
+        if (!(state instanceof TileState tileState)) return false;
 
-        if (!(state instanceof TileState tileState)) return;
+        String tag = tileState.getPersistentDataContainer().get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
+        return ALTAR_TAG.equals(tag);
+    }
 
-        PersistentDataContainer pdc = tileState.getPersistentDataContainer();
-        String tag = pdc.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
-        if (tag == null || !tag.equals("altar_of_circe")) return;
+    /**
+     * @param slot the slot as the server owner sees it in the config, 1 (top) to 3 (bottom).
+     */
+    private boolean isSlotEnabled(int slot) {
+        return main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Slot-" + slot + "-Enabled", slot == 1);
+    }
 
-        int enchantmentTableBtn = e.whichButton();
+    private int getLevelCost() {
+        return Math.max(0, main.getEnchantmentsConfig().getInt("AltarOfCirce.AltarOfCirce-Enchant-Cost-Levels", 15));
+    }
 
-        switch (enchantmentTableBtn) {
-            case 0:
-                    e.setCancelled(true);
-                break;
-            case 1:
-                    e.setCancelled(true);
-                break;
-            case 2:
-                    applyRandomCustomEnchantments(main, player, item, 1, e);
-                break;
+    /**
+     * @return true when the Altar charges experience levels, false when it charges raw XP points.
+     */
+    private boolean isChargingLevels() {
+        return main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Cost-Use-Levels", true);
+    }
+
+    private int getXpCost() {
+        return Math.max(0, main.getEnchantmentsConfig().getInt("AltarOfCirce.AltarOfCirce-Enchant-Cost-XP", 500));
+    }
+
+    /**
+     * The number rendered on the Altar's enchant slots. The enchanting screen can only show a
+     * levels-style price, so in XP mode we display the level a player needs to hold that much XP
+     * (rounded down). The real XP charge is still applied on click, backed by the server-side check.
+     */
+    private int getDisplayCost() {
+        if (isChargingLevels()) return getLevelCost();
+        return (int) Math.floor(ExperienceManager.getLevelFromExp(getXpCost()));
+    }
+
+    private boolean shouldChargePlayer(Player player) {
+        if (player.getGameMode() != GameMode.CREATIVE) return true;
+        return main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Charge-Creative-Players", false);
+    }
+
+    /**
+     * Resolves the vanilla enchantment used as the label on the Altar's slots. Minecraft can only render
+     * real enchantments there, so this cannot be arbitrary text.
+     *
+     * @return the configured enchantment, or null to leave vanilla's own rolled label alone.
+     */
+    private Enchantment getSlotDisplayEnchantment() {
+        String name = main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Slot-Display-Enchantment", "LURE");
+
+        if (name == null || name.isBlank() || name.equalsIgnoreCase("NONE")) return null;
+
+        Enchantment enchantment = Registry.ENCHANTMENT.match(name);
+
+        if (enchantment == null) {
+            main.getLogger().warning("Invalid AltarOfCirce-Slot-Display-Enchantment '" + name + "'. Leaving the vanilla slot label alone.");
+        }
+
+        return enchantment;
+    }
+
+    /**
+     * Cancelling the enchant leaves the lapis in the table, so take it by hand to keep the vanilla feel.
+     */
+    private void consumeLapis(EnchantItemEvent e) {
+        if (!main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Consume-Lapis", true)) return;
+
+        ItemStack lapis = e.getView().getItem(1);
+        if (lapis == null || lapis.getType() == Material.AIR) return;
+
+        // Take a flat configured amount rather than vanilla's slot-based 1/2/3, capped at what's there.
+        int amountToTake = Math.max(0, main.getEnchantmentsConfig().getInt("AltarOfCirce.AltarOfCirce-Lapis-Cost", 3));
+        if (amountToTake == 0) return;
+
+        if (lapis.getAmount() <= amountToTake) {
+            e.getView().setItem(1, null);
+        } else {
+            lapis.setAmount(lapis.getAmount() - amountToTake);
+        }
+
+        e.getEnchanter().updateInventory();
+    }
+
+    /**
+     * Plays the configured sound and sends the configured message for the given config paths.
+     *
+     * @param soundConfigPath The base path for sound settings in config (e.g., "AltarOfCirceSounds.NotEnoughLevels").
+     * @param messageConfigPath The base path for message settings in config (e.g., "AltarOfCirceMessages.NotEnoughLevels").
+     * @param placeholders Key-value pairs of placeholders to replace in messages (e.g., "{levelCost}", "15").
+     */
+    private static void handleFeedback(Main main, Player player, String soundConfigPath, String messageConfigPath, String... placeholders) {
+        boolean playSound = main.getSettingsConfig().getBoolean(soundConfigPath + ".Toggle");
+        if (playSound) {
+            try {
+                Sound sound = Main.getSound(main.getSettingsConfig().getString(soundConfigPath + ".Sound"));
+                float volume = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Volume");
+                float pitch = (float) main.getSettingsConfig().getDouble(soundConfigPath + ".Pitch");
+                player.playSound(player.getLocation(), sound, volume, pitch);
+            } catch (IllegalArgumentException ex) {
+                main.getLogger().warning("Invalid sound specified in config path: " + soundConfigPath + ".Sound. Error: " + ex.getMessage());
+            }
+        }
+
+        boolean sendMessage = main.getSettingsConfig().getBoolean(messageConfigPath + ".Toggle");
+        if (sendMessage) {
+            for (String msg : main.getSettingsConfig().getStringList(messageConfigPath + ".Message")) {
+                String processedMsg = main.setPlaceholders(player, msg);
+                for (int i = 0; i < placeholders.length; i += 2) {
+                    if (i + 1 < placeholders.length) {
+                        processedMsg = processedMsg.replace(placeholders[i], placeholders[i + 1]);
+                    }
+                }
+                player.sendMessage(Main.color(processedMsg));
+            }
         }
     }
 
@@ -112,53 +323,69 @@ public class AltarOfCirceEvent implements Listener {
      */
     public static void applyRandomCustomEnchantments(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply, EnchantItemEvent e) {
 
+        boolean isBook = targetItem.getType() == Material.BOOK;
+
         boolean canEnchantToolsAndArmour = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-ArmourTools-Enchanter-Enabled");
 
-        if(canEnchantToolsAndArmour){
-            if(targetItem.getType() != Material.BOOK)
-            {
-                ApplyToArmourAndTools(main, player, targetItem, numberOfEnchantmentsToApply);
-                e.setCancelled(true);
-            }
+        if(canEnchantToolsAndArmour && !isBook){
+            ApplyToArmourAndTools(main, player, targetItem, numberOfEnchantmentsToApply);
         }
 
         boolean canGetVanillaEnchantments = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled");
 
-        if(!canGetVanillaEnchantments && targetItem.getType() != Material.BOOK)
-        {
-            e.setCancelled(true);
+        // The event is always cancelled so the Altar can charge its own price, which also throws away
+        // vanilla's roll. Re-apply that roll by hand when the server owner wants vanilla enchants too.
+        if(canGetVanillaEnchantments && !isBook && e != null){
+            for (Map.Entry<Enchantment, Integer> vanillaEnchant : e.getEnchantsToAdd().entrySet()) {
+                targetItem.addUnsafeEnchantment(vanillaEnchant.getKey(), vanillaEnchant.getValue());
+            }
         }
 
         boolean canEnchantBook = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Book-Enchanter-Enabled");
 
-        if(canEnchantBook){
-            if(targetItem.getType() == Material.BOOK)
-            {
-                ApplyToBook(main, player, targetItem);
-            }
+        if(canEnchantBook && isBook){
+            ApplyToBook(main, player, targetItem, e);
         }
     }
 
-    public static  void ApplyToBook(Main main, Player player, ItemStack targetItem)
+    public static  void ApplyToBook(Main main, Player player, ItemStack targetItem, EnchantItemEvent e)
     {
         // Basic validation: ensure we have a valid item and a positive number of enchantments to apply.
         if (targetItem == null || targetItem.getType() == Material.AIR) {
-//            main.getLogger().warning("Attempted to apply random enchantments with invalid item or count. Item: " + targetItem + ", Count: " + numberOfEnchantmentsToApply);
             return;
         }
 
-        targetItem.setType(Material.AIR);
+        // The event is cancelled so vanilla leaves the book in the table. Clearing the ItemStack handed to us
+        // by the event does nothing to the real slot, so empty the table's item slot directly.
+        consumeBook(player, e);
 
         // Create an instance of CreateRandomCustomEnchant and call the method
         CreateRandomCustomEnchant createRandomCustomEnchant = new CreateRandomCustomEnchant(main);
         createRandomCustomEnchant.CreateRandomOracleEnchantmentItem(player, 1, true, null);
     }
 
+    /**
+     * Removes one book from the Altar's item slot (slot 0 of the enchanting view).
+     */
+    private static void consumeBook(Player player, EnchantItemEvent e) {
+        if (e == null) return;
+
+        ItemStack slotItem = e.getView().getItem(0);
+        if (slotItem == null || slotItem.getType() == Material.AIR) return;
+
+        if (slotItem.getAmount() <= 1) {
+            e.getView().setItem(0, null);
+        } else {
+            slotItem.setAmount(slotItem.getAmount() - 1);
+        }
+
+        player.updateInventory();
+    }
+
     public static void ApplyToArmourAndTools(Main main, Player player, ItemStack targetItem, int numberOfEnchantmentsToApply)
     {
         // Basic validation: ensure we have a valid item and a positive number of enchantments to apply.
         if (targetItem == null || targetItem.getType() == Material.AIR || numberOfEnchantmentsToApply <= 0 || targetItem.getType() == Material.BOOK) {
-//            main.getLogger().warning("Attempted to apply random enchantments with invalid item or count. Item: " + targetItem + ", Count: " + numberOfEnchantmentsToApply);
             return;
         }
 
@@ -177,7 +404,6 @@ public class AltarOfCirceEvent implements Listener {
 
         // Check if the 'Enchantments' section exists and contains any enchantments.
         if (enchantmentsSection == null || enchantmentsSection.getKeys(false).isEmpty()) {
-//            main.getLogger().warning("No enchantments defined in the config under 'Enchantments' section. Cannot apply random enchantments.");
             return;
         }
 
@@ -198,7 +424,6 @@ public class AltarOfCirceEvent implements Listener {
 
             // Handle cases where the config for this specific enchantment might be missing or malformed.
             if (chosenEnchantConfig == null) {
-//                main.getLogger().warning("Configuration section for random enchantment '" + chosenEnchantName + "' not found. Skipping.");
                 allAvailableEnchantNames.remove(randomIndex); // Remove from the pool for this batch
                 i--; // Decrement counter to try for another enchantment
                 continue;
@@ -207,7 +432,6 @@ public class AltarOfCirceEvent implements Listener {
             // Check if the chosen enchantment is enabled.
             boolean isEnchantmentEnabled = chosenEnchantConfig.getBoolean("Enchantment-Enabled", false);
             if (!isEnchantmentEnabled) {
-//                main.getLogger().info("Skipping disabled enchantment: " + chosenEnchantName);
                 allAvailableEnchantNames.remove(randomIndex); // Remove from the pool for this batch
                 i--; // Decrement counter to try for another enchantment
                 continue;
@@ -222,6 +446,10 @@ public class AltarOfCirceEvent implements Listener {
             // It modifies `targetItem` directly and returns `null` if it couldn't apply.
             ItemStack resultOfApplication = ApplyCustomEnchant.applyCustomEnchantment(main, player, targetItem, chosenEnchantName, randomLevel);
 
+            main.debugOddsInfo("Altar", player.getName(), (resultOfApplication != null ? "Applied " : "Failed to apply ")
+                    + chosenEnchantName + " (Lvl " + randomLevel + "/" + maxLevel + ") to " + targetItem.getType()
+                    + " - picked from " + allAvailableEnchantNames.size() + " remaining enchant(s).");
+
             if (resultOfApplication != null) {
                 // The enchantment was successfully applied or upgraded.
                 successfullyAppliedCount++; // Increment the count of successfully applied *distinct* enchants.
@@ -229,19 +457,10 @@ public class AltarOfCirceEvent implements Listener {
                 allAvailableEnchantNames.remove(randomIndex);
             } else {
                 // The enchantment could not be applied (e.g., due to a blacklist conflict, already max level, or wrong item type).
-//                main.getLogger().info("Failed to apply '" + chosenEnchantName + "' (Lvl " + randomLevel + ") to item. Trying another unique enchantment.");
                 allAvailableEnchantNames.remove(randomIndex); // Remove it from the pool to avoid re-trying the same failing enchant in this batch.
                 i--; // Decrement counter to ensure we still attempt to apply 'numberOfEnchantmentsToApply' distinct enchants.
             }
         }
-
-        // Provide general feedback to the player after all attempts.
-        if (successfullyAppliedCount == 0 && numberOfEnchantmentsToApply > 0) {
-//            player.sendMessage(Main.color("&cCould not apply any random enchantments to your item."));
-        } else if (successfullyAppliedCount > 0) {
-//            player.sendMessage(Main.color("&aSuccessfully applied &e" + successfullyAppliedCount + "&a random enchantment(s)!"));
-        }
-
         // Crucial: Update the player's inventory to reflect the changes on the item.
         player.updateInventory();
     }
@@ -279,19 +498,14 @@ public class AltarOfCirceEvent implements Listener {
             String enchantedItemData = toolPDC.get(Main.customEnchantKeys, PersistentDataType.STRING);
 
             // Ensure the enchantment data is not null or empty
-            if (enchantedItemData == null || enchantedItemData.isEmpty()){
-
-            }else{
-                String[] enchantments = enchantedItemData.split(",");
-
-                for (String enchantment : enchantments) {
+            if (enchantedItemData != null && !enchantedItemData.isEmpty()) {
+                for (String enchantment : enchantedItemData.split(",")) {
                     String[] enchantParts = enchantment.split(":");
 
-                    // Ensure the format is correct
+                    // Ensure the format is correct. Only the name is needed here; the level and
+                    // ID in the remaining parts are not used by this check.
                     if (enchantParts.length == 3) {
                         enchantName = enchantParts[0];
-                        int enchantLevel = Integer.parseInt(enchantParts[1]);
-                        int enchantID = Integer.parseInt(enchantParts[2]);
                     }
                 }
             }

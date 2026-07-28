@@ -1,4 +1,3 @@
-D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\OresPlacedManager.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\MinersTouch.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\SafeMiner.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCircesAnvil.java
@@ -13,14 +12,12 @@ D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCircesBrand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\ExperienceManager.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\Main.java
-D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\LogsPlacedManager.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveRandomEnchantCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveCircesEmberCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\UpgradeCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateRecipeBook.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\GiveCircesBrandCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\PoisonAspect.java
-D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\BlockRadiusFinder.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\AbstractCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\FreezingShot.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateRandomCustomEnchant.java
@@ -32,6 +29,7 @@ D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\OraclesOfEnchantmentEvent.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\PoseidonsBait.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\guis\EnchantListGUI.java
+D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\blockevents\ChainBlockBreakEvent.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\utils\RenameUtils.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\EnchantListCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\AltarOfCirceCraftingRecipe.java
@@ -42,7 +40,6 @@ D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\guis\Gui.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\guis\UpgradeRewardGUI.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\armorevents\ArmorEquipListener.java
-D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\managers\CircesAnvilManager.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\guis\GuideGUI.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\commands\users\ReloadCommand.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\utils\EnchantUtils.java
@@ -50,6 +47,7 @@ D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\ApplyCustomEnchant.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\tools\VeinSeeker.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\armor\Fearsight.java
+D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\RarityRoller.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\defense\EnergyAbsorption.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\enchants\weapons\Propel.java
 D:\Personal\My Projects\AtlasPlugins\Development\AtlasEnchants\src\main\java\com\atlasplugins\atlasenchants\listeners\enchantevents\CreateCustomEnchant.java

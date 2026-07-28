@@ -16,16 +16,12 @@ import com.atlasplugins.atlasenchants.listeners.CircesAnvilEvent;
 import com.atlasplugins.atlasenchants.listeners.CircesBrandEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.*;
 import com.atlasplugins.atlasenchants.listeners.armorevents.ArmorEquipListener;
-import com.atlasplugins.atlasenchants.managers.BlockRadiusFinder;
-import com.atlasplugins.atlasenchants.managers.CircesAnvilManager;
-import com.atlasplugins.atlasenchants.managers.ExperienceManager;
-import com.atlasplugins.atlasenchants.managers.LogsPlacedManager;
-import com.atlasplugins.atlasenchants.managers.OresPlacedManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.skytasul.glowingentities.GlowingEntities;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,8 +40,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static Main instance;
 
-    private ExperienceManager experienceManager;
-
     // Change chat colors and resolve {header}/{footer} placeholders
     public static String color(String string) {
         if (instance != null && instance.getSettingsConfig() != null) {
@@ -55,6 +49,34 @@ public final class Main extends JavaPlugin implements Listener {
             string = string.replace("{footer}", footer);
         }
         return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    // Resolved config material names, so a name is only looked up once no matter how hot the
+    // call site is (these sit in inventory-click handlers that fire for every click a player makes).
+    private static final Map<String, Material> materialCache = new HashMap<>();
+    // Names already warned about, so a single typo doesn't produce one console line per click.
+    private static final Set<String> warnedMaterials = new HashSet<>();
+
+    // Resolve a Material from a config string. Uses matchMaterial rather than valueOf so that
+    // lowercase and namespaced ("minecraft:book") names work, and returns the fallback instead of
+    // throwing when the name is wrong - a typo in config should not break every inventory click.
+    public static Material getMaterial(String name, Material fallback) {
+        if (name == null || name.isEmpty()) return fallback;
+
+        Material cached = materialCache.get(name);
+        if (cached != null) return cached;
+
+        Material resolved = Material.matchMaterial(name);
+        if (resolved == null) {
+            if (instance != null && warnedMaterials.add(name)) {
+                instance.getLogger().warning("Unknown material name in config: '" + name
+                        + "' - falling back to " + fallback + ".");
+            }
+            return fallback;
+        }
+
+        materialCache.put(name, resolved);
+        return resolved;
     }
 
     // Resolve a Sound from a config string. Sound became an interface in 1.21+, but
@@ -85,6 +107,14 @@ public final class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(msg);
     }
 
+    // TESTING ONLY: same gate as debugOddsRoll, for lines that report an outcome rather than a
+    // roll (e.g. which enchant the Altar finally handed out).
+    public void debugOddsInfo(String source, String who, String message) {
+        if (!getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Debug-Odds")) return;
+        Bukkit.getConsoleSender().sendMessage(color(String.format(
+                "&8[&bAE Debug&8] &7(%s) &7by &e%s&7: &f%s", source, who, message)));
+    }
+
     // Glowing Stuff
     public GlowingEntities glowingEntities;
 
@@ -99,14 +129,6 @@ public final class Main extends JavaPlugin implements Listener {
     public static NamespacedKey customCircesBrandKeys;
     // Spawner Stuff
     public static NamespacedKey spawnerKeys;
-    // Logs Placed Stuff
-    private LogsPlacedManager logsPlacedManager;
-    // Ores Placed Stuff
-    private OresPlacedManager oresPlacedManager;
-    // Circe's Anvil Stuff
-    private CircesAnvilManager circesAnvilManager;
-    // Block Radius Finder Stuff
-    public BlockRadiusFinder blockRadiusFinder;
 
     // PlaceholderAPI
     private boolean isPlaceholderAPIPresent;
@@ -175,16 +197,6 @@ public final class Main extends JavaPlugin implements Listener {
         customCircesBrandKeys = new NamespacedKey(this, "Custom_CircesBrand");
         //Spawner Data
         spawnerKeys = new NamespacedKey(this, "Spawners");
-        // Initialize PlayerPlacedBlocksManager
-        logsPlacedManager = new LogsPlacedManager(this);
-        // Initialize PlayerPlacedBlocksManager
-        oresPlacedManager = new OresPlacedManager(this);
-        // Initialize CircesAnvilManager
-        circesAnvilManager = new CircesAnvilManager(this);
-        // Initialize BlockUtils instance
-        blockRadiusFinder = new BlockRadiusFinder(this);
-        // Register experienceManager
-        experienceManager = new ExperienceManager(this);
 
 
         //All Enchants
@@ -252,7 +264,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         // Plugin Started Message
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.4.0"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e" + getDescription().getVersion()));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
@@ -267,35 +279,16 @@ public final class Main extends JavaPlugin implements Listener {
 
         glowingEntities.disable();
 
-        // Save data to file on plugin disable
-        logsPlacedManager.saveDataToFile();
-        // Save data to file on plugin disable
-        oresPlacedManager.saveDataToFile();
-        // Save Circe's Anvil locations on plugin disable
-        circesAnvilManager.saveDataToFile();
-
         // Clean up GUI tracking maps to prevent memory leaks on reload
         GuiManager.cleanupAll();
 
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e1.4.0"));
+        Bukkit.getConsoleSender().sendMessage(color("&7&l[&c&lAtlas Enchants&7&l] &e" + getDescription().getVersion()));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cMade by _Ghillie"));
         Bukkit.getConsoleSender().sendMessage(color(""));
         Bukkit.getConsoleSender().sendMessage(color("&cPlugin &4Disabled"));
         Bukkit.getConsoleSender().sendMessage(color("&4---------------------"));
-    }
-
-    public ExperienceManager getExperienceManager(){
-        return experienceManager;
-    }
-
-    public LogsPlacedManager getLogsPlacedManager() {
-        return logsPlacedManager;
-    }
-
-    public OresPlacedManager getOresPlacedManager() {
-        return oresPlacedManager;
     }
 
     public String setPlaceholders(Player p, String text)
@@ -332,14 +325,6 @@ public final class Main extends JavaPlugin implements Listener {
         return enchantmentsConfig;
     }
 
-    public void saveEnchantmentsConfig() {
-        try {
-            enchantmentsConfig.save(enchantmentsConfigFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void loadEnchantmentsConfig() {
         enchantmentsConfigFile = new File(getDataFolder(), "enchantments.yml");
         if (!enchantmentsConfigFile.exists()) {
@@ -369,14 +354,6 @@ public final class Main extends JavaPlugin implements Listener {
         return settingsConfig;
     }
 
-    public void saveSettingsConfig() {
-        try {
-            settingsConfig.save(settingsConfigFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void loadSettingsConfig() {
         settingsConfigFile = new File(getDataFolder(), "settings.yml");
         if (!settingsConfigFile.exists()) {
@@ -388,14 +365,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     public FileConfiguration getMenusConfig() {
         return menusConfig;
-    }
-
-    public void saveMenusConfig() {
-        try {
-            menusConfig.save(menusConfigFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void loadMenusConfig() {
@@ -415,10 +384,6 @@ public final class Main extends JavaPlugin implements Listener {
     public void openEnchantRarityListGUI(Player player, String rarity){
         EnchantRarityListGUI enchantRarityListGUI = new EnchantRarityListGUI(this, player, rarity);
         enchantRarityListGUI.open();
-    }
-
-    public CircesAnvilManager getCircesAnvilManager() {
-        return circesAnvilManager;
     }
 
     public void openGuideGUI(Player player){
@@ -445,7 +410,6 @@ public final class Main extends JavaPlugin implements Listener {
 
             }
         } catch (IOException ignored2) {
-            //e.printStackTrace();
         }
         return new ArrayList<>();
     }

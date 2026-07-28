@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 
 import java.util.List;
 import java.util.Random;
@@ -21,54 +20,11 @@ public class FinalGuard implements Listener {
 
     Random random = new Random();
 
-    public boolean hasArmor (Player p) {
-        // Get the player's helmet item
-        ItemStack armor = null;
-
-        if(p.getInventory().getHelmet() != null)
-        {
-            armor = p.getInventory().getHelmet();
-        }
-        if(p.getInventory().getChestplate() != null)
-        {
-            armor = p.getInventory().getChestplate();
-        }
-        if(p.getInventory().getLeggings() != null)
-        {
-            armor = p.getInventory().getLeggings();
-        }
-        if(p.getInventory().getBoots() != null)
-        {
-            armor = p.getInventory().getBoots();
-        }
-
-        // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
-
-        // Check if the player is wearing an applicable helmet
-        return armor != null && armorMat.contains(armor.getType().toString());
-    }
-
-    public boolean hasToolMainHand (Player p) {
-        // Get the items in the main hand
-        ItemStack armor = p.getInventory().getItemInMainHand();
-
-        // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
-
-        // Check if the player is wearing an applicable helmet
-        return armor != null && armorMat.contains(armor.getType().toString());
-    }
-    public boolean hasToolOffHand(Player p) {
-        // Get the items in the offhand
-        ItemStack armor = p.getInventory().getItemInOffHand();
-
-        // Get the list of items the Enchant can be applied to from the config
-        List<String> armorMat = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
-
-        // Check if the player is holding an applicable item in their hand
-
-        return armor != null && armorMat.contains(armor.getType().toString());
+    /** Whether this item is one Final Guard may be applied to, per the config list. */
+    private boolean isApplicable(ItemStack item) {
+        if (item == null) return false;
+        List<String> applicable = main.getEnchantmentsConfig().getStringList("Enchantments.FINAL-GUARD.Enchantment-Apply-Item");
+        return applicable.contains(item.getType().toString());
     }
 
     @EventHandler
@@ -84,26 +40,19 @@ public class FinalGuard implements Listener {
 
         if(itemDurability > itemDamage) return;
 
-        // Check if the player has an enchanted helmet
-        if (!hasArmor(p) && !hasToolMainHand(p) && !hasToolOffHand(p)) return;
+        // The enchant protects the item that is about to break, so that is the only item worth
+        // looking at. The old code walked the player's armour slots instead and used the first
+        // non-empty one, which meant an enchanted helmet protected (and was never consumed by)
+        // every tool the player owned, while a Final Guard tool did nothing whenever any armour
+        // was worn.
+        if (!isApplicable(brokenItem)) return;
 
         // Get Enchantment Enabled Status
         boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments.FINAL-GUARD.Enchantment-Enabled");
         // if Enchantment Enabled = false return.
         if(!isEnchantmentEnabled) return;
 
-        // Find the item that has the FINAL-GUARD enchant
-        ItemStack enchantedItem = null;
-        if(p.getInventory().getHelmet() != null) enchantedItem = p.getInventory().getHelmet();
-        else if(p.getInventory().getChestplate() != null) enchantedItem = p.getInventory().getChestplate();
-        else if(p.getInventory().getLeggings() != null) enchantedItem = p.getInventory().getLeggings();
-        else if(p.getInventory().getBoots() != null) enchantedItem = p.getInventory().getBoots();
-        else if(hasToolMainHand(p)) enchantedItem = p.getInventory().getItemInMainHand();
-        else if(hasToolOffHand(p)) enchantedItem = p.getInventory().getItemInOffHand();
-
-        if(enchantedItem == null) return;
-
-        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(enchantedItem)) {
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(brokenItem)) {
             if (enchant.name.contains("FINAL-GUARD")) {
                 // PUT ENCHANT LOGIC HERE
 
@@ -152,6 +101,9 @@ public class FinalGuard implements Listener {
 
                 e.setCancelled(true);
 
+                // The enchant has been spent and stripped, so stop - carrying on would re-read
+                // stale entries from the list we just invalidated.
+                break;
                 //END ENCHANT LOGIC
             }
         }

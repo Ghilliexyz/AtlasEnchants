@@ -107,10 +107,4 @@ public final class RenameUtils {
         return cleaned.replaceAll("&[0-9A-Fa-fK-Ok-oRr]", "");
     }
 
-    /** True if the name contains a formatting code the player would need permission for. */
-    public static boolean usesFormatting(String input) {
-        if (input == null) return false;
-        String cleaned = input.replace('§', '&');
-        return cleaned.matches(".*&[" + FORMAT_CODES + "].*");
-    }
 }

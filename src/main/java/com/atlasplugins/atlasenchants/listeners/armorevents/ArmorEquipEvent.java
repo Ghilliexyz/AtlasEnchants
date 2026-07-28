@@ -1,6 +1,5 @@
 package com.atlasplugins.atlasenchants.listeners.armorevents;
 
-import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -35,14 +34,6 @@ public class ArmorEquipEvent extends Event implements Cancellable {
         this.armorType = armorType;
         this.equipMethod = equipMethod;
         this.cancelled = false;
-
-        // player.sendMessage(Main.color("&c----- &6&lArmorEquipEvent Constructor &c-----"));
-        // player.sendMessage(Main.color("&ePlayer: " + this.player.getName()));
-        // player.sendMessage(Main.color("&eUnequipped Armor: " + (this.unequippedArmor != null ? this.unequippedArmor.getType() : "null")));
-        // player.sendMessage(Main.color("&eEquipped Armor: " + (this.equippedArmor != null ? this.equippedArmor.getType() : "null")));
-        // player.sendMessage(Main.color("&eArmor Type: " + this.armorType));
-        // player.sendMessage(Main.color("&eEquip Method: " + this.equipMethod));
-        // player.sendMessage(Main.color("&eCancelled: " + this.cancelled));
     }
 
     /**

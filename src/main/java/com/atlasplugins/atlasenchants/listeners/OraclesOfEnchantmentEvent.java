@@ -38,7 +38,7 @@ public class OraclesOfEnchantmentEvent implements Listener {
 
         ItemStack itemInHand = e.getItem();
 
-        Material oracleItem = Material.valueOf(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Item"));
+        Material oracleItem = Main.getMaterial(main.getEnchantmentsConfig().getString("OraclesOfEnchantment.OraclesOfEnchantment-Item"), Material.WRITTEN_BOOK);
 
         if (itemInHand != null) {
             if(action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR)
@@ -114,7 +114,6 @@ public class OraclesOfEnchantmentEvent implements Listener {
                                 String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
                                 String message = Main.color(withPAPISet1)
                                         .replace("{oracleName}", formatOracleName(oracleName));
-        //                                .replace("{oracleID}", String.valueOf(oracleID));
                                 player.sendMessage(message);
                             }
                         }
@@ -144,7 +143,6 @@ public class OraclesOfEnchantmentEvent implements Listener {
                             String withPAPISet1 = main.setPlaceholders(player, BlacklistMessage);
                             String message = Main.color(withPAPISet1)
                                     .replace("{oracleName}", formatOracleName(oracleName));
-        //                            .replace("{oracleID}", String.valueOf(oracleID));
                             player.sendMessage(message);
                         }
                     }

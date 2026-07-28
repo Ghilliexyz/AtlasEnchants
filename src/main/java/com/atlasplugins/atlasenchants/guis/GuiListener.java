@@ -45,28 +45,5 @@ public class GuiListener implements Listener {
         GuiManager.clear(event.getPlayer().getUniqueId());
     }
 
-//    private int getCurrentPageFromTitle(String title) {
-//        // Remove Minecraft color/formatting codes
-//        String cleanTitle = title.replaceAll("§[0-9a-fk-orA-FK-OR]", "").replaceAll("&[0-9a-fk-orA-FK-OR]", "");
-//
-//        String[] parts = cleanTitle.split(" ");
-//
-//        // Ensure the title has at least two parts and the last part is a number
-//        if (parts.length > 1 && isNumeric(parts[parts.length - 1])) {
-//            return Integer.parseInt(parts[parts.length - 1]) - 1;
-//        }
-//
-//        // Default to page 0 if no valid page number is found
-//        return 0;
-//    }
-//
-//    private boolean isNumeric(String str) {
-//        try {
-//            Integer.parseInt(str);
-//            return true;
-//        } catch (NumberFormatException e) {
-//            return false;
-//        }
-//    }
 }
 

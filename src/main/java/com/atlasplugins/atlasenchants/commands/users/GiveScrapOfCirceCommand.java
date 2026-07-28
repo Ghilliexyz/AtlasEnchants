@@ -2,7 +2,6 @@ package com.atlasplugins.atlasenchants.commands.users;
 
 import com.atlasplugins.atlasenchants.Main;
 import com.atlasplugins.atlasenchants.commands.AbstractCommand;
-import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateOracleBook;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateScrapOfCirce;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

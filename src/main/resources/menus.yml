@@ -47,12 +47,11 @@ UpgradeEnchant-Gui:
         #The Title of the upgrade btn if items are acceptable
         Title: "&a&lUPGRADE!"
         #The Lore of the upgrade btn if items are acceptable
+        #{upgradeCost} is replaced with the configured cost (e.g. "10 Levels" or "500 XP").
         Lore:
-          - "{header}"
+          - "&c● &7Cost: &e&l{upgradeCost}"
           - ""
           - "&c● &7This action cannot be undone."
-          - ""
-          - "{footer}"
       NotAcceptable:
         #The Item of the upgrade btn if items are not acceptable
         Item: RED_STAINED_GLASS_PANE
@@ -65,6 +64,43 @@ UpgradeEnchant-Gui:
           - "&c● &7You must fill all {requiredBooks} slots with enchants of the same rarity"
           - ""
           - "{footer}"
+      Info:
+        #The Item that sits 2 slots left of the upgrade btn and explains how upgrading works.
+        Item: PAPER
+        #The Title of the info item
+        Title: "&e&lHOW IT WORKS"
+        #The Lore of the info item.
+        #{requiredBooks} is replaced with the configured amount of books needed to upgrade.
+        Lore:
+          - "&7Place &e&l{requiredBooks} &7enchantment books of"
+          - "&7the &fsame rarity &7into the empty slots."
+          - ""
+          - "&7All &e&l{requiredBooks} &7books are consumed and"
+          - "&7you receive &e&l1 &7random book of the"
+          - "&7next rarity tier:"
+          - ""
+          - "&bRARE &8→ &dEPIC &8→ &6LEGENDARY &8→ &cGODLY"
+          - ""
+          - "&c&lNOTE: &cGODLY &7is the highest rarity"
+          - "&7and will &c&lNOT &7upgrade to &4&lDIVINE&7."
+      Cost:
+        #The Item that sits 2 slots right of the upgrade btn and explains the cost of upgrading.
+        Item: EXPERIENCE_BOTTLE
+        #The Title of the cost item
+        Title: "&e&lUPGRADE COST"
+        #The Lore of the cost item.
+        #{upgradeCost} is replaced with the configured cost (e.g. "10 Levels" or "500 XP").
+        #{costMode} is replaced with "experience levels" or "XP points" depending on the configured mode.
+        Lore:
+          - "&7Upgrading costs &e&l{upgradeCost}&7."
+          - ""
+          - "&7The cost is taken from your"
+          - "&f{costMode} &7when you click"
+          - "&7the upgrade button."
+          - ""
+          - "&7If you cannot afford it, the"
+          - "&7upgrade is cancelled and you"
+          - "&7keep your books."
   UpgradeReward-Menu:
     Title: "&c&lREWARD!"
     Filler-Item: BLACK_STAINED_GLASS_PANE
@@ -226,7 +262,7 @@ Guide-Gui:
         Slot: 15
         Lore:
           - ""
-          - "&c● &7Wash enchanted items in a &ewater cauldron"
+          - "&c● &7Wash enchanted book in a &ewater cauldron"
           - "   &7to break them down."
           - ""
           - "&c● &7Has a &e{scrapSuccessChance}% &7chance to produce a"

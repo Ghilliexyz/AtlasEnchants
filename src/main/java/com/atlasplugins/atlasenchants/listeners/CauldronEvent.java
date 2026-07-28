@@ -57,7 +57,7 @@ public class CauldronEvent implements Listener {
         if(itemMeta == null) return;
         PersistentDataContainer itemPDC = itemMeta.getPersistentDataContainer();
 
-        if (itemType != Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem"))) return;
+        if (itemType != Main.getMaterial(main.getSettingsConfig().getString("EnchantItems.EnchantItem"), Material.ENCHANTED_BOOK)) return;
 
         if(itemPDC.has(Main.customEnchantKeys, PersistentDataType.STRING))
         {

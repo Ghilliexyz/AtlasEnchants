@@ -29,8 +29,9 @@ public class CircesAnvilCraftingRecipe {
         CreateCircesEmber createCircesEmber = new CreateCircesEmber(main);
         CreateScrapOfCirce createScrapOfCirce = new CreateScrapOfCirce(main);
 
-        NamespacedKey recipeKey = new NamespacedKey(main, "circes_anvil_recipe");
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, anvilItem);
+//        NamespacedKey recipeKey = new NamespacedKey(main, "circes_anvil_recipe");
+//        ShapedRecipe recipe = new ShapedRecipe(recipeKey, anvilItem);
+        ShapedRecipe recipe = new ShapedRecipe(Main.customCircesAnvilKeys, anvilItem);
 
         String row1 = main.getEnchantmentsConfig().getString("CircesAnvil.CircesAnvil-Crafting-Row-1");
         String row2 = main.getEnchantmentsConfig().getString("CircesAnvil.CircesAnvil-Crafting-Row-2");

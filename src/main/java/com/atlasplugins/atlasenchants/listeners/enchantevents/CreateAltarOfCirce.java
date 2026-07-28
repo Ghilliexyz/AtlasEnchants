@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateAltarOfCirce implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateAltarOfCirce(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateAltarOfCirceItem(int altarAmount, Player p) {
-        ItemStack altar = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Item")));
+        ItemStack altar = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-Item"), Material.ENCHANTING_TABLE));
         ItemMeta altarMeta = altar.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("AltarOfCirce.AltarOfCirce-DisplayName");
@@ -50,10 +48,7 @@ public class CreateAltarOfCirce implements Listener {
             altarMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int altarID = random.nextInt();
-
         PersistentDataContainer pdc = altarMeta.getPersistentDataContainer();
-//        pdc.set(Main.customaltarKeys, PersistentDataType.STRING, "altar" + ":" + altarID);
         pdc.set(Main.customAltarOfCirceKeys, PersistentDataType.STRING, "altar_of_circe");
 
         altarMeta.setLore(enchantmentLore);

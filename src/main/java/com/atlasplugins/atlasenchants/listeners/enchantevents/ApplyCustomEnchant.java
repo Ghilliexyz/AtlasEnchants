@@ -26,8 +26,6 @@ public class ApplyCustomEnchant implements Listener {
 
     private static String ConvertToRomanNumeral(int number) {
         if (number < 1 || number > 1000) {
-            // In a real plugin, you'd use main.getLogger().warning() or similar for logging
-            // System.out.println("Invalid number for Roman numeral conversion: " + number);
             return null;
         }
 
@@ -62,7 +60,7 @@ public class ApplyCustomEnchant implements Listener {
         if (clickedItem == null || cursorItem == null) return;
 
         // Check if the cursor item is the specific custom enchantment item type
-        Material enchantItemMaterial = Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem"));
+        Material enchantItemMaterial = Main.getMaterial(main.getSettingsConfig().getString("EnchantItems.EnchantItem"), Material.ENCHANTED_BOOK);
         if (cursorItem.getType() != enchantItemMaterial) return;
 
         // Check for custom enchantment data on the cursor item
@@ -91,7 +89,16 @@ public class ApplyCustomEnchant implements Listener {
         if (modifiedItem != null) {
             invEvent.setCancelled(true); // Prevent default inventory click behavior first
             invEvent.getClickedInventory().setItem(invEvent.getSlot(), modifiedItem); // Directly set item in slot
-            player.setItemOnCursor(new ItemStack(Material.AIR)); // Consume the enchantment item (avoid deprecated setCursor)
+
+            // Consume only ONE book from the cursor stack. Clearing the whole cursor destroyed
+            // every other book in the stack while only ever applying one enchant.
+            if (cursorItem.getAmount() > 1) {
+                cursorItem.setAmount(cursorItem.getAmount() - 1);
+                player.setItemOnCursor(cursorItem);
+            } else {
+                player.setItemOnCursor(new ItemStack(Material.AIR));
+            }
+
             player.updateInventory(); // Refresh player's inventory display
         }
     }
@@ -177,9 +184,8 @@ public class ApplyCustomEnchant implements Listener {
                                     "{existingEnchantLevel}", String.valueOf(existingEnchantLevel));
                             return null; // Enchantment already applied at sufficient level
                         } else {
-                            // New enchantment is higher level, remove old lore entry
-                            String fakeExistingEnchantName = formatEnchantName(existingEnchantName);
-                            lore.removeIf(line -> Main.color(line).contains(fakeExistingEnchantName));
+                            // New enchantment is higher level, remove the old lore entry
+                            removeAppliedLore(main, player, lore, existingEnchantName, existingEnchantLevel);
                         }
                     } else {
                         // Keep existing enchantments that are not the current one
@@ -208,15 +214,12 @@ public class ApplyCustomEnchant implements Listener {
         if (applicableItems.contains(targetItemType.toString())) {
             // Format for lore display
             String formattedEnchantName = formatEnchantName(enchantName);
-            String romanEnchantLevel = ConvertToRomanNumeral(enchantLevel);
 
             // Construct and add lore entry
-            String enchantLoreConfig = main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore");
-            String enchantLoreWithPAPI = main.setPlaceholders(player, enchantLoreConfig);
-            String enchantLore = Main.color(enchantLoreWithPAPI)
-                    .replace("{enchantmentName}", formattedEnchantName)
-                    .replace("{lvl}", romanEnchantLevel);
-            lore.add(enchantLore);
+            String enchantLore = buildAppliedLore(main, player, enchantName, enchantLevel);
+            if (enchantLore != null) {
+                lore.add(enchantLore);
+            }
             itemMeta.setLore(lore);
 
             // Apply updated metadata to the item
@@ -228,11 +231,16 @@ public class ApplyCustomEnchant implements Listener {
 
             return targetItem; // Enchantment applied successfully, return the modified item
         } else {
-            // Item is not applicable for this enchantment.
-            // Note: PDC was already updated. If you want to revert PDC on non-applicable items,
-            // you'd need to manage a rollback or apply PDC only after this check.
-//            main.getLogger().info(player.getName() + " tried to apply " + enchantName + " to an inapplicable item: " + targetItemType.toString());
-            // You might want a specific feedback message/sound here for non-applicable items.
+            // Item is not applicable for this enchantment. Nothing is written to the item itself -
+            // the PDC edit above went to a detached ItemMeta copy that is simply discarded here.
+            //
+            // Tell the player why, otherwise dropping a book on the wrong gear looks like the
+            // plugin is broken: nothing happens and no message is given.
+            handleFeedback(main, player, "EnchantItemSounds.NotApplicable", "EnchantItemMessages.NotApplicable",
+                    "{enchantName}", formatEnchantName(enchantName),
+                    "{enchantLevel}", String.valueOf(enchantLevel),
+                    "{itemName}", formatEnchantName(targetItemType.toString().replace('_', '-')),
+                    "{applicableItems}", formatApplicableItems(applicableItems));
             return null; // Item type is not valid for this enchantment
         }
     }
@@ -274,6 +282,87 @@ public class ApplyCustomEnchant implements Listener {
                 player.sendMessage(Main.color(processedMsg));
             }
         }
+    }
+
+    /** The literal placeholder the Apply-Lore template uses for the enchant level. */
+    private static final String LEVEL_PLACEHOLDER = "{lvl}";
+
+    /**
+     * Builds the single lore line this plugin writes onto an item when an enchant is applied,
+     * from that enchant's {@code Enchantment-Apply-Lore} template.
+     *
+     * @return the finished line, or {@code null} when the enchant has no Apply-Lore configured.
+     */
+    private static String buildAppliedLore(Main main, Player player, String enchantName, int enchantLevel) {
+        String template = renderAppliedLoreTemplate(main, player, enchantName);
+        if (template == null) return null;
+
+        String romanEnchantLevel = ConvertToRomanNumeral(enchantLevel);
+        return template.replace(LEVEL_PLACEHOLDER, romanEnchantLevel == null ? "" : romanEnchantLevel);
+    }
+
+    /** The Apply-Lore template with everything resolved except {lvl}, which is left in place. */
+    private static String renderAppliedLoreTemplate(Main main, Player player, String enchantName) {
+        String template = main.getEnchantmentsConfig().getString("Enchantments." + enchantName + ".Enchantment-Apply-Lore");
+        if (template == null) return null;
+
+        return Main.color(main.setPlaceholders(player, template))
+                .replace("{enchantmentName}", formatEnchantName(enchantName));
+    }
+
+    /**
+     * Removes the lore line this plugin wrote for {@code enchantName} at {@code existingLevel},
+     * so an upgrade doesn't leave "Leech I" sitting above "Leech III".
+     *
+     * <p>Matches the whole rendered Apply-Lore line rather than just the enchant's name. The name
+     * on its own also matched lore the <em>player</em> wrote - renaming a sword's lore to something
+     * like "Forged in the Leech Caverns" meant upgrading Leech deleted that line too.
+     */
+    private static void removeAppliedLore(Main main, Player player, List<String> lore, String enchantName, int existingLevel) {
+        String template = renderAppliedLoreTemplate(main, player, enchantName);
+        if (template == null) return;
+
+        // The line as it was written at the old level - the normal case.
+        String exact = buildAppliedLore(main, player, enchantName, existingLevel);
+        if (exact != null && lore.removeIf(line -> line.equals(exact))) return;
+
+        // Nothing matched, so the item predates a change to the Apply-Lore format or to the level
+        // numbering. Fall back to the line's shape: same text either side of where the level sits,
+        // whatever the level itself now reads as.
+        int marker = template.indexOf(LEVEL_PLACEHOLDER);
+        if (marker < 0) {
+            lore.removeIf(line -> line.equals(template));
+            return;
+        }
+
+        String prefix = template.substring(0, marker);
+        String suffix = template.substring(marker + LEVEL_PLACEHOLDER.length());
+
+        // A template that is nothing but "{lvl}" would match every line on the item, so leave it.
+        if (prefix.isEmpty() && suffix.isEmpty()) return;
+
+        lore.removeIf(line -> line.length() >= prefix.length() + suffix.length()
+                && line.startsWith(prefix)
+                && line.endsWith(suffix));
+    }
+
+    /**
+     * Renders the Enchantment-Apply-Item list for a message, e.g. "Diamond Pickaxe, Netherite
+     * Pickaxe". Long lists are truncated so the message does not flood chat.
+     */
+    private static String formatApplicableItems(List<String> applicableItems) {
+        if (applicableItems == null || applicableItems.isEmpty()) return "nothing";
+
+        int shown = Math.min(applicableItems.size(), 8);
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < shown; i++) {
+            if (i > 0) result.append(", ");
+            result.append(formatEnchantName(applicableItems.get(i).replace('_', '-')));
+        }
+        if (applicableItems.size() > shown) {
+            result.append(" (+").append(applicableItems.size() - shown).append(" more)");
+        }
+        return result.toString();
     }
 
     private static String formatEnchantName(String enchantName) {

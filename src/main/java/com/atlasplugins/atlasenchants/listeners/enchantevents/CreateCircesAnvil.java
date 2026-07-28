@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateCircesAnvil implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateCircesAnvil(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateCircesAnvilItem(int anvilAmount, Player p) {
-        ItemStack anvil = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("CircesAnvil.CircesAnvil-Item")));
+        ItemStack anvil = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("CircesAnvil.CircesAnvil-Item"), Material.ANVIL));
         ItemMeta anvilMeta = anvil.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("CircesAnvil.CircesAnvil-DisplayName");
@@ -56,9 +54,13 @@ public class CreateCircesAnvil implements Listener {
         anvilMeta.setLore(enchantmentLore);
         anvil.setItemMeta(anvilMeta);
 
+        // Add items to player's inventory if player is not null
         if (p != null) {
             for (int i = 0; i < anvilAmount; i++) {
+                // Check if there's space in the player's inventory
                 HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(anvil);
+
+                // If the inventory is full and the item could not be added, drop it at the player's feet
                 if (!remainingItems.isEmpty()) {
                     for (ItemStack item : remainingItems.values()) {
                         p.getWorld().dropItemNaturally(p.getLocation(), item);

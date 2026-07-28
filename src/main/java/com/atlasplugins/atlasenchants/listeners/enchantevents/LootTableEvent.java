@@ -2,13 +2,14 @@ package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -58,16 +59,12 @@ public class LootTableEvent implements Listener {
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
         // Enchantment Spawner
-//        main.getLogger().info("--------------------------------------------------");
-        boolean hasFoundEnchantment = false;
         boolean hasDisplaced = false;
         String who = resolveWho(event);
         List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
-
-        boolean flipEnchantmentList = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Flip-List");
 
         double chanceToSpawnEnchants = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Spawn-Chance");
 
@@ -117,63 +114,31 @@ public class LootTableEvent implements Listener {
         if (!enchantBookPassed) return;
         if (!hasRoom(event) && hasDisplaced) return;
 
-        List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
-                .stream()
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
-
-        if (flipEnchantmentList) {
-            Collections.reverse(enchantments);
-            Collections.reverse(enchantmentRarity);
+        // One weighted roll picks the rarity, then a random enabled enchant of that rarity is handed out.
+        ConfigurationSection oddsSection = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List");
+        LinkedHashMap<String, Double> weights = RarityRoller.eligibleWeights(main, oddsSection, enchantments);
+        if (weights.isEmpty()) {
+            main.debugOddsInfo("Loot", who, "No eligible rarities to roll - check the rarity weights and that enchants are enabled.");
+            return;
         }
 
-        int maxAttempts = 100;
-        while (!hasFoundEnchantment && maxAttempts-- > 0) {
-            for (String rarity : enchantmentRarity) {
-                double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-                double rarityRoll = random.nextDouble();
-                boolean rarityPassed = rarityRoll <= rarityChance;
-                main.debugOddsRoll("Loot", who, "Rarity " + rarity, rarityRoll, rarityChance, rarityPassed);
-                if (rarityPassed) {
-                    String enchantRarity = rarity.toUpperCase();
+        String chosenRarity = RarityRoller.pickWeightedRarity(random, weights);
+        if (chosenRarity == null) return;
 
-                    // Filter enchantments by the current rarity
-                    List<String> filteredEnchantments = enchantments.stream()
-                            .filter(enchantment -> {
-                                String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
-                                return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
-                            })
-                            .collect(Collectors.toList());
+        List<String> filteredEnchantments = RarityRoller.enabledEnchantsOfRarity(main, chosenRarity, enchantments);
+        if (filteredEnchantments.isEmpty()) return;
 
-                    if (!filteredEnchantments.isEmpty()) {
-                        // Select a random enchantment from the filtered list
-                        String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+        String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+        int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl");
+        if (enchantmentMaxLevel <= 0) return;
 
-//                        main.getLogger().info("Selected Enchantment: " + selectedEnchantment);
+        int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
 
-                        // Get Enchantment Enabled Status
-                        boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
-                        // if Enchantment Enabled = false skip.
-                        if (!isEnchantmentEnabled) continue;
+        main.debugOddsInfo("Loot", who, "Granted " + selectedEnchantment + " (Lvl " + enchantmentLevel + ") from rarity "
+                + chosenRarity + " - picked from " + filteredEnchantments.size() + " enchant(s).");
 
-                        // Get the Enchantment Max Level
-                        int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl"); // Example enchantment level
-                        int enchantmentAmount = 1;
-
-                        // Generate a random number between 1 (inclusive) and enchantmentMaxLevel (inclusive)
-                        int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
-
-                        // Create an instance of CreateCustomEnchant and call the method
-                        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
-                        ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
-
-//                    main.getLogger().info("SPAWN ENCHANT: " + selectedEnchantment);
-                        hasDisplaced = addLoot(event, customItem, hasDisplaced);
-                        hasFoundEnchantment = true;
-                        break; // Exit after adding one enchantment
-                    }
-                }
-            }
-        }
+        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+        ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, 1, null);
+        hasDisplaced = addLoot(event, customItem, hasDisplaced);
     }
 }

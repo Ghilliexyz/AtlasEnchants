@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateScrapOfCirce implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateScrapOfCirce(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateScrapOfCirceItem(int scrapAmount, Player p) {
-        ItemStack scrap = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-Item")));
+        ItemStack scrap = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-Item"), Material.PAPER));
         ItemMeta scrapMeta = scrap.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("ScrapOfCirceWeave.ScrapOfCirceWeave-DisplayName");
@@ -50,10 +48,7 @@ public class CreateScrapOfCirce implements Listener {
             scrapMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int scrapofcirceID = random.nextInt();
-
         PersistentDataContainer pdc = scrapMeta.getPersistentDataContainer();
-//        pdc.set(Main.customscrapKeys, PersistentDataType.STRING, "scrap" + ":" + scrapofcirceID);
         pdc.set(Main.customScrapOfCirceKeys, PersistentDataType.STRING, "scrapeofcirce_book");
 
         scrapMeta.setLore(enchantmentLore);

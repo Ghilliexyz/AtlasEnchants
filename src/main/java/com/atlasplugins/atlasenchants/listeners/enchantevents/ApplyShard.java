@@ -3,7 +3,6 @@ package com.atlasplugins.atlasenchants.listeners.enchantevents;
 import com.atlasplugins.atlasenchants.Main;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +14,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public class ApplyShard implements Listener {
 
@@ -44,8 +42,8 @@ public class ApplyShard implements Listener {
             if (clickedItem == null || cursorItem == null) return;
 
             // Get the custom item material type from the config
-            Material shardItem = Material.valueOf(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item"));
-            Material enchantmentItem = Material.valueOf(main.getSettingsConfig().getString("EnchantItems.EnchantItem"));
+            Material shardItem = Main.getMaterial(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item"), Material.PRISMARINE_SHARD);
+            Material enchantmentItem = Main.getMaterial(main.getSettingsConfig().getString("EnchantItems.EnchantItem"), Material.ENCHANTED_BOOK);
 
             // If the item on the cursor is not the custom item, return
             if (cursorItem.getType() != shardItem) return;
@@ -71,10 +69,11 @@ public class ApplyShard implements Listener {
                     PersistentDataContainer itemPDC = itemMeta.getPersistentDataContainer();
 
                     if (cursorData != null) {
-                        // Split the Shard data into name and level
+                        // Split the Shard data into name and (legacy) ID. Stackable shards no
+                        // longer carry an ID, so treat it as optional for backwards compatibility.
                         String[] shardParts = cursorData.split(":");
                         String shardName = shardParts[0];
-                        int shardID = Integer.parseInt(shardParts[1]);
+                        String shardID = shardParts.length > 1 ? shardParts[1] : "";
 
                         // Get Shard Enabled Status
                         boolean isOblivionShardEnabled = main.getEnchantmentsConfig().getBoolean("OblivionShard.OblivionShard-Enabled");
@@ -220,8 +219,13 @@ public class ApplyShard implements Listener {
                             // Cancel the event to prevent default behavior
                             invEvent.setCancelled(true);
 
-                            // Remove the shard that is left (avoid deprecated setCursor)
-                            player.setItemOnCursor(new ItemStack(Material.AIR));
+                            // Consume only ONE shard from the cursor stack (not the whole stack)
+                            if (cursorItem.getAmount() > 1) {
+                                cursorItem.setAmount(cursorItem.getAmount() - 1);
+                                player.setItemOnCursor(cursorItem);
+                            } else {
+                                player.setItemOnCursor(new ItemStack(Material.AIR));
+                            }
 
                             // Update the inventory to reflect changes
                             player.updateInventory();

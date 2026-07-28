@@ -44,7 +44,7 @@ public class UpgradeRewardGUI extends Gui {
         // ---------- GLASS FILLER ---------- \\
         // Create Item \\
         String GlassTitle = main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Filler-Title");
-        Material GlassConfigItem = Material.valueOf(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Filler-Item"));
+        Material GlassConfigItem = Main.getMaterial(main.getMenusConfig().getString("UpgradeEnchant-Gui.UpgradeReward-Menu.Filler-Item"), Material.BLACK_STAINED_GLASS_PANE);
         ItemStack GlassItem = new ItemStack(GlassConfigItem);
         ItemMeta GlassItemMeta = GlassItem.getItemMeta();
         // Set Title \\

@@ -156,6 +156,19 @@ Enchantments:
       Hostile: RED
       Passive: GREEN
       Player: WHITE
+      #Colour used for neutral mobs (wolves, endermen, iron golems, bees, etc.) once they turn aggressive.
+      #Only used when Aggressive-Glow-Enabled is true.
+      Aggressive: RED
+    #If true, neutral mobs that have picked a target will glow in the Aggressive colour above
+    #instead of their normal Passive/Player colour. Mobs that are always hostile are unaffected.
+    Aggressive-Glow-Enabled: true
+    #If true, a neutral mob only turns Aggressive-coloured when it is targeting YOU specifically.
+    #If false, it turns Aggressive-coloured whenever it is targeting anything (another player, a mob, etc.).
+    Aggressive-Glow-Only-Targeting-You: false
+    #How often (in ticks, 20 = 1 second) the glow is recalculated for players wearing the helmet.
+    #Lower is more responsive but costs more CPU, since each refresh scans for nearby entities.
+    #10 (half a second) is a good balance; 1 would recalculate every single tick.
+    Glow-Refresh-Ticks: 10
     #Radius of how far the glow goes per Tier.
     Fearsight-GlowRadius-1: 5
     Fearsight-GlowRadius-2: 10
@@ -489,6 +502,7 @@ Enchantments:
       - "&c● &7Description:"
       - "  &eMines the entire ore vein instantly, Item will always take damage"
       - "  &efor each block broken, even with Unbreaking."
+      - "  &eOnly works while crouching."
       - ""
       - "&c● &7Type: &ePickaxe Enchantment"
       - ""
@@ -512,6 +526,9 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (VEIN-SEEKER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
+    #If true the enchant only procs while the player is crouching/sneaking. Breaking an ore while
+    #stood up mines that block only, exactly as if the tool were not enchanted.
+    Enchantment-Require-Sneak: true
     #The list of blocks/ores this enchant will seek out and mine.
     VeinSeeker-Block-List:
       - COAL_ORE
@@ -1010,6 +1027,7 @@ Enchantments:
       - "&c● &7Description:"
       - "  &eChops down any tree instantly, Item will always take damage"
       - "  &efor each block broken, even with Unbreaking."
+      - "  &eOnly works while crouching."
       - ""
       - "&c● &7Type: &eAxe Enchantment"
       - ""
@@ -1032,6 +1050,9 @@ Enchantments:
     #Note 2: Make sure to add this enchant Name (TREE-HUGGER) to the enchantment Blacklist of the other enchantments you have listed below.
     Enchantment-Blacklist-Enchants:
       - SAFE-MINER
+    #If true the enchant only procs while the player is crouching/sneaking. Breaking a log while
+    #stood up breaks that block only, exactly as if the tool were not enchanted.
+    Enchantment-Require-Sneak: true
     #The list of blocks/logs this enchant will seek out and mine.
     TreeHugger-Block-List:
       - OAK_LOG
@@ -1419,9 +1440,9 @@ AltarOfCirce:
   #   A B C   =>  END_CRYSTAL      NETHERITE_INGOT   END_CRYSTAL
   #   Y X Y   =>  Scrap of Circe   Oracle Book       Scrap of Circe
   #   G H I   =>  ECHO_SHARD       ECHO_SHARD        ECHO_SHARD
-  AltarOfCirce-Crafting-Row-1: "ABC"
+  AltarOfCirce-Crafting-Row-1: "ABA"
   AltarOfCirce-Crafting-Row-2: "YXY"
-  AltarOfCirce-Crafting-Row-3: "GHI"
+  AltarOfCirce-Crafting-Row-3: "GGG"
   #Materials for each letter (A-I). The special items X and Y are handled above and are NOT set here.
   # **NOTE** Every letter used in the rows above MUST have a valid material here, or the recipe won't register.
   # **NOTE** Letters not used in the rows (by default D, E, F) are ignored, but keep a valid material anyway.
@@ -1437,6 +1458,40 @@ AltarOfCirce:
   AltarOfCirce-Crafting-Materials-I: ECHO_SHARD
   #If true Altar Of Circe can be used.
   AltarOfCirce-Enabled: true
+  #How many XP LEVELS the Altar Of Circe takes every time a player enchants at it.
+  #This completely replaces the vanilla enchanting table cost, players always pay this exact amount.
+  #How the Altar charges players for enchanting.
+  #  true  = charge experience LEVELS (the green number) using AltarOfCirce-Enchant-Cost-Levels below.
+  #  false = charge raw XP POINTS using AltarOfCirce-Enchant-Cost-XP below.
+  #Levels is recommended: it matches vanilla enchanting tables and shows the price in the enchant screen.
+  AltarOfCirce-Cost-Use-Levels: true
+  #LEVELS cost (used when AltarOfCirce-Cost-Use-Levels is true). This value is shown in the enchanting
+  #screen, and players below it cannot click the slot. Set to 0 to make the Altar free.
+  AltarOfCirce-Enchant-Cost-Levels: 15
+  #RAW XP POINTS cost (used when AltarOfCirce-Cost-Use-Levels is false). Set to 0 to make the Altar free.
+  #Note: the enchanting screen can only show a levels-style price, so in XP mode it displays the level
+  #equivalent of this cost while the exact points are enforced on click and shown in the messages.
+  AltarOfCirce-Enchant-Cost-XP: 500
+  #If true players in creative mode are charged as well.
+  AltarOfCirce-Charge-Creative-Players: false
+  #If true the lapis in the table is taken on top of the level cost.
+  AltarOfCirce-Consume-Lapis: true
+  #How much lapis the Altar takes per enchant. Vanilla varies by slot (1/2/3), this is a flat amount.
+  #Capped at however much lapis is actually in the table. Set to 0 to take none.
+  AltarOfCirce-Lapis-Cost: 3
+  #Toggle each of the 3 enchanting slots on the Altar Of Circe. Slot 1 is the top one, slot 3 the bottom.
+  #A disabled slot shows nothing and does nothing when clicked.
+  AltarOfCirce-Slot-1-Enabled: true
+  AltarOfCirce-Slot-2-Enabled: false
+  AltarOfCirce-Slot-3-Enabled: false
+  #What the enabled slots are labelled as in the enchanting screen.
+  # **NOTE** This MUST be a vanilla enchantment name, Minecraft can only render real enchantments there,
+  # so fully custom text is not possible without a resource pack.
+  # **NOTE** Set to NONE to leave whatever vanilla rolled on the slot.
+  #https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html < list of all enchantments.
+  AltarOfCirce-Slot-Display-Enchantment: LURE
+  #The level shown next to the label above, e.g. 1 shows "Lure I", 3 shows "Lure III".
+  AltarOfCirce-Slot-Display-Level: 1
   #If true Altar Of Circe will allow players to enchant Armour and Tools
   #Note this is false by default due to how OP it is.
   AltarOfCirce-ArmourTools-Enchanter-Enabled: false
@@ -1445,23 +1500,24 @@ AltarOfCirce:
   AltarOfCirce-Allow-Vanilla-ToolsAndArmour-Enchants-Enabled: false
   #If true Altar Of Circe will allow players to enchant Books
   AltarOfCirce-Book-Enchanter-Enabled: true
-  #A list of all rarity's in the plugin. (0.5 = 50%)
+  #Rarity WEIGHTS for the Altar's book enchanter. A single roll picks exactly one rarity, with each
+  #rarity's chance equal to its weight divided by the total of all weights. Bigger weight = more
+  #likely. The numbers do NOT have to add up to 1 - they are relative. A weight of 0 makes that
+  #rarity impossible. (With the defaults below the total is 1.111, so GODLY works out to
+  #0.001 / 1.111 = ~1 in 1111, and DIVINE at 0 can never be rolled here.)
   AltarOfCirce-Book-Enchanter-Odds:
-    #Chance to get a Divine enchantment. default is 0 because it's not meant to be obtainable via the Altar Of Circe
+    #Weight for Divine enchantments. default is 0 because it's not meant to be obtainable via the Altar Of Circe.
     DIVINE: 0
-    #Chance to get a Godly enchantment. default is 1 in 1000
+    #Weight for Godly enchantments. default is roughly 1 in 1000.
     GODLY: 0.001
-    #Chance to get a Legendary enchantment.
+    #Weight for Legendary enchantments.
     LEGENDARY: 0.01
-    #Chance to get an Epic enchantment.
+    #Weight for Epic enchantments.
     EPIC: 0.20
-    #Chance to get a Rare enchantment.
+    #Weight for Rare enchantments.
     RARE: 0.40
-    #Chance to get a Trash book.
+    #Weight for Trash books.
     TRASH: 0.50
-  #This allows you to flip the order of the enchants default is true, which means it will check all Rares all the way up to Godly
-  #if false then it will check Godly first and make its way down to Rares.
-  AltarOfCirce-Flip-List: true
   #The name of the Altar Of Circe.
   AltarOfCirce-DisplayName: "&f&k*&l &d&lAltar Of Circe &f&k*"
   #Lore for the Altar Of Circe.
@@ -1618,10 +1674,15 @@ CircesBrand:
     - "  &ethe name it was born with, and answers only to"
     - "  &ethe one you give it."
     - ""
-    - "&c● &7Type: &eMythic Utility"
-    - ""
-    - "&c● &7Usage: &eRight-Click, then hold the item you want"
-    - "  &erenamed and type the new name in chat"
+    - '&c● &7Type: &eMythic Utility'
+    - ''
+    - '&c● &7Usage: &eRight-Click, then place the item you want'
+    - '  &eto rename in the first slot then place the Brand into'
+    - '  &ethe second slot type the text and colours'
+    - '  &eyou want into the text box.'
+    - ''
+#    - "&c● &7Usage: &eRight-Click, then hold the item you want" # use this if the chat version is enabled.
+#    - "  &eto rename and type the new name in chat"
     - ""
     #The "&§c" bits below are not a typo. A plain "&&c" does NOT escape to a literal "&c" -
     #the colour translator leaves the first & alone and then turns the second &c red, eating

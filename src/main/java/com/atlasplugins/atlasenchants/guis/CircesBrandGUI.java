@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
@@ -183,7 +184,11 @@ public class CircesBrandGUI extends Gui {
                 // Only a Brand may be placed here.
                 if (!isEmpty(cursor) && !CreateCircesBrand.isCircesBrand(cursor)) {
                     event.setCancelled(true);
+                    return;
                 }
+                // Brands stack, so a plain left-click drops the whole stack in here. Only one is
+                // ever spent, so the rest is handed straight back rather than parked in the menu.
+                trimBrandSlotLater();
             }
             case SLOT_TOOL -> {
                 if (!isEmpty(cursor) && (!isRenameable(cursor) || CreateCircesBrand.isCircesBrand(cursor))) {
@@ -192,6 +197,44 @@ public class CircesBrandGUI extends Gui {
             }
             default -> event.setCancelled(true);
         }
+    }
+
+    /**
+     * Drags are refused inside the menu outright. A drag can split a stack across both input
+     * slots at once, which would put Brands where the tool belongs and leave odd amounts behind;
+     * the player can still place items normally by clicking.
+     */
+    public void handleDrag(InventoryDragEvent event) {
+        for (int raw : event.getRawSlots()) {
+            if (raw >= 0 && raw < inventory.getSize()) {
+                event.setCancelled(true);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Cut the Brand slot back to a single item on the next tick, returning any excess.
+     *
+     * Deferred because the click that put the stack there has not been applied to the inventory
+     * yet at the point handleClick runs.
+     */
+    private void trimBrandSlotLater() {
+        Bukkit.getScheduler().runTask(main, () -> {
+            if (committed) return;
+
+            ItemStack brand = inventory.getItem(SLOT_BRAND);
+            if (isEmpty(brand) || brand.getAmount() <= 1) return;
+
+            ItemStack excess = brand.clone();
+            excess.setAmount(brand.getAmount() - 1);
+
+            brand.setAmount(1);
+            inventory.setItem(SLOT_BRAND, brand);
+
+            giveBack(excess);
+            player.updateInventory();
+        });
     }
 
     /** Send a shift-clicked item to whichever input slot it belongs in. */

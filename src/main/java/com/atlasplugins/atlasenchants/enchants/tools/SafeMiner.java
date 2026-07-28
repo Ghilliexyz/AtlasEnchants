@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.enchants.tools;
 
 import com.atlasplugins.atlasenchants.Main;
+import com.atlasplugins.atlasenchants.listeners.blockevents.ChainBlockBreakEvent;
 import com.atlasplugins.atlasenchants.listeners.enchantevents.CreateAltarOfCirce;
 import com.atlasplugins.atlasenchants.utils.EnchantUtils;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -10,18 +11,25 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.*;
-import org.bukkit.block.data.type.Bed;
-import org.bukkit.block.data.type.Door;
+import org.bukkit.entity.GlowItemFrame;
+import org.bukkit.entity.Hanging;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.LeashHitch;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.event.block.BlockDropItemEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -30,11 +38,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class SafeMiner implements Listener {
 
     private Main main;
     private WorldGuardPlugin worldGuardPlugin;
+
+    // Block locations broken by a SafeMiner tool this tick, mapped to the miner. Filled in
+    // onBlockBreak and consumed by onBlockDropItem, which fires later in the same tick.
+    private final Map<Location, UUID> pendingBreaks = new HashMap<>();
+
+    // Hanging entities (item frames, paintings, lead knots) attached to a block are not part of
+    // that block's drops - the server only notices their support is gone on a periodic survival
+    // check, which can lag the break by up to 100 ticks. So SafeMiner-broken blocks are also
+    // remembered here for a short window, keyed by block location -> (miner, expiry timestamp),
+    // so the resulting HangingBreakEvent can still be traced back to the player who caused it.
+    private static final long HANGING_WINDOW_MS = 10_000L;
+    private final Map<Location, RecentBreak> recentBreaks = new HashMap<>();
+
+    private record RecentBreak(UUID miner, long expiresAt) {}
 
     public SafeMiner(Main main) {
         this.main = main;
@@ -58,6 +82,11 @@ public class SafeMiner implements Listener {
     // the block, resulting in duplication.
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent e) {
+        // Chain enchants (Vein Seeker, Tree Hugger) break their extra blocks themselves and route
+        // the drops to the player directly, so no BlockDropItemEvent ever follows. Flagging them
+        // here would queue a redirect - and a cleanup task - per block that could never be
+        // consumed; a full 256-block vein meant 255 wasted scheduler tasks in one tick.
+        if (e instanceof ChainBlockBreakEvent) return;
         // Grabbing the player
         Player player = e.getPlayer();
         // Grabbing the broken block
@@ -93,169 +122,165 @@ public class SafeMiner implements Listener {
 
         for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(player.getInventory().getItemInMainHand())) {
             if (enchant.name.contains("SAFE-MINER")) {
-                    // PUT ENCHANT LOGIC HERE
-                    // Handle block drops manually
-                    ItemStack tool = player.getInventory().getItemInMainHand();
-
-                    if(blockMined.getType() == Material.ENCHANTING_TABLE)
-                    {
-                        BlockState blockState = blockMined.getState();
-                        if(!(blockState instanceof TileState tileState)) return;
-                        PersistentDataContainer blockPDC = tileState.getPersistentDataContainer();
-                        if(blockPDC.has(Main.customAltarOfCirceKeys, PersistentDataType.STRING))
-                        {
-                            String value = blockPDC.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING);
-                            if("altar_of_circe".equals(value))
-                            {
-                                // Create an instance of CreateAltarOfCirce and call the method
-                                CreateAltarOfCirce createAltarOfCirce = new CreateAltarOfCirce(main);
-                                // Drop the custom altar instead
-                                createAltarOfCirce.CreateAltarOfCirceItem(1, player);
-                                // Prevent default drops
-                                e.setDropItems(false);
-                            }
-                        }
-                    }else{
-                        SafeMinerLogic(blockMined, e, tool, player);
-
-                        // Prevent default drops
-                        e.setDropItems(false);
-                        //END ENCHANT LOGIC
-                    }
+                // PUT ENCHANT LOGIC HERE
+                if (isAltarOfCirce(blockMined)) {
+                    // Create an instance of CreateAltarOfCirce and call the method
+                    CreateAltarOfCirce createAltarOfCirce = new CreateAltarOfCirce(main);
+                    // Drop the custom altar instead
+                    createAltarOfCirce.CreateAltarOfCirceItem(1, player);
+                    // Prevent default drops
+                    e.setDropItems(false);
+                    return;
                 }
-            }
-    }
 
-    public void SafeMinerLogic(Block blockMined, BlockBreakEvent event, ItemStack tool, Player player) {
-        List<ItemStack> drops = new ArrayList<>(blockMined.getDrops(tool, player));
-
-        if (blockMined.getBlockData() instanceof Bed) {
-            // getDrops() only returns the bed from the head part, so grab from other half too
-            handleBed(blockMined, tool, drops);
-        } else if (blockMined.getBlockData() instanceof Door) {
-            // getDrops() only returns the door from the bottom part
-            handleDoor(blockMined, tool, drops);
-        } else if (isTallFlower(blockMined)) {
-            // getDrops() only returns the flower from the bottom part
-            handleTallFlower(blockMined, tool, drops);
-        } else if (isPiston(blockMined)) {
-            // getDrops() only returns the piston from the base when powered
-            handlePiston(blockMined, tool, drops);
-        } else if (blockMined.getState() instanceof Container) {
-            // Check for loot inside Containers like Chests
-            handleContainers(blockMined, tool, drops, player);
-        } else if(blockMined.getType() == Material.JUKEBOX
-                || blockMined.getType() == Material.LECTERN
-                || blockMined.getType() == Material.CHISELED_BOOKSHELF
-                || blockMined.getType() == Material.DECORATED_POT) {
-            handleEdgeCases(blockMined, tool, drops, player);
-        }
-
-        // Add drops to the player's inventory or drop them if the inventory is full
-        giveOrDropItems(player, drops, blockMined.getLocation());
-    }
-
-    private boolean isTallFlower(Block block) {
-        return block.getType().equals(Material.ROSE_BUSH) ||
-                block.getType().equals(Material.SUNFLOWER) ||
-                block.getType().equals(Material.LILAC) ||
-                block.getType().equals(Material.PEONY) ||
-                block.getType().equals(Material.PITCHER_PLANT);
-    }
-
-    private boolean isPiston(Block block) {
-        return block.getType().equals(Material.PISTON_HEAD) ||
-                block.getType().equals(Material.PISTON) ||
-                block.getType().equals(Material.STICKY_PISTON);
-    }
-
-    private boolean isShulkerBox(Block block) {
-        return block.getType().name().endsWith("SHULKER_BOX");
-    }
-
-    private void handleBed(Block block, ItemStack tool, Collection<ItemStack> drops) {
-        Bed bedData = (Bed) block.getBlockData();
-        Block otherPart = bedData.getPart() == Bed.Part.HEAD ? block.getRelative(bedData.getFacing().getOppositeFace()) : block.getRelative(bedData.getFacing());
-
-        // Add drops for both parts of the bed
-        drops.addAll(otherPart.getDrops(tool));
-    }
-
-    private void handleDoor(Block block, ItemStack tool, Collection<ItemStack> drops) {
-        Door doorData = (Door) block.getBlockData();
-        Block otherPart = doorData.getHalf() == Door.Half.TOP ? block.getRelative(0, -1, 0) : block.getRelative(0, 1, 0);
-
-        // Add drops for both parts of the door
-        drops.addAll(otherPart.getDrops(tool));
-    }
-
-    private void handleTallFlower(Block block, ItemStack tool, Collection<ItemStack> drops) {
-        Block upperPart = block.getRelative(BlockFace.UP);
-        Block lowerPart = block.getRelative(BlockFace.DOWN);
-
-        // Check if the upper part is a tall flower and add drops
-        if (upperPart.getType().equals(block.getType())) {
-            drops.addAll(upperPart.getDrops(tool));
-        }
-        // Check if the lower part is a tall flower and add drops
-        if (lowerPart.getType().equals(block.getType())) {
-            drops.addAll(lowerPart.getDrops(tool));
-        }
-    }
-
-    private void handlePiston(Block block, ItemStack tool, Collection<ItemStack> drops) {
-        if (block.getType().equals(Material.PISTON_HEAD)) {
-            // Find the base of the piston and add drops
-            BlockFace[] faces = {BlockFace.DOWN, BlockFace.UP, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.EAST};
-            for (BlockFace face : faces) {
-                Block relative = block.getRelative(face);
-                if (relative.getType().equals(Material.PISTON) || relative.getType().equals(Material.STICKY_PISTON)) {
-                    drops.addAll(relative.getDrops(tool));
-                    break;
-                }
-            }
-        } else if (block.getType().equals(Material.PISTON) || block.getType().equals(Material.STICKY_PISTON)) {
-            // drops already collected from initial getDrops() call
-        }
-    }
-
-    private void handleContainers(Block block, ItemStack tool, Collection<ItemStack> drops, Player player) {
-        BlockState blockState = block.getState();
-
-        // Skip shulker boxes to avoid dupe exploits
-        if (isShulkerBox(block)) return;
-
-        if (blockState instanceof Container container) {
-            Inventory containerInventory = container.getInventory();
-
-            if (!containerInventory.isEmpty()) {
-                for (ItemStack item : containerInventory.getContents()) {
-                    if (item != null) {
-                        drops.add(item.clone()); // Clone to prevent modifying original reference
-                    }
-                }
-                containerInventory.clear(); // Important: Clear items to prevent duping
+                // Flag the break so onBlockDropItem can redirect the drops into the player's
+                // inventory. We deliberately do NOT use setDropItems(false) + Block#getDrops():
+                // the server's drop capture covers the whole removal, so suppressing it also
+                // voids items produced by the removal's side effects - a torch, door, rail or
+                // sign attached to the block popping off, and container contents. Those never
+                // appear in getDrops(), so they were being deleted outright.
+                pendingBreaks.put(blockMined.getLocation(), player.getUniqueId());
+                // Separate, longer-lived record for hanging entities knocked loose by this break.
+                pruneRecentBreaks();
+                recentBreaks.put(blockMined.getLocation(),
+                        new RecentBreak(player.getUniqueId(), System.currentTimeMillis() + HANGING_WINDOW_MS));
+                // Safety net: if the block yields no drops at all, BlockDropItemEvent never
+                // fires, so drop the flag on the next tick rather than leaking it.
+                Location flagged = blockMined.getLocation();
+                main.getServer().getScheduler().runTask(main, () -> pendingBreaks.remove(flagged));
+                return;
+                //END ENCHANT LOGIC
             }
         }
     }
 
-    private void handleEdgeCases(Block block, ItemStack tool, Collection<ItemStack> drops, Player player)
-    {
-        BlockState state = block.getState();
+    // Fires after the block (and anything the break knocked loose) has produced its items,
+    // but before those item entities are added to the world.
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onBlockDropItem(BlockDropItemEvent e) {
+        Location location = e.getBlock().getLocation();
+        UUID miner = pendingBreaks.get(location);
+        if (miner == null || !miner.equals(e.getPlayer().getUniqueId())) return;
+        pendingBreaks.remove(location);
 
-        // Check if state implements InventoryHolder (which it does for JUKEBOX)
-        if(state instanceof InventoryHolder inventoryHolder)
-        {
-            Inventory inv = inventoryHolder.getInventory();
-
-            for (ItemStack item : inv.getContents())
-            {
-                if(item != null && item.getType() != Material.AIR)
-                {
-                    drops.add(item.clone());
-                }
-            }
+        List<ItemStack> drops = new ArrayList<>();
+        for (Item item : e.getItems()) {
+            drops.add(item.getItemStack());
         }
+
+        // Clearing the list stops the server from spawning the entities at all
+        e.getItems().clear();
+
+        giveOrDropItems(e.getPlayer(), drops, location);
+    }
+
+    // Item frames, paintings and lead knots are entities, so they never produce a
+    // BlockDropItemEvent. Handles both ways they die: the player breaking one directly with a
+    // SafeMiner tool, and one popping off because SafeMiner removed the block holding it up.
+    // HangingBreakByEntityEvent extends HangingBreakEvent, so both arrive here.
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onHangingBreak(HangingBreakEvent e) {
+        Hanging hanging = e.getEntity();
+        Player player = null;
+
+        if (e instanceof HangingBreakByEntityEvent byEntity) {
+            if (byEntity.getRemover() instanceof Player remover && hasSafeMiner(remover)) {
+                player = remover;
+            }
+        } else if (e.getCause() == HangingBreakEvent.RemoveCause.PHYSICS
+                || e.getCause() == HangingBreakEvent.RemoveCause.OBSTRUCTION) {
+            player = recentMiner(hanging);
+        }
+
+        if (player == null) return;
+        // Creative breaks yield nothing in vanilla; leave that alone.
+        if (player.getGameMode() == GameMode.CREATIVE) return;
+
+        List<ItemStack> drops = hangingDrops(hanging);
+        // Nothing to collect (e.g. a fixed frame) - let the server handle it normally.
+        if (drops.isEmpty()) return;
+
+        // There is no setDropItems() for hanging entities, so suppress the vanilla removal and
+        // do it ourselves; cancelling alone would leave the entity floating in mid-air.
+        e.setCancelled(true);
+        hanging.remove();
+
+        giveOrDropItems(player, drops, hanging.getLocation());
+    }
+
+    // Punching an item frame that holds an item pops the item out and leaves the frame standing -
+    // that path fires no HangingBreakEvent at all, only entity damage.
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onItemFrameDamage(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof ItemFrame frame)) return;
+        if (!(e.getDamager() instanceof Player player)) return;
+        if (frame.isFixed()) return;
+
+        ItemStack content = frame.getItem();
+        // Empty frame: this hit destroys the frame itself, which onHangingBreak covers.
+        if (content == null || content.getType().isAir()) return;
+
+        if (player.getGameMode() == GameMode.CREATIVE) return;
+        if (!hasSafeMiner(player)) return;
+
+        e.setCancelled(true);
+        // Clears the frame without dropping the item, playing the usual removal sound.
+        frame.setItem(null, true);
+
+        giveOrDropItems(player, List.of(content.clone()), frame.getLocation());
+    }
+
+    // What the hanging entity would have dropped on the floor.
+    private List<ItemStack> hangingDrops(Hanging hanging) {
+        List<ItemStack> drops = new ArrayList<>();
+
+        if (hanging instanceof ItemFrame frame) {
+            if (frame.isFixed()) return drops;
+            drops.add(new ItemStack(frame instanceof GlowItemFrame ? Material.GLOW_ITEM_FRAME : Material.ITEM_FRAME));
+            ItemStack content = frame.getItem();
+            if (content != null && !content.getType().isAir()) drops.add(content.clone());
+        } else if (hanging instanceof Painting) {
+            drops.add(new ItemStack(Material.PAINTING));
+        } else if (hanging instanceof LeashHitch) {
+            drops.add(new ItemStack(Material.LEAD));
+        }
+
+        return drops;
+    }
+
+    // The player who recently broke the block this entity was hanging on, if any.
+    private Player recentMiner(Hanging hanging) {
+        pruneRecentBreaks();
+        Location support = hanging.getLocation().getBlock().getRelative(hanging.getAttachedFace()).getLocation();
+        RecentBreak recent = recentBreaks.get(support);
+        if (recent == null) return null;
+
+        Player player = main.getServer().getPlayer(recent.miner());
+        return (player != null && player.isOnline()) ? player : null;
+    }
+
+    private void pruneRecentBreaks() {
+        long now = System.currentTimeMillis();
+        recentBreaks.values().removeIf(recent -> recent.expiresAt() <= now);
+    }
+
+    // Whether the player is holding a tool carrying a usable Safe Miner enchant.
+    private boolean hasSafeMiner(Player player) {
+        if (!hasTool(player)) return false;
+        if (!main.getEnchantmentsConfig().getBoolean("Enchantments.SAFE-MINER.Enchantment-Enabled")) return false;
+
+        for (EnchantUtils.EnchantData enchant : EnchantUtils.parseEnchants(player.getInventory().getItemInMainHand())) {
+            if (enchant.name.contains("SAFE-MINER")) return true;
+        }
+        return false;
+    }
+
+    private boolean isAltarOfCirce(Block block) {
+        if (block.getType() != Material.ENCHANTING_TABLE) return false;
+        if (!(block.getState() instanceof TileState tileState)) return false;
+
+        PersistentDataContainer blockPDC = tileState.getPersistentDataContainer();
+        return "altar_of_circe".equals(blockPDC.get(Main.customAltarOfCirceKeys, PersistentDataType.STRING));
     }
 
     private void giveOrDropItems(Player player, Collection<ItemStack> items, Location dropLocation) {

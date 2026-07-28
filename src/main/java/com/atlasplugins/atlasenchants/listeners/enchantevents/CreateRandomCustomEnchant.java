@@ -1,6 +1,7 @@
 package com.atlasplugins.atlasenchants.listeners.enchantevents;
 
 import com.atlasplugins.atlasenchants.Main;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -17,171 +18,102 @@ public class CreateRandomCustomEnchant implements Listener {
         this.main = main;
     }
 
-    // New parameter for specifying rarity
+    /**
+     * Rolls a random custom enchant book against the spawn rarity weights in settings.yml.
+     */
     public ItemStack CreateRandomCustomEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant, String desiredRarity) {
-        boolean hasFoundEnchantment = false;
-        List<String> enchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
-                .stream()
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
-
-        boolean flipEnchantmentList = main.getSettingsConfig().getBoolean("EnchantItems.EnchantItem-Flip-List");
-
-        List<String> enchantmentRarity = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List").getKeys(false)
-                .stream()
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
-
-        if (flipEnchantmentList) {
-            Collections.reverse(enchantments);
-            Collections.reverse(enchantmentRarity);
-        }
-
-        // If a specific rarity is provided, use it, otherwise, continue with random selection
-        int maxAttempts = 100;
-        while (!hasFoundEnchantment && maxAttempts-- > 0) {
-            for (String rarity : enchantmentRarity) {
-                // If a specific rarity is chosen, skip this loop unless it's the desired rarity
-                if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) {
-                    continue;
-                }
-
-                double rarityChance = main.getSettingsConfig().getDouble("EnchantItems.EnchantItem-Rarity-List." + rarity);
-
-                // Only check rarity chance if no specific rarity is given
-                if (desiredRarity == null && random.nextDouble() > rarityChance) {
-                    continue;
-                }
-
-                String enchantRarity = rarity.toUpperCase();
-
-                // Filter enchantments by the current rarity
-                List<String> filteredEnchantments = enchantments.stream()
-                        .filter(enchantment -> {
-                            String spawnEnchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchantment + ".Enchantment-Rarity");
-                            return enchantRarity.equalsIgnoreCase(spawnEnchantRarity);
-                        })
-                        .collect(Collectors.toList());
-
-                if (!filteredEnchantments.isEmpty()) {
-                    // Select a random enchantment from the filtered list
-                    String selectedEnchantment = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
-
-                    // Get Enchantment Enabled Status
-                    boolean isEnchantmentEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + selectedEnchantment + ".Enchantment-Enabled");
-                    if (!isEnchantmentEnabled) continue;
-
-                    // Get the Enchantment Max Level
-                    int enchantmentMaxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selectedEnchantment + ".Enchantment-MaxLvl");
-
-                    // Generate a random level between 1 (inclusive) and enchantmentMaxLevel (inclusive)
-                    int enchantmentLevel = random.nextInt(enchantmentMaxLevel) + 1;
-
-                    // Create the custom enchantment item
-                    CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
-                    ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selectedEnchantment, enchantmentLevel, enchantmentAmount, null);
-
-                    if (givePlayerEnchant && p != null) {
-                        for (int i = 0; i < enchantmentAmount; i++) {
-                            // Add the item to the player's inventory or drop it if the inventory is full
-                            HashMap<Integer, ItemStack> remainingItems = p.getInventory().addItem(customItem);
-                            if (!remainingItems.isEmpty()) {
-                                for (ItemStack item : remainingItems.values()) {
-                                    p.getWorld().dropItemNaturally(p.getLocation(), item);
-                                }
-                            }
-                        }
-                    }
-
-                    hasFoundEnchantment = true;
-                    return customItem;
-                }
-
-                // Exit the loop if a specific rarity was used
-                if (desiredRarity != null) {
-                    break;
-                }
-            }
-        }
-        return null;
+        ConfigurationSection odds = main.getSettingsConfig().getConfigurationSection("EnchantItems.EnchantItem-Rarity-List");
+        return rollBatch(p, enchantmentAmount, givePlayerEnchant, desiredRarity, odds, "Spawn");
     }
 
-    // New parameter for specifying rarity
+    /**
+     * Rolls a random custom enchant book against the Altar Of Circe rarity weights in enchantments.yml.
+     */
     public ItemStack CreateRandomOracleEnchantmentItem(Player p, int enchantmentAmount, boolean givePlayerEnchant, String desiredRarity) {
-        boolean hasFoundEnchantment = false;
+        ConfigurationSection odds = main.getEnchantmentsConfig().getConfigurationSection("AltarOfCirce.AltarOfCirce-Book-Enchanter-Odds");
+        return rollBatch(p, enchantmentAmount, givePlayerEnchant, desiredRarity, odds, "Altar");
+    }
+
+    /**
+     * Rolls {@code enchantmentAmount} books, each one an independent roll.
+     *
+     * <p>The amount used to be applied by handing the <em>same</em> book over repeatedly, so
+     * "give 5 random enchants" produced 5 copies of one enchant rather than 5 rolls.
+     *
+     * @return the last book rolled, or {@code null} when nothing could be rolled.
+     */
+    private ItemStack rollBatch(Player p, int enchantmentAmount, boolean givePlayerEnchant,
+                                String desiredRarity, ConfigurationSection oddsSection, String source) {
+        // Callers that only want an item back (loot chests, trader stock) never ask for more than one.
+        if (!givePlayerEnchant || p == null) {
+            return rollAndCreate(p, givePlayerEnchant, desiredRarity, oddsSection, source);
+        }
+
+        ItemStack last = null;
+        for (int i = 0; i < Math.max(1, enchantmentAmount); i++) {
+            ItemStack rolled = rollAndCreate(p, true, desiredRarity, oddsSection, source);
+            if (rolled != null) last = rolled;
+        }
+        return last;
+    }
+
+    /**
+     * Picks a rarity with a single weighted roll (or honours {@code desiredRarity} when the caller
+     * forces one), then hands out a random enabled enchant of that rarity at a random level.
+     *
+     * @param oddsSection the rarity -> weight section to roll against.
+     * @param source      label used in the debug odds readout ("Spawn"/"Altar").
+     * @return the created book, or {@code null} when nothing could be rolled.
+     */
+    private ItemStack rollAndCreate(Player p, boolean givePlayerEnchant,
+                                    String desiredRarity, ConfigurationSection oddsSection, String source) {
+        String who = p != null ? p.getName() : "Unknown";
 
         List<String> allEnchantments = main.getEnchantmentsConfig().getConfigurationSection("Enchantments").getKeys(false)
                 .stream()
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
 
-        boolean flipEnchantmentList = main.getEnchantmentsConfig().getBoolean("AltarOfCirce.AltarOfCirce-Flip-List");
-
-        List<String> allRarities = main.getEnchantmentsConfig().getConfigurationSection("AltarOfCirce.AltarOfCirce-Book-Enchanter-Odds").getKeys(false)
-                .stream()
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
-
-        if (flipEnchantmentList) {
-            Collections.reverse(allEnchantments);
-            Collections.reverse(allRarities);
-        }
-
-        int maxOracleAttempts = 100;
-        while (!hasFoundEnchantment && maxOracleAttempts-- > 0) {
-            for (String rarity : allRarities) {
-                if (desiredRarity != null && !desiredRarity.equalsIgnoreCase(rarity)) continue;
-
-                double rarityChance = main.getEnchantmentsConfig().getDouble("AltarOfCirce.AltarOfCirce-Book-Enchanter-Odds." + rarity);
-
-                if (desiredRarity == null && random.nextDouble() > rarityChance) continue;
-
-                String upperRarity = rarity.toUpperCase();
-                List<String> filteredEnchantments = getEnabledEnchantmentsByRarity(upperRarity, allEnchantments);
-
-                if (filteredEnchantments.isEmpty()) {
-                    if (desiredRarity != null) return null; // None available for that rarity
-                    continue;
-                }
-
-                // Pick a random enchantment
-                String selected = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
-                int maxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selected + ".Enchantment-MaxLvl");
-
-                // Prevent invalid max level
-                if (maxLevel <= 0) continue;
-
-                int level = random.nextInt(maxLevel) + 1;
-
-                CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
-                ItemStack customItem = createCustomEnchant.CreateCustomEnchantmentItem(selected, level, enchantmentAmount, null);
-
-                if (givePlayerEnchant && p != null) {
-                    for (int i = 0; i < enchantmentAmount; i++) {
-                        HashMap<Integer, ItemStack> remaining = p.getInventory().addItem(customItem);
-                        if (!remaining.isEmpty()) {
-                            for (ItemStack leftover : remaining.values()) {
-                                p.getWorld().dropItemNaturally(p.getLocation(), leftover);
-                            }
-                        }
-                    }
-                }
-
-                hasFoundEnchantment = true;
-                return customItem;
+        String chosenRarity;
+        if (desiredRarity != null) {
+            // The caller wants a specific rarity (e.g. an upgrade reward), so skip the weighted roll.
+            chosenRarity = desiredRarity.toUpperCase();
+        } else {
+            LinkedHashMap<String, Double> weights = RarityRoller.eligibleWeights(main, oddsSection, allEnchantments);
+            if (weights.isEmpty()) {
+                main.debugOddsInfo(source, who, "No eligible rarities to roll - check the odds weights and that enchants are enabled.");
+                return null;
             }
+            chosenRarity = RarityRoller.pickWeightedRarity(random, weights);
+            if (chosenRarity == null) return null;
         }
 
-        return null; // Shouldn't reach here unless something went wrong
-    }
+        List<String> filteredEnchantments = RarityRoller.enabledEnchantsOfRarity(main, chosenRarity, allEnchantments);
+        if (filteredEnchantments.isEmpty()) {
+            main.debugOddsInfo(source, who, "No enabled enchants for rarity " + chosenRarity + ".");
+            return null;
+        }
 
-    private List<String> getEnabledEnchantmentsByRarity(String rarity, List<String> allEnchantments) {
-        return allEnchantments.stream()
-                .filter(enchant -> {
-                    String enchantRarity = main.getEnchantmentsConfig().getString("Enchantments." + enchant + ".Enchantment-Rarity");
-                    boolean isEnabled = main.getEnchantmentsConfig().getBoolean("Enchantments." + enchant + ".Enchantment-Enabled");
-                    return isEnabled && rarity.equalsIgnoreCase(enchantRarity);
-                })
-                .collect(Collectors.toList());
+        String selected = filteredEnchantments.get(random.nextInt(filteredEnchantments.size()));
+        int maxLevel = main.getEnchantmentsConfig().getInt("Enchantments." + selected + ".Enchantment-MaxLvl");
+        if (maxLevel <= 0) {
+            main.debugOddsInfo(source, who, "Skipping " + selected + " - invalid Enchantment-MaxLvl " + maxLevel + ".");
+            return null;
+        }
+
+        int level = random.nextInt(maxLevel) + 1;
+
+        main.debugOddsInfo(source, who, "Granted " + selected + " (Lvl " + level + ") from rarity " + chosenRarity
+                + " - picked from " + filteredEnchantments.size() + " enchant(s).");
+
+        CreateCustomEnchant createCustomEnchant = new CreateCustomEnchant(main);
+
+        // Building and handing over in one call keeps each book's enchant ID unique. Adding the
+        // same built item repeatedly made the books stack, and applying a stack destroyed all of it.
+        if (givePlayerEnchant && p != null) {
+            return createCustomEnchant.CreateCustomEnchantmentItem(selected, level, 1, p);
+        }
+
+        return createCustomEnchant.CreateCustomEnchantmentItem(selected, level, 1, null);
     }
 }

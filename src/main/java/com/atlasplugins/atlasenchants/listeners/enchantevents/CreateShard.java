@@ -14,19 +14,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class CreateShard implements Listener {
 
     private Main main;
-    private final Random random = new Random();
 
     public CreateShard(Main main) {
         this.main = main;
     }
 
     public ItemStack CreateShardItem(int shardAmount, Player p) {
-        ItemStack shard = new ItemStack(Material.valueOf(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item")));
+        ItemStack shard = new ItemStack(Main.getMaterial(main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-Item"), Material.PRISMARINE_SHARD));
         ItemMeta shardMeta = shard.getItemMeta();
 
         String displayName = main.getEnchantmentsConfig().getString("OblivionShard.OblivionShard-DisplayName");
@@ -50,10 +48,9 @@ public class CreateShard implements Listener {
             shardMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
-        int shardID = random.nextInt();
-
+        // No per-item ID: identical PDC data lets shards stack (they no longer need to be unique).
         PersistentDataContainer pdc = shardMeta.getPersistentDataContainer();
-        pdc.set(Main.customShardKeys, PersistentDataType.STRING, "Oblivion-Shard" + ":" + shardID);
+        pdc.set(Main.customShardKeys, PersistentDataType.STRING, "Oblivion-Shard");
 
         shardMeta.setLore(enchantmentLore);
         shard.setItemMeta(shardMeta);

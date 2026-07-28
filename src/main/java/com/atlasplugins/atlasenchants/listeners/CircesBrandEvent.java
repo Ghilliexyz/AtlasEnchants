@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -220,6 +221,21 @@ public class CircesBrandEvent implements Listener {
         if (!gui.getInventory().equals(e.getInventory())) return;
 
         brandGui.updateResult(e);
+    }
+
+    /**
+     * Drags are not routed by GuiListener, so the Brand menu gets them here - without this a drag
+     * could scatter part of a Brand stack across the anvil's input slots.
+     */
+    @EventHandler
+    public void onDrag(InventoryDragEvent e) {
+        if (!(e.getWhoClicked() instanceof Player player)) return;
+
+        Gui gui = GuiManager.getOpenGui(player);
+        if (!(gui instanceof CircesBrandGUI brandGui)) return;
+        if (!gui.getInventory().equals(e.getView().getTopInventory())) return;
+
+        brandGui.handleDrag(e);
     }
 
     // ------------------------------------------------------------------------------------

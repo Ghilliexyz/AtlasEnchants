@@ -52,7 +52,7 @@ permissions:
     default: false
   atlasenchants.guide:
     description: Permission needed to use the guide command.
-    default: true
+    default: false
   atlasenchants.givecircesember:
     description: Permission needed to use the give Circe's Ember command.
     default: false

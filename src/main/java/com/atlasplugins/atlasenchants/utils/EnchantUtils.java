@@ -49,16 +49,4 @@ public class EnchantUtils {
         return result;
     }
 
-    /**
-     * Gets the level of a specific enchantment on an item.
-     * Returns -1 if the enchantment is not found.
-     */
-    public static int getEnchantLevel(ItemStack item, String enchantName) {
-        for (EnchantData enchant : parseEnchants(item)) {
-            if (enchant.name.contains(enchantName)) {
-                return enchant.level;
-            }
-        }
-        return -1;
-    }
 }

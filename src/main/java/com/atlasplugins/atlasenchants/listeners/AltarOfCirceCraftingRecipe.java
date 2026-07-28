@@ -62,14 +62,12 @@ public class AltarOfCirceCraftingRecipe {
 
             String configPath = "AltarOfCirce.AltarOfCirce-Crafting-Materials-" + c;
             if (!main.getEnchantmentsConfig().contains(configPath)) {
-//                Bukkit.getLogger().warning("[AtlasEnchants] Missing material config for '" + c + "'");
                 continue;
             }
 
             String matName = main.getEnchantmentsConfig().getString(configPath);
             Material material = Material.matchMaterial(matName);
             if (material == null) {
-//                Bukkit.getLogger().warning("[AtlasEnchants] Invalid material '" + matName + "' for '" + c + "'");
                 continue;
             }
 
